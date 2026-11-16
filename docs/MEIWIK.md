@@ -95,4 +95,8 @@ Der Aufrufer ergänzt bei „Für später“ Artikel-/Abschnittskennung, Textste
 
 ## Verifikation
 
-`npm --prefix functions run build` kompiliert den Backend-Code und kopiert den aktuellen Artikelkatalog. `npm --prefix functions test` prüft Anfragegrenzen, Rollenvalidierung, Budgetreservierung und vertrauenswürdige Artikelauswahl. `tests/chat.test.ts` prüft Frist, Folgerunden und verlustbegrenzte Kontextverdichtung. Ein Live-OpenAI-Aufruf sowie Regel-/Auth-Integration am Firebase-Emulator sind ohne eingerichtete Umgebung nicht als bestanden zu verstehen.
+`npm --prefix functions run build` kompiliert den Backend-Code und kopiert den aktuellen Artikelkatalog. `npm --prefix functions test` prüft Anfragegrenzen, Rollenvalidierung, Budgetreservierung und vertrauenswürdige Artikelauswahl. `tests/chat.test.ts` prüft Frist, Folgerunden und verlustbegrenzte Kontextverdichtung.
+
+`npm --prefix functions run test:rules` startet ausschließlich den lokalen Firestore-Emulator mit der isolierten Projekt-ID `demo-mywik` und führt sechs Sicherheitstests aus. Geprüft werden eigene/fremde Nutzer, nicht angemeldete Zugriffe, öffentliche schreibgeschützte Artikel, gesperrte Verbrauchsdaten, Löschmarkierungen statt physischer Löschung und ungültige Daten. Diese sechs Tests sind lokal bestanden. Der Test bricht ohne lokale Emulatoradresse ab und verwendet kein produktives Firebase-Projekt. Ein eigener CI-Workflow führt dieselbe Prüfung mit Java 21 durch.
+
+Ein Live-OpenAI-Aufruf, produktive Bereitstellung und echte Firebase-Auth-Anmeldung wurden nicht ausgeführt und sind nicht als bestanden zu verstehen.

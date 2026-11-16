@@ -1,5 +1,39 @@
 import { expect, test, type Locator, type Page } from '@playwright/test';
 
+test.beforeEach(async ({ page }) => {
+  await page.addInitScript(() => {
+    const scope = window as typeof window & { mywikInputEvents?: unknown[] };
+    scope.mywikInputEvents = [];
+    const record = (type: string, node: EventTarget | null) => {
+      if (!(node instanceof HTMLTextAreaElement || node instanceof HTMLInputElement)) return;
+      const target = node as typeof node & { _valueTracker?: { getValue: () => string } };
+      const key = Object.keys(target).find(name => name.startsWith('__reactProps'));
+      const props = key ? (target as unknown as Record<string, { value?: string }>)[key] : undefined;
+      scope.mywikInputEvents!.push({ type, at: performance.now(), label: target.getAttribute('aria-label'), domValue: target.value, reactValue: props?.value, trackedValue: target._valueTracker?.getValue() });
+    };
+    for (const type of ['focusin', 'focusout', 'input', 'change']) document.addEventListener(type, event => {
+      const node = event.target;
+      record(type, node);
+      requestAnimationFrame(() => record(`${type}:frame`, node));
+    }, true);
+  });
+});
+
+test.afterEach(async ({ page }, testInfo) => {
+  if (testInfo.status === testInfo.expectedStatus) return;
+  const events = await page.evaluate(() => (window as typeof window & { mywikInputEvents?: unknown[] }).mywikInputEvents ?? []).catch(() => []);
+  await testInfo.attach('editor-input-events', { body: JSON.stringify(events, null, 2), contentType: 'application/json' });
+});
+
+async function isolateCloud(page: Page) {
+  await page.context().route('**/*', route => {
+    const url = new URL(route.request().url());
+    return ['127.0.0.1', 'localhost'].includes(url.hostname) || ['data:', 'blob:'].includes(url.protocol)
+      ? route.continue()
+      : route.abort();
+  });
+}
+
 async function openDeckungsbeitrag(page: Page) {
   await page.getByRole('button', { name: 'Zur Startseite', exact: true }).click();
   await page.getByRole('button', { name: /^Fächer/ }).click();
@@ -32,12 +66,7 @@ async function textContrast(locator: Locator) {
 
 test('mobile guest can read offline, retain notes/status/cards, and read both themes', async ({ page, context }, testInfo) => {
   // Keep this smoke test isolated from production Firebase and OpenAI. Guest actions stay local.
-  await context.route('**/*', route => {
-    const url = new URL(route.request().url());
-    return ['127.0.0.1', 'localhost'].includes(url.hostname) || ['data:', 'blob:'].includes(url.protocol)
-      ? route.continue()
-      : route.abort();
-  });
+  await isolateCloud(page);
   const crashes: string[] = [];
   page.on('pageerror', error => crashes.push(error.message));
   await page.goto('/');
@@ -45,31 +74,42 @@ test('mobile guest can read offline, retain notes/status/cards, and read both th
   await openDeckungsbeitrag(page);
 
   await page.getByText('variablen Kosten', { exact: true }).click();
+  await expect(page.getByRole('dialog')).toBeVisible();
   await expect(page.getByText('Variable Kosten', { exact: true })).toBeVisible();
   await expect(page.getByRole('button', { name: 'Im Glossar öffnen', exact: true })).toBeVisible();
-  await page.screenshot({ path: testInfo.outputPath('mobile-glossary.png'), fullPage: true });
+  await page.screenshot({ path: testInfo.outputPath('mobile-glossary.png'), fullPage: true, animations: 'disabled' });
   await page.getByRole('button', { name: 'Begriff schließen', exact: true }).click();
+  await expect(page.getByRole('dialog')).toBeHidden();
 
   await page.getByRole('button', { name: 'Offen', exact: true }).click();
   await page.getByRole('button', { name: 'Abgeschlossen', exact: true }).click();
   await expect(page.getByRole('button', { name: 'Abgeschlossen', exact: true })).toBeVisible();
 
   await page.getByRole('button', { name: 'Notiz', exact: true }).first().click();
+  await expect(page.getByRole('dialog').filter({ has: page.getByRole('textbox', { name: 'Notiztext', exact: true }) })).toBeVisible();
   await page.getByRole('textbox', { name: 'Notiztext', exact: true }).fill('Meine Testnotiz: Fixkosten erst vom Gesamtdeckungsbeitrag abziehen.');
   await page.getByRole('button', { name: 'Notiz speichern', exact: true }).click();
+  await expect(page.getByRole('textbox', { name: 'Notiztext', exact: true })).toBeHidden();
+  await expect(page.getByRole('dialog')).toBeHidden();
   await expect(page.getByText('Meine Testnotiz: Fixkosten erst vom Gesamtdeckungsbeitrag abziehen.', { exact: true })).toBeVisible();
 
   // The loaded web bundle remains open. This checks offline interaction, not a service-worker reload.
   // Native offline cold-start is separately supported by the installed app bundle and local cache.
   await context.setOffline(true);
   await page.getByRole('button', { name: 'Karte erstellen', exact: true }).first().click();
+  // RN-web assigns the dialog role after its entrance animation and focus-trap handover.
+  // Waiting for that accessible ready state avoids typing into a departing modal's focus trap.
+  await expect(page.getByRole('dialog').filter({ has: page.getByRole('textbox', { name: 'Karteikarte Frage', exact: true }) })).toBeVisible();
   await page.getByRole('textbox', { name: 'Karteikarte Frage', exact: true }).fill('Was deckt der Deckungsbeitrag?');
+  await expect(page.getByRole('textbox', { name: 'Karteikarte Frage', exact: true })).toHaveValue('Was deckt der Deckungsbeitrag?');
   await page.getByRole('textbox', { name: 'Karteikarte Antwort', exact: true }).fill('Zunächst die Fixkosten; darüber hinaus entsteht Gewinn.');
   await expect(page.getByRole('textbox', { name: 'Karteikarte Frage', exact: true })).toHaveValue('Was deckt der Deckungsbeitrag?');
   await expect(page.getByRole('textbox', { name: 'Karteikarte Antwort', exact: true })).toHaveValue('Zunächst die Fixkosten; darüber hinaus entsteht Gewinn.');
   await page.getByRole('button', { name: 'Im Lernfach speichern', exact: true }).click();
+  await expect(page.getByRole('textbox', { name: 'Karteikarte Frage', exact: true })).toBeHidden();
+  await expect(page.getByRole('dialog')).toBeHidden();
   await expect(page.getByText('Karteikarte im Lernfach gespeichert.', { exact: true })).toBeVisible();
-  await page.screenshot({ path: testInfo.outputPath('mobile-offline-article.png'), fullPage: true });
+  await page.screenshot({ path: testInfo.outputPath('mobile-offline-article.png'), fullPage: true, animations: 'disabled' });
   await page.getByRole('button', { name: 'Zur Startseite', exact: true }).click();
   await page.getByRole('button', { name: /^Karteikarten/ }).click();
   await page.getByRole('button', { name: 'Rechnungswesen', exact: true }).click();
@@ -77,6 +117,7 @@ test('mobile guest can read offline, retain notes/status/cards, and read both th
   await page.getByRole('button', { name: 'Antwort zeigen', exact: true }).click();
   await expect(page.getByText('Zunächst die Fixkosten; darüber hinaus entsteht Gewinn.', { exact: true })).toBeVisible();
   await page.getByRole('button', { name: 'Karte bearbeiten', exact: true }).click();
+  await expect(page.getByRole('dialog').filter({ has: page.getByRole('textbox', { name: 'Frage / Vorderseite', exact: true }) })).toBeVisible();
   await page.getByRole('textbox', { name: 'Frage / Vorderseite', exact: true }).fill('Wozu dient der Deckungsbeitrag?');
   await page.getByRole('button', { name: 'Speichern', exact: true }).click();
   await expect(page.getByText('Wozu dient der Deckungsbeitrag?', { exact: true })).toBeVisible();
@@ -102,7 +143,32 @@ test('mobile guest can read offline, retain notes/status/cards, and read both th
     expect(contrast.ratio).toBeGreaterThanOrEqual(7);
     if (theme === 'light') expect(contrast.backgroundLuminance).toBeGreaterThan(0.7);
     else expect(contrast.backgroundLuminance).toBeLessThan(0.1);
-    await page.screenshot({ path: testInfo.outputPath(`mobile-home-${theme}.png`), fullPage: true });
+    await page.screenshot({ path: testInfo.outputPath(`mobile-home-${theme}.png`), fullPage: true, animations: 'disabled' });
   }
   expect(crashes).toEqual([]);
+});
+
+test('prefilled article card editor retains actual keyboard edits to both fields', async ({ page, context }) => {
+  await isolateCloud(page);
+  await page.goto('/');
+  await expect(page.getByText('Schön, dass du da bist.', { exact: true })).toBeVisible();
+  await openDeckungsbeitrag(page);
+  await context.setOffline(true);
+  await page.getByRole('button', { name: 'Karte erstellen', exact: true }).first().click();
+  const front = page.getByRole('textbox', { name: 'Karteikarte Frage', exact: true });
+  const back = page.getByRole('textbox', { name: 'Karteikarte Antwort', exact: true });
+  await expect(page.getByRole('dialog').filter({ has: front })).toBeVisible();
+  await front.click();
+  await front.press('ControlOrMeta+A');
+  await front.pressSequentially('Frage mit Tastatureingabe', { delay: 10 });
+  await expect(front).toHaveValue('Frage mit Tastatureingabe');
+  await back.click();
+  await back.press('ControlOrMeta+A');
+  await back.pressSequentially('Antwort mit Tastatureingabe', { delay: 10 });
+  await expect(front).toHaveValue('Frage mit Tastatureingabe');
+  await expect(back).toHaveValue('Antwort mit Tastatureingabe');
+  await page.getByRole('button', { name: 'Im Lernfach speichern', exact: true }).click();
+  await expect(front).toBeHidden();
+  await expect.poll(() => page.evaluate(() => localStorage.getItem('mywik.user.v1.guest') ?? '')).toContain('Frage mit Tastatureingabe');
+  await expect.poll(() => page.evaluate(() => localStorage.getItem('mywik.user.v1.guest') ?? '')).toContain('Antwort mit Tastatureingabe');
 });

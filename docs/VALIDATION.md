@@ -4,6 +4,7 @@
 
 - TypeScript-Prüfung der App.
 - 24 Tests für Katalogintegrität, Offline-Konflikte, Nutzerdatenformen, Chat-Aufbewahrung und Gesprächskontext, Lernzeit, Erinnerungsintervalle und Sommerzeitwechsel.
+- Sechs echte Firestore-Emulatortests im isolierten Projekt `demo-mywik`: Nutzertrennung, Katalog-/Verbrauchsschutz, Löschmarkierungen und Schema-Prüfung. Keine produktiven Datenzugriffe.
 - Drei Backendtests für Eingabeprüfung, Verbrauchslimits und vertrauenswürdige Artikel.
 - Web-Bundle sowie Android-/iOS-JavaScript-/Hermes-Bundles erzeugt.
 - Serverseitiges TypeScript-Build inklusive Übernahme des Beispielkatalogs.

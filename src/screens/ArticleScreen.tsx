@@ -128,7 +128,7 @@ export function ArticleScreen({ article, onGlossary, onChat }: ArticleScreenProp
       <Muted>Beispielinhalt · Version {article.version} · Fachliche Vertiefungen ergänzen wir gemeinsam.</Muted>
       <View style={{ height: 64 }} />
     </ScrollView>
-    <Modal visible={!!noteEditor} transparent animationType="slide" onRequestClose={() => setNoteEditor(null)}>
+    <Modal visible={!!noteEditor} transparent animationType={Platform.OS === 'web' ? 'none' : 'slide'} onRequestClose={() => setNoteEditor(null)}>
       <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : undefined} style={styles.modalBackdrop}><ScrollView keyboardShouldPersistTaps="handled" style={{ maxHeight: '90%', width: '100%', maxWidth: 560 }} contentContainerStyle={[styles.modal, { backgroundColor: colors.surface, borderColor: colors.border }]}>
         <Row style={{ justifyContent: 'space-between' }}><Text style={[styles.sectionTitle, { color: colors.text, flex: 1 }]}>Deine Notiz</Text><Pressable accessibilityRole="button" accessibilityLabel="Schließen" onPress={() => setNoteEditor(null)} style={styles.iconButton}><X size={22} color={colors.text} /></Pressable></Row>
         <Muted>{noteEditor?.label}</Muted>
@@ -138,7 +138,7 @@ export function ArticleScreen({ article, onGlossary, onChat }: ArticleScreenProp
         {!!noteEditor?.id && <Button title="Notiz löschen" variant="ghost" onPress={() => { deleteNote(noteEditor.id!); setNoteEditor(null); }} />}
       </ScrollView></KeyboardAvoidingView>
     </Modal>
-    <Modal visible={!!cardEditor} transparent animationType="slide" onRequestClose={closeCard}>
+    <Modal visible={!!cardEditor} transparent animationType={Platform.OS === 'web' ? 'none' : 'slide'} onRequestClose={closeCard}>
       <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : undefined} style={styles.modalBackdrop}><ScrollView keyboardShouldPersistTaps="handled" style={{ maxHeight: '90%', width: '100%', maxWidth: 560 }} contentContainerStyle={[styles.modal, { backgroundColor: colors.surface, borderColor: colors.border }]}>
         <Row style={{ justifyContent: 'space-between' }}><Text style={[styles.sectionTitle, { color: colors.text, flex: 1 }]}>Karteikarte erstellen</Text><Pressable accessibilityRole="button" accessibilityLabel="Schließen" onPress={closeCard} style={styles.iconButton}><X size={22} color={colors.text} /></Pressable></Row>
         <Muted>{cardEditor?.aiGenerated ? 'MeiWik-Vorschlag · Prüfe Frage und Antwort vor dem Speichern.' : 'Textvorlage ohne KI aus dem Artikel. Du kannst sie bearbeiten oder von MeiWik eine Lernfrage formulieren lassen.'}</Muted>
