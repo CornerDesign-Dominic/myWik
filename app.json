@@ -1,0 +1,33 @@
+{
+  "expo": {
+    "name": "myWik",
+    "slug": "mywik",
+    "scheme": "mywik",
+    "version": "0.1.0",
+    "orientation": "portrait",
+    "userInterfaceStyle": "automatic",
+    "ios": {
+      "supportsTablet": true,
+      "bundleIdentifier": "de.mywik.app",
+      "buildNumber": "1"
+    },
+    "android": {
+      "package": "de.mywik.app",
+      "versionCode": 1,
+      "permissions": [
+        "POST_NOTIFICATIONS"
+      ]
+    },
+    "web": {
+      "bundler": "metro",
+      "name": "myWik",
+      "shortName": "myWik",
+      "themeColor": "#080b0d",
+      "backgroundColor": "#080b0d"
+    },
+    "plugins": [
+      "expo-notifications",
+      "expo-status-bar"
+    ]
+  }
+}

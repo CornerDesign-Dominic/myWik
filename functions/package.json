@@ -1,0 +1,23 @@
+{
+  "name": "mywik-functions",
+  "private": true,
+  "main": "lib/index.js",
+  "engines": { "node": "22" },
+  "scripts": {
+    "sync-content": "node --import tsx scripts/sync-content.ts",
+    "build": "npm run sync-content && tsc",
+    "test": "node --import tsx --test src/core.test.ts",
+    "gcp-build": "",
+    "serve": "npm run build && firebase emulators:start --only functions,firestore",
+    "deploy": "firebase deploy --only functions:meiwik"
+  },
+  "dependencies": {
+    "firebase-admin": "^13.6.0",
+    "firebase-functions": "^6.6.0"
+  },
+  "devDependencies": {
+    "@types/node": "^22.0.0",
+    "tsx": "^4.20.0",
+    "typescript": "~5.9.2"
+  }
+}
