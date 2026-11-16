@@ -2,6 +2,14 @@ name: Android test APK
 
 on:
   workflow_dispatch:
+  push:
+    branches: [feat/first-learning-app]
+    paths:
+      - .github/workflows/android-preview.yml
+      - App.tsx
+      - app.json
+      - package-lock.json
+      - src/**
 
 permissions:
   contents: read
