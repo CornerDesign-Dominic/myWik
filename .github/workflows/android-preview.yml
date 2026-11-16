@@ -68,7 +68,12 @@ jobs:
           }
           NODE
       - name: Install SDK required by Expo SDK 58 / React Native 0.88
-        run: sdkmanager "platform-tools" "platforms;android-37" "build-tools;37.0.0" "ndk;27.1.12297006" "cmake;3.30.5"
+        run: |
+          sdkmanager "platform-tools" "platforms;android-37.0" "build-tools;37.0.0" "ndk;27.1.12297006" "cmake;3.30.5"
+          # Google publishes API 37 with its minor version; RN resolves android-37.
+          if [ ! -e "$ANDROID_HOME/platforms/android-37" ]; then
+            ln -s android-37.0 "$ANDROID_HOME/platforms/android-37"
+          fi
       - name: Build self-contained ARM64 APK
         working-directory: android
         run: |
