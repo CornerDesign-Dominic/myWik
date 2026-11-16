@@ -70,7 +70,15 @@ test('mobile guest can read offline, retain notes/status/cards, and read both th
   const crashes: string[] = [];
   page.on('pageerror', error => crashes.push(error.message));
   await page.goto('/');
-  await expect(page.getByText('Schön, dass du da bist.', { exact: true })).toBeVisible();
+  await expect(page.getByRole('button', { name: /^Fächer/ })).toBeVisible();
+  const glossaryCard = page.getByRole('button', { name: /^Begriffsglossar/ });
+  await expect(glossaryCard).toBeVisible();
+  await expect(page.getByRole('button', { name: 'Anmelden / registrieren', exact: true })).toHaveCount(0);
+  await expect(page.getByText(/Du nutzt myWik lokal als Gast/)).toHaveCount(0);
+  await expect(page.getByText('DEIN WISSEN. DEIN TEMPO.', { exact: true })).toHaveCount(0);
+  const glossarySurface = await glossaryCard.evaluate(element => ({ background: getComputedStyle(element).backgroundColor, radius: parseFloat(getComputedStyle(element).borderRadius) }));
+  expect(glossarySurface.background).not.toBe('rgba(0, 0, 0, 0)');
+  expect(glossarySurface.radius).toBeGreaterThanOrEqual(10);
   await openDeckungsbeitrag(page);
 
   await page.getByText('variablen Kosten', { exact: true }).click();
@@ -92,6 +100,7 @@ test('mobile guest can read offline, retain notes/status/cards, and read both th
   await expect(page.getByRole('textbox', { name: 'Notiztext', exact: true })).toBeHidden();
   await expect(page.getByRole('dialog')).toBeHidden();
   await expect(page.getByText('Meine Testnotiz: Fixkosten erst vom Gesamtdeckungsbeitrag abziehen.', { exact: true })).toBeVisible();
+  await expect(page.getByText('Meine Testnotiz: Fixkosten erst vom Gesamtdeckungsbeitrag abziehen.', { exact: true })).toHaveCSS('font-style', 'italic');
 
   // The loaded web bundle remains open. This checks offline interaction, not a service-worker reload.
   // Native offline cold-start is separately supported by the installed app bundle and local cache.
@@ -125,10 +134,22 @@ test('mobile guest can read offline, retain notes/status/cards, and read both th
   await expect.poll(() => page.evaluate(() => localStorage.getItem('mywik.user.v1.guest') ?? '')).toContain('Wozu dient der Deckungsbeitrag?');
   await context.setOffline(false);
   await page.reload();
-  await expect(page.getByText('Schön, dass du da bist.', { exact: true })).toBeVisible();
+  await expect(page.getByRole('button', { name: /^Fächer/ })).toBeVisible();
   await openDeckungsbeitrag(page);
   await expect(page.getByRole('button', { name: 'Abgeschlossen', exact: true })).toBeVisible();
   await expect(page.getByText('Meine Testnotiz: Fixkosten erst vom Gesamtdeckungsbeitrag abziehen.', { exact: true })).toBeVisible();
+  await page.getByRole('button', { name: 'Notiz bearbeiten', exact: true }).click();
+  const noteEditor = page.getByRole('textbox', { name: 'Notiztext', exact: true });
+  await expect(page.getByRole('dialog').filter({ has: noteEditor })).toBeVisible();
+  page.once('dialog', dialog => dialog.dismiss());
+  await page.getByRole('button', { name: 'Notiz löschen', exact: true }).click();
+  await expect(noteEditor).toHaveValue('Meine Testnotiz: Fixkosten erst vom Gesamtdeckungsbeitrag abziehen.');
+  await expect.poll(() => page.evaluate(() => localStorage.getItem('mywik.user.v1.guest') ?? '')).toContain('Meine Testnotiz: Fixkosten erst vom Gesamtdeckungsbeitrag abziehen.');
+  page.once('dialog', dialog => dialog.accept());
+  await page.getByRole('button', { name: 'Notiz löschen', exact: true }).click();
+  await expect(noteEditor).toBeHidden();
+  await expect(page.getByText('Meine Testnotiz: Fixkosten erst vom Gesamtdeckungsbeitrag abziehen.', { exact: true })).toHaveCount(0);
+  await expect.poll(() => page.evaluate(() => localStorage.getItem('mywik.user.v1.guest') ?? '')).not.toContain('Meine Testnotiz: Fixkosten erst vom Gesamtdeckungsbeitrag abziehen.');
   await page.getByRole('button', { name: 'Zur Startseite', exact: true }).click();
   await page.getByRole('button', { name: /^Karteikarten/ }).click();
   await page.getByRole('button', { name: 'Rechnungswesen', exact: true }).click();
@@ -138,7 +159,7 @@ test('mobile guest can read offline, retain notes/status/cards, and read both th
     await page.getByRole('button', { name: 'Einstellungen', exact: true }).click();
     await page.getByRole('button', { name: label, exact: true }).click();
     await page.getByRole('button', { name: 'Zur Startseite', exact: true }).click();
-    const heading = page.getByText('Schön, dass du da bist.', { exact: true });
+    const heading = page.getByRole('button', { name: /^Fächer/ }).getByText('Fächer', { exact: true });
     const contrast = await textContrast(heading);
     expect(contrast.ratio).toBeGreaterThanOrEqual(7);
     if (theme === 'light') expect(contrast.backgroundLuminance).toBeGreaterThan(0.7);
@@ -151,7 +172,7 @@ test('mobile guest can read offline, retain notes/status/cards, and read both th
 test('prefilled article card editor retains actual keyboard edits to both fields', async ({ page, context }) => {
   await isolateCloud(page);
   await page.goto('/');
-  await expect(page.getByText('Schön, dass du da bist.', { exact: true })).toBeVisible();
+  await expect(page.getByRole('button', { name: /^Fächer/ })).toBeVisible();
   await openDeckungsbeitrag(page);
   await context.setOffline(true);
   await page.getByRole('button', { name: 'Karte erstellen', exact: true }).first().click();
@@ -171,4 +192,32 @@ test('prefilled article card editor retains actual keyboard edits to both fields
   await expect(front).toBeHidden();
   await expect.poll(() => page.evaluate(() => localStorage.getItem('mywik.user.v1.guest') ?? '')).toContain('Frage mit Tastatureingabe');
   await expect.poll(() => page.evaluate(() => localStorage.getItem('mywik.user.v1.guest') ?? '')).toContain('Antwort mit Tastatureingabe');
+});
+
+
+test('compact article actions stay on one row at 320px and preserve half-width gutters', async ({ page }) => {
+  await isolateCloud(page);
+  await page.setViewportSize({ width: 320, height: 800 });
+  await page.goto('/');
+  await expect(page.getByRole('button', { name: /^Fächer/ })).toBeVisible();
+  await openDeckungsbeitrag(page);
+  const heading = await page.getByText('Der Deckungsbeitrag', { exact: true }).boundingBox();
+  expect(heading).not.toBeNull();
+  expect(heading!.x).toBeGreaterThanOrEqual(10);
+  expect(heading!.x).toBeLessThanOrEqual(12);
+  const note = page.getByRole('button', { name: 'Notiz', exact: true }).first();
+  await note.scrollIntoViewIfNeeded();
+  const boxes = await Promise.all([
+    note.boundingBox(),
+    page.getByRole('button', { name: 'Karte erstellen', exact: true }).first().boundingBox(),
+    page.getByRole('button', { name: 'MeiWik fragen', exact: true }).first().boundingBox(),
+  ]);
+  boxes.forEach(box => {
+    expect(box).not.toBeNull();
+    expect(Math.abs(box!.y - boxes[0]!.y)).toBeLessThan(2);
+    expect(box!.height).toBeGreaterThanOrEqual(44);
+    expect(box!.x).toBeGreaterThanOrEqual(10);
+    expect(box!.x + box!.width).toBeLessThanOrEqual(310);
+  });
+  await expect(page.getByText(/Beispielinhalt|Vorläufige Themenstruktur|Kapitel vorbereitet/)).toHaveCount(0);
 });

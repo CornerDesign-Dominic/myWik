@@ -14,12 +14,12 @@ type RemoteRequest = { action: 'chat' | 'compact' | 'flashcard'; articleId: stri
 
 function describeError(error: unknown): Error {
   const e = error as { code?: string; message?: string };
-  if (e.code?.includes('not-found')) return new Error('MeiWik ist noch nicht bereitgestellt oder dieser Artikel ist noch nicht freigeschaltet.');
+  if (e.code?.includes('not-found')) return new Error('MeiWik ist für diesen Artikel noch nicht verfügbar.');
   if (e.code?.includes('unauthenticated')) return new Error('Bitte melde dich an, um MeiWik zu nutzen.');
   if (e.code?.includes('permission-denied')) return new Error('MeiWik ist für dieses Konto noch nicht freigeschaltet.');
   if (e.code?.includes('resource-exhausted')) return new Error('Das MeiWik-Verbrauchslimit ist erreicht. Bitte später erneut versuchen.');
   if (e.code?.includes('invalid-argument')) return new Error(e.message ?? 'Die Frage oder der Gesprächsverlauf ist zu lang.');
-  return new Error('MeiWik ist gerade nicht erreichbar. Falls er noch nicht eingerichtet ist: Die Serverfunktion muss zuerst bereitgestellt werden. Dein Verlauf bleibt erhalten.');
+  return new Error('MeiWik ist gerade nicht erreichbar. Bitte versuche es später erneut. Dein Verlauf bleibt erhalten.');
 }
 async function call<T>(data: RemoteRequest): Promise<T> {
   const network = await NetInfo.fetch();

@@ -61,7 +61,7 @@ Auf dem Entwicklungsbranch startet **Android test APK** automatisch bei Änderun
 
 Nach einem erfolgreichen Lauf unter **Artifacts → mywik-android-test-apk** die ZIP-Datei herunterladen, entpacken und `app-release.apk` auf dem Handy installieren. Der Build ist für ARM64-Android-Geräte bestimmt. Android kann eine ausdrückliche Erlaubnis zur Installation aus dieser Quelle verlangen.
 
-Die App heißt **myWik Preview** und verwendet nur im Workflow die Kennung `de.mywik.app.preview`. Sie ist mit dem öffentlichen Testschlüssel aus der Expo-Vorlage signiert und darf **nicht** als Store-/Produktionsbuild veröffentlicht werden. Sie kann neben einer späteren Produktionsapp installiert werden. Lokale Daten der Preview bleiben eine separate Installation; Cloud-Daten werden nach Anmeldung über dasselbe Firebase-Konto synchronisiert.
+Die App heißt **myWik** und verwendet nur im Workflow die Kennung `de.mywik.app.preview`. Sie ist mit dem öffentlichen Testschlüssel aus der Expo-Vorlage signiert und darf **nicht** als Store-/Produktionsbuild veröffentlicht werden. Sie kann neben einer späteren Produktionsapp installiert werden. Lokale Daten der Preview bleiben eine separate Installation; Cloud-Daten werden nach Anmeldung über dasselbe Firebase-Konto synchronisiert.
 
 Die native Projektgenerierung und die Testsignierung wurden geprüft. Ein vollständiger Gradle-/APK-Build war am 16. November 2026 erfolgreich: [erster Testbuild](https://github.com/CornerDesign-Dominic/myWik/actions/runs/43961565620). Nach weiteren Änderungen ist jeweils der neue Workflow-Lauf maßgeblich. GitHub Actions muss für das Repository aktiviert sein. Der erste Build kann wegen der Downloads und nativen Kompilierung länger dauern.
 

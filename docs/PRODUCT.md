@@ -41,3 +41,12 @@ Stand: 16. November 2026. Ziel: HQ Frühjahr 2027, danach mündliche Prüfung; l
 ## Bewusst später
 
 Vollständiger Lehrplan und regelmäßige KI-Inhaltsaudits, redaktioneller Pflegeprozess, Situationsaufgaben, Abonnements/öffentliche KI-Kontingente und endgültige Mascot-Gestaltung. Die erste Implementierung bietet eine breite funktionale Grundlage mit Beispielinhalten, kein fertiges vollständiges Fachwirt-Lehrbuch.
+
+## Oberfläche nach dem ersten Handytest
+
+- Seitliche Inhaltsränder halbiert: 11 statt 22 Punkte. Auch Karten, Dialoge und vertikale Abstände kompakter, ohne kleinere Touch-Ziele oder verkleinerte Leseschrift.
+- Begriffsglossar als eigene Start-Card. Anmeldung und Registrierung ausschließlich in den Einstellungen.
+- Fachübersicht nur mit Titel „Themen“, Kapitelansicht nur mit Fachüberschrift und Verzeichnis. Keine Platzhalter-, Test-/MVP- oder Entwicklungserklärungen in den Lernansichten.
+- Technische Informationen, Versionsstände und Bedienungstipps stehen in den Einstellungen. Fachliche Hinweise bleiben beim Inhalt.
+- Beispielbereiche erhalten dezente Flächen mit Rahmen. Persönliche Notizen erscheinen zurückhaltend und kursiv, mit klarer Kennzeichnung.
+- Abschnittsaktionen einzeilig: Notiz, Karte, MeiWik. Notizlöschung erfordert eine Bestätigung; Abbrechen verändert nichts.
