@@ -31,7 +31,7 @@ function SectionExtras({ section, onCard, onNote, onChat }: { section: ArticleSe
   </>;
 }
 
-export function ArticleScreen({ article, onGlossary, onChat }: ArticleScreenProps) {
+export function ArticleScreen({ article, onGlossary, onChat, onActivity }: ArticleScreenProps) {
   const { colors } = useTheme();
   const { data, user, online, setProgress, saveNote, deleteNote, saveCard } = useStore();
   const progress = data.progress[article.id];
@@ -95,7 +95,7 @@ export function ArticleScreen({ article, onGlossary, onChat }: ArticleScreenProp
   const renderNotes = (scope?: string) => articleNotes.filter(note => note.sectionId === scope).map(note => <Pressable key={note.id} accessibilityRole="button" accessibilityLabel="Notiz bearbeiten" onPress={() => startNote(scope, scope ? 'Zum Abschnitt' : 'Zum Artikel', note)} style={[styles.savedNote, { backgroundColor: colors.accentSoft }]}><Row><StickyNote size={16} color={colors.accent} /><Muted>{note.kind === 'personal' ? 'Deine Notiz' : 'Inhalt verbessern'}</Muted><Pencil size={13} color={colors.muted} /></Row><Body>{note.text}</Body></Pressable>);
 
   return <>
-    <ScrollView ref={scroll} style={{ flex: 1, backgroundColor: colors.background }} contentContainerStyle={styles.page} keyboardShouldPersistTaps="handled" scrollEventThrottle={250} onScroll={event => { offset.current = event.nativeEvent.contentOffset.y; }} onMomentumScrollEnd={() => { if (hydrated.current) void AsyncStorage.setItem(readKey, String(offset.current)); }}>
+    <ScrollView ref={scroll} style={{ flex: 1, backgroundColor: colors.background }} contentContainerStyle={styles.page} keyboardShouldPersistTaps="handled" scrollEventThrottle={250} onScroll={event => { onActivity?.(); offset.current = event.nativeEvent.contentOffset.y; }} onMomentumScrollEnd={() => { if (hydrated.current) void AsyncStorage.setItem(readKey, String(offset.current)); }}>
       <Muted>{subjects.find(subject => subject.id === article.subjectId)?.title.toLocaleUpperCase('de-DE')} · {article.number}</Muted>
       <Heading>{article.title}</Heading>
       <Body style={{ color: colors.muted }}>{article.intro}</Body>

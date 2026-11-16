@@ -63,7 +63,7 @@ Nach einem erfolgreichen Lauf unter **Artifacts → mywik-android-test-apk** die
 
 Die App heißt **myWik Preview** und verwendet nur im Workflow die Kennung `de.mywik.app.preview`. Sie ist mit dem öffentlichen Testschlüssel aus der Expo-Vorlage signiert und darf **nicht** als Store-/Produktionsbuild veröffentlicht werden. Sie kann neben einer späteren Produktionsapp installiert werden. Lokale Daten der Preview bleiben eine separate Installation; Cloud-Daten werden nach Anmeldung über dasselbe Firebase-Konto synchronisiert.
 
-Die native Projektgenerierung und die vorhandene Testsignierung wurden lokal geprüft. Ein vollständiger Gradle-/APK-Build wurde hier noch nicht ausgeführt; erst ein erfolgreicher Workflow-Lauf bestätigt, dass die APK tatsächlich gebaut wurde. GitHub Actions muss für das Repository aktiviert sein. Der erste Build kann wegen der Downloads und nativen Kompilierung länger dauern.
+Die native Projektgenerierung und die Testsignierung wurden geprüft. Ein vollständiger Gradle-/APK-Build war am 16. November 2026 erfolgreich: [erster Testbuild](https://github.com/CornerDesign-Dominic/myWik/actions/runs/43961565620). Nach weiteren Änderungen ist jeweils der neue Workflow-Lauf maßgeblich. GitHub Actions muss für das Repository aktiviert sein. Der erste Build kann wegen der Downloads und nativen Kompilierung länger dauern.
 
 ### EAS-Build mit eigener Signierung
 
@@ -97,10 +97,10 @@ iOS-Gerätebuilds benötigen passende Apple-Signierung und in der Regel eine App
 
 ## Noch extern auszuführen
 
-Die folgenden Schritte erfordern dein Konto beziehungsweise ein echtes Gerät und werden nicht durch das Einchecken des Codes erledigt: Firebase-Anbieter aktivieren, Regeln/Funktionen bereitstellen, OpenAI-Secret setzen, einen tatsächlichen APK-Build ausführen, Berechtigungen und Benachrichtigungen auf Android testen und später Store-Veröffentlichung vorbereiten. Eine EAS-Projektverknüpfung und eigene Signierung sind für den EAS-/Produktionsweg nötig; die oben beschriebene GitHub-Test-APK verwendet stattdessen eine getrennte Preview-Kennung mit öffentlicher Testsignierung.
+Die folgenden Schritte erfordern dein Konto beziehungsweise ein echtes Gerät und werden nicht durch das Einchecken des Codes erledigt: Firebase-Anbieter aktivieren, Regeln/Funktionen bereitstellen, OpenAI-Secret setzen, eine gebaute APK installieren, Berechtigungen und Benachrichtigungen auf Android testen und später Store-Veröffentlichung vorbereiten. Eine EAS-Projektverknüpfung und eigene Signierung sind für den EAS-/Produktionsweg nötig; die oben beschriebene GitHub-Test-APK verwendet stattdessen eine getrennte Preview-Kennung mit öffentlicher Testsignierung.
 
 ## Validierungsumfang
 
-Die GitHub-Prüfung führt nach einem sauberen `npm ci` die App-Typprüfung, die Logiktests sowie Web-, Android- und iOS-JavaScript-Bundle-Exporte aus. Separat werden die Funktionen installiert, getestet und kompiliert. Ein erfolgreicher CI-Lauf bestätigt diese Prüfungen für den jeweiligen Commit; er bestätigt keine bereitgestellten Firebase-Regeln, keinen Live-OpenAI-Aufruf und keinen signierten Gerätebuild.
+Die GitHub-Prüfung führt nach einem sauberen `npm ci` die App-Typprüfung, die Logiktests, zwei mobile Browser-Tests sowie Web-, Android- und iOS-JavaScript-Bundle-Exporte aus. Ein separater Workflow prüft die Firestore-Regeln mit sechs Emulatortests im Demo-Projekt. Separat werden die Funktionen installiert, getestet und kompiliert. Ein erfolgreicher CI-Lauf bestätigt diese Prüfungen für den jeweiligen Commit; er bestätigt keine bereitgestellten Firebase-Regeln, keinen Live-OpenAI-Aufruf und keinen signierten Gerätebuild.
 
 Für die Native-Installation müssen daher zusätzlich ein echter APK-Build und Tests auf deinem Android-Handy abgeschlossen werden. Beim EAS-Weg kommen Projektverknüpfung und Signierung hinzu. Die Web-Vorschau und Bundle-Exporte ersetzen insbesondere keine Prüfung von Benachrichtigungsberechtigungen, Hintergrundverhalten oder nativer Offline-Speicherung.

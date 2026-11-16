@@ -8,10 +8,11 @@
 - Drei Backendtests für Eingabeprüfung, Verbrauchslimits und vertrauenswürdige Artikel.
 - Web-Bundle sowie Android-/iOS-JavaScript-/Hermes-Bundles erzeugt.
 - Serverseitiges TypeScript-Build inklusive Übernahme des Beispielkatalogs.
+- Zwei erfolgreiche mobile Chromium-Browserdurchläufe in GitHub Actions: Artikel/Glossar, Notizen/Status, Offline-Kartenerstellung und -bearbeitung, Persistenz nach Neuladen, Tastatureingaben sowie Hell-/Dunkelkontrast ≥ 7:1.
+- Tatsächliche Android-ARM64-Test-APK mit eingebettetem JavaScript und getrennter Preview-Kennung erfolgreich in GitHub Actions gebaut (Run 43961565620).
 
 ## Noch nicht verifiziert
 
-- Browser-/Screenshot-Durchlauf: Chromium ließ sich in dieser Arbeitsumgebung wegen gesperrter Prozess-Sockets nicht starten. Der Web-Export ist erfolgreich, ersetzt jedoch keinen visuellen Laufzeittest.
 - Live-Anmeldung, Zwei-Geräte-Synchronisation und produktive Firestore-Regeln: erst nach Freischaltung/Deployment am eigenen Firebase-Projekt.
 - Echte OpenAI-Antworten, Kostenmessung und KI-Qualität: erst nach Secret, Konto-Freigabe und Functions-Deployment.
 - Android-Installation, Benachrichtigungen, Offline-Kaltstart und reale Darstellung auf dem Handy; iOS-Gerätetest ebenfalls offen.
