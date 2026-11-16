@@ -4,6 +4,10 @@ on:
   push:
   pull_request:
 
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
   app:
     runs-on: ubuntu-latest
@@ -17,7 +21,16 @@ jobs:
       - run: npm run typecheck
       - run: npm test
       - run: npm run export:web
+      - run: npx playwright install --with-deps chromium
+      - run: npm run test:browser
       - run: npm run export:native
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: browser-smoke-results
+          path: |
+            playwright-report
+            test-results
       - uses: actions/upload-artifact@v4
         with:
           name: web-preview

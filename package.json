@@ -10,6 +10,7 @@
     "web": "expo start --web",
     "typecheck": "tsc --noEmit",
     "test": "node --import tsx --test tests/*.test.ts",
+    "test:browser": "node node_modules/@playwright/test/cli.js test",
     "export:web": "expo export --platform web",
     "export:native": "expo export --platform android --platform ios --output-dir dist-native",
     "check": "npm run typecheck && npm test && npm run export:web"
