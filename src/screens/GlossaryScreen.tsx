@@ -51,8 +51,8 @@ export function GlossaryScreen({ initialTermId, onArticle }: { initialTermId?: s
       {busy && <ActivityIndicator accessibilityLabel="Karte wird erstellt" color={colors.accent} />}
       {!user ? <Muted>Für MeiWik bitte anmelden. Die Textvorlage ist auch ohne Anmeldung nutzbar.</Muted> : !online ? <Muted>MeiWik ist offline. Die Textvorlage bleibt nutzbar.</Muted> : null}
       {!!error && <Text accessibilityRole="alert" style={{ color: colors.danger, lineHeight: 22 }}>{error}</Text>}
-      <Muted>FRAGE</Muted><TextInput accessibilityLabel="Frage der Karteikarte" multiline editable={!busy} value={card?.front ?? ''} onChangeText={front => setCard(card && { ...card, front })} style={[styles.input, { color: colors.text, borderColor: colors.border }]} />
-      <Muted>ANTWORT</Muted><TextInput accessibilityLabel="Antwort der Karteikarte" multiline editable={!busy} value={card?.back ?? ''} onChangeText={back => setCard(card && { ...card, back })} style={[styles.input, { minHeight: 180, color: colors.text, borderColor: colors.border }]} />
+      <Muted>FRAGE</Muted><TextInput accessibilityLabel="Frage der Karteikarte" multiline editable={!busy} value={card?.front ?? ''} onChangeText={front => setCard(current => current && { ...current, front })} style={[styles.input, { color: colors.text, borderColor: colors.border }]} />
+      <Muted>ANTWORT</Muted><TextInput accessibilityLabel="Antwort der Karteikarte" multiline editable={!busy} value={card?.back ?? ''} onChangeText={back => setCard(current => current && { ...current, back })} style={[styles.input, { minHeight: 180, color: colors.text, borderColor: colors.border }]} />
       <Button title="Karte speichern" variant="primary" disabled={busy || !card?.front.trim() || !card?.back.trim()} onPress={() => { if (!card) return; saveCard({ subjectId: card.term.subjectId, front: card.front.trim(), back: card.back.trim() }); setNotice(`Karte im Lernfach ${subjects.find(subject => subject.id === card.term.subjectId)?.title} gespeichert.`); closeCard(); }} />
     </ScrollView></KeyboardAvoidingView></Modal>
   </>;

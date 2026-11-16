@@ -65,6 +65,8 @@ test('mobile guest can read offline, retain notes/status/cards, and read both th
   await page.getByRole('button', { name: 'Karte erstellen', exact: true }).first().click();
   await page.getByRole('textbox', { name: 'Karteikarte Frage', exact: true }).fill('Was deckt der Deckungsbeitrag?');
   await page.getByRole('textbox', { name: 'Karteikarte Antwort', exact: true }).fill('Zunächst die Fixkosten; darüber hinaus entsteht Gewinn.');
+  await expect(page.getByRole('textbox', { name: 'Karteikarte Frage', exact: true })).toHaveValue('Was deckt der Deckungsbeitrag?');
+  await expect(page.getByRole('textbox', { name: 'Karteikarte Antwort', exact: true })).toHaveValue('Zunächst die Fixkosten; darüber hinaus entsteht Gewinn.');
   await page.getByRole('button', { name: 'Im Lernfach speichern', exact: true }).click();
   await expect(page.getByText('Karteikarte im Lernfach gespeichert.', { exact: true })).toBeVisible();
   await page.screenshot({ path: testInfo.outputPath('mobile-offline-article.png'), fullPage: true });

@@ -6,12 +6,12 @@ Die App verwendet Expo und React Native mit TypeScript. Android, iOS und eine We
 
 - Node.js 24 LTS und npm.
 - Ein Firebase-Projekt (`meiwik` ist bereits in der Konfiguration eingetragen).
-- Für installierbare Builds ein Expo-Konto; für spätere Veröffentlichung die jeweiligen Store-Konten.
+- Für EAS-Builds ein Expo-Konto; die GitHub-Test-APK benötigt keines. Für spätere Veröffentlichung die jeweiligen Store-Konten.
 
 ## Projekt starten
 
 ```bash
-git clone https://github.com/CornerDesign-Dominic/myWik.git
+git clone --branch feat/first-learning-app https://github.com/CornerDesign-Dominic/myWik.git
 cd myWik
 npm ci
 npm start
@@ -57,7 +57,7 @@ Die App-Kennung ist `de.mywik.app`. Vor einer Veröffentlichung muss diese Kennu
 
 ### Test-APK über GitHub Actions ohne Expo-Konto
 
-Im Repository unter **Actions → Android test APK → Run workflow** kann ein Android-Testbuild manuell gestartet werden. Der Workflow installiert die Werkzeuge, erzeugt das native Android-Projekt und baut eine APK mit eingebettetem JavaScript. Der fertige Build benötigt weder Expo Go noch einen laufenden Metro-Server. Ein Expo-/EAS-Konto und private Signierungsschlüssel sind für diesen Testweg nicht erforderlich.
+Auf dem Entwicklungsbranch startet **Android test APK** automatisch bei Änderungen am App-Code oder am APK-Workflow. Sobald die Workflow-Datei im Hauptbranch vorhanden ist, kann unter **Actions → Android test APK → Run workflow** auch manuell ein Android-Testbuild gestartet werden. Der Workflow installiert die Werkzeuge, erzeugt das native Android-Projekt und baut eine APK mit eingebettetem JavaScript. Der fertige Build benötigt weder Expo Go noch einen laufenden Metro-Server. Ein Expo-/EAS-Konto und private Signierungsschlüssel sind für diesen Testweg nicht erforderlich.
 
 Nach einem erfolgreichen Lauf unter **Artifacts → mywik-android-test-apk** die ZIP-Datei herunterladen, entpacken und `app-release.apk` auf dem Handy installieren. Der Build ist für ARM64-Android-Geräte bestimmt. Android kann eine ausdrückliche Erlaubnis zur Installation aus dieser Quelle verlangen.
 
