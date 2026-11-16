@@ -212,12 +212,16 @@ test('compact article actions stay on one row at 320px and preserve half-width g
     page.getByRole('button', { name: 'Karte erstellen', exact: true }).first().boundingBox(),
     page.getByRole('button', { name: 'MeiWik fragen', exact: true }).first().boundingBox(),
   ]);
+  const chatButton = await page.getByRole('button', { name: 'MeiWik Chat öffnen', exact: true }).boundingBox();
+  expect(chatButton).not.toBeNull();
   boxes.forEach(box => {
     expect(box).not.toBeNull();
     expect(Math.abs(box!.y - boxes[0]!.y)).toBeLessThan(2);
     expect(box!.height).toBeGreaterThanOrEqual(44);
     expect(box!.x).toBeGreaterThanOrEqual(10);
     expect(box!.x + box!.width).toBeLessThanOrEqual(310);
+    const overlapsChat = box!.x < chatButton!.x + chatButton!.width && box!.x + box!.width > chatButton!.x && box!.y < chatButton!.y + chatButton!.height && box!.y + box!.height > chatButton!.y;
+    expect(overlapsChat).toBe(false);
   });
   await expect(page.getByText(/Beispielinhalt|Vorläufige Themenstruktur|Kapitel vorbereitet/)).toHaveCount(0);
 });
