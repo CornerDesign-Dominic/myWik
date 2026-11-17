@@ -65,6 +65,7 @@ test('owner can write a tombstone but physical deletion remains forbidden', asyn
   await assertSucceeds(setDoc(reference, envelope({ value: null, deleted: true, updatedAt: 200, revision: 'deleted-r2' })));
   assert.equal((await getDoc(reference)).data()?.deleted, true);
   await assertFails(setDoc(reference, envelope({ value: noteValue, deleted: true })));
+  await assertFails(setDoc(reference, envelope({value:{...noteValue,text:'Offline edit after delete'},updatedAt:9999999999999,revision:'resurrection'})));
 });
 
 test('malformed entities, unknown kinds and attempts to change identity are rejected', async () => {
@@ -78,4 +79,17 @@ test('malformed entities, unknown kinds and attempts to change identity are reje
   await assertFails(updateDoc(reference, { entityId: 'changed' }));
   await assertFails(updateDoc(reference, { kind: 'later' }));
   await assertFails(setDoc(doc(db, 'users/alice/entities/session_invalid'), envelope({ kind: 'session', entityId: 'invalid', value: { id: 'invalid', subjectId: 'rw', kind: 'article', seconds: -1, day: '2026-11-16' } })));
+});
+
+
+test('new card counters and source fields synchronize, while invalid counters are rejected', async()=>{
+  const db=env.authenticatedContext('alice').firestore();
+  const ref=doc(db,'users/alice/entities/card_a');
+  const card={id:'a',subjectId:'rechnungswesen',front:'Was ist DB?',back:'Erlös minus variable Kosten.',reviews:3,nextReviewAt:100,updatedAt:100};
+  const entity=(value:object)=>envelope({kind:'card',entityId:'a',value});
+  await assertSucceeds(setDoc(ref,entity(card)));
+  await assertSucceeds(setDoc(ref,entity({...card,knownCount:1,unknownCount:2,successStreak:0,articleId:'deckungsbeitrag',sectionId:'definition',articleVersion:1})));
+  for(const value of [-1,1.5,'2'])await assertFails(setDoc(ref,entity({...card,knownCount:value})));
+  await assertFails(setDoc(ref,entity({...card,articleId:123})));
+  await assertFails(getDoc(doc(env.authenticatedContext('bob').firestore(),'users/alice/entities/card_a')));
 });

@@ -1,0 +1,67 @@
+[
+  {
+    "id": "bwl",
+    "title": "BWL",
+    "subtitle": "Betriebliche Entscheidungen verstehen"
+  },
+  {
+    "id": "vwl",
+    "title": "VWL",
+    "subtitle": "Wirtschaftliche Zusammenhänge erkennen"
+  },
+  {
+    "id": "rechnungswesen",
+    "title": "Rechnungswesen",
+    "subtitle": "Buchführung, Kosten und Ergebnisse einordnen"
+  },
+  {
+    "id": "recht",
+    "title": "Recht",
+    "subtitle": "Rechtsgrundlagen im Unternehmen"
+  },
+  {
+    "id": "steuern",
+    "title": "Steuern",
+    "subtitle": "Steuerarten und betriebliche Auswirkungen"
+  },
+  {
+    "id": "unternehmensfuehrung",
+    "title": "Unternehmensführung",
+    "subtitle": "Strategie und Organisation gestalten"
+  },
+  {
+    "id": "betriebliches-management",
+    "title": "Betriebliches Management",
+    "subtitle": "Planen, organisieren und Projekte steuern"
+  },
+  {
+    "id": "investition-finanzierung",
+    "title": "Investition und Finanzierung",
+    "subtitle": "Investitionen bewerten und Kapital beschaffen"
+  },
+  {
+    "id": "controlling",
+    "title": "Controlling",
+    "subtitle": "Planung, Kennzahlen und Abweichungen auswerten"
+  },
+  {
+    "id": "logistik",
+    "title": "Logistik",
+    "subtitle": "Material- und Informationsflüsse gestalten"
+  },
+  {
+    "id": "marketing",
+    "title": "Marketing und Vertrieb",
+    "subtitle": "Märkte verstehen und Kunden gewinnen"
+  },
+  {
+    "id": "fuehrung-zusammenarbeit",
+    "title": "Führung und Zusammenarbeit",
+    "subtitle": "Menschen führen, kommunizieren und Konflikte lösen"
+  },
+  {
+    "id": "personal",
+    "title": "Personal und Ausbildung",
+    "subtitle": "Personal gewinnen, entwickeln und ausbilden"
+  }
+]

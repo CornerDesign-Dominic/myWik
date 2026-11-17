@@ -1,3 +1,5 @@
+import { unclearCompletion } from './learningProgress';
+import { calendarDaysAfter } from './learningClock';
 import type { UserData, UserSettings, ArticleProgress } from '../types';
 
 export type EntityKind = 'progress' | 'note' | 'card' | 'session' | 'visit' | 'later' | 'recommendation' | 'settings';
@@ -9,7 +11,7 @@ export interface SyncEntity {
   revision: string;
   deleted: boolean;
 }
-export interface LocalSnapshot { schema: 1; entries: Record<string, SyncEntity>; outbox: Record<string, SyncEntity> }
+export interface LocalSnapshot { schema: 1; entries: Record<string, SyncEntity>; outbox: Record<string, SyncEntity>; conflicts?: Record<string, SyncEntity>; bases?: Record<string,string> }
 export const DEFAULT_SETTINGS: UserSettings = {
   theme: 'system',
   reminders: {
@@ -70,7 +72,9 @@ export function isSyncEntity(value: unknown): value is SyncEntity {
   if (e.kind === 'note') return text(v.articleId,250) && optionalText(v.sectionId) && text(v.text)
     && ['personal','improvement'].includes(String(v.kind)) && finite(v.updatedAt);
   if (e.kind === 'card') return text(v.subjectId,250) && text(v.front,10000) && text(v.back)
-    && finite(v.updatedAt) && finite(v.nextReviewAt) && Number.isInteger(v.reviews) && Number(v.reviews) >= 0;
+    && finite(v.updatedAt) && finite(v.nextReviewAt) && Number.isInteger(v.reviews) && Number(v.reviews) >= 0
+    && ['knownCount','unknownCount','successStreak','articleVersion'].every(k => v[k] === undefined || (Number.isSafeInteger(v[k]) && Number(v[k]) >= 0))
+    && optionalText(v.articleId) && optionalText(v.sectionId);
   if (e.kind === 'session') return text(v.subjectId,250) && optionalText(v.articleId) && ['article','cards'].includes(String(v.kind))
     && finite(v.seconds) && v.seconds <= 86400 && typeof v.day === 'string' && /^\d{4}-\d{2}-\d{2}$/.test(v.day) && finite(v.startedAt);
   if (e.kind === 'later') return text(v.subjectId,250) && optionalText(v.articleId) && optionalText(v.sectionId)
@@ -80,31 +84,64 @@ export function isSyncEntity(value: unknown): value is SyncEntity {
     && ['open','done','dismissed','snoozed'].includes(String(v.state)) && finite(v.dueAt) && finite(v.updatedAt);
   return false;
 }
-export function isLocalSnapshot(value: unknown): value is LocalSnapshot {
+export function isLocalSnapshot(value: unknown, requireCoherentOutbox = true): value is LocalSnapshot {
   if (!record(value) || value.schema !== 1 || !record(value.entries) || !record(value.outbox)) return false;
+  if (value.conflicts !== undefined && (!record(value.conflicts) || !Object.entries(value.conflicts).every(([key,e])=>isSyncEntity(e) && !e.deleted && ['note','card'].includes(e.kind) && key === e.revision))) return false;
+  if (value.bases !== undefined && (!record(value.bases) || !Object.values(value.bases).every(v=>typeof v==='string'))) return false;
+  const storedEntries = value.entries;
+  if (requireCoherentOutbox && !Object.entries(value.outbox).every(([key,e])=>JSON.stringify(e)===JSON.stringify(storedEntries[key]))) return false;
   return [value.entries,value.outbox].every(entries => Object.entries(entries).every(([key,e]) => isSyncEntity(e) && key === entityKey(e.kind,e.entityId)));
+}
+/** Older versions could persist a remote entry beside an obsolete local outbox revision. */
+export function repairSnapshot(snapshot: LocalSnapshot): LocalSnapshot {
+  let changed=false;
+  const next={...snapshot,entries:{...snapshot.entries},outbox:{...snapshot.outbox},bases:{...snapshot.bases},conflicts:{...snapshot.conflicts}};
+  for(const [key,pending] of Object.entries(next.outbox)){
+    const current=next.entries[key];
+    if(JSON.stringify(current)===JSON.stringify(pending))continue;
+    changed=true;
+    const chosen=winner(current,pending),loser=chosen.revision===pending.revision?current:pending;
+    if(loser&&!loser.deleted&&['note','card'].includes(loser.kind)&&JSON.stringify(loser.value)!==JSON.stringify(chosen.value))Object.defineProperty(next.conflicts,loser.revision,{value:loser,enumerable:true,configurable:true,writable:true});
+    next.entries[key]=chosen;
+    if(chosen.revision!==pending.revision){delete next.outbox[key];delete next.bases[key];}
+  }
+  return changed?next:snapshot;
 }
 export function winner(left: SyncEntity | undefined, right: SyncEntity): SyncEntity {
   if (!left) return right;
+  // IDs are never reused after deletion. Explicit restoration creates a new ID.
+  if (left.deleted !== right.deleted) return left.deleted ? left : right;
   if (left.updatedAt !== right.updatedAt) return left.updatedAt > right.updatedAt ? left : right;
   return left.revision >= right.revision ? left : right;
 }
-export function applyEntity(snapshot: LocalSnapshot, entity: SyncEntity, pending: boolean): LocalSnapshot {
+export function applyEntity(snapshot: LocalSnapshot, entity: SyncEntity, pending: boolean, detectConflict = true): LocalSnapshot {
   const key = entityKey(entity.kind, entity.entityId);
-  const chosen = winner(snapshot.entries[key], entity);
-  return {
-    ...snapshot,
-    entries: { ...snapshot.entries, [key]: chosen },
-    outbox: pending && chosen.revision === entity.revision ? { ...snapshot.outbox, [key]: chosen } : snapshot.outbox,
-  };
+  const previous = snapshot.entries[key];
+  const chosen = winner(previous, entity);
+  const outbox = {...snapshot.outbox};
+  const bases = {...snapshot.bases};
+  const conflicts = {...snapshot.conflicts};
+  if (!pending && detectConflict && snapshot.outbox[key] && previous && previous.revision !== entity.revision
+    && bases[key] !== entity.revision && JSON.stringify(previous.value) !== JSON.stringify(entity.value)) {
+    const loser = chosen.revision === previous.revision ? entity : previous;
+    if (!loser.deleted && ['note','card'].includes(loser.kind) && isSyncEntity(loser)) Object.defineProperty(conflicts,loser.revision,{value:loser,enumerable:true,configurable:true,writable:true});
+  }
+  if (pending && chosen.revision === entity.revision) {
+    if (!outbox[key]) bases[key] = previous?.revision ?? '';
+    outbox[key] = chosen;
+  } else if (!pending && chosen.revision === entity.revision) {
+    delete outbox[key]; delete bases[key];
+  }
+  return {...snapshot,entries:{...snapshot.entries,[key]:chosen},outbox,bases,conflicts};
 }
 /** Does not clear a newer local revision created while a remote write was in flight. */
 export function acknowledge(snapshot: LocalSnapshot, sent: SyncEntity, remote: SyncEntity): LocalSnapshot {
   const key = entityKey(sent.kind, sent.entityId);
-  const next = applyEntity(snapshot, remote, false);
-  const outbox = { ...next.outbox };
-  if (outbox[key]?.revision === sent.revision) delete outbox[key];
-  return { ...next, outbox };
+  const next = applyEntity(snapshot, remote, false, remote.revision !== sent.revision);
+  const outbox = { ...next.outbox }, bases = {...next.bases};
+  if (outbox[key]?.revision === sent.revision) {delete outbox[key];delete bases[key];}
+  else if (outbox[key]) bases[key] = remote.revision;
+  return { ...next, outbox, bases };
 }
 export function mergeRemote(snapshot: LocalSnapshot, remote: SyncEntity[]): LocalSnapshot {
   return remote.filter(isSyncEntity).reduce((s, e) => applyEntity(s, e, false), snapshot);
@@ -139,12 +176,11 @@ export function createRecommendations(snapshot: LocalSnapshot, articleSubjects: 
   const data = materialize(snapshot);
   const result: SyncEntity[] = [];
   for (const p of Object.values(data.progress)) {
-    if (p.status !== 'done') continue;
-    const history = [...p.history].sort((a,b) => a.at - b.at);
-    const done = [...history].reverse().find(h => h.status === 'done');
-    if (!done || !history.some(h => h.status === 'unclear' && h.at <= done.at)) continue;
-    const dueAt = done.at + 7 * 86400000;
-    const id = `repeat_${p.articleId}_${done.at}`;
+    if (p.status !== 'done' || !articleSubjects[p.articleId]) continue;
+    const doneAt=unclearCompletion(p);
+    if(doneAt===undefined)continue;
+    const dueAt=calendarDaysAfter(doneAt,7);
+    const id = `repeat_${p.articleId}_${doneAt}`;
     if (dueAt > now || data.recommendations.some(r => r.id === id) || snapshot.entries[entityKey('recommendation',id)]) continue;
     result.push(makeEntity('recommendation',id,{
       id, articleId:p.articleId, subjectId:articleSubjects[p.articleId] ?? '',

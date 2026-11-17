@@ -1,13 +1,14 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { ActivityIndicator, Alert, KeyboardAvoidingView, Modal, Platform, Pressable, ScrollView, StyleSheet, Text, TextInput, View } from 'react-native';
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import { Alert, KeyboardAvoidingView, Modal, Platform, Pressable, ScrollView, StyleSheet, Text, TextInput, View } from 'react-native';
+import {useReadingPosition} from '../services/useReadingPosition';
 import { Bookmark, Check, ChevronDown, ChevronUp, CircleHelp, Layers, Pencil, Star, StickyNote, X } from 'lucide-react-native';
 import { Body, Button, Heading, Muted, Panel, Row, useTheme } from '../components/ui';
 import { useStore } from '../state/Store';
 import type { ArticleScreenProps } from '../state/contract';
 import type { ArticleSection, ArticleStatus, Note } from '../types';
 import { subjects } from '../data/content';
-import { generateFlashcard } from '../services/meiwik';
+import { CardEditor } from '../components/CardEditor';
+import { sectionSource } from '../services/flashcards';
 import { MeiWikAvatar } from '../components/MeiWikAvatar';
 
 const statusLabels: Record<ArticleStatus, string> = { open: 'Offen', unclear: 'Noch unklar', working: 'Weiterarbeiten', done: 'Abgeschlossen' };
@@ -16,13 +17,14 @@ function SectionExtras({ section, onCard, onNote, onChat }: { section: ArticleSe
   const { colors } = useTheme();
   const [tab, setTab] = useState(0);
   const [hintOpen, setHintOpen] = useState(false);
+  const selectedTab=Math.min(tab,Math.max(0,(section.tabs?.length??1)-1));
   return <>
     {section.tabs?.length ? <View style={[styles.example, { backgroundColor: colors.highlight, borderColor: colors.border }]}>
-      <Row style={{ gap: 6 }}>{section.tabs.map((item, index) => <Pressable key={item.title} accessibilityRole="tab" accessibilityState={{ selected: tab === index }} onPress={() => setTab(index)} style={[styles.tab, { backgroundColor: tab === index ? colors.accentSoft : 'transparent' }]}><Text style={{ color: tab === index ? colors.accent : colors.muted, fontWeight: '600', fontSize: 13 }}>{item.title}</Text></Pressable>)}</Row>
-      <Body>{section.tabs[tab].content}</Body>
+      <Row style={{ gap: 6 }}>{section.tabs.map((item, index) => <Pressable key={`${index}:${item.title}`} accessibilityRole="tab" aria-selected={selectedTab===index} accessibilityState={{ selected: selectedTab === index }} onPress={() => setTab(index)} style={[styles.tab, { backgroundColor: selectedTab === index ? colors.accentSoft : 'transparent' }]}><Text style={{ color: selectedTab === index ? colors.accent : colors.muted, fontWeight: '600', fontSize: 13 }}>{item.title}</Text></Pressable>)}</Row>
+      <Body>{section.tabs[selectedTab]?.content}</Body>
     </View> : null}
     {section.hint ? <View style={[styles.hint, { borderColor: colors.border }]}>
-      <Pressable accessibilityRole="button" accessibilityState={{ expanded: hintOpen }} onPress={() => setHintOpen(!hintOpen)} style={styles.hintTitle}>
+      <Pressable accessibilityRole="button" aria-expanded={hintOpen} accessibilityState={{ expanded: hintOpen }} onPress={() => setHintOpen(!hintOpen)} style={styles.hintTitle}>
         <View style={{ flex: 1 }}><Muted>HINWEIS</Muted><Text style={[styles.hintText, { color: colors.text }]}>{section.hint.title}</Text></View>
         {hintOpen ? <ChevronUp size={18} color={colors.muted} /> : <ChevronDown size={18} color={colors.muted} />}
       </Pressable>
@@ -38,41 +40,17 @@ function SectionExtras({ section, onCard, onNote, onChat }: { section: ArticleSe
 
 export function ArticleScreen({ article, onGlossary, onChat, onActivity }: ArticleScreenProps) {
   const { colors } = useTheme();
-  const { data, user, online, setProgress, saveNote, deleteNote, saveCard } = useStore();
+  const { data, user, setProgress, saveNote, deleteNote } = useStore();
   const progress = data.progress[article.id];
   const [tocOpen, setTocOpen] = useState(false);
   const [statusOpen, setStatusOpen] = useState(false);
   const [noteEditor, setNoteEditor] = useState<{ id?: string; sectionId?: string; label: string; text: string; kind: Note['kind'] } | null>(null);
-  const [cardEditor, setCardEditor] = useState<{ front: string; back: string; selectedText: string; aiGenerated: boolean } | null>(null);
-  const [cardBusy, setCardBusy] = useState(false);
-  const [cardError, setCardError] = useState('');
-  const generation = useRef(0);
+  const [cardEditor, setCardEditor] = useState<{ front: string; back: string; selectedText: string; sectionId?: string } | null>(null);
   const [notice, setNotice] = useState('');
   const scroll = useRef<React.ElementRef<typeof ScrollView>>(null);
   const positions = useRef<Record<string, number>>({});
-  const offset = useRef(0);
-  const hydrated = useRef(false);
-  const readKey = `mywik:reading:${user?.uid ?? 'guest'}:${article.id}`;
-
-  useEffect(() => {
-    generation.current += 1;
-    setCardBusy(false); setCardError(''); setCardEditor(null); setNoteEditor(null); setNotice('');
-    return () => { generation.current += 1; };
-  }, [article.id, user?.uid]);
-
-  useEffect(() => {
-    let active = true;
-    hydrated.current = false;
-    AsyncStorage.getItem(readKey).then(value => {
-      if (!active) return;
-      offset.current = Number(value) || 0;
-      hydrated.current = true;
-      // onContentSizeChange restores only after all article sections have layout.
-      setTimeout(() => active && scroll.current?.scrollTo({ y: offset.current, animated: false }), 120);
-    }).catch(() => { hydrated.current = true; });
-    return () => { active = false; if (hydrated.current) void AsyncStorage.setItem(readKey, String(offset.current)); };
-  }, [readKey]);
-
+  const reading=useReadingPosition({owner:user?.uid??'guest',articleId:article.id,version:article.version,sectionIds:article.sections.map(s=>s.id),scroll,positions,onActivity,onError:setNotice});
+  useEffect(()=>{setCardEditor(null);setNoteEditor(null);setNotice('')},[article.id,user?.uid]);
   const articleNotes = data.notes.filter(note => note.articleId === article.id);
   const startNote = (sectionId?: string, label = 'Zum Artikel', existing?: Note) => setNoteEditor({ sectionId, label, text: existing?.text ?? '', kind: existing?.kind ?? 'personal', id: existing?.id });
   const confirmDeleteNote = () => {
@@ -89,38 +67,19 @@ export function ArticleScreen({ article, onGlossary, onChat, onActivity }: Artic
     ]);
   };
   const startCard = (section?: ArticleSection) => {
-    generation.current += 1;
-    setCardBusy(false);
-    setCardError('');
-    const selectedText = section ? section.paragraphs.map(paragraph => paragraph.map(part => part.text).join('')).join('\n\n') : '';
-    setCardEditor({ front: section ? `${section.title}: Was ist der Kerngedanke?` : `Was bedeutet „${article.title.replace(/^Der |^Die |^Das /, '')}“?`, back: (section ?? article.sections[0]).paragraphs.map(paragraph => paragraph.map(part => part.text).join('')).join('\n\n'), selectedText, aiGenerated: false });
+    const selectedText = section ? sectionSource(section) : [article.intro,...article.sections.map(sectionSource)].join('\n\n');
+    setCardEditor({ front: section ? `${section.title}: Was ist der Kerngedanke?` : `Was bedeutet „${article.title.replace(/^Der |^Die |^Das /, '')}“?`, back: (section ?? article.sections[0]).paragraphs.map(paragraph => paragraph.map(part => part.text).join('')).join('\n\n'), selectedText, ...(section ? {sectionId:section.id} : {}) });
   };
-  const closeCard = () => { generation.current += 1; setCardBusy(false); setCardError(''); setCardEditor(null); };
-  const generateCard = async () => {
-    if (!cardEditor || cardBusy) return;
-    if (!user) { setCardError('MeiWik benötigt eine Anmeldung in den Einstellungen.'); return; }
-    if (!online) { setCardError('MeiWik ist offline. Du kannst die Karte selbst bearbeiten.'); return; }
-    const request = ++generation.current;
-    const selectedText = cardEditor.selectedText;
-    setCardBusy(true); setCardError('');
-    try {
-      const result = await generateFlashcard(article, selectedText);
-      if (request !== generation.current) return;
-      if (!result.front.trim() || !result.back.trim()) throw new Error('MeiWik hat keinen vollständigen Kartenvorschlag geliefert.');
-      setCardEditor({ ...result, selectedText, aiGenerated: true });
-    } catch (error) {
-      if (request === generation.current) setCardError(error instanceof Error ? error.message : 'MeiWik konnte die Karte gerade nicht erstellen. Deine Eingaben bleiben erhalten.');
-    } finally { if (request === generation.current) setCardBusy(false); }
-  };
+  const closeCard = () => setCardEditor(null);
   const renderNotes = (scope?: string) => articleNotes.filter(note => note.sectionId === scope).map(note => <Pressable key={note.id} accessibilityRole="button" accessibilityLabel="Notiz bearbeiten" onPress={() => startNote(scope, scope ? 'Zum Abschnitt' : 'Zum Artikel', note)} style={[styles.savedNote, { backgroundColor: colors.noteSurface, borderLeftColor: colors.accent }]}><Row style={{ gap: 6 }}><StickyNote size={13} color={colors.muted} /><Muted style={{ fontSize: 12 }}>{note.kind === 'personal' ? 'Deine Notiz' : 'Inhalt verbessern'}</Muted><Pencil size={12} color={colors.muted} /></Row><Body style={{ color: colors.muted, fontStyle: 'italic', fontSize: 15, lineHeight: 24 }}>{note.text}</Body></Pressable>);
 
   return <>
-    <ScrollView ref={scroll} style={{ flex: 1, backgroundColor: colors.background }} contentContainerStyle={styles.page} keyboardShouldPersistTaps="handled" scrollEventThrottle={250} onScroll={event => { onActivity?.(); offset.current = event.nativeEvent.contentOffset.y; }} onMomentumScrollEnd={() => { if (hydrated.current) void AsyncStorage.setItem(readKey, String(offset.current)); }}>
+    <ScrollView ref={scroll} style={{ flex: 1, backgroundColor: colors.background }} contentContainerStyle={styles.page} keyboardShouldPersistTaps="handled" scrollEventThrottle={250} onLayout={e=>reading.onLayout(e.nativeEvent.layout.height)} onContentSizeChange={(_,h)=>reading.onContentSizeChange(h)} onScroll={e=>reading.onScroll(e.nativeEvent.contentOffset.y)} onTouchStart={reading.onTouchStart} onScrollBeginDrag={reading.onScrollBeginDrag} onScrollEndDrag={reading.onScrollEndDrag}>
       <Muted>{subjects.find(subject => subject.id === article.subjectId)?.title.toLocaleUpperCase('de-DE')} · {article.number}</Muted>
       <Heading>{article.title}</Heading>
       <Body style={{ color: colors.muted }}>{article.intro}</Body>
       <Row>
-        <Pressable accessibilityRole="button" onPress={() => setStatusOpen(!statusOpen)} style={[styles.status, { borderColor: colors.border, backgroundColor: colors.surface }]}>
+        <Pressable accessibilityRole="button" aria-expanded={statusOpen} accessibilityState={{expanded:statusOpen}} onPress={() => setStatusOpen(!statusOpen)} style={[styles.status, { borderColor: colors.border, backgroundColor: colors.surface }]}>
           {progress?.status === 'done' ? <Check size={17} color={colors.accent} /> : progress?.status === 'unclear' ? <CircleHelp size={17} color={colors.accent} /> : <Bookmark size={17} color={colors.muted} />}
           <Text style={{ color: colors.text }}>{statusLabels[progress?.status ?? 'open']}</Text><ChevronDown size={14} color={colors.muted} />
         </Pressable>
@@ -128,10 +87,10 @@ export function ArticleScreen({ article, onGlossary, onChat, onActivity }: Artic
       </Row>
       {statusOpen && <Panel><Muted>DEIN LERNSTATUS</Muted>{(Object.keys(statusLabels) as ArticleStatus[]).map(status => <Button key={status} title={statusLabels[status]} variant={progress?.status === status ? 'primary' : 'ghost'} onPress={() => { setProgress(article.id, { status }); setStatusOpen(false); }} />)}</Panel>}
       <View style={[styles.toc, { borderColor: colors.border }]}>
-        <Pressable accessibilityRole="button" accessibilityState={{ expanded: tocOpen }} onPress={() => setTocOpen(!tocOpen)} style={styles.hintTitle}><Text style={[styles.hintText, { color: colors.text }]}>In diesem Artikel</Text>{tocOpen ? <ChevronUp size={18} color={colors.muted} /> : <ChevronDown size={18} color={colors.muted} />}</Pressable>
-        {tocOpen && article.sections.map(section => <Pressable key={section.id} accessibilityRole="button" onPress={() => scroll.current?.scrollTo({ y: positions.current[section.id] ?? 0, animated: true })} style={{ paddingVertical: 9 }}><Text style={{ color: colors.accent, fontSize: 15 }}>{section.title}</Text></Pressable>)}
+        <Pressable accessibilityRole="button" aria-expanded={tocOpen} accessibilityState={{ expanded: tocOpen }} onPress={() => setTocOpen(!tocOpen)} style={styles.hintTitle}><Text style={[styles.hintText, { color: colors.text }]}>In diesem Artikel</Text>{tocOpen ? <ChevronUp size={18} color={colors.muted} /> : <ChevronDown size={18} color={colors.muted} />}</Pressable>
+        {tocOpen && article.sections.map(section => <Pressable key={section.id} accessibilityRole="button" onPress={() => reading.jumpTo(section.id)} style={{ paddingVertical: 9 }}><Text style={{ color: colors.accent, fontSize: 15 }}>{section.title}</Text></Pressable>)}
       </View>
-      {article.sections.map(section => <View key={section.id} onLayout={event => { positions.current[section.id] = event.nativeEvent.layout.y; }} style={{ gap: 10, paddingTop: 7 }}>
+      {article.sections.map(section => <View key={section.id} onLayout={event => reading.onSectionLayout(section.id,event.nativeEvent.layout.y)} style={{ gap: 10, paddingTop: 7 }}>
         <Text accessibilityRole="header" style={[styles.sectionTitle, { color: colors.text }]}>{section.title}</Text>
         {section.paragraphs.map((paragraph, index) => <View key={index} style={{ gap: 8 }}>
           <Text selectable accessibilityActions={[{ name: 'longpress', label: 'Notiz zu diesem Absatz hinzufügen' }]} onAccessibilityAction={event => { if (event.nativeEvent.actionName === 'longpress') startNote(`${section.id}:p${index}`, `${section.title} · Absatz ${index + 1}`); }} onLongPress={() => startNote(`${section.id}:p${index}`, `${section.title} · Absatz ${index + 1}`)} style={[styles.paragraph, { color: colors.text }]}>
@@ -142,33 +101,22 @@ export function ArticleScreen({ article, onGlossary, onChat, onActivity }: Artic
         <SectionExtras section={section} onCard={() => startCard(section)} onNote={() => startNote(section.id, section.title)} onChat={() => onChat(section.id)} />
         {renderNotes(section.id)}
       </View>)}
-      <View style={[styles.toc, { borderColor: colors.border }]}><Row><StickyNote size={16} color={colors.muted} /><Text style={[styles.hintText, { color: colors.text }]}>Deine Notizen zum Artikel</Text></Row>{renderNotes()}<Button title="Notiz zum Artikel hinzufügen" onPress={() => startNote()} /></View>
+      <View style={[styles.toc, { borderColor: colors.border }]}><Row><StickyNote size={16} color={colors.muted} /><Text style={[styles.hintText, { color: colors.text }]}>Deine Notizen zum Artikel</Text></Row>{renderNotes()}{articleNotes.filter(note=>note.sectionId&&!article.sections.some(section=>note.sectionId===section.id||section.paragraphs.some((_,i)=>note.sectionId===`${section.id}:p${i}`))).map(note=><Pressable key={note.id} accessibilityRole="button" accessibilityLabel="Notiz zu früherem Abschnitt bearbeiten" onPress={()=>startNote(note.sectionId,'Früherer Abschnitt',note)} style={styles.savedNote}><Muted>Früherer Abschnitt</Muted><Body>{note.text}</Body></Pressable>)}<Button title="Notiz zum Artikel hinzufügen" onPress={() => startNote()} /></View>
       {!!notice && <Text accessibilityLiveRegion="polite" style={{ color: colors.accent }}>{notice}</Text>}
       <Button title="Karte zum Thema erstellen" onPress={() => startCard()} />
       <View style={{ height: 64 }} />
     </ScrollView>
     <Modal visible={!!noteEditor} transparent animationType={Platform.OS === 'web' ? 'none' : 'slide'} onRequestClose={() => setNoteEditor(null)}>
-      <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : undefined} style={styles.modalBackdrop}><ScrollView keyboardShouldPersistTaps="handled" style={{ maxHeight: '90%', width: '100%', maxWidth: 560 }} contentContainerStyle={[styles.modal, { backgroundColor: colors.surface, borderColor: colors.border }]}>
+      <KeyboardAvoidingView behavior={Platform.OS === 'web' ? undefined : 'padding'} style={styles.modalBackdrop}><ScrollView keyboardShouldPersistTaps="handled" style={{ maxHeight: '90%', width: '100%', maxWidth: 560 }} contentContainerStyle={[styles.modal, { backgroundColor: colors.surface, borderColor: colors.border }]}>
         <Row style={{ justifyContent: 'space-between' }}><Text style={[styles.sectionTitle, { color: colors.text, flex: 1 }]}>Deine Notiz</Text><Pressable accessibilityRole="button" accessibilityLabel="Schließen" onPress={() => setNoteEditor(null)} style={styles.iconButton}><X size={22} color={colors.text} /></Pressable></Row>
         <Muted>{noteEditor?.label}</Muted>
         <Row><Button title="Persönlich" variant={noteEditor?.kind === 'personal' ? 'primary' : 'secondary'} onPress={() => setNoteEditor(current => current && { ...current, kind: 'personal' })} /><Button title="Inhalt verbessern" variant={noteEditor?.kind === 'improvement' ? 'primary' : 'secondary'} onPress={() => setNoteEditor(current => current && { ...current, kind: 'improvement' })} /></Row>
-        <TextInput accessibilityLabel="Notiztext" multiline placeholder="Dein Gedanke …" placeholderTextColor={colors.muted} value={noteEditor?.text ?? ''} onChangeText={text => setNoteEditor(current => current && { ...current, text })} style={[styles.input, { color: colors.text, borderColor: colors.border, backgroundColor: colors.background }]} />
+        <TextInput accessibilityLabel="Notiztext" multiline maxLength={20000} placeholder="Dein Gedanke …" placeholderTextColor={colors.muted} value={noteEditor?.text ?? ''} onChangeText={text => setNoteEditor(current => current && { ...current, text })} style={[styles.input, { color: colors.text, borderColor: colors.border, backgroundColor: colors.background }]} />
         <Button title="Notiz speichern" variant="primary" disabled={!noteEditor?.text.trim()} onPress={() => { if (!noteEditor?.text.trim()) return; saveNote({ id: noteEditor.id, articleId: article.id, sectionId: noteEditor.sectionId, text: noteEditor.text.trim(), kind: noteEditor.kind }); setNoteEditor(null); }} />
         {!!noteEditor?.id && <Button title="Notiz löschen" variant="ghost" onPress={confirmDeleteNote} />}
       </ScrollView></KeyboardAvoidingView>
     </Modal>
-    <Modal visible={!!cardEditor} transparent animationType={Platform.OS === 'web' ? 'none' : 'slide'} onRequestClose={closeCard}>
-      <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : undefined} style={styles.modalBackdrop}><ScrollView keyboardShouldPersistTaps="handled" style={{ maxHeight: '90%', width: '100%', maxWidth: 560 }} contentContainerStyle={[styles.modal, { backgroundColor: colors.surface, borderColor: colors.border }]}>
-        <Row style={{ justifyContent: 'space-between' }}><Text style={[styles.sectionTitle, { color: colors.text, flex: 1 }]}>Karteikarte erstellen</Text><Pressable accessibilityRole="button" accessibilityLabel="Schließen" onPress={closeCard} style={styles.iconButton}><X size={22} color={colors.text} /></Pressable></Row>
-        {cardEditor?.aiGenerated && <Muted>MeiWik-Vorschlag</Muted>}
-        <Button title={cardBusy ? 'MeiWik erstellt die Karte …' : 'Mit MeiWik formulieren'} onPress={() => { void generateCard(); }} disabled={cardBusy} />
-        {cardBusy && <ActivityIndicator accessibilityLabel="Karte wird erstellt" color={colors.accent} />}
-        {!!cardError && <Text accessibilityRole="alert" style={{ color: colors.danger, lineHeight: 22 }}>{cardError}</Text>}
-        <Muted>VORDERSEITE</Muted><TextInput accessibilityLabel="Karteikarte Frage" multiline editable={!cardBusy} value={cardEditor?.front ?? ''} onChangeText={front => setCardEditor(current => current && { ...current, front })} style={[styles.input, { minHeight: 70, color: colors.text, borderColor: colors.border }]} />
-        <Muted>RÜCKSEITE</Muted><TextInput accessibilityLabel="Karteikarte Antwort" multiline editable={!cardBusy} value={cardEditor?.back ?? ''} onChangeText={back => setCardEditor(current => current && { ...current, back })} style={[styles.input, { color: colors.text, borderColor: colors.border }]} />
-        <Button title="Im Lernfach speichern" variant="primary" disabled={cardBusy || !cardEditor?.front.trim() || !cardEditor?.back.trim()} onPress={() => { if (!cardEditor) return; saveCard({ subjectId: article.subjectId, front: cardEditor.front.trim(), back: cardEditor.back.trim() }); closeCard(); setNotice('Karteikarte im Lernfach gespeichert.'); }} />
-      </ScrollView></KeyboardAvoidingView>
-    </Modal>
+    {cardEditor && <CardEditor key={`${user?.uid??'guest'}:${article.id}`} initial={{subjectId:article.subjectId,articleId:article.id,articleVersion:article.version,...(cardEditor.sectionId?{sectionId:cardEditor.sectionId}:{}),front:cardEditor.front,back:cardEditor.back}} source={cardEditor.selectedText} onClose={closeCard} onSaved={()=>setNotice('Karteikarte im Lernfach gespeichert.')} frontLabel="Karteikarte Frage" backLabel="Karteikarte Antwort" saveLabel="Im Lernfach speichern"/>}
   </>;
 }
 

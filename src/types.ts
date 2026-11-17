@@ -9,7 +9,7 @@ export interface Article { id: string; subjectId: string; chapterId: string; tit
 export interface GlossaryTerm { id: string; subjectId: string; term: string; definition: string; example?: string; articleId?: string }
 export interface ArticleProgress { articleId: string; status: ArticleStatus; starred: boolean; updatedAt: number; history: { status: ArticleStatus; at: number }[] }
 export interface Note { id: string; articleId: string; sectionId?: string; text: string; kind: 'personal' | 'improvement'; updatedAt: number }
-export interface Flashcard { id: string; subjectId: string; front: string; back: string; updatedAt: number; nextReviewAt: number; reviews: number; deleted?: boolean }
+export interface Flashcard { id: string; subjectId: string; front: string; back: string; updatedAt: number; nextReviewAt: number; reviews: number; knownCount?: number; unknownCount?: number; successStreak?: number; articleId?: string; sectionId?: string; articleVersion?: number; deleted?: boolean }
 export interface LearningSession { id: string; subjectId: string; articleId?: string; kind: 'article' | 'cards'; seconds: number; day: string; startedAt: number }
 export interface LaterItem { id: string; subjectId: string; articleId?: string; sectionId?: string; sourceText: string; question: string; answer: string; suspectedGap: string; suggestion: string; kind: 'missing' | 'wording' | 'example' | 'structure' | 'depth'; status: 'open' | 'done'; updatedAt: number }
 export interface Recommendation { id: string; articleId: string; subjectId: string; title: string; reason: string; state: 'open' | 'done' | 'dismissed' | 'snoozed'; dueAt: number; updatedAt: number }
@@ -19,4 +19,4 @@ export interface UserSettings { theme: ThemeMode; reminders: Record<ReminderCate
 export interface ChatMessage { id: string; role: 'user' | 'assistant'; content: string; createdAt: number }
 export interface ArticleChat { articleId: string; messages: ChatMessage[]; summary: string; updatedAt: number; expiresAt: number }
 export interface UserData { progress: Record<string, ArticleProgress>; notes: Note[]; cards: Flashcard[]; sessions: LearningSession[]; visits: string[]; later: LaterItem[]; recommendations: Recommendation[]; settings: UserSettings }
-export type Route = { name: 'home' | 'subjects' | 'cards' | 'success' | 'later' | 'recommendations' | 'settings' | 'glossary' } | { name: 'chapters'; subjectId: string } | { name: 'article'; articleId: string };
+export type Route = { name: 'home' | 'subjects' | 'cards' | 'success' | 'later' | 'recommendations' | 'settings' } | { name:'glossary';termId?:string;context?:{query:string;expanded:string|null;y:number} } | { name: 'chapters'; subjectId: string; collapsed?:Record<string,boolean> } | { name: 'article'; articleId: string };

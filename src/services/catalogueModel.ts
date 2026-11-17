@@ -1,30 +1,32 @@
 import type { Article, Chapter, GlossaryTerm, Subject } from '../types';
 export interface Catalogue { version:number; subjects:Subject[]; chapters:Chapter[]; articles:Article[]; glossary:GlossaryTerm[] }
 const object=(v:unknown):v is Record<string,unknown>=>!!v&&typeof v==='object'&&!Array.isArray(v);
-const str=(v:unknown)=>typeof v==='string'&&v.length>0;
+const str=(v:unknown)=>typeof v==='string'&&v.trim().length>0;
+const id=(v:unknown)=>typeof v==='string'&&/^[a-zA-Z0-9_-]+$/.test(v)&&!['__proto__','prototype','constructor'].includes(v);
+const optionalId=(v:unknown)=>v===undefined||id(v);
 const number=(v:unknown)=>typeof v==='number'&&Number.isFinite(v)&&v>=0;
 /** Remote content is data, never executable markup. Reject incomplete trees atomically. */
 export function isCatalogue(value:unknown):value is Catalogue {
  if(!object(value)||!number(value.version))return false;
  const{subjects,chapters,articles,glossary}=value;
  if(!Array.isArray(subjects)||!subjects.length||subjects.length>200||!Array.isArray(chapters)||chapters.length>10000||!Array.isArray(articles)||articles.length>5000||!Array.isArray(glossary)||glossary.length>10000)return false;
- if(!subjects.every(s=>object(s)&&str(s.id)&&str(s.title)&&typeof s.subtitle==='string'&&str(s.icon)))return false;
+ if(!subjects.every(s=>object(s)&&id(s.id)&&str(s.title)&&typeof s.subtitle==='string'&&str(s.icon)))return false;
  const subjectIds=new Set(subjects.map(s=>s.id));if(subjectIds.size!==subjects.length)return false;
- if(!chapters.every(c=>object(c)&&str(c.id)&&subjectIds.has(c.subjectId)&&str(c.title)&&typeof c.number==='string'&&/^\d+(\.\d+)*$/.test(c.number)&&(!c.parentId||str(c.parentId))&&(!c.articleId||str(c.articleId))))return false;
+ if(!chapters.every(c=>object(c)&&id(c.id)&&subjectIds.has(c.subjectId)&&str(c.title)&&typeof c.number==='string'&&/^\d+(\.\d+)*$/.test(c.number)&&optionalId(c.parentId)&&optionalId(c.articleId)))return false;
  const chapterIds=new Map(chapters.map(c=>[c.id,c]));if(chapterIds.size!==chapters.length)return false;
  for(const chapter of chapters){let cursor=chapter;const seen=new Set<string>();while(cursor.parentId){if(seen.has(cursor.id))return false;seen.add(cursor.id);const parent=chapterIds.get(cursor.parentId);if(!parent||parent.subjectId!==chapter.subjectId)return false;cursor=parent}}
  const validSection=(s:unknown):boolean=>{
-  if(!object(s)||!str(s.id)||!str(s.title)||!Array.isArray(s.paragraphs))return false;
-  if(!s.paragraphs.every(p=>Array.isArray(p)&&p.every(t=>object(t)&&typeof t.text==='string'&&(!t.termId||str(t.termId)))))return false;
-  if(s.tabs&&(!Array.isArray(s.tabs)||!s.tabs.every(t=>object(t)&&str(t.title)&&typeof t.content==='string')))return false;
-  if(s.hint&&(!object(s.hint)||!str(s.hint.title)||typeof s.hint.content!=='string'))return false;
+  if(!object(s)||!id(s.id)||!str(s.title)||!Array.isArray(s.paragraphs))return false;
+  if(!s.paragraphs.every(p=>Array.isArray(p)&&p.every(t=>object(t)&&typeof t.text==='string'&&optionalId(t.termId))))return false;
+  if(s.tabs!==undefined&&(!Array.isArray(s.tabs)||!s.tabs.every(t=>object(t)&&str(t.title)&&typeof t.content==='string')))return false;
+  if(s.hint!==undefined&&(!object(s.hint)||!str(s.hint.title)||typeof s.hint.content!=='string'))return false;
   return true;
  };
- if(!articles.every(a=>object(a)&&str(a.id)&&subjectIds.has(a.subjectId)&&chapterIds.has(a.chapterId)&&str(a.title)&&str(a.number)&&typeof a.intro==='string'&&number(a.updatedAt)&&number(a.version)&&Array.isArray(a.sections)&&a.sections.length>0&&a.sections.length<=200&&a.sections.every(validSection)))return false;
+ if(!articles.every(a=>object(a)&&id(a.id)&&subjectIds.has(a.subjectId)&&chapterIds.has(a.chapterId)&&str(a.title)&&str(a.number)&&typeof a.intro==='string'&&number(a.updatedAt)&&number(a.version)&&Array.isArray(a.sections)&&a.sections.length>0&&a.sections.length<=200&&a.sections.every(validSection)))return false;
  const articleIds=new Map(articles.map(a=>[a.id,a]));if(articleIds.size!==articles.length)return false;
- if(!articles.every(a=>chapterIds.get(a.chapterId)?.subjectId===a.subjectId&&new Set(a.sections.map((s:{id:string})=>s.id)).size===a.sections.length))return false;
+ if(!articles.every(a=>chapterIds.get(a.chapterId)?.subjectId===a.subjectId&&chapterIds.get(a.chapterId)?.articleId===a.id&&new Set(a.sections.map((s:{id:string})=>s.id)).size===a.sections.length))return false;
  if(!chapters.every(c=>!c.articleId||(articleIds.get(c.articleId)?.chapterId===c.id)))return false;
- if(!glossary.every(t=>object(t)&&str(t.id)&&subjectIds.has(t.subjectId)&&str(t.term)&&str(t.definition)&&(!t.example||typeof t.example==='string')&&(!t.articleId||articleIds.has(t.articleId))))return false;
+ if(!glossary.every(t=>object(t)&&id(t.id)&&subjectIds.has(t.subjectId)&&str(t.term)&&str(t.definition)&&(t.example===undefined||typeof t.example==='string')&&(t.articleId===undefined||(id(t.articleId)&&articleIds.has(t.articleId)))))return false;
  const termIds=new Set(glossary.map(t=>t.id));if(termIds.size!==glossary.length)return false;
  return articles.every(a=>a.sections.every((s:{paragraphs:{termId?:string}[][]})=>s.paragraphs.every(p=>p.every(t=>!t.termId||termIds.has(t.termId)))));
 }

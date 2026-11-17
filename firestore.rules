@@ -13,12 +13,19 @@ service cloud.firestore {
         && d.deleted is bool
         && (d.deleted ? d.value == null : validValue(d));
     }
+    function cardCount(d, key) { return !(key in d) || (d[key] is int && d[key] >= 0); }
+    function validCard(d) {
+      return d.id is string && d.subjectId is string && d.front is string && d.front.size() <= 10000 && d.back is string && d.back.size() <= 20000
+        && d.reviews is int && d.reviews >= 0 && d.nextReviewAt is number && d.nextReviewAt >= 0 && d.updatedAt is number
+        && cardCount(d, 'knownCount') && cardCount(d, 'unknownCount') && cardCount(d, 'successStreak') && cardCount(d, 'articleVersion')
+        && (!('articleId' in d) || d.articleId is string) && (!('sectionId' in d) || d.sectionId is string);
+    }
     function validValue(d) {
       return (d.kind == 'visit' && d.value is string && d.value.matches('^[0-9]{4}-[0-9]{2}-[0-9]{2}$'))
         || (d.kind == 'settings' && d.value is map && d.value.theme in ['system', 'light', 'dark'] && d.value.reminders is map)
         || (d.kind == 'progress' && d.value is map && d.value.articleId is string && d.value.status in ['open', 'unclear', 'working', 'done'] && d.value.starred is bool && d.value.history is list && d.value.history.size() <= 200)
         || (d.kind == 'note' && d.value is map && d.value.id is string && d.value.articleId is string && d.value.text is string && d.value.text.size() <= 20000 && d.value.kind in ['personal', 'improvement'])
-        || (d.kind == 'card' && d.value is map && d.value.id is string && d.value.subjectId is string && d.value.front is string && d.value.front.size() <= 10000 && d.value.back is string && d.value.back.size() <= 20000)
+        || (d.kind == 'card' && d.value is map && validCard(d.value))
         || (d.kind == 'session' && d.value is map && d.value.id is string && d.value.subjectId is string && d.value.kind in ['article', 'cards'] && d.value.seconds is number && d.value.seconds >= 0 && d.value.seconds <= 86400 && d.value.day is string)
         || (d.kind == 'later' && d.value is map && d.value.id is string && d.value.subjectId is string && d.value.question is string && d.value.question.size() <= 20000 && d.value.answer is string && d.value.answer.size() <= 30000 && d.value.status in ['open', 'done'])
         || (d.kind == 'recommendation' && d.value is map && d.value.id is string && d.value.articleId is string && d.value.state in ['open', 'done', 'dismissed', 'snoozed']);
@@ -28,7 +35,8 @@ service cloud.firestore {
       allow create: if own(uid) && validEntity();
       allow update: if own(uid) && validEntity()
         && request.resource.data.kind == resource.data.kind
-        && request.resource.data.entityId == resource.data.entityId;
+        && request.resource.data.entityId == resource.data.entityId
+        && (!resource.data.deleted || request.resource.data.deleted);
       // Sync clients write tombstones so offline devices cannot resurrect deletions.
       allow delete: if false;
     }

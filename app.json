@@ -3,17 +3,17 @@
     "name": "myWik",
     "slug": "mywik",
     "scheme": "mywik",
-    "version": "0.3.0",
+    "version": "0.4.0",
     "orientation": "portrait",
     "userInterfaceStyle": "automatic",
     "ios": {
       "supportsTablet": true,
       "bundleIdentifier": "de.mywik.app",
-      "buildNumber": "3"
+      "buildNumber": "4"
     },
     "android": {
       "package": "de.mywik.app",
-      "versionCode": 3,
+      "versionCode": 4,
       "permissions": [
         "POST_NOTIFICATIONS"
       ]

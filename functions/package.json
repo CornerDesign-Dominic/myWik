@@ -12,7 +12,8 @@
     "test:rules": "firebase emulators:exec --only firestore --project demo-mywik --config ../firebase.json \"node --import tsx --test src/rules.test.ts\"",
     "gcp-build": "",
     "serve": "npm run build && firebase emulators:start --only functions,firestore",
-    "deploy": "firebase deploy --only functions:meiwik"
+    "deploy": "firebase deploy --only functions:meiwik",
+    "test:sync": "firebase emulators:exec --only firestore --project demo-mywik --config ../firebase.json \"node --import tsx --test ../tests/sync.integration.ts\""
   },
   "dependencies": {
     "firebase-admin": "^13.6.0",

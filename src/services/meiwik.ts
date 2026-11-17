@@ -1,7 +1,8 @@
+import type { CardDraft } from './flashcards';
 import NetInfo from '@react-native-community/netinfo';
 import { getFunctions, httpsCallable } from 'firebase/functions';
 import { app, auth } from './firebase';
-import type { Article, ArticleChat, LaterItem } from '../types';
+import type { Article, ArticleChat, LaterItem, Flashcard } from '../types';
 import { isChatExpired, RECENT_CONTEXT_MESSAGES, RETAIN_AFTER_COMPACTION } from './chatLogic';
 
 export interface MeiWikReply {
@@ -10,7 +11,7 @@ export interface MeiWikReply {
   summary?: string;
   later?: Pick<LaterItem, 'suspectedGap' | 'suggestion' | 'kind'> | null;
 }
-type RemoteRequest = { action: 'chat' | 'compact' | 'flashcard'; articleId: string; sectionId?: string; message?: string; selectedText?: string; summary?: string; messages?: Array<{ role: 'user' | 'assistant'; content: string }> };
+type RemoteRequest = { action: 'chat' | 'compact' | 'flashcard' | 'flashcards' | 'check_card' | 'practice'; articleId: string; sectionId?: string; message?: string; selectedText?: string; generationMode?: 'new'|'improve'; subjectId?: string; card?: {id?:string;front:string;back:string}; existingCards?: Array<{id:string;front:string;back:string}>; summary?: string; messages?: Array<{ role: 'user' | 'assistant'; content: string }> };
 
 function describeError(error: unknown): Error {
   const e = error as { code?: string; message?: string };
@@ -58,4 +59,32 @@ export async function generateFlashcard(article: Article, selectedText = ''): Pr
   const result = await call<{ front: string; back: string }>({ action: 'flashcard', articleId: article.id, selectedText });
   if (typeof result.front !== 'string' || typeof result.back !== 'string') throw new Error('Die Karteikarte konnte nicht erstellt werden.');
   return result;
+}
+
+
+function cardRequest(draft: CardDraft) {
+  return {articleId: draft.articleId ?? 'card', subjectId:draft.subjectId, ...(draft.sectionId ? {sectionId:draft.sectionId} : {}), card:{...(draft.id ? {id:draft.id} : {}),front:draft.front,back:draft.back}};
+}
+function candidates(cards: Flashcard[], draft: CardDraft, source = '') {
+  const words = new Set(`${draft.front} ${source}`.toLowerCase().split(/\W+/).filter(w=>w.length>3));
+  const score = (c: Flashcard) => `${c.front} ${c.back}`.toLowerCase().split(/\W+/).filter(w=>words.has(w)).length;
+  return cards.filter(c=>!c.deleted && c.id!==draft.id).sort((a,b)=>score(b)-score(a)).slice(0,40).map(c=>({id:c.id,front:c.front.slice(0,500),back:c.back.slice(0,400)}));
+}
+export async function generateFlashcards(draft: CardDraft, source: string, cards: Flashcard[], generationMode: 'new'|'improve' = 'improve') {
+  const result = await call<{cards:Array<{front:string;back:string}>}>({...cardRequest(draft),action:'flashcards',generationMode,selectedText:source.slice(0,8000),existingCards:candidates(cards,draft,source)});
+  if (!Array.isArray(result.cards) || result.cards.length>5 || result.cards.some(c=>typeof c.front!=='string'||!c.front.trim().endsWith('?')||typeof c.back!=='string'||!c.back.trim())) throw new Error('Keine vollständigen Kartenvorschläge erhalten.');
+  return result.cards;
+}
+export async function checkCardDuplicates(draft: CardDraft, cards: Flashcard[]) {
+  const pool = candidates(cards,draft);
+  const result = await call<{duplicateIds:string[];matches?:Flashcard[]}>({...cardRequest(draft),action:'check_card',existingCards:pool});
+  if (!Array.isArray(result.duplicateIds) || result.duplicateIds.some(id=>typeof id!=='string')) throw new Error('Dublettenprüfung fehlgeschlagen.');
+  const remote=(result.matches??[]).filter(c=>typeof c.id==='string'&&typeof c.front==='string'&&typeof c.back==='string'&&typeof c.reviews==='number'&&typeof c.nextReviewAt==='number');
+  return [...new Map([...remote,...cards].filter(c=>result.duplicateIds.includes(c.id)&&c.id!==draft.id&&!c.deleted).map(c=>[c.id,c])).values()];
+}
+export async function practiceFlashcard(card: Flashcard, answer: string, history: Array<{role:'user'|'assistant';content:string}>) {
+  if (!answer.trim() || answer.length>4000) throw new Error('Bitte antworte mit 1 bis 4000 Zeichen.');
+  const result = await call<{reply:string}>({...cardRequest(card),action:'practice',message:answer,messages:history.slice(-12)});
+  if (typeof result.reply!=='string' || !result.reply.trim()) throw new Error('Keine Rückmeldung erhalten.');
+  return result.reply;
 }

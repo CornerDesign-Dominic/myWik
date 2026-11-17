@@ -19,28 +19,28 @@ export function SubjectsScreen({ onSubject }: { onSubject: (subjectId: string) =
       const completed = existingArticles.filter(chapter => data.progress[chapter.articleId!]?.status === 'done').length;
       return <Pressable key={subject.id} accessibilityRole="button" accessibilityLabel={`${subject.title}, ${existingArticles.length} Artikel verfügbar`} onPress={() => onSubject(subject.id)} style={({ pressed }) => [styles.subject, { borderColor: colors.border, backgroundColor: colors.surface, opacity: pressed ? .75 : 1 }]}>
         <View style={[styles.icon, { backgroundColor: colors.accentSoft }]}><Icon size={23} color={colors.accent} /></View>
-        <View style={{ flex: 1, gap: 4 }}><Text style={[styles.subjectName, { color: colors.text }]}>{subject.title}</Text><Muted>{subject.subtitle}</Muted>{existingArticles.length > 0 && <Text style={{ color: colors.muted, fontSize: 12 }}>{existingArticles.length} Artikel · {completed} abgeschlossen</Text>}</View>
+        <View style={{ flex: 1, gap: 4 }}><Text style={[styles.subjectName, { color: colors.text }]}>{subject.title}</Text><Muted>{subject.subtitle}</Muted>{<Text style={{ color: colors.muted, fontSize: 12 }}>{existingArticles.length ? `${existingArticles.length} Artikel · ${completed} abgeschlossen` : 'Noch keine Artikel verfügbar'}</Text>}</View>
         <ChevronRight size={18} color={colors.muted} />
       </Pressable>;
     })}
   </Page>;
 }
 
-export function ChaptersScreen({ subjectId, onArticle }: { subjectId: string; onArticle: (articleId: string) => void }) {
+export function ChaptersScreen({ subjectId, onArticle, initialCollapsed, onCollapsedChange }: { subjectId: string; onArticle: (articleId: string) => void; initialCollapsed?:Record<string,boolean>; onCollapsedChange?:(value:Record<string,boolean>)=>void }) {
   const { colors } = useTheme();
   const { data } = useStore();
   const subject = subjects.find(item => item.id === subjectId);
   const nodes = chapters.filter(chapter => chapter.subjectId === subjectId);
-  const [collapsed, setCollapsed] = useState<Record<string, boolean>>({});
-  const toggle = (id: string) => setCollapsed(current => ({ ...current, [id]: !current[id] }));
+  const [collapsed, setCollapsed] = useState<Record<string, boolean>>(initialCollapsed??{});
+  const toggle = (id:string)=>{const value={...collapsed,[id]:!collapsed[id]};setCollapsed(value);onCollapsedChange?.(value)};
   const renderChapter = (chapter: Chapter, depth = 0): React.ReactNode => {
     const children = nodes.filter(node => node.parentId === chapter.id);
     const progress = chapter.articleId ? data.progress[chapter.articleId] : undefined;
     const StatusIcon = progress?.status === 'done' ? Check : progress?.status === 'unclear' ? CircleHelp : progress?.status === 'working' ? Flag : null;
     return <View key={chapter.id}>
-      <Pressable accessibilityRole={chapter.articleId || children.length ? 'button' : 'text'} disabled={!chapter.articleId && !children.length} accessibilityState={children.length ? { expanded: !collapsed[chapter.id] } : { disabled: !chapter.articleId }} onPress={() => chapter.articleId ? onArticle(chapter.articleId) : children.length ? toggle(chapter.id) : undefined} style={({ pressed }) => [styles.chapter, { paddingLeft: Math.min(depth, 4) * 15, borderColor: colors.border, opacity: pressed ? .65 : 1 }]}>
+      <Pressable accessibilityRole={chapter.articleId || children.length ? 'button' : 'text'} disabled={!chapter.articleId && !children.length} aria-expanded={children.length ? !collapsed[chapter.id] : undefined} accessibilityState={children.length ? { expanded: !collapsed[chapter.id] } : { disabled: !chapter.articleId }} onPress={() => chapter.articleId ? onArticle(chapter.articleId) : children.length ? toggle(chapter.id) : undefined} style={({ pressed }) => [styles.chapter, { paddingLeft: Math.min(depth, 4) * 15, borderColor: colors.border, opacity: pressed ? .65 : 1 }]}>
         <View style={{ width: 20, alignItems: 'center' }}>{StatusIcon ? <StatusIcon size={17} color={colors.accent} /> : progress?.starred ? <Star size={16} color={colors.gold} fill={colors.gold} /> : null}</View>
-        <View style={{ flex: 1 }}><Text style={{ color: chapter.articleId || children.length ? colors.text : colors.muted, fontSize: depth ? 15 : 17, fontWeight: depth ? '500' : '600', lineHeight: 23 }}><Text style={{ color: colors.muted }}>{chapter.number} </Text>{chapter.title}</Text></View>
+        <View style={{ flex: 1 }}><Text style={{ color: chapter.articleId || children.length ? colors.text : colors.muted, fontSize: depth ? 15 : 17, fontWeight: depth ? '500' : '600', lineHeight: 23 }}><Text style={{ color: colors.muted }}>{chapter.number} </Text>{chapter.title}</Text>{!chapter.articleId&&!children.length&&<Muted>Inhalt folgt</Muted>}</View>
         {progress?.starred && StatusIcon && <Star size={14} color={colors.gold} fill={colors.gold} />}
         {children.length ? collapsed[chapter.id] ? <ChevronRight size={17} color={colors.muted} /> : <ChevronDown size={17} color={colors.muted} /> : chapter.articleId ? <ChevronRight size={17} color={colors.muted} /> : null}
       </Pressable>

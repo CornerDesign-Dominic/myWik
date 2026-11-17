@@ -1,4 +1,5 @@
 import { expect, test, type Locator, type Page } from '@playwright/test';
+import {articles as fixtureArticles,subjects as fixtureSubjects,chapters as fixtureChapters,glossary as fixtureGlossary,contentVersion as fixtureVersion} from '../src/data/content';
 
 test.beforeEach(async ({ page }) => {
   await page.addInitScript(() => {
@@ -224,4 +225,466 @@ test('compact article actions stay on one row at 320px and preserve half-width g
     expect(overlapsChat).toBe(false);
   });
   await expect(page.getByText(/Beispielinhalt|Vorläufige Themenstruktur|Kapitel vorbereitet/)).toHaveCount(0);
+});
+
+
+test('chat keeps its composer in a short viewport and dismisses input focus on send', async ({ page }) => {
+  await isolateCloud(page);
+  await page.goto('/');
+  await expect(page.getByRole('button', { name: /^Fächer/ })).toBeVisible();
+  await openDeckungsbeitrag(page);
+  await page.getByRole('button', { name: 'MeiWik Chat öffnen', exact: true }).click();
+  const input = page.getByRole('textbox', { name: 'Frage an MeiWik', exact: true });
+  await expect(page.getByRole('dialog').filter({ has: input })).toBeVisible();
+  await input.fill('Wie berechne ich den Deckungsbeitrag?');
+  await expect(input).toBeFocused();
+
+  // A shorter browser viewport checks the constrained layout, not a native keyboard.
+  await page.setViewportSize({ width: 393, height: 400 });
+  const send = page.getByRole('button', { name: 'An MeiWik senden', exact: true });
+  for (const control of [input, send]) {
+    const box = await control.boundingBox();
+    expect(box).not.toBeNull();
+    expect(box!.y).toBeGreaterThanOrEqual(0);
+    expect(box!.y + box!.height).toBeLessThanOrEqual(400);
+  }
+  await send.click();
+  await expect(input).not.toBeFocused();
+  // Guest rejection exercises the send action without contacting the live backend.
+  await expect(page.getByText('Bitte unter Einstellungen anmelden. MeiWik benötigt ein persönliches Konto.', { exact: true })).toBeVisible();
+  await expect(input).toHaveValue('Wie berechne ich den Deckungsbeitrag?');
+  await input.focus();
+  await page.getByRole('button', { name: 'Chat verkleinern', exact: true }).click();
+  await expect(input).toBeHidden();
+  await page.setViewportSize({ width: 393, height: 851 });
+  await page.getByRole('button', { name: 'MeiWik Chat öffnen', exact: true }).click();
+  await expect(page.getByRole('dialog').filter({ has: input })).toBeVisible();
+  await expect(input).not.toBeFocused();
+  await expect(input).toHaveValue('Wie berechne ich den Deckungsbeitrag?');
+});
+
+
+test('chat formats saved answers safely in light/dark and narrow screens', async ({ page }) => {
+  await isolateCloud(page);
+  await page.addInitScript(() => {
+    const now = Date.now();
+    localStorage.setItem('@mywik/chat/v1/guest/deckungsbeitrag', JSON.stringify({ articleId: 'deckungsbeitrag', summary: '', updatedAt: now, expiresAt: now + 3600000, messages: [{ id: 'answer', role: 'assistant', createdAt: now, content: '## Merksatz\n\nDer **Deckungsbeitrag** deckt *Fixkosten*.\n\n4. **Recherchieren:** Informationen suchen.\n5. **Reflexion:** Ergebnis prüfen.\n\n> 80 − 35 = 45 €\n\n| Preis | Kosten |\n| --- | --- |\n| 80 € | 35 € |\n\n[Quelle](https://example.com) ![Kein Abruf](https://example.com/tracker.png)\n\n<script>alert(1)</script>' }] }));
+  });
+  const crashes: string[] = [];
+  page.on('pageerror', e => crashes.push(e.message));
+  await page.goto('/');
+  await expect(page.getByRole('button', { name: /^Fächer/ })).toBeVisible();
+  await openDeckungsbeitrag(page);
+  for (const width of [320, 393]) {
+    await page.setViewportSize({ width, height: 650 });
+    await page.getByRole('button', { name: 'MeiWik Chat öffnen', exact: true }).click();
+    const dialog = page.getByRole('dialog').filter({ has: page.getByRole('textbox', { name: 'Frage an MeiWik' }) });
+    await expect(dialog).toBeVisible();
+    await expect(dialog.getByRole('heading', { name: 'Merksatz' })).toHaveCount(1);
+    await expect(dialog.getByText('Deckungsbeitrag', { exact: true })).toHaveCSS('font-weight', '700');
+    await expect(dialog.getByText('Fixkosten', { exact: true })).toHaveCSS('font-style', 'italic');
+    await expect(dialog.getByText('Recherchieren:', { exact: true })).toHaveCSS('font-weight', '700');
+    await expect(dialog.getByText('**Deckungsbeitrag**', { exact: true })).toHaveCount(0);
+    await expect(dialog.locator('script, iframe, img[src*="example.com"], a[href]')).toHaveCount(0);
+    expect(await dialog.evaluate(el => el.scrollWidth <= el.clientWidth)).toBe(true);
+    await page.getByRole('button', { name: 'Chat verkleinern', exact: true }).click();
+    if (width === 320) {
+      await page.getByRole('button', { name: 'Einstellungen', exact: true }).click();
+      await page.getByRole('button', { name: 'Hell', exact: true }).click();
+      await openDeckungsbeitrag(page);
+    }
+  }
+  expect(crashes).toEqual([]);
+});
+
+
+async function seedPracticeCards(page: Page, uid = 'guest') {
+  await page.addInitScript(({ uid }) => {
+    const now=Date.now();
+    const entries: Record<string, unknown>={};
+    for (const [id,front,back] of [['one','Was ist der Deckungsbeitrag?','Erlös minus variable Kosten.'],['two','Was ist die Gewinnschwelle?','Erlöse und Kosten sind gleich hoch.']]) {
+      entries[`card_${id}`]={kind:'card',entityId:id,value:{id,subjectId:'rechnungswesen',front,back,updatedAt:now,nextReviewAt:now-1000,reviews:0},updatedAt:now,revision:`rev-${id}`,deleted:false};
+    }
+    localStorage.setItem(`mywik.user.v1.${uid}`,JSON.stringify({schema:1,entries,outbox:{}}));
+  },{uid});
+}
+async function openPracticeCards(page: Page) {
+  await page.getByRole('button',{name:'Zur Startseite',exact:true}).click();
+  await page.getByRole('button',{name:/^Karteikarten/}).click();
+  await page.getByRole('button',{name:'Rechnungswesen',exact:true}).click();
+  await expect(page.getByRole('button',{name:'Antwort zeigen',exact:true})).toBeVisible();
+}
+async function mockLearnerLogin(page: Page, uid='local-practice-test') {
+  const token=[{alg:'none'},{sub:uid,user_id:uid,aud:'meiwik',iss:'https://securetoken.google.com/meiwik',iat:Math.floor(Date.now()/1000),exp:Math.floor(Date.now()/1000)+3600,email:'learner@example.invalid',firebase:{sign_in_provider:'password'}}].map(x=>Buffer.from(JSON.stringify(x)).toString('base64url')).join('.')+'.test';
+  await page.route('https://identitytoolkit.googleapis.com/**',route=>route.fulfill({json:route.request().url().includes('accounts:lookup')?{users:[{localId:uid,email:'learner@example.invalid',emailVerified:false,providerUserInfo:[]}]}:{localId:uid,email:'learner@example.invalid',idToken:token,refreshToken:'test-refresh-token',expiresIn:'3600',registered:true},headers:{'access-control-allow-origin':'*'}}));
+  await page.getByRole('button',{name:'Einstellungen',exact:true}).click();
+  await page.getByRole('textbox',{name:'E-Mail',exact:true}).fill('learner@example.invalid');
+  await page.getByRole('textbox',{name:'Passwort',exact:true}).fill('test-password-only');
+  await page.getByRole('button',{name:'Anmelden',exact:true}).click();
+  await expect(page.getByRole('button',{name:/^Fächer/})).toBeVisible();
+}
+
+test('offline cards count only explicit ratings, preserve counters and allow resetting the schedule',async({page,context})=>{
+  await isolateCloud(page);await seedPracticeCards(page);await page.goto('/');
+  await openPracticeCards(page);await context.setOffline(true);
+  await page.getByRole('button',{name:'Nächste Karte (überspringen)',exact:true}).click();
+  await expect(page.getByText('0× gewusst · 0× nicht gewusst',{exact:true}).first()).toBeVisible();
+  await page.getByRole('button',{name:'Antwort zeigen',exact:true}).click();
+  await page.getByRole('button',{name:'Wusste ich nicht',exact:true}).click();
+  await expect.poll(()=>page.evaluate(()=>JSON.parse(localStorage.getItem('mywik.user.v1.guest')!).entries.card_two.value.unknownCount)).toBe(1);
+  await page.getByRole('button',{name:'Antwort zeigen',exact:true}).click();
+  await page.getByRole('button',{name:'Wusste ich',exact:true}).click();
+  await expect.poll(()=>page.evaluate(()=>JSON.parse(localStorage.getItem('mywik.user.v1.guest')!).entries.card_one.value.knownCount)).toBe(1);
+  await page.getByRole('button',{name:'Was ist der Deckungsbeitrag?',exact:true}).click();
+  await page.getByRole('button',{name:'Karte bearbeiten',exact:true}).click();
+  await page.getByRole('textbox',{name:'Frage / Vorderseite',exact:true}).fill('Wie berechnet sich der Stückdeckungsbeitrag?');
+  await page.getByRole('switch',{name:'Wiederholungsabstand zurücksetzen',exact:true}).click();
+  await page.getByRole('button',{name:'Speichern',exact:true}).click();
+  await expect(page.getByRole('dialog')).toBeHidden();
+  const saved=await page.evaluate(()=>JSON.parse(localStorage.getItem('mywik.user.v1.guest')!).entries.card_one.value);
+  expect(saved.knownCount).toBe(1);expect(saved.successStreak).toBe(0);expect(saved.nextReviewAt).toBeLessThanOrEqual(Date.now()+1000);
+});
+
+test('manual duplicate warning allows editing the existing card or deliberately saving another',async({page})=>{
+  await isolateCloud(page);await seedPracticeCards(page);await page.goto('/');await openPracticeCards(page);
+  await page.getByRole('button',{name:'Karte hinzufügen',exact:true}).click();
+  await page.getByRole('textbox',{name:'Frage / Vorderseite',exact:true}).fill('Was ist der Deckungsbeitrag?');
+  await page.getByRole('textbox',{name:'Antwort / Rückseite',exact:true}).fill('Umsatz abzüglich variabler Kosten.');
+  await page.getByRole('button',{name:'Speichern',exact:true}).click();
+  await expect(page.getByText('Ähnliche Karten bestehen bereits:',{exact:true})).toBeVisible();
+  await expect(page.getByRole('button',{name:/^Vorhandene Karte bearbeiten:/})).toBeVisible();
+  await page.getByRole('button',{name:'Bewusst zusätzlich speichern',exact:true}).click();
+  await expect(page.getByRole('dialog')).toBeHidden();
+  await expect(page.getByRole('button',{name:'Alle (3)',exact:true})).toBeVisible();
+});
+
+test('practice feedback never rates cards and its chat is discarded on card change',async({page})=>{
+  await isolateCloud(page);await seedPracticeCards(page,'local-practice-test');
+  const requests: Array<Record<string,unknown>>=[];
+  await page.route('https://europe-west1-meiwik.cloudfunctions.net/meiwik',async route=>{
+    if(route.request().method()==='OPTIONS'){await route.fulfill({status:204,headers:{'access-control-allow-origin':'*','access-control-allow-headers':'authorization,content-type','access-control-allow-methods':'POST'}});return;}
+    const body=route.request().postDataJSON().data;requests.push(body);
+    await route.fulfill({json:{data:{reply:'Das war falsch. Der Deckungsbeitrag ist Erlös minus variable Kosten.'}},headers:{'access-control-allow-origin':'*'}});
+  });
+  await page.goto('/');await mockLearnerLogin(page);await openPracticeCards(page);
+  await page.getByRole('button',{name:'Mit MeiWik üben',exact:true}).click();
+  const input=page.getByRole('textbox',{name:'Meine Antwort auf die Karte',exact:true});
+  await input.fill('Nur die Fixkosten.');
+  await page.getByRole('button',{name:'Antwort mit MeiWik besprechen',exact:true}).click();
+  await expect(page.getByText(/Das war falsch/)).toBeVisible();
+  expect(requests[0].action).toBe('practice');
+  await expect(input).not.toBeFocused();
+  let snapshot=await page.evaluate(()=>JSON.parse(localStorage.getItem('mywik.user.v1.local-practice-test')!));
+  expect(snapshot.entries.card_one.value.reviews).toBe(0);
+  await page.getByRole('button',{name:'Antwort zeigen',exact:true}).click();
+  // The learner may explicitly choose "known" even after negative AI feedback.
+  await page.getByRole('button',{name:'Wusste ich',exact:true}).click();
+  await expect(page.getByText(/Das war falsch/)).toHaveCount(0);
+  await page.getByRole('button',{name:'Was ist der Deckungsbeitrag?',exact:true}).click();
+  await page.getByRole('button',{name:'Mit MeiWik üben',exact:true}).click();
+  await expect(input).toHaveValue('');await expect(page.getByText(/Das war falsch/)).toHaveCount(0);
+  snapshot=await page.evaluate(()=>JSON.parse(localStorage.getItem('mywik.user.v1.local-practice-test')!));
+  expect(snapshot.entries.card_one.value.knownCount).toBe(1);
+  expect(JSON.stringify(snapshot)).not.toContain('Nur die Fixkosten.');
+  expect(JSON.stringify(snapshot)).not.toContain('Das war falsch');
+});
+
+
+test('AI creation uses edited drafts and saves batch suggestions individually without provenance labels',async({page})=>{
+  await isolateCloud(page);await seedPracticeCards(page,'local-practice-test');
+  const requests: Array<Record<string,unknown>>=[];
+  await page.route('https://europe-west1-meiwik.cloudfunctions.net/meiwik',async route=>{
+    const data=route.request().postDataJSON().data;requests.push(data);
+    await route.fulfill({json:{data:data.action==='flashcards'?{cards:[{front:'Wie berechnet man das Betriebsergebnis?',back:'Gesamtdeckungsbeitrag minus Fixkosten.'},{front:'Wann entsteht Gewinn?',back:'Wenn der Gesamtdeckungsbeitrag die Fixkosten übersteigt.'}]}:{duplicateIds:[]}},headers:{'access-control-allow-origin':'*'}});
+  });
+  await page.goto('/');await mockLearnerLogin(page);await openDeckungsbeitrag(page);
+  await page.getByRole('button',{name:'Karte erstellen',exact:true}).first().click();
+  const front=page.getByRole('textbox',{name:'Karteikarte Frage',exact:true});
+  await front.fill('Meine konkretisierte Frage?');
+  await page.getByRole('button',{name:'Mit MeiWik formulieren',exact:true}).click();
+  await expect(front).toHaveValue('Wie berechnet man das Betriebsergebnis?');
+  expect((requests[0].card as {front:string}).front).toBe('Meine konkretisierte Frage?');
+  expect(requests[0].generationMode).toBe('improve');
+  expect(requests[0].sectionId).toBe('definition');
+  expect((requests[0].existingCards as unknown[]).length).toBe(2);
+  await expect(page.getByText('MeiWik-Vorschlag',{exact:true})).toHaveCount(0);
+  await page.getByRole('button',{name:'Im Lernfach speichern',exact:true}).click();
+  await expect(front).toHaveValue('Wann entsteht Gewinn?');
+  await page.getByRole('button',{name:'Im Lernfach speichern',exact:true}).click();
+  await expect(page.getByRole('dialog')).toBeHidden();
+  await openPracticeCards(page);
+  await expect(page.getByRole('button',{name:'Alle (4)',exact:true})).toBeVisible();
+});
+
+test('late practice feedback is ignored after a card switch and offline fallback still allows self assessment',async({page,context})=>{
+  await isolateCloud(page);await seedPracticeCards(page,'local-practice-test');
+  let reply: (()=>void)|undefined;
+  await page.route('https://europe-west1-meiwik.cloudfunctions.net/meiwik',async route=>{
+    await new Promise<void>(resolve=>{reply=resolve});
+    await route.fulfill({json:{data:{reply:'VERSCHWUNDENE ALTE RÜCKMELDUNG'}},headers:{'access-control-allow-origin':'*'}});
+  });
+  await page.goto('/');await mockLearnerLogin(page);await openPracticeCards(page);
+  await page.getByRole('button',{name:'Mit MeiWik üben',exact:true}).click();
+  await page.getByRole('textbox',{name:'Meine Antwort auf die Karte',exact:true}).fill('Meine erste Antwort');
+  await page.getByRole('button',{name:'Antwort mit MeiWik besprechen',exact:true}).click();
+  await expect.poll(()=>!!reply).toBe(true);
+  await page.getByRole('button',{name:'Nächste Karte (überspringen)',exact:true}).click();
+  reply!();
+  await page.getByRole('button',{name:'Mit MeiWik üben',exact:true}).click();
+  await expect(page.getByRole('textbox',{name:'Meine Antwort auf die Karte',exact:true})).toHaveValue('');
+  await expect(page.getByText('VERSCHWUNDENE ALTE RÜCKMELDUNG',{exact:true})).toHaveCount(0);
+  await context.setOffline(true);
+  await expect(page.getByText(/MeiWik ist offline. Du kannst die Karte trotzdem/)).toBeVisible();
+  await page.getByRole('button',{name:'Antwort zeigen',exact:true}).click();
+  await page.getByRole('button',{name:'Wusste ich nicht',exact:true}).click();
+  await expect.poll(()=>page.evaluate(()=>JSON.parse(localStorage.getItem('mywik.user.v1.local-practice-test')!).entries.card_two.value.unknownCount)).toBe(1);
+});
+
+
+test('guest and two accounts remain isolated across sign out, storage failure and returning login',async({page,context})=>{
+ await isolateCloud(page);
+ for(const uid of ['guest','alice','bob'])await seedPracticeCards(page,uid);
+ await page.addInitScript(()=>{
+  for(const uid of ['guest','alice','bob']){const key=`mywik.user.v1.${uid}`;const s=JSON.parse(localStorage.getItem(key)!);s.entries.card_one.value.front=`Private Frage ${uid}?`;localStorage.setItem(key,JSON.stringify(s));}
+  const original=Storage.prototype.setItem;
+  Storage.prototype.setItem=function(key,value){if((window as unknown as {failOwner?:string}).failOwner&&key===`mywik.user.v1.${(window as unknown as {failOwner?:string}).failOwner}`)throw new DOMException('Storage full','QuotaExceededError');return original.call(this,key,value)};
+ });
+ await page.goto('/');await openPracticeCards(page);
+ await expect(page.getByText('Private Frage guest?',{exact:true}).first()).toBeVisible();
+ await mockLearnerLogin(page,'alice');await openPracticeCards(page);
+ await expect(page.getByText('Private Frage alice?',{exact:true}).first()).toBeVisible();
+ await expect(page.getByText('Private Frage guest?',{exact:true})).toHaveCount(0);
+ await page.getByRole('button',{name:'Karte bearbeiten',exact:true}).click();
+ await page.getByRole('textbox',{name:'Frage / Vorderseite',exact:true}).fill('Alice noch nicht gespeichert?');
+ // Switch to offline to test storage independently of the mocked cloud transport.
+ await context.setOffline(true);
+ await page.evaluate(()=>{(window as unknown as {failOwner?:string}).failOwner='alice'});
+ await expect(page.getByText(/Ohne KI-Verbindung werden ähnliche Formulierungen lokal geprüft/)).toBeVisible();
+ // The comparison endpoint can fail; saving is still explicitly possible without AI.
+ await page.getByRole('button',{name:'Speichern',exact:true}).click();
+ const bypass=page.getByRole('button',{name:'Ohne KI-Prüfung speichern',exact:true});
+ if(await bypass.isVisible())await bypass.click();
+ await expect(page.getByRole('dialog')).toBeHidden();
+ await expect(page.getByRole('button',{name:'Speichern erneut versuchen',exact:true})).toBeVisible();
+ await page.getByRole('button',{name:'Einstellungen',exact:true}).click();
+ await page.getByRole('button',{name:'Abmelden',exact:true}).click();
+ await expect(page.getByRole('button',{name:'Abmelden',exact:true})).toBeVisible();
+ await page.evaluate(()=>{(window as unknown as {failOwner?:string}).failOwner=undefined});
+ await page.getByRole('button',{name:'Speichern erneut versuchen',exact:true}).click();
+ await expect(page.getByRole('button',{name:'Speichern erneut versuchen',exact:true})).toHaveCount(0);
+ await page.getByRole('button',{name:'Abmelden',exact:true}).click();
+ await expect(page.getByRole('button',{name:/^Fächer/})).toBeVisible();
+ await openPracticeCards(page);await expect(page.getByText('Private Frage guest?',{exact:true}).first()).toBeVisible();
+ await context.setOffline(false);
+ await mockLearnerLogin(page,'bob');await openPracticeCards(page);
+ await expect(page.getByText('Private Frage bob?',{exact:true}).first()).toBeVisible();
+ await expect(page.getByText('Alice noch nicht gespeichert?',{exact:true})).toHaveCount(0);
+ await page.getByRole('button',{name:'Einstellungen',exact:true}).click();await page.getByRole('button',{name:'Abmelden',exact:true}).click();
+ await expect(page.getByRole('button',{name:/^Fächer/})).toBeVisible();
+ await mockLearnerLogin(page,'alice');await openPracticeCards(page);
+ await expect(page.getByText('Alice noch nicht gespeichert?',{exact:true}).first()).toBeVisible();
+});
+
+test('corrupt local data stays untouched and can be retried without silently resetting the account',async({page})=>{
+ await isolateCloud(page);await page.addInitScript(()=>localStorage.setItem('mywik.user.v1.guest','CORRUPT-DATA'));
+ await page.goto('/');await expect(page.getByText(/Die lokalen Lerndaten konnten nicht gelesen werden/)).toBeVisible();
+ expect(await page.evaluate(()=>localStorage.getItem('mywik.user.v1.guest'))).toBe('CORRUPT-DATA');
+ await page.evaluate(()=>localStorage.setItem('mywik.user.v1.guest',JSON.stringify({schema:1,entries:{},outbox:{}})));
+ await page.getByRole('button',{name:'Erneut laden',exact:true}).click();
+ await expect(page.getByRole('button',{name:/^Fächer/})).toBeVisible();
+});
+
+
+test('private conflict copies can be restored under a new ID and never appear in another account',async({page})=>{
+ await isolateCloud(page);await seedPracticeCards(page,'alice');
+ await page.addInitScript(()=>{
+  const key='mywik.user.v1.alice',s=JSON.parse(localStorage.getItem(key)!);
+  const value={id:'deleted-note',articleId:'deckungsbeitrag',kind:'personal',text:'ALICE KONFLIKTKOPIE',updatedAt:10};
+  s.conflicts={'conflict-a':{kind:'note',entityId:'deleted-note',value,updatedAt:10,revision:'conflict-a',deleted:false}};
+  s.entries['note_deleted-note']={kind:'note',entityId:'deleted-note',value:null,updatedAt:11,revision:'deletion',deleted:true};
+  localStorage.setItem(key,JSON.stringify(s));
+ });
+ await page.goto('/');await mockLearnerLogin(page,'alice');
+ await page.getByRole('button',{name:'Einstellungen',exact:true}).click();
+ await expect(page.getByText('ALICE KONFLIKTKOPIE',{exact:true})).toBeVisible();
+ await page.getByRole('button',{name:'Als neue Kopie wiederherstellen',exact:true}).click();
+ await expect(page.getByText('ALICE KONFLIKTKOPIE',{exact:true})).toHaveCount(0);
+ const snapshot=await page.evaluate(()=>JSON.parse(localStorage.getItem('mywik.user.v1.alice')!));
+ expect(snapshot.entries['note_deleted-note'].deleted).toBe(true);
+ const restored=Object.values(snapshot.entries).find((e:any)=>e.kind==='note'&&!e.deleted) as {entityId:string;value:{text:string}};
+ expect(restored.entityId).not.toBe('deleted-note');expect(restored.value.text).toBe('ALICE KONFLIKTKOPIE');
+ await page.getByRole('button',{name:'Abmelden',exact:true}).click();
+ await expect(page.getByRole('button',{name:/^Fächer/})).toBeVisible();
+ await page.getByRole('button',{name:'Einstellungen',exact:true}).click();
+ await expect(page.getByText('ALICE KONFLIKTKOPIE',{exact:true})).toHaveCount(0);
+ await expect(page.getByText('Gesicherte Konfliktversionen',{exact:true})).toHaveCount(0);
+});
+
+
+test('an answer started in account A cannot appear in account B after sign out',async({page})=>{
+ await isolateCloud(page);await seedPracticeCards(page,'alice');await seedPracticeCards(page,'bob');
+ let release: (()=>void)|undefined;
+ await page.route('https://europe-west1-meiwik.cloudfunctions.net/meiwik',async route=>{
+  await new Promise<void>(r=>{release=r});await route.fulfill({json:{data:{reply:'PRIVATE ANTWORT VON ALICE'}},headers:{'access-control-allow-origin':'*'}});
+ });
+ await page.goto('/');await mockLearnerLogin(page,'alice');await openPracticeCards(page);
+ await page.getByRole('button',{name:'Mit MeiWik üben',exact:true}).click();
+ await page.getByRole('textbox',{name:'Meine Antwort auf die Karte',exact:true}).fill('Private Eingabe von Alice');
+ await page.getByRole('button',{name:'Antwort mit MeiWik besprechen',exact:true}).click();await expect.poll(()=>!!release).toBe(true);
+ await page.getByRole('button',{name:'Einstellungen',exact:true}).click();await page.getByRole('button',{name:'Abmelden',exact:true}).click();
+ await expect(page.getByRole('button',{name:/^Fächer/})).toBeVisible();
+ await mockLearnerLogin(page,'bob');release!();await openPracticeCards(page);
+ await page.getByRole('button',{name:'Mit MeiWik üben',exact:true}).click();
+ await expect(page.getByRole('textbox',{name:'Meine Antwort auf die Karte',exact:true})).toHaveValue('');
+ await expect(page.getByText('PRIVATE ANTWORT VON ALICE',{exact:true})).toHaveCount(0);
+ const bob=await page.evaluate(()=>localStorage.getItem('mywik.user.v1.bob'));
+ expect(bob).not.toContain('Private Eingabe von Alice');expect(bob).not.toContain('PRIVATE ANTWORT VON ALICE');
+});
+
+
+async function recordedSeconds(page:Page) {
+ return page.evaluate(()=>Object.values(JSON.parse(localStorage.getItem('mywik.user.v1.guest')??'{"entries":{}}').entries).reduce((n:number,e:any)=>n+(e.kind==='session'&&!e.deleted?e.value.seconds:0),0));
+}
+test('learning time stops at inactivity and does not backfill the idle gap on a new touch',async({page})=>{
+ await isolateCloud(page);
+ const start=new Date('2026-11-17T20:00:00+01:00');await page.clock.install({time:start});await page.clock.pauseAt(start);
+ await page.goto('/');await openDeckungsbeitrag(page);
+ await page.clock.runFor(190000);
+ await expect.poll(()=>recordedSeconds(page)).toBe(120);
+ await page.getByRole('button',{name:'MeiWik Chat öffnen',exact:true}).tap();
+ await page.clock.runFor(15000);
+ await expect.poll(()=>recordedSeconds(page)).toBe(125);
+ await page.getByRole('button',{name:'Chat verkleinern',exact:true}).click();
+ await page.getByRole('button',{name:'Zur Startseite',exact:true}).click();
+ await expect.poll(()=>recordedSeconds(page)).toBe(135);
+ const before=await recordedSeconds(page);await page.clock.runFor(60000);expect(await recordedSeconds(page)).toBe(before);
+});
+
+test('learning intervals crossing midnight are stored on both original local days',async({page})=>{
+ await isolateCloud(page);
+ const start=new Date('2026-11-17T23:59:50+01:00');await page.clock.install({time:start});await page.clock.pauseAt(start);
+ await page.goto('/');await openDeckungsbeitrag(page);await page.clock.runFor(30000);
+ const days=await page.evaluate(()=>Object.values(JSON.parse(localStorage.getItem('mywik.user.v1.guest')!).entries).reduce((out:Record<string,number>,e:any)=>{if(e.kind==='session'){out[e.value.day]=(out[e.value.day]??0)+e.value.seconds}return out},{}));
+ expect(days['2026-11-17']).toBe(10);expect(days['2026-11-18']).toBe(20);
+});
+
+test('monthly statistics change totals and milestones together with the selected calendar',async({page})=>{
+ await isolateCloud(page);await page.clock.install({time:new Date('2026-11-17T12:00:00+01:00')});
+ await page.addInitScript(()=>{
+  const s={schema:1,entries:{} as Record<string,unknown>,outbox:{}};
+  for(const [id,day,seconds,kind] of [['oct','2026-10-31',3600,'article'],['nov','2026-11-17',600,'cards']] as const){s.entries[`session_${id}`]={kind:'session',entityId:id,value:{id,subjectId:'rechnungswesen',kind,seconds,day,startedAt:0},updatedAt:1,revision:id,deleted:false};s.entries[`visit_${day}`]={kind:'visit',entityId:day,value:day,updatedAt:1,revision:day,deleted:false};}
+  localStorage.setItem('mywik.user.v1.guest',JSON.stringify(s));
+ });
+ await page.goto('/');await page.getByRole('button',{name:/^Deine Erfolge/}).click();
+ await expect(page.getByText('November 2026',{exact:true})).toBeVisible();
+ await expect(page.getByText('10 Min.',{exact:true})).toBeVisible();await expect(page.getByText('★ 0 Tagessterne',{exact:true})).toBeVisible();
+ await page.getByRole('button',{name:'‹',exact:true}).click();
+ await expect(page.getByText('Oktober 2026',{exact:true})).toBeVisible();await expect(page.getByText('1 h',{exact:true})).toBeVisible();await expect(page.getByText('★ 1 Tagessterne',{exact:true})).toBeVisible();
+ await page.getByRole('button',{name:'Aktueller Monat',exact:true}).click();await expect(page.getByText('10 Min.',{exact:true})).toBeVisible();
+});
+
+
+test('hidden views pause learning and card study cannot count article time twice',async({page})=>{
+ await isolateCloud(page);await seedPracticeCards(page);
+ const start=new Date('2026-11-17T20:00:00+01:00');await page.clock.install({time:start});await page.clock.pauseAt(start);
+ await page.addInitScript(()=>{Object.defineProperty(document,'hidden',{configurable:true,get:()=>(window as unknown as {testHidden?:boolean}).testHidden??false})});
+ await page.goto('/');await openDeckungsbeitrag(page);await page.clock.runFor(30000);await expect.poll(()=>recordedSeconds(page)).toBe(30);
+ await page.evaluate(()=>{(window as unknown as {testHidden?:boolean}).testHidden=true;document.dispatchEvent(new Event('visibilitychange'))});await page.clock.runFor(180000);expect(await recordedSeconds(page)).toBe(30);
+ await page.evaluate(()=>{(window as unknown as {testHidden?:boolean}).testHidden=false;document.dispatchEvent(new Event('visibilitychange'))});await page.clock.runFor(15000);await expect.poll(()=>recordedSeconds(page)).toBe(45);
+ await openPracticeCards(page);await page.clock.runFor(30000);await page.getByRole('button',{name:'Zur Startseite',exact:true}).click();
+ await expect.poll(()=>recordedSeconds(page)).toBe(75);
+ const categories=await page.evaluate(()=>Object.values(JSON.parse(localStorage.getItem('mywik.user.v1.guest')!).entries).reduce((out:Record<string,number>,e:any)=>{if(e.kind==='session')out[e.value.kind]=(out[e.value.kind]??0)+e.value.seconds;return out},{}));
+ expect(categories.article).toBe(45);expect(categories.cards).toBe(30);
+});
+
+test('bookmark changes preserve progress history and reopening an article dismisses stale recommendations',async({page})=>{
+ await isolateCloud(page);
+ await page.addInitScript(()=>{
+  const progress={articleId:'deckungsbeitrag',status:'done',starred:false,updatedAt:1,history:[{status:'unclear',at:0},{status:'done',at:1}]};
+  const recommendation={id:'repeat_deckungsbeitrag_1',articleId:'deckungsbeitrag',subjectId:'rechnungswesen',title:'Alte Empfehlung',reason:'Vorheriger Abschluss',state:'open',dueAt:1,updatedAt:1};
+  const entity=(kind:string,id:string,value:unknown)=>({kind,entityId:id,value,updatedAt:1,revision:id,deleted:false});
+  localStorage.setItem('mywik.user.v1.guest',JSON.stringify({schema:1,entries:{progress_deckungsbeitrag:entity('progress','deckungsbeitrag',progress),recommendation_repeat_deckungsbeitrag_1:entity('recommendation','repeat_deckungsbeitrag_1',recommendation)},outbox:{}}));
+ });
+ await page.goto('/');await openDeckungsbeitrag(page);
+ await page.getByRole('button',{name:'Als interessant merken',exact:true}).click();
+ await expect.poll(()=>page.evaluate(()=>JSON.parse(localStorage.getItem('mywik.user.v1.guest')!).entries.progress_deckungsbeitrag.value.starred)).toBe(true);
+ expect(await page.evaluate(()=>JSON.parse(localStorage.getItem('mywik.user.v1.guest')!).entries.progress_deckungsbeitrag.value.history.length)).toBe(2);
+ await page.getByRole('button',{name:'Abgeschlossen',exact:true}).click();await page.getByRole('button',{name:'Weiterarbeiten',exact:true}).click();
+ await expect.poll(()=>page.evaluate(()=>JSON.parse(localStorage.getItem('mywik.user.v1.guest')!).entries.recommendation_repeat_deckungsbeitrag_1.value.state)).toBe('dismissed');
+});
+
+
+test('glossary searches examples and umlaut spellings and retains context after visiting an article',async({page})=>{
+ await isolateCloud(page);await page.goto('/');await page.getByRole('button',{name:'Glossar durchsuchen',exact:true}).click();
+ const search=page.getByRole('textbox',{name:'Glossar durchsuchen',exact:true});
+ await search.fill('  vollstaendige  beruflichen  ');await page.getByRole('button',{name:'Vollständige Handlung',exact:true}).click();
+ await expect(page.getByText(/Modell einer selbstständig bewältigten beruflichen Handlung/)).toBeVisible();
+ await page.getByRole('button',{name:'Suche leeren',exact:true}).click();await search.fill('Hallenmiete');
+ await page.getByRole('button',{name:'Fixkosten',exact:true}).click();await page.getByRole('button',{name:'Zum Artikel',exact:true}).click();
+ await expect(page.getByRole('heading',{name:'Der Deckungsbeitrag',exact:true})).toBeVisible();
+ await page.getByRole('button',{name:'Zurück',exact:true}).click();await expect(search).toHaveValue('Hallenmiete');
+ await expect(page.getByRole('button',{name:'Fixkosten',exact:true})).toHaveAttribute('aria-expanded','true');
+ await search.fill('KeinTreffer123');await expect(page.getByText('Kein passender Begriff gefunden.',{exact:true})).toBeVisible();
+});
+
+async function articleScrollTop(page:Page){return page.getByRole('heading',{name:'Der Deckungsbeitrag',exact:true}).evaluate(el=>{let node=el.parentElement;while(node){if(['auto','scroll'].includes(getComputedStyle(node).overflowY)&&node.scrollHeight>node.clientHeight)return node.scrollTop;node=node.parentElement}return -1})}
+
+test('article reading position survives glossary navigation and legacy pixel positions still restore',async({page})=>{
+ await isolateCloud(page);await page.addInitScript(()=>{if(!localStorage.getItem('mywik:reading:guest:deckungsbeitrag'))localStorage.setItem('mywik:reading:guest:deckungsbeitrag','900')});
+ await page.goto('/');await openDeckungsbeitrag(page);
+ await expect.poll(()=>articleScrollTop(page)).toBeGreaterThan(850);
+ await page.getByRole('button',{name:'Glossar durchsuchen',exact:true}).click();await expect(page.getByRole('heading',{name:'Begriffsglossar',exact:true})).toBeVisible();
+ await page.getByRole('button',{name:'Zurück',exact:true}).click();await expect.poll(()=>articleScrollTop(page)).toBeGreaterThan(850);
+ expect(await articleScrollTop(page)).toBeLessThan(1000);
+});
+
+test('article terms open the selected glossary entry and table of contents reaches the correct section',async({page})=>{
+ await isolateCloud(page);await page.setViewportSize({width:320,height:800});await page.goto('/');await openDeckungsbeitrag(page);
+ await page.getByText('variablen Kosten',{exact:true}).click();await expect(page.getByRole('dialog')).toBeVisible();
+ await page.getByRole('button',{name:'Im Glossar öffnen',exact:true}).click();
+ await expect(page.getByRole('button',{name:'Variable Kosten',exact:true})).toHaveAttribute('aria-expanded','true');
+ await expect(page.getByRole('button',{name:'Zum Artikel',exact:true})).toBeInViewport();
+ await page.getByRole('button',{name:'Zurück',exact:true}).click();
+ await page.getByRole('button',{name:'In diesem Artikel',exact:true}).click();
+ await page.getByRole('button',{name:'Typische Fehler vermeiden',exact:true}).click();
+ await expect(page.getByRole('heading',{name:'Typische Fehler vermeiden',exact:true})).toBeInViewport();
+ await page.getByRole('tab',{name:'Formeln',exact:true}).click();await expect(page.getByRole('tab',{name:'Formeln',exact:true})).toHaveAttribute('aria-selected','true');
+ await expect(page.getByText(/Stückdeckungsbeitrag: db = p − kv/)).toBeVisible();
+});
+
+test('notes from removed sections remain visible and editable',async({page})=>{
+ await isolateCloud(page);await page.addInitScript(()=>{
+  const value={id:'old-note',articleId:'deckungsbeitrag',sectionId:'removed-section:p0',text:'NOTIZ AUS FRÜHEREM ABSCHNITT',kind:'personal',updatedAt:1};
+  localStorage.setItem('mywik.user.v1.guest',JSON.stringify({schema:1,entries:{'note_old-note':{kind:'note',entityId:'old-note',value,updatedAt:1,revision:'old-note',deleted:false}},outbox:{}}));
+ });
+ await page.goto('/');await openDeckungsbeitrag(page);
+ await page.getByRole('button',{name:'Notiz zu früherem Abschnitt bearbeiten',exact:true}).click();
+ await expect(page.getByRole('textbox',{name:'Notiztext',exact:true})).toHaveValue('NOTIZ AUS FRÜHEREM ABSCHNITT');
+ await page.getByRole('textbox',{name:'Notiztext',exact:true}).fill('Weiterhin vorhandene persönliche Notiz');
+ await page.getByRole('button',{name:'Notiz speichern',exact:true}).click();await expect(page.getByText('Weiterhin vorhandene persönliche Notiz',{exact:true})).toBeVisible();
+});
+
+test('repeated navigation does not stack duplicate screens and chapter folds survive returning from an article',async({page})=>{
+ await isolateCloud(page);await page.goto('/');await page.getByRole('button',{name:'Einstellungen',exact:true}).click();await page.getByRole('button',{name:'Einstellungen',exact:true}).click();
+ await page.getByRole('button',{name:'Zurück',exact:true}).click();await expect(page.getByRole('button',{name:/^Fächer/})).toBeVisible();
+ await page.getByRole('button',{name:/^Fächer/}).click();await page.getByRole('button',{name:/^Rechnungswesen,/}).click();
+ await page.getByRole('button',{name:/1\.2 Teilkostenrechnung/}).click();
+ await page.getByRole('button',{name:'Glossar durchsuchen',exact:true}).click();await page.getByRole('button',{name:'Deckungsbeitrag',exact:true}).click();await page.getByRole('button',{name:'Zum Artikel',exact:true}).click();
+ await page.getByRole('button',{name:'Zurück',exact:true}).click();await page.getByRole('button',{name:'Zurück',exact:true}).click();
+ await expect(page.getByRole('button',{name:/1\.2 Teilkostenrechnung/})).toHaveAttribute('aria-expanded','false');
+ await page.getByRole('button',{name:'Zur Startseite',exact:true}).click();await page.getByRole('button',{name:/^Fächer/}).click();await page.getByRole('button',{name:/^BWL,/}).click();
+ await expect(page.getByText('Inhalt folgt',{exact:true}).first()).toBeVisible();
+});
+
+
+test('long glossary definitions scroll inside the popup without losing its actions',async({page})=>{
+ await isolateCloud(page);await page.setViewportSize({width:320,height:640});
+ const catalogue=JSON.parse(JSON.stringify({version:fixtureVersion+1,subjects:fixtureSubjects,chapters:fixtureChapters,articles:fixtureArticles,glossary:fixtureGlossary}));
+ catalogue.glossary.find((t:any)=>t.id==='variable-kosten').definition='LANGE TESTDEFINITION. '+('Variable Kosten verändern sich mit der Ausbringungsmenge. '.repeat(100));
+ await page.addInitScript(c=>localStorage.setItem('@mywik/catalogue/v1',JSON.stringify(c)),catalogue);
+ await page.goto('/');await openDeckungsbeitrag(page);await page.getByText('variablen Kosten',{exact:true}).click();
+ const dialog=page.getByRole('dialog');await expect(dialog.getByText(/LANGE TESTDEFINITION/)).toBeVisible();
+ const action=page.getByRole('button',{name:'Im Glossar öffnen',exact:true});await action.scrollIntoViewIfNeeded();await expect(action).toBeInViewport();
+ await action.click();await expect(page.getByRole('heading',{name:'Begriffsglossar',exact:true})).toBeVisible();
+ await expect(page.getByRole('button',{name:'Variable Kosten',exact:true})).toHaveAttribute('aria-expanded','true');
 });

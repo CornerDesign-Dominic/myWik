@@ -1,62 +1,36 @@
-import React, { useEffect, useRef, useState } from 'react';
-import { ActivityIndicator, KeyboardAvoidingView, Modal, Platform, Pressable, ScrollView, StyleSheet, Text, TextInput, View } from 'react-native';
-import { ChevronDown, ChevronUp, Search, X } from 'lucide-react-native';
-import { Body, Button, Heading, Muted, Page, Panel, Row, useTheme } from '../components/ui';
-import { articles, glossary, subjects } from '../data/content';
-import { useStore } from '../state/Store';
-import { generateFlashcard } from '../services/meiwik';
-import type { GlossaryTerm } from '../types';
+import React, {useEffect,useRef,useState} from 'react';
+import {Keyboard,Pressable,ScrollView,StyleSheet,Text,TextInput,View} from 'react-native';
+import {ChevronDown,ChevronUp,Search} from 'lucide-react-native';
+import {Body,Button,Heading,Muted,Panel,Row,useTheme} from '../components/ui';
+import {articles,glossary,subjects} from '../data/content';
+import {useStore} from '../state/Store';
+import {CardEditor} from '../components/CardEditor';
+import {searchGlossary,type GlossaryState} from '../services/navigation';
+import type {GlossaryTerm} from '../types';
 
-export function GlossaryScreen({ initialTermId, onArticle }: { initialTermId?: string; onArticle: (articleId: string) => void }) {
-  const { colors } = useTheme();
-  const { saveCard, user, online } = useStore();
-  const [search, setSearch] = useState('');
-  const [expanded, setExpanded] = useState<string | null>(initialTermId ?? null);
-  const [card, setCard] = useState<{ term: GlossaryTerm; front: string; back: string; aiGenerated?: boolean } | null>(null);
-  const [busy, setBusy] = useState(false);
-  const [error, setError] = useState('');
-  const generation = useRef(0);
-  const [notice, setNotice] = useState('');
-  useEffect(() => { generation.current += 1; setCard(null); setBusy(false); setError(''); setNotice(''); return () => { generation.current += 1; }; }, [user?.uid]);
-  const closeCard = () => { generation.current += 1; setCard(null); setBusy(false); setError(''); };
-  const generate = async () => {
-    if (!card || busy) return;
-    if (!user) { setError('MeiWik benötigt eine Anmeldung in den Einstellungen.'); return; }
-    if (!online) { setError('MeiWik ist offline. Du kannst die Karte selbst bearbeiten.'); return; }
-    const article = articles.find(item => item.id === card.term.articleId);
-    if (!article) return;
-    const request = ++generation.current;
-    const term = card.term;
-    setBusy(true); setError('');
-    try {
-      const result = await generateFlashcard(article, `${term.term}\n${term.definition}${term.example ? `\nBeispiel: ${term.example}` : ''}`);
-      if (request !== generation.current) return;
-      if (!result.front.trim() || !result.back.trim()) throw new Error('MeiWik hat keinen vollständigen Kartenvorschlag geliefert.');
-      setCard({ term, ...result, aiGenerated: true });
-    } catch (problem) {
-      if (request === generation.current) setError(problem instanceof Error ? problem.message : 'MeiWik konnte die Karte gerade nicht erstellen. Deine Eingaben bleiben erhalten.');
-    } finally { if (request === generation.current) setBusy(false); }
-  };
-  const items = [...glossary].sort((a, b) => a.term.localeCompare(b.term, 'de')).filter(term => `${term.term} ${term.definition}`.toLocaleLowerCase('de-DE').includes(search.toLocaleLowerCase('de-DE')));
-  return <><Page><Heading>Begriffsglossar</Heading>
-    <View style={[styles.search, { backgroundColor: colors.surface, borderColor: colors.border }]}><Search size={19} color={colors.muted} /><TextInput accessibilityLabel="Glossar durchsuchen" value={search} onChangeText={setSearch} placeholder="Begriff suchen …" placeholderTextColor={colors.muted} style={{ flex: 1, color: colors.text, fontSize: 16, minHeight: 44 }} /></View>
-    {!!notice && <Text accessibilityLiveRegion="polite" style={{ color: colors.accent }}>{notice}</Text>}
-    {!items.length && <Muted>Kein passender Begriff gefunden.</Muted>}
-    {items.map(term => <Panel key={term.id}><Pressable accessibilityRole="button" accessibilityState={{ expanded: expanded === term.id }} onPress={() => setExpanded(expanded === term.id ? null : term.id)} style={{ flexDirection: 'row', gap: 10, alignItems: 'center', minHeight: 44 }}><View style={{ flex: 1, gap: 4 }}><Text style={{ color: colors.text, fontSize: 18, fontWeight: '600' }}>{term.term}</Text><Muted>{subjects.find(subject => subject.id === term.subjectId)?.title}</Muted></View>{expanded === term.id ? <ChevronUp size={18} color={colors.muted} /> : <ChevronDown size={18} color={colors.muted} />}</Pressable>
-      {expanded === term.id && <><Body>{term.definition}</Body>{term.example && <View style={{ backgroundColor: colors.highlight, borderColor: colors.border, borderWidth: 1, padding: 12, borderRadius: 11, gap: 5 }}><Muted>BEISPIEL</Muted><Body>{term.example}</Body></View>}<Row>{term.articleId && <Button title="Zum Artikel" onPress={() => onArticle(term.articleId!)} />}<Button title="Karte erstellen" onPress={() => setCard({ term, front: `Was bedeutet „${term.term}“?`, back: term.definition + (term.example ? `\n\nBeispiel: ${term.example}` : '') })} /></Row></>}
-    </Panel>)}
-  </Page>
-    <Modal visible={!!card} animationType={Platform.OS === 'web' ? 'none' : 'slide'} transparent onRequestClose={closeCard}><KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : undefined} style={styles.backdrop}><ScrollView keyboardShouldPersistTaps="handled" style={{ maxHeight: '90%', width: '100%', maxWidth: 560 }} contentContainerStyle={[styles.editor, { backgroundColor: colors.surface, borderColor: colors.border }]}>
-      <Row style={{ justifyContent: 'space-between' }}><Text style={{ color: colors.text, fontSize: 21, fontWeight: '600', flex: 1 }}>Karteikarte erstellen</Text><Pressable accessibilityRole="button" accessibilityLabel="Schließen" onPress={closeCard} style={styles.close}><X size={22} color={colors.text} /></Pressable></Row>
-      {card?.aiGenerated && <Muted>MeiWik-Vorschlag</Muted>}
-      {!!card?.term.articleId && <Button title={busy ? 'MeiWik erstellt die Karte …' : 'Mit MeiWik formulieren'} onPress={() => { void generate(); }} disabled={busy} />}
-      {busy && <ActivityIndicator accessibilityLabel="Karte wird erstellt" color={colors.accent} />}
-      {!!error && <Text accessibilityRole="alert" style={{ color: colors.danger, lineHeight: 22 }}>{error}</Text>}
-      <Muted>FRAGE</Muted><TextInput accessibilityLabel="Frage der Karteikarte" multiline editable={!busy} value={card?.front ?? ''} onChangeText={front => setCard(current => current && { ...current, front })} style={[styles.input, { color: colors.text, borderColor: colors.border }]} />
-      <Muted>ANTWORT</Muted><TextInput accessibilityLabel="Antwort der Karteikarte" multiline editable={!busy} value={card?.back ?? ''} onChangeText={back => setCard(current => current && { ...current, back })} style={[styles.input, { minHeight: 180, color: colors.text, borderColor: colors.border }]} />
-      <Button title="Karte speichern" variant="primary" disabled={busy || !card?.front.trim() || !card?.back.trim()} onPress={() => { if (!card) return; saveCard({ subjectId: card.term.subjectId, front: card.front.trim(), back: card.back.trim() }); setNotice(`Karte im Lernfach ${subjects.find(subject => subject.id === card.term.subjectId)?.title} gespeichert.`); closeCard(); }} />
-    </ScrollView></KeyboardAvoidingView></Modal>
-  </>;
+export function GlossaryScreen({initialTermId,initialContext,onContextChange,onArticle}:{initialTermId?:string;initialContext?:GlossaryState;onContextChange?:(context:GlossaryState)=>void;onArticle:(id:string)=>void}){
+ const {colors}=useTheme();const {user}=useStore();
+ const [search,setSearch]=useState(initialContext?.query??'');const [expanded,setExpanded]=useState<string|null>(initialContext?initialContext.expanded:initialTermId??null);
+ const [card,setCard]=useState<{term:GlossaryTerm;front:string;back:string}|null>(null);const [notice,setNotice]=useState('');
+ const scroll=useRef<React.ElementRef<typeof ScrollView>>(null);const positions=useRef<Record<string,number>>({});
+ const context=useRef<GlossaryState>(initialContext??{query:'',expanded:initialTermId??null,y:0});
+ const pending=useRef(true);const viewport=useRef(0);const height=useRef(0);
+ const items=searchGlossary(glossary,search);
+ const update=(patch:Partial<GlossaryState>)=>{context.current={...context.current,...patch};onContextChange?.(context.current)};
+ const restore=()=>{if(!pending.current||!viewport.current||!height.current||items.some(t=>positions.current[t.id]===undefined))return;const y=initialContext?.y??(initialTermId?positions.current[initialTermId]:0);if(y===undefined){pending.current=false;return;}pending.current=false;scroll.current?.scrollTo({y:Math.max(0,Math.min(y,height.current-viewport.current)),animated:false})};
+ useEffect(()=>{setCard(null);setNotice('')},[user?.uid]);
+ return <><ScrollView ref={scroll} style={{flex:1}} keyboardShouldPersistTaps="handled" onLayout={e=>{viewport.current=e.nativeEvent.layout.height;restore()}} onContentSizeChange={(_,h)=>{height.current=h;requestAnimationFrame(restore)}} onScroll={e=>{if(!pending.current)update({y:e.nativeEvent.contentOffset.y})}} scrollEventThrottle={250} contentContainerStyle={{paddingHorizontal:11,paddingTop:14,paddingBottom:24,gap:10}}>
+  <Heading>Begriffsglossar</Heading>
+  <View style={[styles.search,{backgroundColor:colors.surface,borderColor:colors.border}]}><Search size={19} color={colors.muted}/><TextInput accessibilityLabel="Glossar durchsuchen" value={search} onChangeText={value=>{pending.current=false;setSearch(value);update({query:value,y:0});scroll.current?.scrollTo({y:0,animated:false})}} placeholder="Begriff suchen …" placeholderTextColor={colors.muted} style={{flex:1,color:colors.text,fontSize:16,minHeight:44}}/>{!!search&&<Button title="Suche leeren" onPress={()=>{setSearch('');update({query:'',y:0});scroll.current?.scrollTo({y:0,animated:false})}}/>}</View>
+  {initialTermId&&!glossary.some(t=>t.id===initialTermId)&&<Muted>Der verlinkte Begriff ist nicht mehr verfügbar.</Muted>}
+  {!!notice&&<Text accessibilityLiveRegion="polite" style={{color:colors.accent}}>{notice}</Text>}
+  {!items.length&&<Muted>Kein passender Begriff gefunden.</Muted>}
+  {items.map(term=><View key={term.id} onLayout={e=>{positions.current[term.id]=e.nativeEvent.layout.y;requestAnimationFrame(restore)}}><Panel><Pressable accessibilityRole="button" accessibilityLabel={term.term} aria-expanded={expanded===term.id} accessibilityState={{expanded:expanded===term.id}} onPress={()=>{Keyboard.dismiss();pending.current=false;const value=expanded===term.id?null:term.id;setExpanded(value);update({expanded:value})}} style={{flexDirection:'row',gap:10,alignItems:'center',minHeight:44}}><View style={{flex:1,gap:4}}><Text style={{color:colors.text,fontSize:18,fontWeight:'600'}}>{term.term}</Text><Muted>{subjects.find(s=>s.id===term.subjectId)?.title}</Muted></View>{expanded===term.id?<ChevronUp size={18} color={colors.muted}/>:<ChevronDown size={18} color={colors.muted}/>}</Pressable>
+   {expanded===term.id&&<><Body>{term.definition}</Body>{term.example&&<View style={{backgroundColor:colors.highlight,padding:12,borderRadius:11,gap:5}}><Muted>BEISPIEL</Muted><Body>{term.example}</Body></View>}<Row>{articles.some(a=>a.id===term.articleId)&&<Button title="Zum Artikel" onPress={()=>{Keyboard.dismiss();onArticle(term.articleId!)}}/>}<Button title="Karte erstellen" onPress={()=>setCard({term,front:`Was bedeutet „${term.term}“?`,back:term.definition+(term.example?`\n\nBeispiel: ${term.example}`:'')})}/></Row></>}
+  </Panel></View>)}
+ </ScrollView>
+ {card&&<CardEditor key={user?.uid??'guest'} initial={{subjectId:card.term.subjectId,...(articles.some(a=>a.id===card.term.articleId)?{articleId:card.term.articleId}:{}),front:card.front,back:card.back}} source={`${card.term.term}\n${card.term.definition}\n${card.term.example??''}`} frontLabel="Frage der Karteikarte" backLabel="Antwort der Karteikarte" saveLabel="Karte speichern" onClose={()=>setCard(null)} onSaved={()=>setNotice('Karte im Lernfach gespeichert.')}/>}
+ </>;
 }
 
-const styles = StyleSheet.create({ search: { flexDirection: 'row', alignItems: 'center', gap: 8, borderWidth: 1, borderRadius: 12, paddingHorizontal: 11 }, backdrop: { flex: 1, justifyContent: 'flex-end', alignItems: 'center', padding: 11, backgroundColor: 'rgba(0,0,0,.55)' }, editor: { padding: 15, borderRadius: 20, borderWidth: 1, gap: 10 }, close: { minHeight: 44, minWidth: 44, alignItems: 'center', justifyContent: 'center' }, input: { borderWidth: 1, padding: 12, borderRadius: 12, fontSize: 16, lineHeight: 24, minHeight: 75, textAlignVertical: 'top' } });
+const styles = StyleSheet.create({ search: { flexDirection: 'row', alignItems: 'center', gap: 8, borderWidth: 1, borderRadius: 12, paddingHorizontal: 11 } });

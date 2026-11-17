@@ -4,7 +4,8 @@ import { useStore } from '../state/Store';
 import { useTheme } from '../components/ui';
 import { articles, subjects } from '../data/content';
 import { syncReminders } from '../services/reminders';
-import { useLearningTimer } from '../services/useLearningTimer';
+import { learningSummary } from '../services/learningProgress';
+import { useCurrentTime } from '../services/useCurrentTime';
 import type { ReminderCategory, ReminderSetting, ThemeMode } from '../types';
 
 function confirmDelete(message: string, remove: () => void) {
@@ -42,64 +43,27 @@ const articleName = (id?: string) => articles.find(article => article.id === id)
 const formatTime = (seconds: number) => seconds >= 3600 ? `${(seconds / 3600).toLocaleString('de-DE', { maximumFractionDigits: 1 })} h` : `${Math.floor(seconds / 60)} Min.`;
 const dayKey = (date: Date) => `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}-${String(date.getDate()).padStart(2, '0')}`;
 
-export function CardsScreen({ subjectId, onActiveSubject }: { subjectId?: string; onActiveSubject?: (id: string | null) => void }) {
-  const store = useStore();
-  const c = usePalette();
-  const [selectedSubject, setSubject] = useState(subjectId ?? subjects[0]?.id ?? '');
-  const [activeId, setActiveId] = useState<string | null>(null);
-  const [showAnswer, setShowAnswer] = useState(false);
-  const [editor, setEditor] = useState<{ id?: string; front: string; back: string } | null>(null);
-  const [filter, setFilter] = useState<'due' | 'all'>('all');
-  const allCards = store.data.cards.filter(card => !card.deleted && card.subjectId === selectedSubject);
-  const cards = allCards.filter(card => filter === 'all' || card.nextReviewAt <= Date.now()).sort((a, b) => a.nextReviewAt - b.nextReviewAt);
-  const active = cards.find(card => card.id === activeId) ?? cards[0];
-  const { touch } = useLearningTimer(active ? selectedSubject : undefined, 'cards');
-  useEffect(() => { if (subjectId) setSubject(subjectId); }, [subjectId]);
-  useEffect(() => { onActiveSubject?.(active ? selectedSubject : null); return () => onActiveSubject?.(null); }, [selectedSubject, !!active, onActiveSubject]);
-  const chooseSubject = (id: string) => { setSubject(id); setActiveId(null); setShowAnswer(false); };
-  const review = (known: boolean) => {
-    if (!active) return;
-    const index = cards.findIndex(card => card.id === active.id);
-    const next = cards.length > 1 ? cards[(index + 1) % cards.length].id : null;
-    store.reviewCard(active.id, known);
-    setActiveId(next);
-    setShowAnswer(false);
-  };
-  return <ScrollView contentContainerStyle={styles.page} keyboardShouldPersistTaps="handled" onTouchStart={touch} onScroll={touch} scrollEventThrottle={500}>
-    <Title>Karteikarten</Title>
-    <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={styles.row}>{subjects.map(subject => <Action key={subject.id} title={subject.title} primary={subject.id === selectedSubject} onPress={() => chooseSubject(subject.id)} />)}</ScrollView>
-    <View style={styles.row}><Action title={`Alle (${allCards.length})`} primary={filter === 'all'} onPress={() => setFilter('all')} /><Action title={`Fällig (${allCards.filter(card => card.nextReviewAt <= Date.now()).length})`} primary={filter === 'due'} onPress={() => setFilter('due')} /></View>
-    {active ? <>
-      <Box><Text style={[styles.eyebrow, { color: c.muted }]}>{subjectName(selectedSubject)} · FRAGE</Text><Text style={[styles.cardQuestion, { color: c.text }]}>{active.front}</Text>{showAnswer ? <><View style={[styles.divider, { backgroundColor: c.border }]} /><Copy>{active.back}</Copy></> : <Action title="Antwort zeigen" primary onPress={() => setShowAnswer(true)} />}</Box>
-      {showAnswer && <View style={styles.row}><Action title="Noch unsicher" onPress={() => review(false)} /><Action title="Gewusst" primary onPress={() => review(true)} /></View>}
-      <View style={styles.row}><Action title="Karte bearbeiten" onPress={() => setEditor({ id: active.id, front: active.front, back: active.back })} /><Action title="Löschen" onPress={() => confirmDelete('Diese Karteikarte wird auf deinen Geräten gelöscht.', () => store.deleteCard(active.id))} /></View>
-      <Copy muted>{active.reviews} Wiederholungen · Nächste Wiederholung: {new Date(active.nextReviewAt).toLocaleDateString('de-DE')}</Copy>
-    </> : <Box><Copy>{filter === 'due' ? 'Keine Karten fällig.' : 'Keine Karten in diesem Fach.'}</Copy></Box>}
-    <Action title="Karte hinzufügen" onPress={() => setEditor({ front: '', back: '' })} />
-    {allCards.length > 1 && <><Text style={[styles.sectionTitle, { color: c.text }]}>Deine Karten</Text>{allCards.map(card => <Pressable key={card.id} accessibilityRole="button" onPress={() => { setFilter('all'); setActiveId(card.id); setShowAnswer(false); }}><Box><Copy>{card.front}</Copy></Box></Pressable>)}</>}
-    <Modal visible={!!editor} transparent animationType={Platform.OS === 'web' ? 'none' : 'slide'} onRequestClose={() => setEditor(null)}><View style={styles.backdrop}><View style={[styles.sheet, { backgroundColor: c.surface }]}><ScrollView keyboardShouldPersistTaps="handled" contentContainerStyle={{ gap: 10 }}><Text style={[styles.sectionTitle, { color: c.text }]}>{editor?.id ? 'Karte bearbeiten' : 'Neue Karte'}</Text><Copy muted>{subjectName(selectedSubject)}</Copy><Input label="Frage / Vorderseite" multiline value={editor?.front ?? ''} onChangeText={front => setEditor(value => value && ({ ...value, front }))} /><Input label="Antwort / Rückseite" multiline value={editor?.back ?? ''} onChangeText={back => setEditor(value => value && ({ ...value, back }))} /><View style={styles.row}><Action title="Abbrechen" onPress={() => setEditor(null)} /><Action title="Speichern" primary disabled={!editor?.front.trim() || !editor?.back.trim()} onPress={() => { if (editor) store.saveCard({ ...editor, subjectId: selectedSubject, front: editor.front.trim(), back: editor.back.trim() }); setEditor(null); }} /></View></ScrollView></View></View></Modal>
-  </ScrollView>;
-}
+export { CardsScreen } from './CardsScreen';
 
 export function SuccessScreen() {
   const { data } = useStore();
   const c = usePalette();
+  const now=useCurrentTime();const [followCurrent,setFollowCurrent]=useState(true);
   const [month, setMonth] = useState(() => new Date(new Date().getFullYear(), new Date().getMonth(), 1));
-  const secondsByDay = useMemo(() => data.sessions.reduce<Record<string, number>>((result, session) => { result[session.day] = (result[session.day] ?? 0) + session.seconds; return result; }, {}), [data.sessions]);
-  const visits = new Set(data.visits);
+  useEffect(()=>{if(followCurrent)setMonth(new Date(new Date(now).getFullYear(),new Date(now).getMonth(),1))},[followCurrent,new Date(now).getFullYear(),new Date(now).getMonth()]);
+  const summary=useMemo(()=>learningSummary(data,month),[data,month]);
+  const {sessions:monthSessions,days:allDays,reached,completed}=summary;
   const days = Array.from({ length: new Date(month.getFullYear(), month.getMonth() + 1, 0).getDate() }, (_, index) => new Date(month.getFullYear(), month.getMonth(), index + 1));
   const rows = [{ label: 'App besucht', threshold: 0 }, { label: '5 Minuten', threshold: 300 }, { label: '15 Minuten', threshold: 900 }, { label: '30 Minuten', threshold: 1800 }, { label: '60 Minuten', threshold: 3600 }, { label: 'Tagesstern', threshold: -1 }];
-  const reached = (key: string, threshold: number) => threshold === 0 ? visits.has(key) : threshold === -1 ? visits.has(key) && (secondsByDay[key] ?? 0) >= 3600 : (secondsByDay[key] ?? 0) >= threshold;
-  const allDays = Array.from(new Set([...Object.keys(secondsByDay), ...data.visits]));
-  const completed = data.recommendations.filter(item => item.state === 'done').length;
   return <ScrollView contentContainerStyle={styles.page}>
     <Title>Deine Erfolge</Title>
-    <View style={[styles.row, { justifyContent: 'space-between' }]}><Action title="‹" onPress={() => setMonth(value => new Date(value.getFullYear(), value.getMonth() - 1, 1))} /><Text style={[styles.sectionTitle, { color: c.text }]}>{month.toLocaleDateString('de-DE', { month: 'long', year: 'numeric' })}</Text><Action title="›" onPress={() => setMonth(value => new Date(value.getFullYear(), value.getMonth() + 1, 1))} /></View>
-    <Box><View style={{ flexDirection: 'row' }}><View style={{ width: 96 }}><View style={styles.dayCell} />{rows.map(row => <View key={row.label} style={styles.dayCell}><Text style={{ color: c.muted, fontSize: 12 }}>{row.label}</Text></View>)}</View><ScrollView horizontal showsHorizontalScrollIndicator contentContainerStyle={{ paddingBottom: 8 }}>{days.map(date => { const key = dayKey(date); const today = key === dayKey(new Date()); return <View key={key} style={{ width: 32 }}><View style={styles.dayCell}><Text style={{ color: today ? c.accent : c.muted, fontWeight: today ? '700' : '400' }}>{date.getDate()}</Text></View>{rows.map(row => <View key={row.label} style={styles.dayCell}><Text accessibilityLabel={`${date.getDate()}. ${row.label}: ${reached(key, row.threshold) ? 'erreicht' : 'nicht erreicht'}`} style={{ color: reached(key, row.threshold) ? row.threshold === -1 ? c.gold : c.accent : c.border, fontSize: 18 }}>{reached(key, row.threshold) ? row.threshold === -1 ? '★' : '☑' : '□'}</Text></View>)}</View>; })}</ScrollView></View></Box>
+    <View style={[styles.row, { justifyContent: 'space-between' }]}><Action title="‹" onPress={() => {setFollowCurrent(false);setMonth(value => new Date(value.getFullYear(), value.getMonth() - 1, 1))}} /><Text style={[styles.sectionTitle, { color: c.text }]}>{month.toLocaleDateString('de-DE', { month: 'long', year: 'numeric' })}</Text><Action title="›" onPress={() => {setFollowCurrent(false);setMonth(value => new Date(value.getFullYear(), value.getMonth() + 1, 1))}} /></View>
+    <Action title="Aktueller Monat" onPress={()=>{setFollowCurrent(true);setMonth(new Date(new Date(now).getFullYear(),new Date(now).getMonth(),1))}}/><Copy muted>Alle folgenden Summen beziehen sich auf den ausgewählten Monat.</Copy>
+    <Box><View style={{ flexDirection: 'row' }}><View style={{ width: 96 }}><View style={styles.dayCell} />{rows.map(row => <View key={row.label} style={styles.dayCell}><Text style={{ color: c.muted, fontSize: 12 }}>{row.label}</Text></View>)}</View><ScrollView horizontal showsHorizontalScrollIndicator contentContainerStyle={{ paddingBottom: 8 }}>{days.map(date => { const key = dayKey(date); const today = key === dayKey(new Date(now)); return <View key={key} style={{ width: 32 }}><View style={styles.dayCell}><Text style={{ color: today ? c.accent : c.muted, fontWeight: today ? '700' : '400' }}>{date.getDate()}</Text></View>{rows.map(row => <View key={row.label} style={styles.dayCell}><Text accessibilityLabel={`${date.getDate()}. ${row.label}: ${reached(key, row.threshold) ? 'erreicht' : 'nicht erreicht'}`} style={{ color: reached(key, row.threshold) ? row.threshold === -1 ? c.gold : c.accent : c.border, fontSize: 18 }}>{reached(key, row.threshold) ? row.threshold === -1 ? '★' : '☑' : '□'}</Text></View>)}</View>; })}</ScrollView></View></Box>
     <Box><Text style={[styles.sectionTitle, { color: c.gold }]}>★ {allDays.filter(key => reached(key, -1)).length} Tagessterne</Text>{[300, 900, 1800, 3600].map(seconds => <Copy key={seconds}>{allDays.filter(key => reached(key, seconds)).length}× mindestens {seconds / 60} Minuten gelernt</Copy>)}<Copy>{completed} MeiWik Empfehlungen abgeschlossen</Copy></Box>
     <Text style={[styles.sectionTitle, { color: c.text }]}>Lernzeit nach Fach</Text>
-    {subjects.map(subject => { const sessions = data.sessions.filter(item => item.subjectId === subject.id); const reading = sessions.filter(item => item.kind === 'article').reduce((sum, item) => sum + item.seconds, 0); const cards = sessions.filter(item => item.kind === 'cards').reduce((sum, item) => sum + item.seconds, 0); if (!reading && !cards) return null; return <Box key={subject.id}><View style={[styles.row, { justifyContent: 'space-between' }]}><Text style={[styles.sectionTitle, { color: c.text }]}>{subject.title}</Text><Text style={{ color: c.accent, fontSize: 18, fontWeight: '600' }}>{formatTime(reading + cards)}</Text></View><Copy muted>Artikel & MeiWik: {formatTime(reading)} · Karten: {formatTime(cards)}</Copy></Box>; })}
-    {!data.sessions.length && <Copy muted>Noch keine Lernzeit erfasst.</Copy>}
+    {subjects.map(subject => { const sessions = monthSessions.filter(item => item.subjectId === subject.id); const reading = sessions.filter(item => item.kind === 'article').reduce((sum, item) => sum + item.seconds, 0); const cards = sessions.filter(item => item.kind === 'cards').reduce((sum, item) => sum + item.seconds, 0); if (!reading && !cards) return null; return <Box key={subject.id}><View style={[styles.row, { justifyContent: 'space-between' }]}><Text style={[styles.sectionTitle, { color: c.text }]}>{subject.title}</Text><Text style={{ color: c.accent, fontSize: 18, fontWeight: '600' }}>{formatTime(reading + cards)}</Text></View><Copy muted>Artikel & MeiWik: {formatTime(reading)} · Karten: {formatTime(cards)}</Copy></Box>; })}
+    {!monthSessions.length && <Copy muted>In diesem Monat wurde noch keine Lernzeit erfasst.</Copy>}
   </ScrollView>;
 }
 
@@ -118,9 +82,10 @@ export function LaterScreen({ onArticle }: { onArticle: (id: string) => void }) 
 }
 
 export function RecommendationsScreen({ onArticle }: { onArticle: (id: string) => void }) {
+  const now=useCurrentTime();
   const store = useStore();
   const c = usePalette();
-  const items = store.data.recommendations.filter(item => item.state === 'open' || item.state === 'snoozed' && item.dueAt <= Date.now());
+  const items = store.data.recommendations.filter(item => item.state === 'open' || item.state === 'snoozed' && item.dueAt <= now);
   return <ScrollView contentContainerStyle={styles.page}><Title>MeiWik Empfehlungen</Title>{!items.length && <Box><Copy>Keine Empfehlungen fällig.</Copy></Box>}{items.map(item => <Box key={item.id}><Text style={[styles.eyebrow, { color: c.accent }]}>{subjectName(item.subjectId)}</Text><Text style={[styles.sectionTitle, { color: c.text }]}>{item.title}</Text><Copy>{item.reason}</Copy><View style={styles.row}><Action title="Artikel wiederholen" primary onPress={() => onArticle(item.articleId)} /><Action title="Geschafft" onPress={() => store.updateRecommendation(item.id, 'done')} /><Action title="Morgen" onPress={() => store.updateRecommendation(item.id, 'snoozed')} /><Action title="Verwerfen" onPress={() => store.updateRecommendation(item.id, 'dismissed')} /></View></Box>)}</ScrollView>;
 }
 
@@ -156,6 +121,7 @@ export function SettingsScreen() {
   return <ScrollView contentContainerStyle={styles.page} keyboardShouldPersistTaps="handled"><Title>Einstellungen</Title>
     <Box><Text style={[styles.sectionTitle, { color: c.text }]}>Darstellung</Text><View style={styles.row}>{([['system', 'Wie Gerät'], ['light', 'Hell'], ['dark', 'Dunkel']] as [ThemeMode, string][]).map(([mode, label]) => <Action key={mode} title={label} primary={store.data.settings.theme === mode} onPress={() => store.updateSettings({ theme: mode })} />)}</View></Box>
     <Box><Text style={[styles.sectionTitle, { color: c.text }]}>Dein Konto</Text>{store.user ? <><Copy>{store.user.email ?? 'Angemeldet'}</Copy><Copy muted>{syncLabels[store.syncState]}</Copy><View style={styles.row}><Action title="Jetzt synchronisieren" disabled={busy || !store.online} onPress={() => run(store.syncNow)} /><Action title="Abmelden" disabled={busy} onPress={() => run(store.signOut)} /></View></> : <><Input label="E-Mail" keyboardType="email-address" value={email} onChangeText={setEmail} /><Input label="Passwort" value={password} onChangeText={setPassword} secureTextEntry /><View style={styles.row}><Action title="Anmelden" primary disabled={busy || !email.trim() || !password || !store.online} onPress={() => run(() => store.signIn(email.trim(), password))} /><Action title="Konto erstellen" disabled={busy || !email.trim() || password.length < 6 || !store.online} onPress={() => run(() => store.register(email.trim(), password))} /></View><Copy muted>Für ein neues Konto mindestens 6 Zeichen verwenden.</Copy></>}</Box>
+    {!!store.conflicts.length && <Box><Text style={[styles.sectionTitle,{color:c.text}]}>Gesicherte Konfliktversionen</Text><Copy muted>Bei gleichzeitiger Bearbeitung wurden diese Fassungen auf diesem Gerät gesichert. Wiederherstellen legt eine neue Notiz oder Karte an.</Copy>{store.conflicts.map(item=>{const v=item.value as Record<string,unknown>;return <Box key={item.revision}><Copy>{item.kind==='card'?String(v.front):String(v.text)}</Copy>{item.kind==='card'&&<Copy>{String(v.back)}</Copy>}<View style={styles.row}><Action title="Als neue Kopie wiederherstellen" onPress={()=>store.restoreConflict(item.revision)}/><Action title="Konfliktkopie verwerfen" onPress={()=>confirmDelete('Diese lokale Konfliktkopie verwerfen?',()=>store.dismissConflict(item.revision))}/></View></Box>})}</Box>}
     <Text style={[styles.sectionTitle, { color: c.text }]}>Deine Erinnerungen</Text><Copy muted>Drei unabhängige Rhythmen. Uhrzeit und Häufigkeit gelten jeweils für diese Kategorie.</Copy>
     {(['learning', 'recommendations', 'news'] as ReminderCategory[]).map(key => <Box key={key}><View style={[styles.row, { justifyContent: 'space-between' }]}><Text style={[styles.sectionTitle, { color: c.text, flex: 1 }]}>{labels[key]}</Text><Switch accessibilityLabel={`${labels[key]} aktivieren`} value={reminderDraft[key].enabled} onValueChange={enabled => setReminder(key, { enabled })} trackColor={{ true: c.accent }} /></View><Input label="Uhrzeit (HH:MM)" value={timeDraft[key]} onChangeText={text => setTimeDraft(value => ({ ...value, [key]: text }))} /><Copy muted>Alle {reminderDraft[key].everyDays} {reminderDraft[key].everyDays === 1 ? 'Tag' : 'Tage'}</Copy><View style={styles.row}>{[1, 3, 7].map(days => <Action key={days} title={days === 1 ? 'Täglich' : days === 7 ? 'Wöchentlich' : 'Alle 3 Tage'} primary={reminderDraft[key].everyDays === days} onPress={() => setReminder(key, { everyDays: days })} />)}</View>{key === 'news' && <Copy muted>Wird nur eingeplant, wenn neue Inhalte bekannt sind. Automatische Nachrichten über neue Veröffentlichungen folgen mit der Inhaltsverwaltung.</Copy>}{key === 'recommendations' && <Copy muted>Wird nur eingeplant, wenn Empfehlungen vorliegen.</Copy>}</Box>)}
     <Action title={busy ? 'Bitte warten …' : 'Erinnerungen speichern'} primary disabled={busy} onPress={saveReminders} />

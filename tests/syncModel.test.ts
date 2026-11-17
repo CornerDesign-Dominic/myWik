@@ -82,17 +82,51 @@ test('body IDs and persisted map keys must agree with the entity envelope', () =
   assert.equal(isLocalSnapshot(applyEntity(emptySnapshot(),visit,true)),true);
 });
 
-test('a stale local tombstone cannot enqueue the winning remote entity as a new write', () => {
+test('deletion wins over a later offline edit regardless of clock skew', () => {
   const remote = makeEntity('note','a',{id:'a',articleId:'article',text:'new',kind:'personal',updatedAt:5},false,5);
   const staleDeletion = makeEntity('note','a',null,true,3);
   const snapshot = applyEntity(applyEntity(emptySnapshot(),remote,false),staleDeletion,true);
-  assert.equal(snapshot.entries[entityKey('note','a')].deleted,false);
-  assert.equal(Object.keys(snapshot.outbox).length,0);
-  assert.equal(materialize(snapshot).notes.length,1);
+  assert.equal(snapshot.entries[entityKey('note','a')].deleted,true);
+  assert.equal(snapshot.outbox[entityKey('note','a')].revision,staleDeletion.revision);
+  assert.equal(materialize(snapshot).notes.length,0);
 });
 
 test('non-null tombstones and non-finite clocks are rejected', () => {
   assert.equal(isSyncEntity(makeEntity('note','a',{text:'not deleted'},true,1)),false);
   assert.equal(isSyncEntity(makeEntity('note','a',null,true,Infinity)),false);
   assert.equal(isLocalSnapshot({schema:1,entries:[],outbox:{}}),false);
+});
+
+
+test('concurrent pending text is preserved as a private conflict copy when remote wins',()=>{
+ const base=makeEntity('note','a',{id:'a',articleId:'article',text:'base',kind:'personal',updatedAt:1},false,1);
+ const local=makeEntity('note','a',{...base.value as object,text:'offline local',updatedAt:2},false,2);
+ const remote=makeEntity('note','a',{...base.value as object,text:'second device',updatedAt:3},false,3);
+ let s=applyEntity(applyEntity(emptySnapshot(),base,false),local,true);
+ assert.equal(Object.keys(mergeRemote(s,[base]).conflicts??{}).length,0);
+ s=mergeRemote(s,[remote]);
+ assert.equal(materialize(s).notes[0].text,'second device');
+ assert.equal((s.conflicts![local.revision].value as {text:string}).text,'offline local');
+ assert.equal(Object.keys(s.outbox).length,0);assert(isLocalSnapshot(s));
+ assert.equal(Object.keys(mergeRemote(s,[remote]).conflicts??{}).length,1);
+});
+test('remote deletion preserves unsent edited text without reviving the deleted ID',()=>{
+ const local=makeEntity('note','a',{id:'a',articleId:'article',text:'pending',kind:'personal',updatedAt:900},false,900);
+ const deletion=makeEntity('note','a',null,true,5);
+ const s=mergeRemote(applyEntity(emptySnapshot(),local,true),[deletion]);
+ assert.equal(materialize(s).notes.length,0);assert.equal(Object.keys(s.outbox).length,0);
+ assert.equal(s.conflicts![local.revision].revision,local.revision);
+ assert(isLocalSnapshot(s));
+});
+test('acknowledgment of an older own write is not a conflict and cannot lose the new revision',()=>{
+ const old=makeEntity('note','a',{id:'a',articleId:'article',text:'old',kind:'personal',updatedAt:1},false,1);
+ const edited=makeEntity('note','a',{...old.value as object,text:'new',updatedAt:2},false,2);
+ const s=acknowledge(applyEntity(applyEntity(emptySnapshot(),old,true),edited,true),old,old);
+ assert.equal(s.outbox[entityKey('note','a')].revision,edited.revision);
+ assert.equal(Object.keys(s.conflicts??{}).length,0);assert(isLocalSnapshot(s));
+});
+test('local snapshot cannot contain a detached outbox version or invalid conflict copy',()=>{
+ const e=makeEntity('note','a',{id:'a',articleId:'article',text:'old',kind:'personal',updatedAt:1},false,1);
+ assert(!isLocalSnapshot({schema:1,entries:{},outbox:{[entityKey('note','a')]:e}}));
+ assert(!isLocalSnapshot({...emptySnapshot(),conflicts:{bad:e}}));
 });

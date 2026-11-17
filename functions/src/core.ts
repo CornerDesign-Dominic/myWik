@@ -2,14 +2,14 @@ export const MAX_RECENT_MESSAGES = 16;
 export const MAX_USER_TEXT = 4000;
 export const MAX_SUMMARY = 6000;
 export const MAX_OUTPUT_TOKENS = 2200;
-export type Action = 'chat' | 'compact' | 'flashcard';
+export type Action = 'chat' | 'compact' | 'flashcard' | 'flashcards' | 'check_card' | 'practice';
 export interface Turn { role: 'user' | 'assistant'; content: string }
-export interface Input { action: Action; articleId: string; sectionId?: string; message: string; summary: string; messages: Turn[]; selectedText: string }
+export interface Input { action: Action; articleId: string; sectionId?: string; message: string; summary: string; messages: Turn[]; selectedText: string; generationMode?: 'new'|'improve'; subjectId?: string; card?: {id?: string; front: string; back: string}; existingCards?: Array<{id: string; front: string; back: string}> }
 export interface TrustedArticle { id: string; title: string; subjectId: string; intro: string; number: string; sections: Array<{ id: string; title: string; paragraphs: Array<Array<{ text: string }>>; tabs?: Array<{ title: string; content: string }>; hint?: { title: string; content: string } }> }
 export function parseInput(raw: unknown): Input {
   if (!raw || typeof raw !== 'object') throw new Error('Ungültige Anfrage.');
   const r = raw as Record<string, unknown>;
-  if (!['chat', 'compact', 'flashcard'].includes(String(r.action))) throw new Error('Ungültige Aktion.');
+  if (!['chat', 'compact', 'flashcard', 'flashcards', 'check_card', 'practice'].includes(String(r.action))) throw new Error('Ungültige Aktion.');
   const text = (key: string, max: number, required = false) => {
     const value = r[key] ?? '';
     if (typeof value !== 'string' || value.length > max || (required && !value.trim())) throw new Error(`Ungültiges Feld: ${key}`);
@@ -24,6 +24,24 @@ export function parseInput(raw: unknown): Input {
     return { role: m.role, content: m.content };
   });
   const input: Input = { action: r.action as Action, articleId, sectionId: text('sectionId', 160) || undefined, message: text('message', MAX_USER_TEXT, r.action === 'chat'), summary: text('summary', MAX_SUMMARY), messages: parsed, selectedText: text('selectedText', 8000) };
+  if (r.generationMode !== undefined && !['new','improve'].includes(String(r.generationMode))) throw new Error('Ungültiger Erstellungsmodus.');
+  input.generationMode = r.generationMode as 'new'|'improve'|undefined;
+  input.subjectId = text('subjectId', 160) || undefined;
+  const card = r.card;
+  if (card !== undefined) {
+    if (!card || typeof card !== 'object') throw new Error('Ungültige Karte.');
+    const c = card as Record<string, unknown>;
+    if (typeof c.front !== 'string' || !c.front.trim() || c.front.length > 1500 || typeof c.back !== 'string' || !c.back.trim() || c.back.length > 6000 || (c.id !== undefined && (typeof c.id !== 'string' || c.id.length > 250))) throw new Error('Ungültige Karte.');
+    input.card = {front:c.front,back:c.back,...(typeof c.id === 'string' ? {id:c.id} : {})};
+  }
+  if (['practice','check_card'].includes(input.action) && (!input.card || !input.subjectId || (input.action === 'practice' && !input.message))) throw new Error('Karte, Fach oder Antwort fehlt.');
+  if (r.existingCards !== undefined) {
+    if (!Array.isArray(r.existingCards) || r.existingCards.length > 40) throw new Error('Zu viele Vergleichskarten.');
+    input.existingCards = r.existingCards.map(c => {
+      if (!c || typeof c.id !== 'string' || c.id.length > 250 || typeof c.front !== 'string' || c.front.length > 1500 || typeof c.back !== 'string' || c.back.length > 1000) throw new Error('Ungültige Vergleichskarte.');
+      return {id:c.id,front:c.front,back:c.back};
+    });
+  }
   if (JSON.stringify(input).length > 80000) throw new Error('Die Anfrage ist zu groß.');
   return input;
 }

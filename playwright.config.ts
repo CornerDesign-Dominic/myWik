@@ -11,8 +11,9 @@ export default defineConfig({
   reporter: [['list'], ['html', { outputFolder: 'playwright-report', open: 'never' }]],
   use: {
     baseURL: 'http://127.0.0.1:4173',
-    ...devices['Pixel 7'],
-    browserName: 'chromium',
+    timezoneId: 'Europe/Berlin',
+    ...devices[process.env.MYWIK_TEST_WEBKIT === '1' ? 'iPhone 13' : 'Pixel 7'],
+    browserName: process.env.MYWIK_TEST_WEBKIT === '1' ? 'webkit' : 'chromium',
     trace: 'retain-on-failure',
     screenshot: 'only-on-failure',
   },
