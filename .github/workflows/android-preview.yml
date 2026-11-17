@@ -2,8 +2,6 @@ name: Android test APK
 
 on:
   workflow_dispatch:
-  push:
-    branches: [release/preview-0.3.0]
 
 permissions:
   contents: read
