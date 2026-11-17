@@ -1,7 +1,7 @@
 import assert from 'node:assert/strict';
 import {before,beforeEach,after,test} from 'node:test';
 import {readFileSync} from 'node:fs';
-import {initializeTestEnvironment,type RulesTestEnvironment} from '../functions/node_modules/@firebase/rules-unit-testing';
+import {initializeTestEnvironment,type RulesTestEnvironment} from '@firebase/rules-unit-testing';
 import {initializeApp,deleteApp,type FirebaseApp} from 'firebase/app';
 import {getFirestore,connectFirestoreEmulator,terminate} from 'firebase/firestore';
 import {createEntitySync} from '../src/services/syncTransport';
