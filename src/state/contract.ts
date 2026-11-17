@@ -8,6 +8,7 @@ export interface StoreContract {
  setProgress(articleId: string, patch: { status?: ArticleStatus; starred?: boolean }): void;
  saveNote(note: Omit<Note, 'id' | 'updatedAt'> & { id?: string }): void; deleteNote(id: string): void;
  saveCard(card: CardDraft & { resetSchedule?: boolean }): void; deleteCard(id: string): void; reviewCard(id: string, known: boolean): void;
+ saveCards(cards: Array<CardDraft & { resetSchedule?: boolean }>): Promise<number>;
  addLearningTime(subjectId: string, kind: 'article' | 'cards', seconds: number, articleId?: string, startedAt?: number): void;
  saveLater(item: Omit<LaterItem, 'id' | 'updatedAt' | 'status'>): void; updateLater(id: string, status: LaterItem['status']): void;
  updateRecommendation(id: string, state: Recommendation['state']): void;

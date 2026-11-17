@@ -29,7 +29,7 @@ export function GlossaryScreen({initialTermId,initialContext,onContextChange,onA
    {expanded===term.id&&<><Body>{term.definition}</Body>{term.example&&<View style={{backgroundColor:colors.highlight,padding:12,borderRadius:11,gap:5}}><Muted>BEISPIEL</Muted><Body>{term.example}</Body></View>}<Row>{articles.some(a=>a.id===term.articleId)&&<Button title="Zum Artikel" onPress={()=>{Keyboard.dismiss();onArticle(term.articleId!)}}/>}<Button title="Karte erstellen" onPress={()=>setCard({term,front:`Was bedeutet „${term.term}“?`,back:term.definition+(term.example?`\n\nBeispiel: ${term.example}`:'')})}/></Row></>}
   </Panel></View>)}
  </ScrollView>
- {card&&<CardEditor key={user?.uid??'guest'} initial={{subjectId:card.term.subjectId,...(articles.some(a=>a.id===card.term.articleId)?{articleId:card.term.articleId}:{}),front:card.front,back:card.back}} source={`${card.term.term}\n${card.term.definition}\n${card.term.example??''}`} frontLabel="Frage der Karteikarte" backLabel="Antwort der Karteikarte" saveLabel="Karte speichern" onClose={()=>setCard(null)} onSaved={()=>setNotice('Karte im Lernfach gespeichert.')}/>}
+ {card&&<CardEditor key={user?.uid??'guest'} initial={{subjectId:card.term.subjectId,...(articles.some(a=>a.id===card.term.articleId)?{articleId:card.term.articleId}:{}),front:card.front,back:card.back}} source={`${card.term.term}\n${card.term.definition}\n${card.term.example??''}`} frontLabel="Frage der Karteikarte" backLabel="Antwort der Karteikarte" saveLabel="Karte speichern" onClose={()=>setCard(null)} onSaved={(count=1)=>setNotice(count===1?'Karte im Lernfach gespeichert.':`${count} Karten im Lernfach gespeichert.`)}/>}
  </>;
 }
 

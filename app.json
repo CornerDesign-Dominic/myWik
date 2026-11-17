@@ -3,17 +3,22 @@
     "name": "myWik",
     "slug": "mywik",
     "scheme": "mywik",
-    "version": "0.4.0",
+    "version": "0.5.0",
+    "icon": "./assets/app-icon-tortoise-a.png",
     "orientation": "portrait",
     "userInterfaceStyle": "automatic",
     "ios": {
       "supportsTablet": true,
       "bundleIdentifier": "de.mywik.app",
-      "buildNumber": "4"
+      "buildNumber": "5"
     },
     "android": {
       "package": "de.mywik.app",
-      "versionCode": 4,
+      "versionCode": 5,
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/app-icon-tortoise-a.png",
+        "backgroundColor": "#000000"
+      },
       "permissions": [
         "POST_NOTIFICATIONS"
       ]
@@ -22,6 +27,7 @@
       "bundler": "metro",
       "name": "myWik",
       "shortName": "myWik",
+      "favicon": "./assets/app-icon-tortoise-a.png",
       "themeColor": "#080b0d",
       "backgroundColor": "#080b0d"
     },

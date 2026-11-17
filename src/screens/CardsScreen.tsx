@@ -47,7 +47,7 @@ export function CardsScreen({subjectId,onActiveSubject}:{subjectId?:string;onAct
     if(Platform.OS==='web'){if(window.confirm('Diese Karteikarte wirklich löschen?'))act()}
     else Alert.alert('Karte löschen?','Diese Karte wird auf deinen Geräten gelöscht.',[{text:'Abbrechen',style:'cancel'},{text:'Löschen',style:'destructive',onPress:act}]);
   };
-  return <KeyboardAvoidingView behavior={Platform.OS==='web'?undefined:'padding'} style={{flex:1}}><ScrollView keyboardShouldPersistTaps="handled" keyboardDismissMode="on-drag" onTouchStart={touch} contentContainerStyle={{padding:11,gap:10,paddingBottom:24}}>
+  return <KeyboardAvoidingView behavior={Platform.OS==='ios'?'padding':undefined} style={{flex:1}}><ScrollView keyboardShouldPersistTaps="handled" keyboardDismissMode="on-drag" onTouchStart={touch} contentContainerStyle={{padding:11,gap:10,paddingBottom:24}}>
     <Heading>Karteikarten</Heading>
     <ScrollView horizontal contentContainerStyle={{gap:8}}>{subjects.map(s=><Button key={s.id} title={s.title} variant={s.id===subject?'primary':'secondary'} onPress={()=>{reset();setSubject(s.id);setActiveId(null)}}/>)}</ScrollView>
     <Row><Button title={`Alle (${all.length})`} variant={filter==='all'?'primary':'secondary'} onPress={()=>{reset();setFilter('all');setActiveId(null)}}/><Button title={`Fällig (${due.length})`} variant={filter==='due'?'primary':'secondary'} onPress={()=>{reset();setFilter('due');setActiveId(null)}}/></Row>

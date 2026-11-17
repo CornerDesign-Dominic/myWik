@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { Alert, KeyboardAvoidingView, Modal, Platform, Pressable, ScrollView, StyleSheet, Text, TextInput, View } from 'react-native';
+import { Alert, Modal, Platform, Pressable, ScrollView, StyleSheet, Text, TextInput, View } from 'react-native';
 import {useReadingPosition} from '../services/useReadingPosition';
 import { Bookmark, Check, ChevronDown, ChevronUp, CircleHelp, Layers, Pencil, Star, StickyNote, X } from 'lucide-react-native';
 import { Body, Button, Heading, Muted, Panel, Row, useTheme } from '../components/ui';
@@ -10,6 +10,7 @@ import { subjects } from '../data/content';
 import { CardEditor } from '../components/CardEditor';
 import { sectionSource } from '../services/flashcards';
 import { MeiWikAvatar } from '../components/MeiWikAvatar';
+import { ModalLayout } from '../components/ModalLayout';
 
 const statusLabels: Record<ArticleStatus, string> = { open: 'Offen', unclear: 'Noch unklar', working: 'Weiterarbeiten', done: 'Abgeschlossen' };
 
@@ -106,17 +107,17 @@ export function ArticleScreen({ article, onGlossary, onChat, onActivity }: Artic
       <Button title="Karte zum Thema erstellen" onPress={() => startCard()} />
       <View style={{ height: 64 }} />
     </ScrollView>
-    <Modal visible={!!noteEditor} transparent animationType={Platform.OS === 'web' ? 'none' : 'slide'} onRequestClose={() => setNoteEditor(null)}>
-      <KeyboardAvoidingView behavior={Platform.OS === 'web' ? undefined : 'padding'} style={styles.modalBackdrop}><ScrollView keyboardShouldPersistTaps="handled" style={{ maxHeight: '90%', width: '100%', maxWidth: 560 }} contentContainerStyle={[styles.modal, { backgroundColor: colors.surface, borderColor: colors.border }]}>
+    <Modal visible={!!noteEditor} transparent statusBarTranslucent={Platform.OS === 'android'} navigationBarTranslucent={Platform.OS === 'android'} animationType={Platform.OS === 'web' ? 'none' : 'slide'} onRequestClose={() => setNoteEditor(null)}>
+      <ModalLayout backgroundColor="rgba(0,0,0,.55)" keyboardAvoiding align="bottom" padding={11}><ScrollView keyboardShouldPersistTaps="handled" style={{ maxHeight: '90%', width: '100%', maxWidth: 560 }} contentContainerStyle={[styles.modal, { backgroundColor: colors.surface, borderColor: colors.border }]}>
         <Row style={{ justifyContent: 'space-between' }}><Text style={[styles.sectionTitle, { color: colors.text, flex: 1 }]}>Deine Notiz</Text><Pressable accessibilityRole="button" accessibilityLabel="Schließen" onPress={() => setNoteEditor(null)} style={styles.iconButton}><X size={22} color={colors.text} /></Pressable></Row>
         <Muted>{noteEditor?.label}</Muted>
         <Row><Button title="Persönlich" variant={noteEditor?.kind === 'personal' ? 'primary' : 'secondary'} onPress={() => setNoteEditor(current => current && { ...current, kind: 'personal' })} /><Button title="Inhalt verbessern" variant={noteEditor?.kind === 'improvement' ? 'primary' : 'secondary'} onPress={() => setNoteEditor(current => current && { ...current, kind: 'improvement' })} /></Row>
         <TextInput accessibilityLabel="Notiztext" multiline maxLength={20000} placeholder="Dein Gedanke …" placeholderTextColor={colors.muted} value={noteEditor?.text ?? ''} onChangeText={text => setNoteEditor(current => current && { ...current, text })} style={[styles.input, { color: colors.text, borderColor: colors.border, backgroundColor: colors.background }]} />
         <Button title="Notiz speichern" variant="primary" disabled={!noteEditor?.text.trim()} onPress={() => { if (!noteEditor?.text.trim()) return; saveNote({ id: noteEditor.id, articleId: article.id, sectionId: noteEditor.sectionId, text: noteEditor.text.trim(), kind: noteEditor.kind }); setNoteEditor(null); }} />
         {!!noteEditor?.id && <Button title="Notiz löschen" variant="ghost" onPress={confirmDeleteNote} />}
-      </ScrollView></KeyboardAvoidingView>
+      </ScrollView></ModalLayout>
     </Modal>
-    {cardEditor && <CardEditor key={`${user?.uid??'guest'}:${article.id}`} initial={{subjectId:article.subjectId,articleId:article.id,articleVersion:article.version,...(cardEditor.sectionId?{sectionId:cardEditor.sectionId}:{}),front:cardEditor.front,back:cardEditor.back}} source={cardEditor.selectedText} onClose={closeCard} onSaved={()=>setNotice('Karteikarte im Lernfach gespeichert.')} frontLabel="Karteikarte Frage" backLabel="Karteikarte Antwort" saveLabel="Im Lernfach speichern"/>}
+    {cardEditor && <CardEditor key={`${user?.uid??'guest'}:${article.id}`} initial={{subjectId:article.subjectId,articleId:article.id,articleVersion:article.version,...(cardEditor.sectionId?{sectionId:cardEditor.sectionId}:{}),front:cardEditor.front,back:cardEditor.back}} source={cardEditor.selectedText} onClose={closeCard} onSaved={(count=1)=>setNotice(count===1?'Karteikarte im Lernfach gespeichert.':`${count} Karteikarten im Lernfach gespeichert.`)} frontLabel="Karteikarte Frage" backLabel="Karteikarte Antwort" saveLabel="Im Lernfach speichern"/>}
   </>;
 }
 

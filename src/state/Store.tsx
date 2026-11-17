@@ -10,6 +10,7 @@ import { flushLearningClocks } from '../services/learningLifecycle';
 import { updatedProgress, unclearCompletion } from '../services/learningProgress';
 import { calendarDaysAfter, learningDay } from '../services/learningClock';
 import { reviewedCard } from '../services/flashcards';
+import { prepareCardBatch } from '../services/cardBatch';
 import type { StoreContract } from './contract';
 import { articles } from '../data/content';
 import type { ArticleProgress, Flashcard, LaterItem, Note, UserSettings } from '../types';
@@ -252,6 +253,20 @@ export function StoreProvider({ children }: { children: React.ReactNode }) {
     const value: Flashcard = {...previous,...draft,id,updatedAt:Date.now(),nextReviewAt:resetSchedule ? Date.now() : previous?.nextReviewAt ?? Date.now(),reviews:previous?.reviews ?? 0,knownCount:previous?.knownCount ?? 0,unknownCount:previous?.unknownCount ?? 0,successStreak:resetSchedule ? 0 : previous?.successStreak ?? 0};
     mutate('card',id,value);
   };
+  const saveCards: StoreContract['saveCards'] = async cards => {
+    if (!readyRef.current) throw new Error('Die Lerndaten werden noch geladen. Bitte gleich erneut versuchen.');
+    const epoch = generation.current;
+    const prepared = prepareCardBatch(snapshotRef.current, cards);
+    if (!prepared.count) return 0;
+    const write = commit(prepared.snapshot);
+    if (!write) throw new Error('Die Auswahl konnte noch nicht gespeichert werden. Bitte erneut versuchen.');
+    setSyncState(uidRef.current ? 'syncing' : 'local');
+    // All selected cards enter the durable outbox together. Their stable IDs also make retries safe.
+    scheduleSync();
+    await write;
+    if (generation.current !== epoch) throw new Error('Das Konto wurde inzwischen gewechselt. Bitte im ursprünglichen Konto nachsehen.');
+    return prepared.count;
+  };
   const reviewCard: StoreContract['reviewCard'] = (id,known) => {
     const card = materialize(snapshotRef.current).cards.find(c => c.id === id);
     if (!card) return;
@@ -293,13 +308,13 @@ export function StoreProvider({ children }: { children: React.ReactNode }) {
     commit({...snapshotRef.current,conflicts});scheduleSync();
   };
   const dismissConflict=(revision:string)=>{const conflicts={...snapshotRef.current.conflicts};delete conflicts[revision];commit({...snapshotRef.current,conflicts});};
-  const scopedAuth=(action:()=>Promise<void>) => generation.current===actionEpoch && uidRef.current===actionUid ? action() : Promise.reject(new Error('Das Konto wurde inzwischen gewechselt.'));
+  const scopedAuth=<T,>(action:()=>Promise<T>) => generation.current===actionEpoch && uidRef.current===actionUid ? action() : Promise.reject(new Error('Das Konto wurde inzwischen gewechselt.'));
   const value: StoreContract = {
     ready,online,user,data,syncState,retryLoad:()=>setReloadKey(k=>k+1),error:storageError??error,storageError,conflicts:Object.values(snapshot.conflicts??{}),restoreConflict:guard(restoreConflict),dismissConflict:guard(dismissConflict),
     signIn:(email,password) => scopedAuth(()=>authAction(() => signInWithEmailAndPassword(auth,email.trim(),password))),
     register:(email,password) => scopedAuth(()=>authAction(() => createUserWithEmailAndPassword(auth,email.trim(),password))),
     signOut:() => scopedAuth(()=>authAction(() => firebaseSignOut(auth))),
-    setProgress:guard(setProgress),saveNote:guard(saveNote),deleteNote:guard((id:string)=>mutate('note',id,null,true)),saveCard:guard(saveCard),deleteCard:guard((id:string)=>mutate('card',id,null,true)),reviewCard:guard(reviewCard),
+    setProgress:guard(setProgress),saveNote:guard(saveNote),deleteNote:guard((id:string)=>mutate('note',id,null,true)),saveCard:guard(saveCard),saveCards:cards=>scopedAuth(()=>saveCards(cards)),deleteCard:guard((id:string)=>mutate('card',id,null,true)),reviewCard:guard(reviewCard),
     addLearningTime:guard(addLearningTime),saveLater:guard(saveLater),
     updateLater:guard((id:string,status:LaterItem['status']) => { const item = materialize(snapshotRef.current).later.find(i=>i.id===id); if(item) mutate('later',id,{...item,status,updatedAt:Date.now()}); }),
     updateRecommendation:guard((id:string,state:'open'|'done'|'dismissed'|'snoozed') => { const item=materialize(snapshotRef.current).recommendations.find(i=>i.id===id); if(item) mutate('recommendation',id,{...item,state,dueAt:state==='snoozed'?calendarDaysAfter(Date.now(),1):item.dueAt,updatedAt:Date.now()}); }),

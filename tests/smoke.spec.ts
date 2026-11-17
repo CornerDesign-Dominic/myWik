@@ -390,7 +390,7 @@ test('practice feedback never rates cards and its chat is discarded on card chan
 });
 
 
-test('AI creation uses edited drafts and saves batch suggestions individually without provenance labels',async({page})=>{
+test('AI creation uses edited drafts and saves selected suggestions together without provenance labels',async({page})=>{
   await isolateCloud(page);await seedPracticeCards(page,'local-practice-test');
   const requests: Array<Record<string,unknown>>=[];
   await page.route('https://europe-west1-meiwik.cloudfunctions.net/meiwik',async route=>{
@@ -402,16 +402,28 @@ test('AI creation uses edited drafts and saves batch suggestions individually wi
   const front=page.getByRole('textbox',{name:'Karteikarte Frage',exact:true});
   await front.fill('Meine konkretisierte Frage?');
   await page.getByRole('button',{name:'Mit MeiWik formulieren',exact:true}).click();
-  await expect(front).toHaveValue('Wie berechnet man das Betriebsergebnis?');
+  await expect(page.getByRole('checkbox',{name:'Vorschlag 1: Wie berechnet man das Betriebsergebnis?',exact:true})).toBeVisible();
   expect((requests[0].card as {front:string}).front).toBe('Meine konkretisierte Frage?');
   expect(requests[0].generationMode).toBe('improve');
   expect(requests[0].sectionId).toBe('definition');
   expect((requests[0].existingCards as unknown[]).length).toBe(2);
   await expect(page.getByText('MeiWik-Vorschlag',{exact:true})).toHaveCount(0);
-  await page.getByRole('button',{name:'Im Lernfach speichern',exact:true}).click();
-  await expect(front).toHaveValue('Wann entsteht Gewinn?');
-  await page.getByRole('button',{name:'Im Lernfach speichern',exact:true}).click();
+  const first=page.getByRole('checkbox',{name:'Vorschlag 1: Wie berechnet man das Betriebsergebnis?',exact:true});
+  const second=page.getByRole('checkbox',{name:'Vorschlag 2: Wann entsteht Gewinn?',exact:true});
+  await expect(first).not.toBeChecked();await expect(second).not.toBeChecked();
+  await expect(page.getByRole('button',{name:'Auswahl übernehmen (0)',exact:true})).toBeDisabled();
+  await first.click();await expect(first).toBeChecked();
+  await expect(page.getByRole('button',{name:'Auswahl übernehmen (1)',exact:true})).toBeEnabled();
+  await page.getByRole('button',{name:'Alle auswählen',exact:true}).click();
+  await expect(first).toBeChecked();await expect(second).toBeChecked();
+  await page.getByRole('button',{name:'Auswahl aufheben',exact:true}).click();
+  await expect(first).not.toBeChecked();await expect(second).not.toBeChecked();
+  await first.click();await second.click();
+  await page.getByRole('button',{name:'Auswahl übernehmen (2)',exact:true}).click();
   await expect(page.getByRole('dialog')).toBeHidden();
+  const saved=await page.evaluate(()=>JSON.parse(localStorage.getItem('mywik.user.v1.local-practice-test')!).entries);
+  const proposals=Object.values(saved).filter((entry:any)=>entry.kind==='card'&&!entry.deleted&&['Wie berechnet man das Betriebsergebnis?','Wann entsteht Gewinn?'].includes(entry.value.front)) as Array<{value:{subjectId:string;front:string}}>;
+  expect(proposals).toHaveLength(2);expect(proposals.every(entry=>entry.value.subjectId==='rechnungswesen')).toBe(true);
   await openPracticeCards(page);
   await expect(page.getByRole('button',{name:'Alle (4)',exact:true})).toBeVisible();
 });
@@ -687,4 +699,75 @@ test('long glossary definitions scroll inside the popup without losing its actio
  const action=page.getByRole('button',{name:'Im Glossar öffnen',exact:true});await action.scrollIntoViewIfNeeded();await expect(action).toBeInViewport();
  await action.click();await expect(page.getByRole('heading',{name:'Begriffsglossar',exact:true})).toBeVisible();
  await expect(page.getByRole('button',{name:'Variable Kosten',exact:true})).toHaveAttribute('aria-expanded','true');
+});
+
+test('modal actions respect simulated three-button, gesture and landscape system insets', async ({ page }) => {
+  await isolateCloud(page);
+  // Chromium cannot display Android's OS bars. Feed realistic CSS-env measurements
+  // through the actual safe-area provider to exercise each modal's layout instead.
+  await page.addInitScript(() => {
+    type Insets = { top: number; right: number; bottom: number; left: number };
+    const scope = window as typeof window & { mywikTestInsets?: Insets };
+    scope.mywikTestInsets = { top: 24, right: 0, bottom: 48, left: 0 };
+    const original = window.getComputedStyle.bind(window);
+    window.getComputedStyle = (element: Element, pseudo?: string | null) => {
+      const actual = original(element, pseudo);
+      if (!(element instanceof HTMLElement) || !element.style.paddingTop.includes('safe-area-inset')) return actual;
+      const sides: Record<string, keyof Insets> = { paddingTop: 'top', paddingRight: 'right', paddingBottom: 'bottom', paddingLeft: 'left' };
+      return new Proxy(actual, { get(target, property) {
+        if (typeof property === 'string' && sides[property]) return `${scope.mywikTestInsets![sides[property]]}px`;
+        const value = Reflect.get(target, property, target);
+        return typeof value === 'function' ? value.bind(target) : value;
+      } });
+    };
+  });
+  await page.goto('/');
+  await expect(page.getByRole('button', { name: /^Fächer/ })).toBeVisible();
+  await openDeckungsbeitrag(page);
+  const scenarios = [
+    { width: 393, height: 720, insets: { top: 24, right: 0, bottom: 48, left: 0 } },
+    { width: 393, height: 650, insets: { top: 24, right: 0, bottom: 24, left: 0 } },
+    { width: 720, height: 393, insets: { top: 0, right: 48, bottom: 24, left: 24 } },
+  ];
+  for (const scenario of scenarios) {
+    await page.setViewportSize({ width: scenario.width, height: scenario.height });
+    await page.evaluate(insets => {
+      (window as typeof window & { mywikTestInsets?: typeof insets }).mywikTestInsets = insets;
+      window.dispatchEvent(new Event('resize'));
+    }, scenario.insets);
+    const assertSafeAction = async (button: Locator) => {
+      const safeArea = page.getByTestId('modal-safe-area');
+      await expect(safeArea).toHaveCSS('padding-bottom', `${scenario.insets.bottom}px`);
+      await expect(safeArea).toHaveCSS('padding-left', `${scenario.insets.left}px`);
+      await expect(safeArea).toHaveCSS('padding-right', `${scenario.insets.right}px`);
+      await button.scrollIntoViewIfNeeded();
+      const box = await button.boundingBox();
+      expect(box).not.toBeNull();
+      expect(box!.x).toBeGreaterThanOrEqual(scenario.insets.left);
+      expect(box!.x + box!.width).toBeLessThanOrEqual(scenario.width - scenario.insets.right + 1);
+      expect(box!.y).toBeGreaterThanOrEqual(scenario.insets.top);
+      expect(box!.y + box!.height).toBeLessThanOrEqual(scenario.height - scenario.insets.bottom + 1);
+    };
+    await page.getByText('variablen Kosten', { exact: true }).click();
+    await expect(page.getByRole('dialog')).toBeVisible();
+    await assertSafeAction(page.getByRole('button', { name: 'Im Glossar öffnen', exact: true }));
+    await page.getByRole('button', { name: 'Begriff schließen', exact: true }).click();
+    await expect(page.getByRole('dialog')).toBeHidden();
+    await page.getByRole('button', { name: 'Notiz', exact: true }).first().click();
+    await expect(page.getByRole('dialog')).toBeVisible();
+    await page.getByRole('textbox', { name: 'Notiztext', exact: true }).fill('Sicher oberhalb der Systemnavigation.');
+    await assertSafeAction(page.getByRole('button', { name: 'Notiz speichern', exact: true }));
+    await page.getByRole('button', { name: 'Schließen', exact: true }).click();
+    await expect(page.getByRole('dialog')).toBeHidden();
+    await page.getByRole('button', { name: 'Karte erstellen', exact: true }).first().click();
+    await expect(page.getByRole('dialog')).toBeVisible();
+    await assertSafeAction(page.getByRole('button', { name: 'Im Lernfach speichern', exact: true }));
+    await page.getByRole('button', { name: 'Schließen', exact: true }).click();
+    await expect(page.getByRole('dialog')).toBeHidden();
+    await page.getByRole('button', { name: 'MeiWik Chat öffnen', exact: true }).click();
+    await expect(page.getByRole('dialog')).toBeVisible();
+    await assertSafeAction(page.getByRole('button', { name: 'An MeiWik senden', exact: true }));
+    await page.getByRole('button', { name: 'Chat verkleinern', exact: true }).click();
+    await expect(page.getByRole('dialog')).toBeHidden();
+  }
 });
