@@ -57,7 +57,9 @@ Die App-Kennung ist `de.mywik.app`. Vor einer Veröffentlichung muss diese Kennu
 
 ### Test-APK über GitHub Actions ohne Expo-Konto
 
-Auf dem Entwicklungsbranch startet **Android test APK** automatisch bei Änderungen am App-Code oder am APK-Workflow. Sobald die Workflow-Datei im Hauptbranch vorhanden ist, kann unter **Actions → Android test APK → Run workflow** auch manuell ein Android-Testbuild gestartet werden. Der Workflow installiert die Werkzeuge, erzeugt das native Android-Projekt und baut eine APK mit eingebettetem JavaScript. Der fertige Build benötigt weder Expo Go noch einen laufenden Metro-Server. Ein Expo-/EAS-Konto und private Signierungsschlüssel sind für diesen Testweg nicht erforderlich.
+**Freigaberegel:** Änderungen werden zunächst im Quellcode gesammelt. Eine neue APK, ein App-Update oder eine Veröffentlichung wird erst nach der ausdrücklichen Anweisung **„jetzt veröffentlichen“** erstellt beziehungsweise ausgelöst. Deshalb startet dieser APK-Workflow ausschließlich manuell über `workflow_dispatch`; ein Push erzeugt keine neue APK.
+
+Sobald die Workflow-Datei im Hauptbranch vorhanden ist, kann nach dieser Freigabe unter **Actions → Android test APK → Run workflow** manuell ein Android-Testbuild gestartet werden. Der Workflow installiert die Werkzeuge, erzeugt das native Android-Projekt und baut eine APK mit eingebettetem JavaScript. Der fertige Build benötigt weder Expo Go noch einen laufenden Metro-Server. Ein Expo-/EAS-Konto und private Signierungsschlüssel sind für diesen Testweg nicht erforderlich.
 
 Nach einem erfolgreichen Lauf unter **Artifacts → mywik-android-test-apk** die ZIP-Datei herunterladen, entpacken und `app-release.apk` auf dem Handy installieren. Der Build ist für ARM64-Android-Geräte bestimmt. Android kann eine ausdrückliche Erlaubnis zur Installation aus dieser Quelle verlangen.
 

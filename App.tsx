@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { ActivityIndicator, AppState, BackHandler, Modal, Platform, Pressable, StyleSheet, Text, View } from 'react-native';
 import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
 import { StatusBar } from 'expo-status-bar';
-import { ArrowLeft, BookOpen, ChevronRight, Glasses, Layers, Search, Settings, Star, Bookmark, X } from 'lucide-react-native';
+import { ArrowLeft, BookOpen, ChevronRight, Layers, Search, Settings, Star, Bookmark, X } from 'lucide-react-native';
 import { StoreProvider, useStore } from './src/state/Store';
 import { ThemeProvider, useTheme, Page, Heading, Body, Muted, Button, Row } from './src/components/ui';
 import { subjects, articles, glossary } from './src/data/content';
@@ -11,6 +11,7 @@ import { ArticleScreen } from './src/screens/ArticleScreen';
 import { GlossaryScreen } from './src/screens/GlossaryScreen';
 import { CardsScreen, SuccessScreen, LaterScreen, RecommendationsScreen, SettingsScreen } from './src/screens/LearningScreens';
 import { ChatPanel } from './src/components/ChatPanel';
+import { MeiWikAvatar } from './src/components/MeiWikAvatar';
 import { useLearningTimer } from './src/services/useLearningTimer';
 import { syncReminders } from './src/services/reminders';
 import type { Route } from './src/types';
@@ -29,9 +30,9 @@ function HomeScreen({navigate}:{navigate:(r:Route)=>void}) {
  {title:'Karteikarten',sub:`${data.cards.length} ${data.cards.length===1?'Karte':'Karten'}`,icon:Layers,route:'cards'},
  {title:'Deine Erfolge',sub:`${minutes} Minuten heute`,icon:Star,route:'success'},
  {title:'Für später',sub:`${data.later.filter(x=>x.status==='open').length} offene Einträge`,icon:Bookmark,route:'later'},
- {title:'MeiWik Empfehlungen',sub:`${available} ${available===1?'Empfehlung':'Empfehlungen'}`,icon:Glasses,route:'recommendations'}
+ {title:'MeiWik Empfehlungen',sub:`${available} ${available===1?'Empfehlung':'Empfehlungen'}`,icon:null,route:'recommendations'}
  ] as const;
- return <Page><Heading>Start</Heading>{tiles.map(tile=><Pressable key={tile.title} accessibilityRole="button" onPress={()=>navigate({name:tile.route})} style={({pressed})=>[styles.tile,{backgroundColor:colors.surface,borderColor:colors.border,opacity:pressed?.75:1}]}><View style={{padding:9,backgroundColor:colors.accentSoft,borderRadius:11}}><tile.icon color={colors.accent} size={22}/></View><View style={{flex:1,gap:3}}><Text style={{color:colors.text,fontSize:17,fontWeight:'600'}}>{tile.title}</Text><Muted>{tile.sub}</Muted></View><ChevronRight size={18} color={colors.muted}/></Pressable>)}</Page>
+ return <Page><Heading>Start</Heading>{tiles.map(tile=><Pressable key={tile.title} accessibilityRole="button" onPress={()=>navigate({name:tile.route})} style={({pressed})=>[styles.tile,{backgroundColor:colors.surface,borderColor:colors.border,opacity:pressed?.75:1}]}><View style={{width:40,height:40,alignItems:'center',justifyContent:'center',backgroundColor:colors.accentSoft,borderRadius:11}}>{tile.icon?<tile.icon color={colors.accent} size={22}/>:<MeiWikAvatar size={36}/>}</View><View style={{flex:1,gap:3}}><Text style={{color:colors.text,fontSize:17,fontWeight:'600'}}>{tile.title}</Text><Muted>{tile.sub}</Muted></View><ChevronRight size={18} color={colors.muted}/></Pressable>)}</Page>
 }
 
 function Application() {
@@ -54,7 +55,7 @@ function Application() {
  switch(route.name){case'home':screen=<HomeScreen navigate={navigate}/>;break;case'subjects':screen=<SubjectsScreen onSubject={subjectId=>navigate({name:'chapters',subjectId})}/>;break;case'chapters':screen=<ChaptersScreen subjectId={route.subjectId} onArticle={articleId=>navigate({name:'article',articleId})}/>;break;case'article':screen=article?<ArticleScreen key={article.id} article={article} onActivity={touch} onGlossary={setTermId} onChat={section=>{touch();setChatSection(section);setChatOpen(true)}}/>:<Page><Heading>Artikel nicht gefunden</Heading><Button title="Zu den Fächern" onPress={()=>navigate({name:'subjects'})}/></Page>;break;case'glossary':screen=<GlossaryScreen initialTermId={fullTermId} onArticle={articleId=>navigate({name:'article',articleId})}/>;break;case'cards':screen=<CardsScreen/>;break;case'success':screen=<SuccessScreen/>;break;case'later':screen=<LaterScreen onArticle={articleId=>navigate({name:'article',articleId})}/>;break;case'recommendations':screen=<RecommendationsScreen onArticle={articleId=>navigate({name:'article',articleId})}/>;break;case'settings':screen=<SettingsScreen/>;break;}
  const term=glossary.find(t=>t.id===termId);
  return <SafeAreaView style={{flex:1,backgroundColor:colors.background}}><StatusBar style={mode==='dark'?'light':'dark'}/><View style={[styles.header,{borderColor:colors.border}]}>{history.length>1?<Pressable accessibilityRole="button" accessibilityLabel="Zurück" onPress={back} style={styles.icon}><ArrowLeft color={colors.text} size={24}/></Pressable>:<View style={{width:28}}/>}<Pressable accessibilityRole="button" accessibilityLabel="Zur Startseite" onPress={()=>{setHistory([{name:'home'}]);setChatOpen(false)}}><Text style={{fontSize:24,fontWeight:'700',letterSpacing:-1,color:colors.text}}>myWik<Text style={{color:colors.accent}}>.</Text></Text></Pressable><Row><Pressable accessibilityRole="button" accessibilityLabel="Glossar durchsuchen" onPress={()=>{setFullTermId(undefined);navigate({name:'glossary'})}} style={styles.icon}><Search size={21} color={colors.muted}/></Pressable><Pressable accessibilityRole="button" accessibilityLabel="Einstellungen" onPress={()=>navigate({name:'settings'})} style={styles.icon}><Settings color={colors.muted} size={21}/></Pressable></Row></View>
- <View style={{flex:1,paddingBottom:article?56:0}} onTouchStart={touch}>{screen}{article&&<Pressable accessibilityRole="button" accessibilityLabel="MeiWik Chat öffnen" onPress={()=>{touch();setChatOpen(true)}} style={[styles.fab,{backgroundColor:colors.accentSoft,borderColor:colors.accent}]}><Glasses color={colors.accent} size={23}/><Text style={{color:colors.accent,fontWeight:'600'}}>MeiWik</Text></Pressable>}</View>
+ <View style={{flex:1,paddingBottom:article?56:0}} onTouchStart={touch}>{screen}{article&&<Pressable accessibilityRole="button" accessibilityLabel="MeiWik Chat öffnen" onPress={()=>{touch();setChatOpen(true)}} style={[styles.fab,{backgroundColor:colors.accentSoft,borderColor:colors.accent}]}><MeiWikAvatar size={26}/><Text style={{color:colors.accent,fontWeight:'600'}}>MeiWik</Text></Pressable>}</View>
  <Modal visible={!!term} transparent animationType={Platform.OS==='web'?'none':'fade'} onRequestClose={()=>setTermId(null)}><View style={styles.scrim}><View style={[styles.term,{backgroundColor:colors.surface,borderColor:colors.border}]}><Row><Text style={{flex:1,color:colors.text,fontSize:23,fontWeight:'700'}}>{term?.term}</Text><Pressable accessibilityLabel="Begriff schließen" accessibilityRole="button" onPress={()=>setTermId(null)} style={styles.icon}><X color={colors.text} size={22}/></Pressable></Row><Body>{term?.definition}</Body>{term?.example&&<View style={{backgroundColor:colors.highlight,borderWidth:1,borderColor:colors.border,padding:11,borderRadius:10}}><Muted>BEISPIEL</Muted><Body>{term.example}</Body></View>}<Button title="Im Glossar öffnen" variant="primary" onPress={()=>{setFullTermId(term?.id);navigate({name:'glossary'})}}/></View></View></Modal>
  {article&&<ChatPanel article={article} sectionId={chatSection} visible={chatOpen} onMinimize={()=>setChatOpen(false)} onTouch={touch}/>}
  </SafeAreaView>;

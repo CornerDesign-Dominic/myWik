@@ -1,16 +1,20 @@
 import type { Article, Chapter, GlossaryTerm, Subject } from '../types';
 
 export const subjects: Subject[] = [
-  { id: 'marketing', title: 'Marketing', subtitle: 'Märkte verstehen und Kunden gewinnen', icon: 'target' },
-  { id: 'logistik', title: 'Logistik', subtitle: 'Material- und Informationsflüsse gestalten', icon: 'truck' },
   { id: 'bwl', title: 'BWL', subtitle: 'Betriebliche Entscheidungen verstehen', icon: 'building' },
   { id: 'vwl', title: 'VWL', subtitle: 'Wirtschaftliche Zusammenhänge erkennen', icon: 'globe' },
+  { id: 'rechnungswesen', title: 'Rechnungswesen', subtitle: 'Buchführung, Kosten und Ergebnisse einordnen', icon: 'calculator' },
   { id: 'recht', title: 'Recht', subtitle: 'Rechtsgrundlagen im Unternehmen', icon: 'scale' },
   { id: 'steuern', title: 'Steuern', subtitle: 'Steuerarten und betriebliche Auswirkungen', icon: 'receipt' },
-  { id: 'rechnungswesen', title: 'Rechnungswesen', subtitle: 'Zahlen einordnen und Entscheidungen vorbereiten', icon: 'calculator' },
-  { id: 'unternehmensfuehrung', title: 'Unternehmensführung', subtitle: 'Unternehmen und Menschen entwickeln', icon: 'compass' },
+  { id: 'unternehmensfuehrung', title: 'Unternehmensführung', subtitle: 'Strategie und Organisation gestalten', icon: 'compass' },
   { id: 'betriebliches-management', title: 'Betriebliches Management', subtitle: 'Planen, organisieren und Projekte steuern', icon: 'workflow' },
-  { id: 'personal', title: 'Führung und Zusammenarbeit', subtitle: 'Kommunikation, Personal und Ausbildung', icon: 'users' },
+  { id: 'investition-finanzierung', title: 'Investition und Finanzierung', subtitle: 'Investitionen bewerten und Kapital beschaffen', icon: 'calculator' },
+  { id: 'controlling', title: 'Controlling', subtitle: 'Planung, Kennzahlen und Abweichungen auswerten', icon: 'target' },
+  { id: 'logistik', title: 'Logistik', subtitle: 'Material- und Informationsflüsse gestalten', icon: 'truck' },
+  { id: 'marketing', title: 'Marketing und Vertrieb', subtitle: 'Märkte verstehen und Kunden gewinnen', icon: 'target' },
+  { id: 'fuehrung-zusammenarbeit', title: 'Führung und Zusammenarbeit', subtitle: 'Menschen führen, kommunizieren und Konflikte lösen', icon: 'users' },
+  // Keep this ID: existing training articles, cards and learning sessions use it.
+  { id: 'personal', title: 'Personal und Ausbildung', subtitle: 'Personal gewinnen, entwickeln und ausbilden', icon: 'users' },
 ];
 
 export const chapters: Chapter[] = [
@@ -21,13 +25,16 @@ export const chapters: Chapter[] = [
   { id: 'rw-break-even', subjectId: 'rechnungswesen', parentId: 'rw-teilkosten', number: '1.2.2', title: 'Break-even-Analyse' },
   { id: 'rw-preisuntergrenzen', subjectId: 'rechnungswesen', parentId: 'rw-teilkosten', number: '1.2.3', title: 'Preisuntergrenzen' },
   { id: 'rw-jahresabschluss', subjectId: 'rechnungswesen', number: '2', title: 'Buchführung und Jahresabschluss' },
-  { id: 'personal-ausbildung', subjectId: 'personal', number: '1', title: 'Ausbildung und Personalentwicklung' },
+  { id: 'personal-ausbildung', subjectId: 'personal', number: '1', title: 'Ausbildung' },
   { id: 'personal-methoden', subjectId: 'personal', parentId: 'personal-ausbildung', number: '1.1', title: 'Ausbildungsmethoden' },
   { id: 'personal-leittext', subjectId: 'personal', parentId: 'personal-methoden', number: '1.1.1', title: 'Leittextmethode', articleId: 'leittextmethode' },
+  { id: 'personal-planung', subjectId: 'personal', number: '2', title: 'Personalplanung und Personalbeschaffung' },
+  { id: 'personal-entwicklung', subjectId: 'personal', number: '3', title: 'Personalbetreuung und Personalentwicklung' },
   { id: 'marketing-planung', subjectId: 'marketing', number: '1', title: 'Marketingplanung' },
   { id: 'marketing-analyse', subjectId: 'marketing', parentId: 'marketing-planung', number: '1.1', title: 'Analyse der Ausgangssituation' },
   { id: 'marketing-ziele', subjectId: 'marketing', parentId: 'marketing-planung', number: '1.2', title: 'Marketingziele und Strategien' },
   { id: 'marketing-mix', subjectId: 'marketing', number: '2', title: 'Marketinginstrumente' },
+  { id: 'marketing-vertrieb', subjectId: 'marketing', number: '3', title: 'Vertrieb und Kundenmanagement' },
   { id: 'logistik-grundlagen', subjectId: 'logistik', number: '1', title: 'Grundlagen und Ziele der Logistik' },
   { id: 'logistik-beschaffung', subjectId: 'logistik', number: '2', title: 'Beschaffungslogistik' },
   { id: 'logistik-lager', subjectId: 'logistik', number: '3', title: 'Lager- und Distributionslogistik' },
@@ -41,6 +48,17 @@ export const chapters: Chapter[] = [
   { id: 'uf-organisation', subjectId: 'unternehmensfuehrung', number: '2', title: 'Organisation und Veränderung' },
   { id: 'bm-planung', subjectId: 'betriebliches-management', number: '1', title: 'Betriebliche Planung und Steuerung' },
   { id: 'bm-projekt', subjectId: 'betriebliches-management', number: '2', title: 'Projektmanagement' },
+  { id: 'if-investition', subjectId: 'investition-finanzierung', number: '1', title: 'Investitionsplanung und Investitionsrechnung' },
+  { id: 'if-statisch', subjectId: 'investition-finanzierung', parentId: 'if-investition', number: '1.1', title: 'Statische Verfahren der Investitionsrechnung' },
+  { id: 'if-dynamisch', subjectId: 'investition-finanzierung', parentId: 'if-investition', number: '1.2', title: 'Dynamische Verfahren der Investitionsrechnung' },
+  { id: 'if-finanzierungsarten', subjectId: 'investition-finanzierung', number: '2', title: 'Finanzierungsarten' },
+  { id: 'if-liquiditaet', subjectId: 'investition-finanzierung', number: '3', title: 'Finanzplanung und Liquidität' },
+  { id: 'controlling-grundlagen', subjectId: 'controlling', number: '1', title: 'Aufgaben und Instrumente des Controllings' },
+  { id: 'controlling-planung', subjectId: 'controlling', number: '2', title: 'Planung, Budgetierung und Kontrolle' },
+  { id: 'controlling-kennzahlen', subjectId: 'controlling', number: '3', title: 'Kennzahlen und Berichtswesen' },
+  { id: 'fz-fuehrung', subjectId: 'fuehrung-zusammenarbeit', number: '1', title: 'Führungsverhalten und Führungsinstrumente' },
+  { id: 'fz-kommunikation', subjectId: 'fuehrung-zusammenarbeit', number: '2', title: 'Kommunikation und Zusammenarbeit' },
+  { id: 'fz-konflikte', subjectId: 'fuehrung-zusammenarbeit', number: '3', title: 'Konfliktmanagement und Moderation' },
 ];
 
 const updatedAt = Date.UTC(2026, 10, 16);
@@ -133,4 +151,4 @@ export const glossary: GlossaryTerm[] = [
   { id: 'vollstaendige-handlung', subjectId: 'personal', term: 'Vollständige Handlung', definition: 'Modell einer selbstständig bewältigten beruflichen Handlung mit den Phasen Informieren, Planen, Entscheiden, Ausführen, Kontrollieren und Bewerten.', example: 'Eine Arbeitsaufgabe wird nicht nur ausgeführt: Lernende planen zuvor ihr Vorgehen und prüfen sowie reflektieren danach das Ergebnis.', articleId: 'leittextmethode' },
 ];
 
-export const contentVersion = 1;
+export const contentVersion = 2;

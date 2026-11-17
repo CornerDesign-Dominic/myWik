@@ -1,11 +1,11 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { doc, getDocFromServer } from 'firebase/firestore';
 import { db } from './firebase';
-import { subjects, chapters, articles, glossary } from '../data/content';
+import { subjects, chapters, articles, glossary, contentVersion } from '../data/content';
 import { isCatalogue, type Catalogue } from './catalogueModel';
 
 const CACHE='@mywik/catalogue/v1';
-let version=1;
+let version=contentVersion;
 function install(catalogue:Catalogue){
  if(catalogue.version<version)return false;
  subjects.splice(0,subjects.length,...catalogue.subjects);chapters.splice(0,chapters.length,...catalogue.chapters);

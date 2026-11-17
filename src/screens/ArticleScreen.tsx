@@ -1,13 +1,14 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { ActivityIndicator, Alert, KeyboardAvoidingView, Modal, Platform, Pressable, ScrollView, StyleSheet, Text, TextInput, View } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { Bookmark, Check, ChevronDown, ChevronUp, CircleHelp, Glasses, Layers, Pencil, Star, StickyNote, X } from 'lucide-react-native';
+import { Bookmark, Check, ChevronDown, ChevronUp, CircleHelp, Layers, Pencil, Star, StickyNote, X } from 'lucide-react-native';
 import { Body, Button, Heading, Muted, Panel, Row, useTheme } from '../components/ui';
 import { useStore } from '../state/Store';
 import type { ArticleScreenProps } from '../state/contract';
 import type { ArticleSection, ArticleStatus, Note } from '../types';
 import { subjects } from '../data/content';
 import { generateFlashcard } from '../services/meiwik';
+import { MeiWikAvatar } from '../components/MeiWikAvatar';
 
 const statusLabels: Record<ArticleStatus, string> = { open: 'Offen', unclear: 'Noch unklar', working: 'Weiterarbeiten', done: 'Abgeschlossen' };
 
@@ -30,7 +31,7 @@ function SectionExtras({ section, onCard, onNote, onChat }: { section: ArticleSe
     <View style={styles.actions}>
       <Pressable accessibilityRole="button" accessibilityLabel="Notiz" onPress={onNote} style={styles.action}><Pencil size={15} color={colors.muted} /><Text style={[styles.actionLabel, { color: colors.muted }]}>Notiz</Text></Pressable>
       <Pressable accessibilityRole="button" accessibilityLabel="Karte erstellen" onPress={onCard} style={styles.action}><Layers size={15} color={colors.muted} /><Text style={[styles.actionLabel, { color: colors.muted }]}>Karte</Text></Pressable>
-      <Pressable accessibilityRole="button" accessibilityLabel="MeiWik fragen" onPress={onChat} style={styles.action}><Glasses size={16} color={colors.muted} /><Text style={[styles.actionLabel, { color: colors.muted }]}>MeiWik</Text></Pressable>
+      <Pressable accessibilityRole="button" accessibilityLabel="MeiWik fragen" onPress={onChat} style={styles.action}><MeiWikAvatar size={22} /><Text style={[styles.actionLabel, { color: colors.muted }]}>MeiWik</Text></Pressable>
     </View>
   </>;
 }

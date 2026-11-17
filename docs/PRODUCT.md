@@ -1,6 +1,6 @@
 # Vereinbartes Produkt – myWik
 
-Stand: 16. November 2026. Ziel: HQ Frühjahr 2027, danach mündliche Prüfung; langfristig vollständiger Wirtschaftsfachwirt und erweiterbare Themen.
+Stand: 17. November 2026. Ziel: HQ Frühjahr 2027, danach mündliche Prüfung; langfristig vollständiger Wirtschaftsfachwirt und erweiterbare Themen.
 
 ## Inhalt und Navigation
 
@@ -11,6 +11,32 @@ Stand: 16. November 2026. Ziel: HQ Frühjahr 2027, danach mündliche Prüfung; l
 - Artikel: Definition/Kurzerklärung, ausführliche Abschnitte, TOC mit Sprungfunktion, kontextabhängige Reiter (Beispiel/Praxis/Lösung/Formel/Rechenweg), sparsame aufklappbare Hinweise.
 - Notizen pro Artikel/Abschnitt: persönlich oder Verbesserungshinweis, pro Nutzer editierbar.
 - Status offen/unklar/weiterarbeiten/abgeschlossen plus unabhängiger Stern. Aktive Symbole im Kapitelverzeichnis. Statushistorie für Wiederholungen.
+
+### Vereinbarte Fächer
+
+Die oberste Ebene enthält diese 13 Fächer in der folgenden Reihenfolge. Fachnamen tragen keine sichtbaren Nummern; die Kapitelnummerierung beginnt innerhalb jedes Fachs neu.
+
+| Fach | Dauerhafte interne ID |
+| --- | --- |
+| BWL | `bwl` |
+| VWL | `vwl` |
+| Rechnungswesen | `rechnungswesen` |
+| Recht | `recht` |
+| Steuern | `steuern` |
+| Unternehmensführung | `unternehmensfuehrung` |
+| Betriebliches Management | `betriebliches-management` |
+| Investition und Finanzierung | `investition-finanzierung` |
+| Controlling | `controlling` |
+| Logistik | `logistik` |
+| Marketing und Vertrieb | `marketing` |
+| Führung und Zusammenarbeit | `fuehrung-zusammenarbeit` |
+| Personal und Ausbildung | `personal` |
+
+- Unternehmensführung behandelt Strategie und Organisation; Führung und Zusammenarbeit behandelt Führungsverhalten, Kommunikation und Konflikte. Personal und Ausbildung bündelt Personalplanung, Personalentwicklung und Ausbildungsmethoden.
+- Investition und Finanzierung sowie Controlling sind eigenständige Fächer. Die Deckungsbeitragsrechnung bleibt als vorhandener Grundlagenartikel im Rechnungswesen; passende Verknüpfungen können später ergänzt werden.
+- Die bisherige ID `personal` wird für Personal und Ausbildung weiterverwendet, damit die Leittextmethode sowie bestehende Karteikarten und Fachzeiten unter derselben ID erhalten bleiben. Artikel-, Kapitel-, Abschnitts- und Glossar-IDs werden nicht geändert. Status und Notizen behalten dadurch ihre Zuordnung.
+- Ergänzte Kapitel sind zunächst reine Gliederungseinträge ohne vorgetäuschte Artikel. Die beiden vorhandenen Artikel bleiben inhaltlich unverändert.
+- Der gebündelte Katalog hat Version 2. Ältere heruntergeladene Kataloge dürfen diese Gliederung beim Start nicht überschreiben. Eine Veröffentlichung in Firebase oder als App erfolgt erst nach ausdrücklichem Auftrag.
 
 ## Lernen
 
