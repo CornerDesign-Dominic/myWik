@@ -476,6 +476,12 @@ test('guest and two accounts remain isolated across sign out, storage failure an
  await page.getByRole('button',{name:'Speichern',exact:true}).click();
  const bypass=page.getByRole('button',{name:'Ohne KI-Prüfung speichern',exact:true});
  if(await bypass.isVisible())await bypass.click();
+ // Durable card saves retain the editor and its draft when the device write fails.
+ const editor=page.getByRole('dialog');
+ await expect(editor).toBeVisible();
+ await expect(editor.getByRole('textbox',{name:'Frage / Vorderseite',exact:true})).toHaveValue('Alice noch nicht gespeichert?');
+ await expect(editor.getByRole('alert')).toBeVisible();
+ await editor.getByRole('button',{name:'Schließen',exact:true}).click();
  await expect(page.getByRole('dialog')).toBeHidden();
  await expect(page.getByRole('button',{name:'Speichern erneut versuchen',exact:true})).toBeVisible();
  await page.getByRole('button',{name:'Einstellungen',exact:true}).click();
@@ -770,4 +776,24 @@ test('modal actions respect simulated three-button, gesture and landscape system
     await page.getByRole('button', { name: 'Chat verkleinern', exact: true }).click();
     await expect(page.getByRole('dialog')).toBeHidden();
   }
+});
+
+test('the logistics catalogue opens an inventory diagram and keeps the case solution collapsed', async ({ page }) => {
+  await isolateCloud(page);
+  await page.goto('/');
+  await page.getByRole('button', { name: /^Fächer/ }).click();
+  await page.getByRole('button', { name: /^Logistik,/ }).click();
+  await page.getByRole('button', { name: /1\.3\.4 Bestellpunkt/ }).click();
+  await expect(page.getByRole('heading', { name: 'Bestellpunkt, Meldebestand und Bestellrhythmus', exact: true })).toBeVisible();
+  await expect(page.locator('svg[viewBox="0 0 320 177"] polyline')).toBeVisible();
+  await expect(page.getByText(/Am Tag 0 wird beim Meldebestand/)).toBeVisible();
+
+  await page.getByRole('button', { name: 'Zurück', exact: true }).click();
+  await page.getByRole('button', { name: /2\.4 Übungsfall: Bestellzeitpunkt/ }).click();
+  await expect(page.getByText(/Ermittle den Meldebestand und den Arbeitstag/)).toBeVisible();
+  const solution = page.getByRole('button', { name: /Musterlösung/ });
+  await expect(solution).toHaveAttribute('aria-expanded', 'false');
+  await expect(page.getByText(/Ersparnis = 600/)).toBeHidden();
+  await solution.click();
+  await expect(page.getByText(/Ersparnis = 600.*17,24/)).toBeVisible();
 });

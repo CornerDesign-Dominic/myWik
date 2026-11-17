@@ -1392,7 +1392,38 @@
             "title": "Rechenweg",
             "content": "Meldebestand = 12 × 5 + 20 = 80 Stück. Im Grundmodell überbrücken 60 Stück den erwarteten Verbrauch bis zur Lieferung, 20 bleiben als Puffer."
           }
-        ]
+        ],
+        "inventoryChart": {
+          "description": "Am Tag 0 wird beim Meldebestand von 80 Stück bestellt. Bis Tag 5 sinkt der Bestand auf 20 Stück. Die Lieferung von 100 Stück erhöht ihn auf 120 Stück. Am Tag 8 sind noch 84 Stück vorhanden.",
+          "points": [
+            [
+              0,
+              80
+            ],
+            [
+              5,
+              20
+            ],
+            [
+              5,
+              120
+            ],
+            [
+              8,
+              84
+            ]
+          ],
+          "days": [
+            0,
+            5,
+            8
+          ],
+          "levels": [
+            20,
+            80,
+            120
+          ]
+        }
       },
       {
         "id": "kurzfrage",
@@ -1795,7 +1826,7 @@
     "chapterId": "logistik-kommissionierung",
     "subjectId": "logistik",
     "title": "Kommissionierung und Bereitstellung",
-    "number": "2.2.2",
+    "number": "2.2.2.1",
     "intro": "Bei der Kommissionierung stellt das Lager Artikel und Mengen nach einem Auftrag zusammen.",
     "updatedAt": 1794873600000,
     "version": 1,
@@ -1856,7 +1887,7 @@
     "chapterId": "logistik-fertigungsprinzipien",
     "subjectId": "logistik",
     "title": "Werkstattfertigung, Fertigungsinseln und Fließfertigung",
-    "number": "3.1",
+    "number": "3.1.0",
     "intro": "Die Anordnung von Arbeitsplätzen beeinflusst Wege, Durchlaufzeiten und Flexibilität in der Produktion.",
     "updatedAt": 1794873600000,
     "version": 1,
@@ -2039,7 +2070,7 @@
     "chapterId": "logistik-verpackung",
     "subjectId": "logistik",
     "title": "Funktionen der Verpackung",
-    "number": "3.3",
+    "number": "3.3.1",
     "intro": "Eine Verpackung schützt die Ware, erleichtert ihre Handhabung und vermittelt Informationen für Lager und Transport.",
     "updatedAt": 1794873600000,
     "version": 1,
@@ -2100,7 +2131,7 @@
     "chapterId": "logistik-warenausgang",
     "subjectId": "logistik",
     "title": "Warenausgang und Distribution",
-    "number": "3.4",
+    "number": "3.4.1",
     "intro": "Der Warenausgang macht aus einem fertigen Auftrag eine übergabefähige Sendung. Die Distribution plant, wie die Sendung ihren Empfänger erreicht.",
     "updatedAt": 1794873600000,
     "version": 1,
@@ -2283,7 +2314,7 @@
     "chapterId": "logistik-entsorgungslogistik",
     "subjectId": "logistik",
     "title": "Entsorgungslogistik und Abfallhierarchie",
-    "number": "3.6",
+    "number": "3.6.0",
     "intro": "Entsorgungslogistik organisiert den Umgang mit Reststoffen und Abfällen. Getrennte Stoffströme halten geeignete Verwertungswege offen.",
     "updatedAt": 1794873600000,
     "version": 1,
@@ -2344,7 +2375,7 @@
     "chapterId": "logistik-produktportfolio",
     "subjectId": "logistik",
     "title": "Produktportfolio und logistische Komplexität",
-    "number": "4.1",
+    "number": "4.1.2",
     "intro": "Jede zusätzliche Variante kann einen eigenen Bestand, eigene Stammdaten und zusätzliche Umrüstungen verursachen. Der Betrieb kann Varianten vereinfachen, ohne jeden Kundenwunsch aufzugeben.",
     "updatedAt": 1794873600000,
     "version": 1,
@@ -4173,7 +4204,7 @@
     "chapterId": "logistik-kommissionierzeit",
     "subjectId": "logistik",
     "title": "Kommissionierzeit berechnen und verbessern",
-    "number": "2.2.3",
+    "number": "2.2.2.2",
     "intro": "Die Kommissionierzeit setzt sich aus mehreren Tätigkeiten zusammen. Wer sie einzeln erfasst, kann Verbesserungen gezielt prüfen.",
     "updatedAt": 1794960000000,
     "version": 1,
@@ -4362,7 +4393,7 @@
     "chapterId": "logistik-distributionsstufen",
     "subjectId": "logistik",
     "title": "Einstufige und mehrstufige Distribution",
-    "number": "3.7",
+    "number": "3.4.2",
     "intro": "Die Zahl der Lagerstufen beeinflusst Kundennähe, Umschlag und Kapitalbindung. Hier geht es um die Lagerstruktur der physischen Distribution.",
     "updatedAt": 1794960000000,
     "version": 1,
@@ -4423,7 +4454,7 @@
     "chapterId": "logistik-transportvertraege",
     "subjectId": "logistik",
     "title": "Fracht-, Speditions- und Lagervertrag",
-    "number": "3.8",
+    "number": "3.4.3",
     "intro": "Transportaufträge können verschiedene Pflichten auslösen. Die zugesagte Leistung ist für die Einordnung entscheidend.",
     "updatedAt": 1794960000000,
     "version": 1,
@@ -4484,7 +4515,7 @@
     "chapterId": "logistik-frachtbrief",
     "subjectId": "logistik",
     "title": "Frachtbrief, Warenangaben und Ablieferbeleg",
-    "number": "3.9",
+    "number": "3.4.4",
     "intro": "Transportdokumente sollen den Auftrag eindeutig beschreiben und nachvollziehbar machen, wann und in welchem Zustand Ware übernommen oder abgeliefert wurde.",
     "updatedAt": 1794960000000,
     "version": 1,
@@ -4545,7 +4576,7 @@
     "chapterId": "logistik-frachtfuehrerhaftung",
     "subjectId": "logistik",
     "title": "Frachtführerhaftung: HGB und CMR",
-    "number": "3.10",
+    "number": "3.4.5",
     "intro": "Bei Verlust, Beschädigung oder Verspätung kommt es darauf an, welches Regelwerk gilt und welche Art von Schaden vorliegt.",
     "updatedAt": 1794960000000,
     "version": 1,
@@ -4673,7 +4704,7 @@
     "chapterId": "logistik-rueckfuehrung",
     "subjectId": "logistik",
     "title": "Rückführung, Wiederverwendung und Recycling",
-    "number": "3.11",
+    "number": "3.6.7",
     "intro": "Rücksendungen, Mehrwegträger und Produktionsreste gehen in unterschiedliche Prozesse. Die erste Entscheidung betrifft Zustand und mögliche weitere Nutzung.",
     "updatedAt": 1794960000000,
     "version": 1,
@@ -5704,7 +5735,47 @@
             "title": "Rechenweg",
             "content": "Schutzzeit = 5 + 3 = 8 Arbeitstage. Sollbestand = 8 × 20 + 40 = 200 Stück. Auffüllmenge = 200 − 135 = 65 Stück."
           }
-        ]
+        ],
+        "inventoryChart": {
+          "description": "Ohne offene Zugänge entspricht der physische Bestand am Tag 0 der Bestandsposition von 135 Stück. Die erste Bestellung von 65 Stück trifft am Tag 3 bei 75 Stück ein. Am Prüftag 5 liegen 100 Stück auf Lager. Die zweite Bestellung über 100 Stück trifft am Tag 8 bei 40 Stück ein.",
+          "points": [
+            [
+              0,
+              135
+            ],
+            [
+              3,
+              75
+            ],
+            [
+              3,
+              140
+            ],
+            [
+              5,
+              100
+            ],
+            [
+              8,
+              40
+            ],
+            [
+              8,
+              140
+            ]
+          ],
+          "days": [
+            0,
+            3,
+            5,
+            8
+          ],
+          "levels": [
+            40,
+            100,
+            140
+          ]
+        }
       },
       {
         "id": "kurzfrage",
@@ -5790,7 +5861,7 @@
     "chapterId": "logistik-cmr-vorbehalte",
     "subjectId": "logistik",
     "title": "Schadensanzeige und Vorbehalte bei HGB und CMR",
-    "number": "3.13",
+    "number": "3.4.6",
     "intro": "Ein Transportvermerk hält den Zustand der Ware fest. Bei Schäden und Verspätung können Inhalt, Zeitpunkt und Empfänger der Anzeige rechtlich entscheidend sein.",
     "updatedAt": 1794960000000,
     "version": 1,
@@ -5964,6 +6035,2722 @@
           "label": "SELBSTKONTROLLE",
           "title": "Musterantwort",
           "content": "Der Hersteller liefert direkt an den Kunden des Händlers. Die Bank prüft, ob die vorgelegten Dokumente die Akkreditivbedingungen erfüllen."
+        }
+      }
+    ]
+  },
+  {
+    "id": "logistik-lieferservice",
+    "chapterId": "logistik-lieferservice",
+    "subjectId": "logistik",
+    "title": "Lieferservice und Organisation der Logistik",
+    "number": "1.1.7",
+    "intro": "Lieferservice umfasst mehrere Eigenschaften. Kunden erleben neben der Lieferzeit auch die Qualität, Flexibilität und Verlässlichkeit einer Lieferung.",
+    "updatedAt": 1794960000000,
+    "version": 1,
+    "sections": [
+      {
+        "id": "abschnitt-1",
+        "title": "Lieferservice beurteilen",
+        "paragraphs": [
+          [
+            {
+              "text": "Kurze Lieferzeit betrifft die Spanne bis zur Ankunft. Termintreue misst, ob Zusagen eingehalten wurden. Lieferqualität betrifft unter anderem vollständige und unbeschädigte Ware. Lieferflexibilität umfasst etwa die Reaktion auf geänderte Mengen oder Termine. Auch Statusauskünfte, Reklamationen und Retouren prägen den Service."
+            }
+          ]
+        ]
+      },
+      {
+        "id": "abschnitt-2",
+        "title": "Logistik als Querschnittsfunktion",
+        "paragraphs": [
+          [
+            {
+              "text": "Ein gemeinsamer Logistikbereich kann Schnittstellen bündeln. Verteilte Zuständigkeiten oder eine Matrixorganisation verbinden Fachbereiche, brauchen aber klar geregelte Übergaben und Verantwortlichkeiten."
+            }
+          ]
+        ]
+      },
+      {
+        "id": "praxisbeispiel",
+        "title": "Praxisbeispiel",
+        "paragraphs": [
+          [
+            {
+              "text": "Ein Kunde erhält ein Ersatzteil am zugesagten Tag, aber die Ausführung passt nicht. Die Disposition organisiert nach Meldung zügig Ersatz und Rücknahme."
+            }
+          ]
+        ]
+      },
+      {
+        "id": "kurzfrage",
+        "title": "Kurzfrage zum Schluss",
+        "paragraphs": [
+          [
+            {
+              "text": "Welche Dimension war zunächst erfüllt und welche verfehlt?"
+            }
+          ]
+        ],
+        "hint": {
+          "label": "SELBSTKONTROLLE",
+          "title": "Musterantwort",
+          "content": "Die Termintreue war erfüllt. Die Lieferqualität war wegen der falschen Ausführung mangelhaft. Die Ersatz- und Rücknahmeabwicklung prägt den weiteren Lieferservice."
+        }
+      }
+    ]
+  },
+  {
+    "id": "logistik-angebotspruefung",
+    "chapterId": "logistik-angebotspruefung",
+    "subjectId": "logistik",
+    "title": "Formelle und materielle Angebotsprüfung",
+    "number": "1.2.11",
+    "intro": "Vor dem Preisvergleich muss klar sein, ob ein Angebot vollständig und die angebotene Leistung vergleichbar ist.",
+    "updatedAt": 1794960000000,
+    "version": 1,
+    "sections": [
+      {
+        "id": "abschnitt-1",
+        "title": "Formelle Prüfung",
+        "paragraphs": [
+          [
+            {
+              "text": "Prüfe die äußeren und administrativen Anforderungen, etwa Frist, Vollständigkeit der verlangten Angaben und vorgeschriebene Unterlagen. Welche formellen Anforderungen gelten, hängt von der Anfrage und dem Verfahren ab."
+            }
+          ]
+        ]
+      },
+      {
+        "id": "abschnitt-2",
+        "title": "Materielle Prüfung",
+        "paragraphs": [
+          [
+            {
+              "text": "Prüfe inhaltlich, ob die Ware die technische Spezifikation erfüllt und ob Menge, Liefertermin, Bezugskosten, Zahlungsbedingungen und Qualitätsnachweise passen. Nicht vergleichbare Leistungspakete müssen geklärt werden, bevor eine Rangfolge sinnvoll ist."
+            }
+          ]
+        ]
+      },
+      {
+        "id": "praxisbeispiel",
+        "title": "Praxisbeispiel",
+        "paragraphs": [
+          [
+            {
+              "text": "Bei einem Angebot fehlt das laut Anfrage einzureichende Datenblatt. Beim zweiten ist es vollständig, die angebotene Dichtung verträgt aber die geforderte Temperatur nicht."
+            }
+          ]
+        ]
+      },
+      {
+        "id": "kurzfrage",
+        "title": "Kurzfrage zum Schluss",
+        "paragraphs": [
+          [
+            {
+              "text": "Welche Abweichung betrifft die formelle Prüfung und welche die materielle Prüfung?"
+            }
+          ]
+        ],
+        "hint": {
+          "label": "SELBSTKONTROLLE",
+          "title": "Musterantwort",
+          "content": "Das fehlende angeforderte Datenblatt ist formell. Die zu geringe Temperaturbeständigkeit ist ein materieller Mangel des Angebots."
+        }
+      }
+    ]
+  },
+  {
+    "id": "logistik-beschaffungsmarkt",
+    "chapterId": "logistik-beschaffungsmarkt",
+    "subjectId": "logistik",
+    "title": "Marktformen und räumliche Beschaffungsstrategien",
+    "number": "1.2.12",
+    "intro": "Anzahl, Standort und Austauschbarkeit der Anbieter beeinflussen Verhandlungsspielraum und Lieferrisiko.",
+    "updatedAt": 1794960000000,
+    "version": 1,
+    "sections": [
+      {
+        "id": "abschnitt-1",
+        "title": "Polypol, Oligopol und Monopol",
+        "paragraphs": [
+          [
+            {
+              "text": "Auf der Angebotsseite stehen beim Polypol viele Anbieter, beim Oligopol wenige und beim Monopol nur einer zur Verfügung. Im Einkauf zählt der sachlich und räumlich relevante Markt. Bei wenigen geeigneten Lieferanten können Ersatzprodukte, Eigenfertigung oder gemeinsame Beschaffung die Abhängigkeit senken."
+            }
+          ]
+        ]
+      },
+      {
+        "id": "abschnitt-2",
+        "title": "Local, Domestic und Global Sourcing",
+        "paragraphs": [
+          [
+            {
+              "text": "Local Sourcing nutzt die nähere Umgebung. Domestic Sourcing beschränkt sich auf den heimischen Markt, kann aber überregional sein. Global Sourcing erschließt internationale Liefermärkte. Entfernungen, Verkehrswege und gemeinsame Vorlieferanten beeinflussen die Standortentscheidung."
+            }
+          ]
+        ]
+      },
+      {
+        "id": "praxisbeispiel",
+        "title": "Praxisbeispiel",
+        "paragraphs": [
+          [
+            {
+              "text": "Ein Hersteller kann Standarddichtungen bundesweit von vielen Anbietern beziehen. Für ein zertifiziertes Modul kommt kurzfristig nur ein Anbieter in Frage."
+            }
+          ]
+        ]
+      },
+      {
+        "id": "kurzfrage",
+        "title": "Kurzfrage zum Schluss",
+        "paragraphs": [
+          [
+            {
+              "text": "Warum hat der Hersteller beim Modul trotz bundesweiter Suche weniger Auswahl?"
+            }
+          ]
+        ],
+        "hint": {
+          "label": "SELBSTKONTROLLE",
+          "title": "Musterantwort",
+          "content": "Auf dem für das Modul relevanten, durch die Anforderungen abgegrenzten Markt ist nur ein Anbieter verfügbar. Standarddichtungen sind dagegen über mehrere Quellen erhältlich."
+        }
+      }
+    ]
+  },
+  {
+    "id": "logistik-einkaufskooperation-lieferkette",
+    "chapterId": "logistik-einkaufskooperation-lieferkette",
+    "subjectId": "logistik",
+    "title": "Einkaufskooperationen und Sorgfalt in Lieferketten",
+    "number": "1.2.13",
+    "intro": "Eine Einkaufskooperation kann Bedarfe bündeln. Zugleich muss der Betrieb beobachten, welche Risiken bei Partnern in der Lieferkette anfallen.",
+    "updatedAt": 1794960000000,
+    "version": 1,
+    "sections": [
+      {
+        "id": "abschnitt-1",
+        "title": "Kooperation abgrenzen",
+        "paragraphs": [
+          [
+            {
+              "text": "Gemeinsam einkaufende Unternehmen können Konditionen verbessern. In der Praxis ist zu prüfen, welche Zusammenarbeit und welcher Informationsaustausch wettbewerbsrechtlich zulässig sind. Vertrauliche Verkaufsdaten und Angaben über das Marktverhalten brauchen besondere Aufmerksamkeit."
+            }
+          ]
+        ]
+      },
+      {
+        "id": "abschnitt-2",
+        "title": "Sorgfalt organisieren",
+        "paragraphs": [
+          [
+            {
+              "text": "Das Lieferkettensorgfaltspflichtengesetz ist im Buch ein Beispiel für menschenrechtliche und umweltbezogene Sorgfalt. Anwendungsbereich und Rechtsstand sind gesondert zu prüfen. Fachlich gehören Risikoanalyse, geeignete Präventionsmaßnahmen, Reaktion auf Hinweise und Dokumentation zusammen."
+            }
+          ]
+        ]
+      },
+      {
+        "id": "praxisbeispiel",
+        "title": "Praxisbeispiel",
+        "paragraphs": [
+          [
+            {
+              "text": "Vor einem neuen Bezug kritischer Komponenten werden Lieferweg und Vorlieferanten erfasst. Bei einem glaubhaften Hinweis auf problematische Arbeitsbedingungen klärt die zuständige Stelle den Sachverhalt und geeignete Maßnahmen."
+            }
+          ]
+        ]
+      },
+      {
+        "id": "kurzfrage",
+        "title": "Kurzfrage zum Schluss",
+        "paragraphs": [
+          [
+            {
+              "text": "Warum reicht die Bestätigung des direkten Lieferanten bei einem konkreten Risikohinweis nicht aus?"
+            }
+          ]
+        ],
+        "hint": {
+          "label": "SELBSTKONTROLLE",
+          "title": "Musterantwort",
+          "content": "Das Risiko kann in einer vorgelagerten Stufe liegen. Der Hinweis muss bewertet und mit geeigneten Informationen und Maßnahmen bearbeitet werden."
+        }
+      }
+    ]
+  },
+  {
+    "id": "logistik-stuecklistenarten",
+    "chapterId": "logistik-stuecklistenarten",
+    "subjectId": "logistik",
+    "title": "Mengenübersichts-, Struktur- und Baukastenstückliste",
+    "number": "1.3.2.8",
+    "intro": "Stücklisten können dieselbe Produktstruktur auf verschiedene Weise darstellen. Die richtige Ansicht hängt davon ab, welche Entscheidung ansteht.",
+    "updatedAt": 1794960000000,
+    "version": 1,
+    "sections": [
+      {
+        "id": "abschnitt-1",
+        "title": "Mengenübersicht und Struktur",
+        "paragraphs": [
+          [
+            {
+              "text": "Die Mengenübersichtsstückliste fasst den Gesamtbedarf je Teil für ein Endprodukt zusammen. Die Strukturstückliste zeigt den hierarchischen Aufbau über mehrere Ebenen. Achte darauf, ob eine Mengenangabe auf die übergeordnete Baugruppe oder bereits auf das Endprodukt bezogen ist."
+            }
+          ]
+        ]
+      },
+      {
+        "id": "abschnitt-2",
+        "title": "Baukasten und Varianten",
+        "paragraphs": [
+          [
+            {
+              "text": "Die Baukastenstückliste zeigt die unmittelbar untergeordneten Teile einer Baugruppe. Wiederverwendete Baugruppen können so separat gepflegt werden. Variantenstücklisten bilden Unterschiede zwischen Ausführungen ab."
+            }
+          ]
+        ]
+      },
+      {
+        "id": "praxisbeispiel",
+        "title": "Praxisbeispiel",
+        "paragraphs": [
+          [
+            {
+              "text": "Ein Gerät enthält zwei Module mit je drei Schrauben und eine Schraube desselben Typs im Gehäuse. Die Stückliste soll entweder den Gesamtbedarf oder den Aufbau erklären."
+            }
+          ]
+        ],
+        "tabs": [
+          {
+            "title": "Rechenweg",
+            "content": "Mengenübersicht: 2 × 3 + 1 = 7 Schrauben pro Gerät. Struktur: drei je Modul und eine auf Geräteebene. Baukasten des Moduls: drei Schrauben."
+          }
+        ]
+      },
+      {
+        "id": "kurzfrage",
+        "title": "Kurzfrage zum Schluss",
+        "paragraphs": [
+          [
+            {
+              "text": "Welche Liste zeigt den Gesamtbedarf auf einen Blick und welche den Einbauort über die Ebenen?"
+            }
+          ]
+        ],
+        "hint": {
+          "label": "SELBSTKONTROLLE",
+          "title": "Musterantwort",
+          "content": "Die Mengenübersicht zeigt sieben Schrauben. Die Strukturstückliste macht sichtbar, in welchen Baugruppen und auf welchen Ebenen sie eingesetzt werden."
+        }
+      }
+    ]
+  },
+  {
+    "id": "logistik-heuristische-bedarfsplanung",
+    "chapterId": "logistik-heuristische-bedarfsplanung",
+    "subjectId": "logistik",
+    "title": "Bedarf schätzen bei wenigen Daten",
+    "number": "1.3.2.9",
+    "intro": "Neue Produkte und seltene Ersatzteile haben oft keine belastbare Verbrauchshistorie. Dann kann eine nachvollziehbare Schätzung weiterhelfen.",
+    "updatedAt": 1794960000000,
+    "version": 1,
+    "sections": [
+      {
+        "id": "abschnitt-1",
+        "title": "Analog und intuitiv schätzen",
+        "paragraphs": [
+          [
+            {
+              "text": "Bei der Analogschätzung leitest du den Bedarf aus einem vergleichbaren Fall ab und passt relevante Unterschiede an. Bei der intuitiven Schätzung nutzt du Erfahrungswissen von Personen, die den Bedarf kennen. Dokumentiere Annahmen und Unsicherheit."
+            }
+          ]
+        ]
+      },
+      {
+        "id": "abschnitt-2",
+        "title": "Schätzung überprüfen",
+        "paragraphs": [
+          [
+            {
+              "text": "Gleiche erste Istwerte mit der Planung ab. Bei unregelmäßigen Bedarfen können Szenarien sinnvoller sein als ein scheinbar genauer Mittelwert."
+            }
+          ]
+        ]
+      },
+      {
+        "id": "praxisbeispiel",
+        "title": "Praxisbeispiel",
+        "paragraphs": [
+          [
+            {
+              "text": "Für ein neues Ersatzteil erwartet der Service mehr Geräte im Feld als beim Vorgängermodell. Die bisherige Fehlerquote des Vorgängers dient als Ausgangspunkt."
+            }
+          ]
+        ]
+      },
+      {
+        "id": "kurzfrage",
+        "title": "Kurzfrage zum Schluss",
+        "paragraphs": [
+          [
+            {
+              "text": "Welche Schätzmethode ist das und wann sollte sie überprüft werden?"
+            }
+          ]
+        ],
+        "hint": {
+          "label": "SELBSTKONTROLLE",
+          "title": "Musterantwort",
+          "content": "Es ist eine Analogschätzung. Sobald Verkaufs- und Ausfalldaten des neuen Modells vorliegen, wird geprüft, ob die Annahmen noch passen."
+        }
+      }
+    ]
+  },
+  {
+    "id": "logistik-sicherheitszeit",
+    "chapterId": "logistik-sicherheitszeit",
+    "subjectId": "logistik",
+    "title": "Sicherheitszeit, Fehlmengenkosten und Bestandsverlauf",
+    "number": "1.3.9",
+    "intro": "Versorgungsunsicherheit lässt sich durch zusätzliche Menge oder zusätzliche Zeit abfedern. Beide Maßnahmen können den durchschnittlichen Bestand erhöhen.",
+    "updatedAt": 1794960000000,
+    "version": 1,
+    "sections": [
+      {
+        "id": "abschnitt-1",
+        "title": "Zeitpuffer und Fehlmengenkosten",
+        "paragraphs": [
+          [
+            {
+              "text": "Sicherheitszeit zieht den vorgesehenen Beschaffungstermin vor. Ein Sicherheitsbestand legt einen Mengenpuffer fest. Fehlmengen können Expressfahrten, Produktionsstillstand, kurzfristig teureren Einkauf und entgangenen Absatz verursachen."
+            }
+          ]
+        ]
+      },
+      {
+        "id": "abschnitt-2",
+        "title": "Bestandsverlauf lesen",
+        "paragraphs": [
+          [
+            {
+              "text": "Bei gleichmäßigem Verbrauch fällt der Bestand zwischen Zugängen. Beim Bestellpunktverfahren richtet sich die Auslösung nach einer Schwelle. Beim Rhythmusverfahren wird zu festen Prüfterminen bestellt. Die Lieferung erhöht den Bestand nach Ablauf der Wiederbeschaffungszeit."
+            }
+          ]
+        ]
+      },
+      {
+        "id": "praxisbeispiel",
+        "title": "Praxisbeispiel",
+        "paragraphs": [
+          [
+            {
+              "text": "Ein Betrieb verbraucht täglich 30 Stück. Die Lieferzeit beträgt vier Arbeitstage. Er plant zusätzlich zwei Arbeitstage Zeitpuffer. Im Beispiel wird der Puffer nur über Zeit berücksichtigt."
+            }
+          ]
+        ],
+        "tabs": [
+          {
+            "title": "Rechenweg",
+            "content": "Vier Tage entsprechen 120 Stück. Zwei zusätzliche Tage entsprechen 60 Stück. Die Bestellung wird rechnerisch bei 180 Stück ausgelöst, sofern keine offenen Zugänge oder sonstigen Änderungen vorliegen."
+          }
+        ]
+      },
+      {
+        "id": "kurzfrage",
+        "title": "Kurzfrage zum Schluss",
+        "paragraphs": [
+          [
+            {
+              "text": "Warum sollte der Betrieb für dieselbe Unsicherheit nicht gleichzeitig zwei Tage und nochmals 60 Stück einrechnen?"
+            }
+          ]
+        ],
+        "hint": {
+          "label": "SELBSTKONTROLLE",
+          "title": "Musterantwort",
+          "content": "Beide Größen bilden im Beispiel denselben Puffer ab. Eine doppelte Anrechnung würde den Bestand höher als beabsichtigt auslegen."
+        }
+      }
+    ]
+  },
+  {
+    "id": "logistik-lagerfunktionen-vertieft",
+    "chapterId": "logistik-lagerfunktionen-vertieft",
+    "subjectId": "logistik",
+    "title": "Lagerfunktionen, Regalwahl und LIFO",
+    "number": "2.2.1.9",
+    "intro": "Neben Versorgung und Pufferung kann Lagerung Sortimente bilden, Produkte verändern oder einen günstigen Einkaufszeitpunkt ausnutzen.",
+    "updatedAt": 1794960000000,
+    "version": 1,
+    "sections": [
+      {
+        "id": "abschnitt-1",
+        "title": "Weitere Lagerfunktionen",
+        "paragraphs": [
+          [
+            {
+              "text": "Bei der Spekulationsfunktion wird wegen erwarteter Preis- oder Verfügbarkeitsänderungen eingelagert. Die Veredelungsfunktion nutzt Lagerzeit für eine gewünschte Veränderung, etwa Reifung. Die Sortimentsfunktion kombiniert verschiedene Artikel für die Nachfrage des Kunden."
+            }
+          ]
+        ]
+      },
+      {
+        "id": "abschnitt-2",
+        "title": "Technik und Entnahme",
+        "paragraphs": [
+          [
+            {
+              "text": "Fachregale passen oft zu kleinteiliger Ware, Verschieberegale nutzen Fläche mit wechselnd geöffneten Gängen, Umlaufregale bringen Fächer zur Entnahmestelle und Hochregale nutzen die Höhe. Bei physischem LIFO wird zuletzt eingelagerte Ware zuerst entnommen. Das passt nur, wenn Alter und Rückverfolgbarkeit beherrscht werden."
+            }
+          ]
+        ]
+      },
+      {
+        "id": "praxisbeispiel",
+        "title": "Praxisbeispiel",
+        "paragraphs": [
+          [
+            {
+              "text": "Gleichartige, nicht verderbliche Behälter werden in einem tiefen Kanal von derselben Seite ein- und ausgelagert. Das hinterste Gebinde ist erst nach Entnahme der vorderen erreichbar."
+            }
+          ]
+        ]
+      },
+      {
+        "id": "kurzfrage",
+        "title": "Kurzfrage zum Schluss",
+        "paragraphs": [
+          [
+            {
+              "text": "Welche Entnahmereihenfolge ergibt sich typischerweise, und wann wäre sie ungeeignet?"
+            }
+          ]
+        ],
+        "hint": {
+          "label": "SELBSTKONTROLLE",
+          "title": "Musterantwort",
+          "content": "LIFO, weil die zuletzt eingelagerten Gebinde vorn stehen. Für chargen- oder haltbarkeitskritische Ware wäre die Reihenfolge ohne zusätzliche Maßnahmen ungeeignet."
+        }
+      }
+    ]
+  },
+  {
+    "id": "logistik-kommissionierorganisation",
+    "chapterId": "logistik-kommissionierorganisation",
+    "subjectId": "logistik",
+    "title": "Serielle und parallele Kommissionierung",
+    "number": "2.2.2.3",
+    "intro": "Ein Auftrag kann nacheinander durch mehrere Lagerzonen laufen oder gleichzeitig in mehreren Zonen bearbeitet werden.",
+    "updatedAt": 1794960000000,
+    "version": 1,
+    "sections": [
+      {
+        "id": "abschnitt-1",
+        "title": "Organisation der Entnahme",
+        "paragraphs": [
+          [
+            {
+              "text": "Bei serieller Kommissionierung bearbeitet jede Zone den Auftrag nacheinander. Bei paralleler Kommissionierung laufen Teilaufträge gleichzeitig. Danach müssen ihre Positionen korrekt konsolidiert werden. Auftragsbezogene Entnahme und Sammelentnahme mehrerer Aufträge sind eine weitere Organisationsentscheidung."
+            }
+          ]
+        ]
+      },
+      {
+        "id": "abschnitt-2",
+        "title": "Information zur Entnahmestelle bringen",
+        "paragraphs": [
+          [
+            {
+              "text": "Pick-by-Scan bestätigt Artikel oder Platz über einen Scan. Pick-by-Voice führt per Sprachanweisung. Pick-by-Light zeigt Position oder Menge an. Pick-by-Vision blendet Informationen ins Sichtfeld ein."
+            }
+          ]
+        ]
+      },
+      {
+        "id": "praxisbeispiel",
+        "title": "Praxisbeispiel",
+        "paragraphs": [
+          [
+            {
+              "text": "Eine Bestellung umfasst Teile aus drei Zonen. Zwei Mitarbeitende bearbeiten Teilaufträge gleichzeitig. Die Packstation führt sie über die Auftragsnummer zusammen."
+            }
+          ]
+        ]
+      },
+      {
+        "id": "kurzfrage",
+        "title": "Kurzfrage zum Schluss",
+        "paragraphs": [
+          [
+            {
+              "text": "Was spart die parallele Bearbeitung und welches zusätzliche Risiko muss der Prozess beherrschen?"
+            }
+          ]
+        ],
+        "hint": {
+          "label": "SELBSTKONTROLLE",
+          "title": "Musterantwort",
+          "content": "Sie kann Wartezeit zwischen Lagerzonen sparen. Bei der Zusammenführung dürfen Positionen aus verschiedenen Aufträgen nicht vertauscht werden."
+        }
+      }
+    ]
+  },
+  {
+    "id": "logistik-werkstattfertigung",
+    "chapterId": "logistik-werkstattfertigung",
+    "subjectId": "logistik",
+    "title": "Werkstattfertigung",
+    "number": "3.1.1",
+    "intro": "Maschinen mit ähnlicher Funktion stehen zusammen. Jeder Auftrag durchläuft diejenigen Werkstätten, die sein Arbeitsplan erfordert.",
+    "updatedAt": 1794960000000,
+    "version": 1,
+    "sections": [
+      {
+        "id": "abschnitt-1",
+        "title": "Flexibilität und Wege",
+        "paragraphs": [
+          [
+            {
+              "text": "Die Werkstattfertigung eignet sich für wechselnde Bearbeitungsfolgen und kleine Lose. Maschinen können für viele Produkte genutzt werden. Dafür müssen Transporte und Reihenfolgen zwischen Werkstätten koordiniert werden."
+            }
+          ]
+        ]
+      },
+      {
+        "id": "abschnitt-2",
+        "title": "Wartezeiten erkennen",
+        "paragraphs": [
+          [
+            {
+              "text": "Viele offene Aufträge vor einer Maschine erhöhen die Durchlaufzeit. Eine hohe Auslastung jeder einzelnen Werkstatt ist nur dann nützlich, wenn die gesamte Auftragsfolge stabil bleibt."
+            }
+          ]
+        ]
+      },
+      {
+        "id": "praxisbeispiel",
+        "title": "Praxisbeispiel",
+        "paragraphs": [
+          [
+            {
+              "text": "Ein Einzelteil wird zuerst gedreht, dann gefräst und geprüft. Ein anderer Auftrag benötigt nur Fräsen und Prüfen."
+            }
+          ]
+        ]
+      },
+      {
+        "id": "kurzfrage",
+        "title": "Kurzfrage zum Schluss",
+        "paragraphs": [
+          [
+            {
+              "text": "Warum passt diese Fertigungsform zu unterschiedlichen Auftragsfolgen?"
+            }
+          ]
+        ],
+        "hint": {
+          "label": "SELBSTKONTROLLE",
+          "title": "Musterantwort",
+          "content": "Jeder Auftrag kann die benötigten Werkstätten in der für ihn passenden Reihenfolge durchlaufen. Er muss keine vollständige gemeinsame Fertigungslinie nutzen."
+        }
+      }
+    ]
+  },
+  {
+    "id": "logistik-fertigungsinseln",
+    "chapterId": "logistik-fertigungsinseln",
+    "subjectId": "logistik",
+    "title": "Fertigungsinseln",
+    "number": "3.1.2",
+    "intro": "Eine Fertigungsinsel bündelt Arbeitsplätze für eine Produktfamilie. Sie verbindet kürzere Wege mit Spielraum für Varianten.",
+    "updatedAt": 1794960000000,
+    "version": 1,
+    "sections": [
+      {
+        "id": "abschnitt-1",
+        "title": "Nach Produktfamilien gliedern",
+        "paragraphs": [
+          [
+            {
+              "text": "Fasse Produkte zusammen, die einen ähnlichen Ablauf benötigen. Die Insel kann Bearbeitung, Montage und Prüfung räumlich eng verbinden. Teams müssen die unterschiedlichen Aufgaben beherrschen."
+            }
+          ]
+        ]
+      },
+      {
+        "id": "abschnitt-2",
+        "title": "Auslastung und Schnittstellen beachten",
+        "paragraphs": [
+          [
+            {
+              "text": "Nicht jede Maschine lässt sich wirtschaftlich in mehreren Inseln vorhalten. Gemeinsam genutzte Spezialmaschinen sollten so eingeplant werden, dass sie die Insel nicht regelmäßig blockieren."
+            }
+          ]
+        ]
+      },
+      {
+        "id": "praxisbeispiel",
+        "title": "Praxisbeispiel",
+        "paragraphs": [
+          [
+            {
+              "text": "Eine Insel fertigt drei Ventilvarianten. Sie montiert und prüft sie am selben Ort. Eine selten benötigte Härteanlage bleibt zentral."
+            }
+          ]
+        ]
+      },
+      {
+        "id": "kurzfrage",
+        "title": "Kurzfrage zum Schluss",
+        "paragraphs": [
+          [
+            {
+              "text": "Warum ist die Insel ein Mittelweg zwischen Werkstatt und Fließband?"
+            }
+          ]
+        ],
+        "hint": {
+          "label": "SELBSTKONTROLLE",
+          "title": "Musterantwort",
+          "content": "Die Arbeitsschritte liegen nah beieinander wie bei einer produktorientierten Fertigung. Unterschiedliche Varianten einer Familie können dennoch flexibel bearbeitet werden."
+        }
+      }
+    ]
+  },
+  {
+    "id": "logistik-reihen-fliesbandfertigung",
+    "chapterId": "logistik-reihen-fliesbandfertigung",
+    "subjectId": "logistik",
+    "title": "Reihenfertigung und Fließbandfertigung",
+    "number": "3.1.3",
+    "intro": "Bei beiden Formen folgen die Arbeitsplätze der Bearbeitungsfolge. Die Taktbindung unterscheidet die Fließbandfertigung von der Reihenfertigung.",
+    "updatedAt": 1794960000000,
+    "version": 1,
+    "sections": [
+      {
+        "id": "abschnitt-1",
+        "title": "Reihenfertigung",
+        "paragraphs": [
+          [
+            {
+              "text": "Stationen stehen in Arbeitsreihenfolge, ohne dass jede Übergabe im selben festen Takt erfolgen muss. Zwischenbestände können Unterschiede in den Bearbeitungszeiten abfangen."
+            }
+          ]
+        ]
+      },
+      {
+        "id": "abschnitt-2",
+        "title": "Getaktete Fließbandfertigung",
+        "paragraphs": [
+          [
+            {
+              "text": "Ein gemeinsamer Takt synchronisiert die Stationen. Personal und Arbeitsschritte müssen zum Takt passen. Wenn eine Station länger braucht, kann sie die ganze Linie ausbremsen."
+            }
+          ]
+        ]
+      },
+      {
+        "id": "praxisbeispiel",
+        "title": "Praxisbeispiel",
+        "paragraphs": [
+          [
+            {
+              "text": "In einer Reihe kann ein Werkstück vor der Prüfung kurz warten. Auf einer getakteten Linie rückt jedes Werkstück nach 90 Sekunden weiter."
+            }
+          ]
+        ]
+      },
+      {
+        "id": "kurzfrage",
+        "title": "Kurzfrage zum Schluss",
+        "paragraphs": [
+          [
+            {
+              "text": "Welche Anordnung braucht für alle Stationen einen abgestimmten gemeinsamen Takt?"
+            }
+          ]
+        ],
+        "hint": {
+          "label": "SELBSTKONTROLLE",
+          "title": "Musterantwort",
+          "content": "Die getaktete Fließbandfertigung. Bei der Reihenfertigung ist die Abfolge festgelegt, die Übergabezeiten müssen aber nicht einheitlich sein."
+        }
+      }
+    ]
+  },
+  {
+    "id": "logistik-werkverkehr-rohrleitungen",
+    "chapterId": "logistik-werkverkehr-rohrleitungen",
+    "subjectId": "logistik",
+    "title": "Werkverkehr, gewerblicher Güterverkehr und Rohrleitungen",
+    "number": "3.2.4",
+    "intro": "Straßentransporte lassen sich nach ihrem Zweck einordnen. Für bestimmte Stoffströme kommt außerdem eine fest installierte Rohrleitung infrage.",
+    "updatedAt": 1794960000000,
+    "version": 1,
+    "sections": [
+      {
+        "id": "abschnitt-1",
+        "title": "Straßenverkehr nach Zweck einordnen",
+        "paragraphs": [
+          [
+            {
+              "text": "Werkverkehr dient den eigenen Unternehmenszwecken und ist nach § 1 GüKG unter anderem an Anforderungen zum Warenbezug, Zweck der Beförderung, eingesetztem Personal und ihrer Rolle als Hilfstätigkeit gebunden. Die entgeltliche Beförderung fremder Ware für einen Auftraggeber ist ein typisches Beispiel gewerblichen Güterkraftverkehrs."
+            }
+          ]
+        ]
+      },
+      {
+        "id": "abschnitt-2",
+        "title": "Rohrleitung mit anderen Verkehrsträgern vergleichen",
+        "paragraphs": [
+          [
+            {
+              "text": "Pipelines eignen sich für kontinuierliche, geeignete Stoffströme wie Flüssigkeiten und Gase. Hohe Investitionen und geringe Flexibilität der Strecke stehen stetigem Transport gegenüber. In der Schifffahrt greift die Binnenschifffahrt auf Binnenwasserstraßen zurück, die Seeschifffahrt auf Seewege."
+            }
+          ]
+        ]
+      },
+      {
+        "id": "praxisbeispiel",
+        "title": "Praxisbeispiel",
+        "paragraphs": [
+          [
+            {
+              "text": "Ein Hersteller beliefert mit eigenem Personal sein Lager. Ein externer Frachtführer liefert später eine Sendung an den Kunden. Das Werk bezieht Prozessgas über eine Leitung."
+            }
+          ]
+        ]
+      },
+      {
+        "id": "kurzfrage",
+        "title": "Kurzfrage zum Schluss",
+        "paragraphs": [
+          [
+            {
+              "text": "Welche Merkmale unterscheiden die drei Transportlösungen?"
+            }
+          ]
+        ],
+        "hint": {
+          "label": "SELBSTKONTROLLE",
+          "title": "Musterantwort",
+          "content": "Der erste Straßentransport dient bei erfüllten Voraussetzungen dem eigenen Unternehmen, der zweite ist eine Transportleistung für einen Auftraggeber. Die Rohrleitung dient einem festen, kontinuierlichen Stoffstrom."
+        }
+      }
+    ]
+  },
+  {
+    "id": "logistik-verpackungsarten",
+    "chapterId": "logistik-verpackungsarten",
+    "subjectId": "logistik",
+    "title": "Verkaufs-, Um- und Transportverpackung",
+    "number": "3.3.2",
+    "intro": "Die Funktion entscheidet über die Verpackungsart. Eine einzelne Sendung kann mehrere Verpackungsebenen enthalten.",
+    "updatedAt": 1794960000000,
+    "version": 1,
+    "sections": [
+      {
+        "id": "abschnitt-1",
+        "title": "Verpackungsebenen unterscheiden",
+        "paragraphs": [
+          [
+            {
+              "text": "Die Verkaufsverpackung bildet typischerweise eine Einheit mit dem Produkt für den Endnutzer. Eine Umverpackung fasst Verkaufseinheiten zusammen. Eine Transportverpackung erleichtert Handhabung und Beförderung und hilft, Transportschäden zu vermeiden."
+            }
+          ]
+        ]
+      },
+      {
+        "id": "abschnitt-2",
+        "title": "Verpackungsbegriffe und Rechtsstand",
+        "paragraphs": [
+          [
+            {
+              "text": "Das Packgut ist die zu verpackende Ware. Karton oder Kiste sind Packmittel. Füllung, Polsterung und Klebeband können Packhilfsmittel sein. Das Buch verwendet den damaligen Begriff VerpackG. Für aktuelle deutsche Pflichten sind die EU-Verpackungsverordnung und das Verpackungsrecht-Durchführungsgesetz mit der jeweiligen Übergangsregelung zu prüfen."
+            }
+          ]
+        ]
+      },
+      {
+        "id": "praxisbeispiel",
+        "title": "Praxisbeispiel",
+        "paragraphs": [
+          [
+            {
+              "text": "Ventile liegen einzeln in Schachteln. Mehrere Schachteln fasst ein Umkarton zur Verkaufseinheit zusammen. Für die Fracht werden die Kartons auf einer gesicherten Palette gebündelt."
+            }
+          ]
+        ]
+      },
+      {
+        "id": "kurzfrage",
+        "title": "Kurzfrage zum Schluss",
+        "paragraphs": [
+          [
+            {
+              "text": "Warum lassen sich Verpackungsaufgaben nicht allein am verwendeten Material erkennen?"
+            }
+          ]
+        ],
+        "hint": {
+          "label": "SELBSTKONTROLLE",
+          "title": "Musterantwort",
+          "content": "Karton kann sowohl eine Verkaufseinheit bilden als auch mehrere Einheiten bündeln. Die Funktion und die vorgesehene Verwendung bestimmen die Zuordnung."
+        }
+      }
+    ]
+  },
+  {
+    "id": "logistik-adsp-verkehrsvertrag",
+    "chapterId": "logistik-adsp-verkehrsvertrag",
+    "subjectId": "logistik",
+    "title": "ADSp und Pflichten rund um den Transportauftrag",
+    "number": "3.4.7",
+    "intro": "Bei einem Transportauftrag können gesetzliche Regeln und wirksam einbezogene Vertragsbedingungen zusammenwirken.",
+    "updatedAt": 1794960000000,
+    "version": 1,
+    "sections": [
+      {
+        "id": "abschnitt-1",
+        "title": "ADSp einordnen",
+        "paragraphs": [
+          [
+            {
+              "text": "Die Allgemeinen Deutschen Spediteurbedingungen sind empfohlene Vertragsbedingungen, deren Anwendbarkeit im Vertrag zu prüfen ist. Für einen Schaden sind zunächst Vertragstyp, Verkehrsart und zwingende Vorschriften zu bestimmen. Erst danach lassen sich einschlägige Bedingungen und Haftungsgrenzen prüfen."
+            }
+          ]
+        ]
+      },
+      {
+        "id": "abschnitt-2",
+        "title": "Angaben und Unterlagen bereitstellen",
+        "paragraphs": [
+          [
+            {
+              "text": "Der Auftrag muss Gut, Ort, Termine und Besonderheiten erkennen lassen. Verpackung und Kennzeichnung müssen passen. Bei gefährlichen Gütern und fremdsprachigen oder grenzüberschreitenden Unterlagen ist vor der Übergabe zu klären, welche Angaben, Dokumente und Verantwortlichkeiten erforderlich sind."
+            }
+          ]
+        ]
+      },
+      {
+        "id": "praxisbeispiel",
+        "title": "Praxisbeispiel",
+        "paragraphs": [
+          [
+            {
+              "text": "Ein Auftrag enthält nur den Vermerk „gemäß Bedingungen“. Vor der Haftungsprüfung wird festgestellt, welche Fassung vereinbart wurde und ob das Straßengüterrecht eines internationalen Übereinkommens einschlägig ist."
+            }
+          ]
+        ]
+      },
+      {
+        "id": "kurzfrage",
+        "title": "Kurzfrage zum Schluss",
+        "paragraphs": [
+          [
+            {
+              "text": "Warum genügt der bloße Hinweis auf ADSp zur Berechnung einer Haftungsgrenze nicht?"
+            }
+          ]
+        ],
+        "hint": {
+          "label": "SELBSTKONTROLLE",
+          "title": "Musterantwort",
+          "content": "Einbeziehung, Fassung, Vertrag und Verkehrsart müssen feststehen. Zwingende Vorschriften können die Reichweite vertraglicher Bedingungen begrenzen."
+        }
+      }
+    ]
+  },
+  {
+    "id": "logistik-sonderziehungsrechte",
+    "chapterId": "logistik-sonderziehungsrechte",
+    "subjectId": "logistik",
+    "title": "Güterschaden und Sonderziehungsrechte berechnen",
+    "number": "3.4.8",
+    "intro": "Sonderziehungsrechte (SZR) dienen als Recheneinheit für bestimmte Haftungsgrenzen. Ein Höchstbetrag und der ersatzfähige Schaden sind zu unterscheiden.",
+    "updatedAt": 1794960000000,
+    "version": 1,
+    "sections": [
+      {
+        "id": "abschnitt-1",
+        "title": "Gewichtsbasis und Kurs",
+        "paragraphs": [
+          [
+            {
+              "text": "Nach § 431 HGB gilt für die reguläre Grenze bei Verlust oder Beschädigung 8,33 SZR je Kilogramm Rohgewicht. Bei Teilschäden ist zu klären, auf welche entwertete Sendung oder welchen entwerteten Teil sich das Gewicht bezieht. Rechne den passenden SZR-Kurs zum maßgeblichen Zeitpunkt um."
+            }
+          ]
+        ]
+      },
+      {
+        "id": "abschnitt-2",
+        "title": "Schadensarten vergleichen",
+        "paragraphs": [
+          [
+            {
+              "text": "Warenwert, Haftungsgrenze und nachgewiesener Schaden sind getrennt zu prüfen. Für Lieferfristüberschreitung gelten andere Grenzen. Bei CMR-Transporten sind die CMR und das einschlägige Protokoll bzw. die anwendbare Fassung zu prüfen. Die Übung unterstellt die reguläre HGB-Grenze."
+            }
+          ]
+        ]
+      },
+      {
+        "id": "abschnitt-3",
+        "title": "Andere Pflichtverletzungen abgrenzen",
+        "paragraphs": [
+          [
+            {
+              "text": "Bei einer vereinbarten Nachnahme ist die Einziehung des Betrags eine eigene Pflicht. Für einen Fehler dabei und für sonstige Vermögensschäden gelten andere Regeln als für den Verlust eines Packstücks. Prüfe bei einer Haftungsanalyse deshalb auch das vereinbarte Leistungsprogramm und nicht nur das Rohgewicht."
+            }
+          ]
+        ]
+      },
+      {
+        "id": "praxisbeispiel",
+        "title": "Praxisbeispiel",
+        "paragraphs": [
+          [
+            {
+              "text": "Ein Packstück mit 300 kg Rohgewicht geht verloren. Es ist der einzige entwertete Teil. Der ersatzfähige Warenwert beträgt 4.000 €. Die Übung gibt 1,20 € pro SZR vor."
+            }
+          ]
+        ],
+        "tabs": [
+          {
+            "title": "Rechenweg",
+            "content": "300 kg × 8,33 SZR/kg = 2.499 SZR. 2.499 × 1,20 € = 2.998,80 €. Unter den Aufgabenannahmen greift diese Grenze vor dem Warenwert von 4.000 €."
+          }
+        ]
+      },
+      {
+        "id": "kurzfrage",
+        "title": "Kurzfrage zum Schluss",
+        "paragraphs": [
+          [
+            {
+              "text": "Wie hoch wäre der Ersatz im vereinfachten Fall, wenn der ersatzfähige Warenwert nur 2.000 € beträgt?"
+            }
+          ]
+        ],
+        "hint": {
+          "label": "SELBSTKONTROLLE",
+          "title": "Musterantwort",
+          "content": "2.000 €. Die Haftungsgrenze begrenzt den Ersatz nach oben und erhöht den tatsächlich ersatzfähigen Schaden nicht."
+        }
+      }
+    ]
+  },
+  {
+    "id": "logistik-ladungssicherung-rollen",
+    "chapterId": "logistik-ladungssicherung-rollen",
+    "subjectId": "logistik",
+    "title": "Verantwortung und Kräfte bei der Verladung",
+    "number": "3.5.4",
+    "intro": "Ein sicherer Transport setzt voraus, dass Güter, Ladungsträger und Fahrzeug zusammen beurteilt werden. Dazu müssen Zuständigkeiten vor der Abfahrt feststehen.",
+    "updatedAt": 1794960000000,
+    "version": 1,
+    "sections": [
+      {
+        "id": "abschnitt-1",
+        "title": "Verantwortung bei der Übergabe",
+        "paragraphs": [
+          [
+            {
+              "text": "§ 412 HGB trennt die beförderungssichere Verladung des Absenders und die betriebssichere Verladung des Frachtführers nach den dort genannten Voraussetzungen. Im Straßenverkehr bestehen zusätzlich Pflichten insbesondere zur sicheren Verstauung und zur Verkehrssicherheit nach §§ 22 und 23 StVO."
+            }
+          ]
+        ]
+      },
+      {
+        "id": "abschnitt-2",
+        "title": "Kräfte im Grundmodell",
+        "paragraphs": [
+          [
+            {
+              "text": "Masse erzeugt bei einer Beschleunigungsänderung eine Trägheitswirkung. Reibung wirkt einer Bewegung entgegen, schützt aber nur im Rahmen der tatsächlichen Bedingungen. daN ist eine Krafteinheit. Die konkrete Sicherung muss nach den anerkannten Regeln der Technik für das Fahrzeug und die Ladung ausgelegt werden."
+            }
+          ]
+        ]
+      },
+      {
+        "id": "praxisbeispiel",
+        "title": "Praxisbeispiel",
+        "paragraphs": [
+          [
+            {
+              "text": "Die Packstücke sind auf dem Ladungsträger ausreichend verbunden. Der Fahrer stellt bei der Übernahme fest, dass die gewählte Position für das Fahrzeug ungeeignet ist."
+            }
+          ]
+        ]
+      },
+      {
+        "id": "kurzfrage",
+        "title": "Kurzfrage zum Schluss",
+        "paragraphs": [
+          [
+            {
+              "text": "Welche zwei Sicherheitsfragen sind vor der Abfahrt zu klären?"
+            }
+          ]
+        ],
+        "hint": {
+          "label": "SELBSTKONTROLLE",
+          "title": "Musterantwort",
+          "content": "Ob das Gut einschließlich seiner Ladeeinheit gegen Bewegungen ausreichend gesichert ist und ob das beladene Fahrzeug etwa hinsichtlich Lastverteilung und Verkehrssicherheit geeignet ist."
+        }
+      }
+    ]
+  },
+  {
+    "id": "logistik-entsorgungsobjekte",
+    "chapterId": "logistik-entsorgungsobjekte",
+    "subjectId": "logistik",
+    "title": "Objekte und Wege der Entsorgungslogistik",
+    "number": "3.6.1",
+    "intro": "Entsorgungslogistik erfasst unterschiedliche Stoffströme und organisiert ihre Übergabe an die passende weitere Nutzung oder Entsorgung.",
+    "updatedAt": 1794960000000,
+    "version": 1,
+    "sections": [
+      {
+        "id": "abschnitt-1",
+        "title": "Stoffströme erfassen",
+        "paragraphs": [
+          [
+            {
+              "text": "Im Betrieb können etwa Verpackungsmaterial, Produktionsreste, Ausschuss und ausgediente Betriebsmittel anfallen. Für jeden Strom werden Herkunft, Zusammensetzung und Zustand betrachtet."
+            }
+          ]
+        ]
+      },
+      {
+        "id": "abschnitt-2",
+        "title": "Wege festlegen",
+        "paragraphs": [
+          [
+            {
+              "text": "Sammelstelle, Abholung, Aufbereitung und Übergabe brauchen klare Verantwortlichkeiten. Prüfe zuerst, ob ein Gegenstand unmittelbar wiederverwendbar ist oder als Abfall eingeordnet werden muss."
+            }
+          ]
+        ]
+      },
+      {
+        "id": "praxisbeispiel",
+        "title": "Praxisbeispiel",
+        "paragraphs": [
+          [
+            {
+              "text": "Saubere Verschnittreste, ölhaltige Wischtücher und funktionsfähige Mehrwegkisten fallen am selben Standort an."
+            }
+          ]
+        ]
+      },
+      {
+        "id": "kurzfrage",
+        "title": "Kurzfrage zum Schluss",
+        "paragraphs": [
+          [
+            {
+              "text": "Warum brauchen diese drei Ströme eine eigene Zuordnung?"
+            }
+          ]
+        ],
+        "hint": {
+          "label": "SELBSTKONTROLLE",
+          "title": "Musterantwort",
+          "content": "Sie unterscheiden sich in weiterer Nutzung und möglicher Gefährlichkeit. Eine gemeinsame Behandlung könnte Wiederverwendung und geeignete Verwertung verhindern."
+        }
+      }
+    ]
+  },
+  {
+    "id": "logistik-abfallvermeidung",
+    "chapterId": "logistik-abfallvermeidung",
+    "subjectId": "logistik",
+    "title": "Abfallvermeidung im Einkauf und in der Fertigung",
+    "number": "3.6.2",
+    "intro": "Abfallvermeidung setzt vor dem Entstehen von Abfall an. Einkauf, Konstruktion und Produktion können dazu beitragen.",
+    "updatedAt": 1794960000000,
+    "version": 1,
+    "sections": [
+      {
+        "id": "abschnitt-1",
+        "title": "Vermeidung an der Quelle",
+        "paragraphs": [
+          [
+            {
+              "text": "Prüfe, welche Stoffe und Verpackungen überhaupt benötigt werden. Längere Nutzung, Reparaturfähigkeit, Mehrweg und ein verschnittarmer Zuschnitt können die Abfallmenge verringern."
+            }
+          ]
+        ]
+      },
+      {
+        "id": "abschnitt-2",
+        "title": "Wirkung prüfen",
+        "paragraphs": [
+          [
+            {
+              "text": "Vergleiche die Maßnahme über den relevanten Ablauf. Bei Mehrweg gehören Rücktransport und Reinigung zur Bewertung. Eine Maßnahme soll Abfall vermeiden, ohne vermeidbare Schäden an der Ware zu verursachen."
+            }
+          ]
+        ]
+      },
+      {
+        "id": "praxisbeispiel",
+        "title": "Praxisbeispiel",
+        "paragraphs": [
+          [
+            {
+              "text": "Für regelmäßige Lieferungen auf einer festen Route ersetzt ein Betrieb unnötige Einwegzwischenlagen durch einen wiederverwendbaren Einsatz."
+            }
+          ]
+        ]
+      },
+      {
+        "id": "kurzfrage",
+        "title": "Kurzfrage zum Schluss",
+        "paragraphs": [
+          [
+            {
+              "text": "Warum ist der Wechsel Abfallvermeidung?"
+            }
+          ]
+        ],
+        "hint": {
+          "label": "SELBSTKONTROLLE",
+          "title": "Musterantwort",
+          "content": "Die Einwegzwischenlage fällt künftig gar nicht mehr als Abfall an. Ein bereits entstandener Abfall müsste dagegen bewirtschaftet werden."
+        }
+      }
+    ]
+  },
+  {
+    "id": "logistik-wiederverwendung-vorbereitung",
+    "chapterId": "logistik-wiederverwendung-vorbereitung",
+    "subjectId": "logistik",
+    "title": "Vorbereitung zur Wiederverwendung",
+    "number": "3.6.3",
+    "intro": "Prüfung, Reinigung oder Reparatur können einen Gegenstand, der bereits Abfall geworden ist, wieder für seinen Zweck nutzbar machen.",
+    "updatedAt": 1794960000000,
+    "version": 1,
+    "sections": [
+      {
+        "id": "abschnitt-1",
+        "title": "Status und Arbeitsschritt",
+        "paragraphs": [
+          [
+            {
+              "text": "Gebrauchsfähige Gegenstände können direkt wiederverwendet werden. Bei der Vorbereitung zur Wiederverwendung geht es um Produkte oder Bestandteile, die bereits als Abfall einzuordnen sind und nach geeigneter Vorbereitung wieder nutzbar werden."
+            }
+          ]
+        ]
+      },
+      {
+        "id": "abschnitt-2",
+        "title": "Funktion erhalten",
+        "paragraphs": [
+          [
+            {
+              "text": "Entscheidend ist, dass der Gegenstand oder sein Bestandteil erneut eingesetzt werden kann. Wird das Material stattdessen zu einem anderen Stoff verarbeitet, ist eine andere Stufe zu prüfen."
+            }
+          ]
+        ]
+      },
+      {
+        "id": "praxisbeispiel",
+        "title": "Praxisbeispiel",
+        "paragraphs": [
+          [
+            {
+              "text": "Aussortierte Transportkisten werden geprüft. Geeignete Kisten werden repariert und anschließend wieder als Kisten genutzt."
+            }
+          ]
+        ]
+      },
+      {
+        "id": "kurzfrage",
+        "title": "Kurzfrage zum Schluss",
+        "paragraphs": [
+          [
+            {
+              "text": "Weshalb ist die Reparatur als Vorbereitung zur Wiederverwendung einzuordnen, wenn die Kisten bereits Abfall geworden sind?"
+            }
+          ]
+        ],
+        "hint": {
+          "label": "SELBSTKONTROLLE",
+          "title": "Musterantwort",
+          "content": "Sie stellt die ursprüngliche Funktion wieder her. Die Kisten bleiben als Gegenstände erhalten."
+        }
+      }
+    ]
+  },
+  {
+    "id": "logistik-recycling",
+    "chapterId": "logistik-recycling",
+    "subjectId": "logistik",
+    "title": "Recycling und stoffliche Aufbereitung",
+    "number": "3.6.4",
+    "intro": "Recycling nutzt das Material eines Abfalls für neue Produkte, Stoffe oder Materialien.",
+    "updatedAt": 1794960000000,
+    "version": 1,
+    "sections": [
+      {
+        "id": "abschnitt-1",
+        "title": "Recycling erkennen",
+        "paragraphs": [
+          [
+            {
+              "text": "Sortierte Fraktionen können gereinigt, getrennt und zu einem verwertbaren Material aufbereitet werden. Verschmutzung oder eine Vermischung von Werkstoffen erschweren die stoffliche Nutzung."
+            }
+          ]
+        ]
+      },
+      {
+        "id": "abschnitt-2",
+        "title": "Qualität am Entstehungsort sichern",
+        "paragraphs": [
+          [
+            {
+              "text": "Getrennte Erfassung erhält geeignete Fraktionen. Die Auswahl der Verpackung und ihre Zerlegbarkeit können den späteren Recyclingweg beeinflussen."
+            }
+          ]
+        ]
+      },
+      {
+        "id": "praxisbeispiel",
+        "title": "Praxisbeispiel",
+        "paragraphs": [
+          [
+            {
+              "text": "Getrennt erfasste Kunststoffreste eines Werkstoffs werden zu Granulat für neue Teile aufbereitet."
+            }
+          ]
+        ]
+      },
+      {
+        "id": "kurzfrage",
+        "title": "Kurzfrage zum Schluss",
+        "paragraphs": [
+          [
+            {
+              "text": "Warum handelt es sich um Recycling und nicht lediglich um Rückführung?"
+            }
+          ]
+        ],
+        "hint": {
+          "label": "SELBSTKONTROLLE",
+          "title": "Musterantwort",
+          "content": "Der Abfall wird zu einem Werkstoff für neue Produkte verarbeitet. Reine Rückführung beschreibt zunächst nur den Rücktransport."
+        }
+      }
+    ]
+  },
+  {
+    "id": "logistik-sonstige-verwertung",
+    "chapterId": "logistik-sonstige-verwertung",
+    "subjectId": "logistik",
+    "title": "Sonstige Verwertung",
+    "number": "3.6.5",
+    "intro": "Bei sonstiger Verwertung kann Abfall einen anderen nutzbringenden Zweck erfüllen, ohne als Material recycelt zu werden.",
+    "updatedAt": 1794960000000,
+    "version": 1,
+    "sections": [
+      {
+        "id": "abschnitt-1",
+        "title": "Energetische Verwertung und Verfüllung",
+        "paragraphs": [
+          [
+            {
+              "text": "Eine geeignete energetische Verwertung gewinnt nutzbare Energie aus Abfällen. Bei einer zulässigen Verfüllung kann geeigneter Abfall anderes Material ersetzen. Die konkrete rechtliche Einordnung hängt von Verfahren und Voraussetzungen ab."
+            }
+          ]
+        ]
+      },
+      {
+        "id": "abschnitt-2",
+        "title": "Stoffliche und energetische Nutzung vergleichen",
+        "paragraphs": [
+          [
+            {
+              "text": "Beim Recycling bleibt Material als Ressource erhalten. Bei energetischer Verwertung steht der Energiegewinn im Vordergrund. Bei der Auswahl sind Hierarchie und Umweltauswirkungen zu berücksichtigen."
+            }
+          ]
+        ]
+      },
+      {
+        "id": "praxisbeispiel",
+        "title": "Praxisbeispiel",
+        "paragraphs": [
+          [
+            {
+              "text": "Für einen sortierten Reststoff wird geprüft, ob er stofflich aufbereitet werden kann. Ein anderer geeigneter Reststoff wird in einem anerkannten Verfahren energetisch genutzt."
+            }
+          ]
+        ]
+      },
+      {
+        "id": "kurzfrage",
+        "title": "Kurzfrage zum Schluss",
+        "paragraphs": [
+          [
+            {
+              "text": "Woran erkennst du, dass die zweite Behandlung kein Recycling ist?"
+            }
+          ]
+        ],
+        "hint": {
+          "label": "SELBSTKONTROLLE",
+          "title": "Musterantwort",
+          "content": "Das Ziel ist die Nutzung der Energie. Das Material wird nicht zu einem Werkstoff für eine neue stoffliche Anwendung aufbereitet."
+        }
+      }
+    ]
+  },
+  {
+    "id": "logistik-abfallbeseitigung",
+    "chapterId": "logistik-abfallbeseitigung",
+    "subjectId": "logistik",
+    "title": "Abfallbeseitigung und Übergabe",
+    "number": "3.6.6",
+    "intro": "Ist eine geeignete Verwertung nicht möglich oder geboten, kommt ein zulässiger Beseitigungsweg in Betracht.",
+    "updatedAt": 1794960000000,
+    "version": 1,
+    "sections": [
+      {
+        "id": "abschnitt-1",
+        "title": "Beseitigung einordnen",
+        "paragraphs": [
+          [
+            {
+              "text": "Die Beseitigung steht in der Abfallhierarchie nach den Verwertungsstufen. Ein mögliches Beispiel ist die Ablagerung geeigneter und entsprechend behandelter Abfälle auf einer zugelassenen Deponie."
+            }
+          ]
+        ]
+      },
+      {
+        "id": "abschnitt-2",
+        "title": "Übergabe nachvollziehbar machen",
+        "paragraphs": [
+          [
+            {
+              "text": "Abfallart und vorgesehener Weg werden vor der Übergabe geklärt. Weitere Anforderungen hängen unter anderem davon ab, ob der Abfall gefährlich ist und welche Anlage ihn annimmt."
+            }
+          ]
+        ]
+      },
+      {
+        "id": "praxisbeispiel",
+        "title": "Praxisbeispiel",
+        "paragraphs": [
+          [
+            {
+              "text": "Ein belasteter Reststoff kann nicht in den üblichen Recyclingweg gegeben werden. Der Betrieb prüft nach Einstufung einen zulässigen Beseitigungsweg."
+            }
+          ]
+        ]
+      },
+      {
+        "id": "kurzfrage",
+        "title": "Kurzfrage zum Schluss",
+        "paragraphs": [
+          [
+            {
+              "text": "Warum ist eine Stoffeinstufung nötig, bevor der Betrieb den Abfall abgibt?"
+            }
+          ]
+        ],
+        "hint": {
+          "label": "SELBSTKONTROLLE",
+          "title": "Musterantwort",
+          "content": "Einstufung und Eigenschaften bestimmen, welche Behandlungswege, Annahmestellen und Nachweise für den Stoff in Frage kommen."
+        }
+      }
+    ]
+  },
+  {
+    "id": "logistik-beschaffungsportfolio",
+    "chapterId": "logistik-beschaffungsportfolio",
+    "subjectId": "logistik",
+    "title": "Beschaffungsportfoliomatrix und Einkaufsstrategien",
+    "number": "4.1.1",
+    "intro": "Die Portfoliomatrix des Buchs verbindet die wirtschaftliche Bedeutung eines Beschaffungsguts mit seinem Versorgungsrisiko.",
+    "updatedAt": 1794960000000,
+    "version": 1,
+    "sections": [
+      {
+        "id": "abschnitt-1",
+        "title": "Vier Felder einordnen",
+        "paragraphs": [
+          [
+            {
+              "text": "Hoher Wertanteil und geringes Risiko ergeben Hebelprodukte. Hoher Wertanteil und hohes Risiko ergeben Schlüsselprodukte. Bei geringerem Wertanteil und geringem Risiko spricht das Buch von unkritischen Produkten, bei geringerem Wertanteil und hohem Risiko von Engpassprodukten."
+            }
+          ]
+        ]
+      },
+      {
+        "id": "abschnitt-2",
+        "title": "Strategien ableiten",
+        "paragraphs": [
+          [
+            {
+              "text": "Bei Hebelprodukten lässt sich die Marktposition nutzen. Bei Schlüsselprodukten sind tragfähige Lieferbeziehungen und abgesicherte Alternativen wichtig. Bei Engpassprodukten steht Verfügbarkeit im Vordergrund. Unkritische Produkte eignen sich oft für Standardisierung und einfache Prozesse."
+            }
+          ]
+        ]
+      },
+      {
+        "id": "praxisbeispiel",
+        "title": "Praxisbeispiel",
+        "paragraphs": [
+          [
+            {
+              "text": "Ein günstiger Sonderclip ist nur bei einem Hersteller verfügbar und stoppt bei fehlendem Bestand die Montage. Teure Standardprofile sind bei vielen Lieferanten erhältlich."
+            }
+          ]
+        ]
+      },
+      {
+        "id": "kurzfrage",
+        "title": "Kurzfrage zum Schluss",
+        "paragraphs": [
+          [
+            {
+              "text": "In welche Felder gehören Clip und Profile, und welche Maßnahmen ergeben sich?"
+            }
+          ]
+        ],
+        "hint": {
+          "label": "SELBSTKONTROLLE",
+          "title": "Musterantwort",
+          "content": "Der Clip ist ein Engpassprodukt. Puffer oder eine Ersatzfreigabe schützen die Versorgung. Die Profile sind Hebelprodukte. Gebündelte Mengen und ein Angebotsvergleich können die Einkaufsposition nutzen."
+        }
+      }
+    ]
+  },
+  {
+    "id": "logistik-rfid",
+    "chapterId": "logistik-rfid",
+    "subjectId": "logistik",
+    "title": "RFID, Barcode und automatische Identifikation",
+    "number": "4.3.5",
+    "intro": "Barcodes und RFID verbinden Gegenstände mit ihren Daten. Bei RFID identifiziert ein Lesegerät geeignete Transponder per Funk.",
+    "updatedAt": 1794960000000,
+    "version": 1,
+    "sections": [
+      {
+        "id": "abschnitt-1",
+        "title": "Erfassungsprinzipien unterscheiden",
+        "paragraphs": [
+          [
+            {
+              "text": "Optisches Lesen braucht einen erfassbaren Code. RFID benötigt keinen direkten Sichtkontakt, kann je nach System mehrere Transponder erfassen und muss auf Lesereichweite und Umgebung abgestimmt werden. Metall, Flüssigkeiten und ungeeignete Anordnung können das Lesen erschweren."
+            }
+          ]
+        ]
+      },
+      {
+        "id": "abschnitt-2",
+        "title": "Nutzen im Prozess bewerten",
+        "paragraphs": [
+          [
+            {
+              "text": "Vergleiche Erfassungsaufwand, Datenqualität, Fehlbuchungen und Kosten. Ein Lesepunkt ist nur dann nützlich, wenn die gelesene Kennung eindeutig mit der geforderten Bewegung verknüpft ist."
+            }
+          ]
+        ]
+      },
+      {
+        "id": "praxisbeispiel",
+        "title": "Praxisbeispiel",
+        "paragraphs": [
+          [
+            {
+              "text": "Mehrwegbehälter werden an der Rampe in Gruppen erfasst. Der Betrieb testet, ob RFID gegenüber einzelnen Scans Zeit spart und dieselbe Bestandsgenauigkeit erreicht."
+            }
+          ]
+        ]
+      },
+      {
+        "id": "kurzfrage",
+        "title": "Kurzfrage zum Schluss",
+        "paragraphs": [
+          [
+            {
+              "text": "Was sollte neben der Zeitersparnis vor der Umstellung gemessen werden?"
+            }
+          ]
+        ],
+        "hint": {
+          "label": "SELBSTKONTROLLE",
+          "title": "Musterantwort",
+          "content": "Lesefehler, unbeabsichtigte Mehrfachlesungen, vollständige Zuordnung zum Vorgang und Kosten pro erfasstem Umlauf."
+        }
+      }
+    ]
+  },
+  {
+    "id": "logistik-taric-atlas",
+    "chapterId": "logistik-taric-atlas",
+    "subjectId": "logistik",
+    "title": "TARIC, EZT und ATLAS",
+    "number": "5.2.8",
+    "intro": "Beim Zoll sind Tarifierung und elektronische Abwicklung zwei verschiedene Arbeitsschritte.",
+    "updatedAt": 1794960000000,
+    "version": 1,
+    "sections": [
+      {
+        "id": "abschnitt-1",
+        "title": "TARIC und Elektronischer Zolltarif",
+        "paragraphs": [
+          [
+            {
+              "text": "TARIC ist der integrierte Zolltarif der Europäischen Union. Er verknüpft Warennummern unter anderem mit einschlägigen Zollsätzen, handelspolitischen Maßnahmen und Unterlagencodes. In Deutschland bietet der Elektronische Zolltarif (EZT) zusätzliche nationale Informationen. Maßgeblich ist der jeweilige Stichtag."
+            }
+          ]
+        ]
+      },
+      {
+        "id": "abschnitt-2",
+        "title": "ATLAS und Vorgangsdaten",
+        "paragraphs": [
+          [
+            {
+              "text": "ATLAS steht für Automatisiertes Tarif- und Lokales Zollabwicklungssystem. Das IT-Verfahren der deutschen Zollverwaltung dient der elektronischen Zollabwicklung. Die Zollanmeldung übermittelt Angaben und Unterlagen zum konkreten Vorgang. Bei einer Ausfuhr können die Vorgangsnummer (MRN) und der elektronische Ausgangsvermerk für die Nachverfolgung wichtig sein."
+            }
+          ]
+        ]
+      },
+      {
+        "id": "praxisbeispiel",
+        "title": "Praxisbeispiel",
+        "paragraphs": [
+          [
+            {
+              "text": "Ein Betrieb klärt zuerst Warennummer und anwendbare Maßnahmen. Danach reicht er über die elektronische Abwicklung die konkrete Anmeldung mit Mengen und Unterlagen ein."
+            }
+          ]
+        ]
+      },
+      {
+        "id": "kurzfrage",
+        "title": "Kurzfrage zum Schluss",
+        "paragraphs": [
+          [
+            {
+              "text": "Wofür dient TARIC und wofür ATLAS in diesem Beispiel?"
+            }
+          ]
+        ],
+        "hint": {
+          "label": "SELBSTKONTROLLE",
+          "title": "Musterantwort",
+          "content": "TARIC dient der Information über tarifliche und handelspolitische Maßnahmen. ATLAS verarbeitet die Anmeldung des konkreten Zollvorgangs elektronisch."
+        }
+      }
+    ]
+  },
+  {
+    "id": "logistik-ursprungsnachweise",
+    "chapterId": "logistik-ursprungsnachweise",
+    "subjectId": "logistik",
+    "title": "Ursprungszeugnis, Präferenznachweis und Lieferantenerklärung",
+    "number": "5.2.9",
+    "intro": "Ähnlich klingende Unterlagen beantworten beim Zoll unterschiedliche Fragen. Entscheidend ist die verwendete Ursprungsregel.",
+    "updatedAt": 1794960000000,
+    "version": 1,
+    "sections": [
+      {
+        "id": "abschnitt-1",
+        "title": "Nichtpräferenziellen Ursprung belegen",
+        "paragraphs": [
+          [
+            {
+              "text": "Ein Ursprungszeugnis kann den nichtpräferenziellen, handelspolitischen Ursprung nachweisen. Eine Präferenzvergünstigung setzt dagegen die Einhaltung der Ursprungsregeln des einschlägigen Abkommens oder der einschlägigen Regelung voraus."
+            }
+          ]
+        ]
+      },
+      {
+        "id": "abschnitt-2",
+        "title": "Präferenznachweise und Vorlieferantendaten",
+        "paragraphs": [
+          [
+            {
+              "text": "Je nach Regelung kommen etwa eine Warenverkehrsbescheinigung EUR.1 oder eine Erklärung zum Ursprung in Frage. Eine Lieferantenerklärung kann Ursprungseigenschaften in der Lieferkette belegen und bei der Erstellung eines Präferenznachweises helfen. Sie ist nicht pauschal der Nachweis für die ausländische Zollstelle."
+            }
+          ]
+        ]
+      },
+      {
+        "id": "praxisbeispiel",
+        "title": "Praxisbeispiel",
+        "paragraphs": [
+          [
+            {
+              "text": "Ein Ausführer hat eine Lieferantenerklärung. Der Kunde bittet um einen für sein Abkommen zulässigen Nachweis."
+            }
+          ]
+        ]
+      },
+      {
+        "id": "kurzfrage",
+        "title": "Kurzfrage zum Schluss",
+        "paragraphs": [
+          [
+            {
+              "text": "Welche Prüfung ist vor Ausstellung eines Nachweises erforderlich?"
+            }
+          ]
+        ],
+        "hint": {
+          "label": "SELBSTKONTROLLE",
+          "title": "Musterantwort",
+          "content": "Der Ausführer prüft das einschlägige Abkommen, die Ursprungsregel für die konkrete Ware und die zulässige Nachweisform. Die Lieferantenerklärung kann dabei als Unterlage dienen."
+        }
+      }
+    ]
+  },
+  {
+    "id": "logistik-ausfuhrbeschraenkungen",
+    "chapterId": "logistik-ausfuhrbeschraenkungen",
+    "subjectId": "logistik",
+    "title": "Ein- und Ausfuhrbeschränkungen und Zollunterlagen",
+    "number": "5.2.10",
+    "intro": "Zollabwicklung umfasst mehr als die Erhebung von Abgaben. Für manche Waren gelten Verbote, Genehmigungen, Kontingente oder besondere Unterlagen.",
+    "updatedAt": 1794960000000,
+    "version": 1,
+    "sections": [
+      {
+        "id": "abschnitt-1",
+        "title": "Warenart und Bestimmung prüfen",
+        "paragraphs": [
+          [
+            {
+              "text": "Prüfe Warennummer, Ursprung, Herkunft, Ziel und Verwendung der Ware. Welches Verfahren oder welche Einschränkung einschlägig ist, hängt von der konkreten Ware und der Regelung ab. Eine passende Warennummer allein beantwortet nicht alle Fragen."
+            }
+          ]
+        ]
+      },
+      {
+        "id": "abschnitt-2",
+        "title": "Unterlagen dem Vorgang zuordnen",
+        "paragraphs": [
+          [
+            {
+              "text": "Handelsrechnung, Packliste, Beförderungsdaten, erforderliche Genehmigungen und gegebenenfalls Ursprungsnachweise dienen verschiedenen Zwecken. Plausible Angaben zu Menge, Wert und Warenbeschreibung erleichtern die abgestimmte Abfertigung."
+            }
+          ]
+        ]
+      },
+      {
+        "id": "praxisbeispiel",
+        "title": "Praxisbeispiel",
+        "paragraphs": [
+          [
+            {
+              "text": "Vor dem Versand eines besonderen Bauteils fragt der Einkauf nach der Zollnummer. Der Export prüft zusätzlich Ziel, Verwendung und ob für die Ware eine Genehmigung einschlägig sein kann."
+            }
+          ]
+        ]
+      },
+      {
+        "id": "kurzfrage",
+        "title": "Kurzfrage zum Schluss",
+        "paragraphs": [
+          [
+            {
+              "text": "Warum reicht die ermittelte Warennummer allein für die Freigabe nicht aus?"
+            }
+          ]
+        ],
+        "hint": {
+          "label": "SELBSTKONTROLLE",
+          "title": "Musterantwort",
+          "content": "Beschränkungen können von Bestimmungsland, Verwendung, Beschaffenheit oder weiteren Kriterien abhängen. Die zuständige Stelle muss den konkreten Vorgang prüfen."
+        }
+      }
+    ]
+  },
+  {
+    "id": "logistik-lieferklauseln-vergleich",
+    "chapterId": "logistik-lieferklauseln-vergleich",
+    "subjectId": "logistik",
+    "title": "Lieferklauseln nach Kosten, Gefahr und Zuständigkeit vergleichen",
+    "number": "5.1.8",
+    "intro": "Ein benannter Ort ist beim Vergleich ebenso wichtig wie das Kürzel. Wer die Hauptbeförderung bezahlt, trägt nicht bei jeder Klausel bis zum Ziel die Gefahr.",
+    "updatedAt": 1794960000000,
+    "version": 1,
+    "sections": [
+      {
+        "id": "abschnitt-1",
+        "title": "Klauseln für verschiedene Verkehrsträger",
+        "paragraphs": [
+          [
+            {
+              "text": "Bei EXW stellt der Verkäufer die Ware am benannten Ort bereit. Bei FCA liefert er an den vom Käufer benannten Frachtführer oder eine andere benannte Person nach der Regel für den vereinbarten Lieferort. Bei CPT und CIP bezahlt der Verkäufer den Transport zum Bestimmungsort, während der Gefahrübergang schon bei der vorgesehenen Übergabe an den Frachtführer erfolgt. CIP umfasst zusätzlich eine Versicherungspflicht des Verkäufers."
+            }
+          ]
+        ]
+      },
+      {
+        "id": "abschnitt-2",
+        "title": "Ankunftsklauseln und Seegruppe",
+        "paragraphs": [
+          [
+            {
+              "text": "DAP sieht entladebereite Übergabe am Ziel vor, DPU schließt die Entladung durch den Verkäufer ein. Bei DDP übernimmt der Verkäufer grundsätzlich auch die Einfuhrabfertigung. FAS, FOB, CFR und CIF sind für See- und Binnenschiffstransporte vorgesehen. Die konkrete Verteilung hängt von Klausel, benanntem Punkt und Fassung ab."
+            }
+          ]
+        ]
+      },
+      {
+        "id": "praxisbeispiel",
+        "title": "Praxisbeispiel",
+        "paragraphs": [
+          [
+            {
+              "text": "Zwei Angebote nennen CPT und DAP mit derselben Zieladresse. Beide Anbieter organisieren den Haupttransport, aber der Gefahrübergang liegt unterschiedlich."
+            }
+          ]
+        ]
+      },
+      {
+        "id": "kurzfrage",
+        "title": "Kurzfrage zum Schluss",
+        "paragraphs": [
+          [
+            {
+              "text": "Warum reicht ein identischer Bestimmungsort nicht für gleiche Risikoaufteilung?"
+            }
+          ]
+        ],
+        "hint": {
+          "label": "SELBSTKONTROLLE",
+          "title": "Musterantwort",
+          "content": "Bei CPT kann die Gefahr schon bei Übergabe an den Frachtführer übergehen. Bei DAP liegt der Übergabepunkt am vereinbarten Ziel, wenn die Ware entladebereit zur Verfügung steht."
+        }
+      }
+    ]
+  },
+  {
+    "id": "logistik-eigentum-zahlung-gefahr",
+    "chapterId": "logistik-eigentum-zahlung-gefahr",
+    "subjectId": "logistik",
+    "title": "Eigentumsvorbehalt, Zahlung und Gefahrübergang",
+    "number": "5.1.9",
+    "intro": "Wer Besitzer einer Sache ist, wem sie gehört und wer das Transportrisiko trägt, können getrennte Fragen sein.",
+    "updatedAt": 1794960000000,
+    "version": 1,
+    "sections": [
+      {
+        "id": "abschnitt-1",
+        "title": "Eigentumsvorbehalt nach § 449 BGB",
+        "paragraphs": [
+          [
+            {
+              "text": "Beim einfachen Eigentumsvorbehalt an einer beweglichen Sache erfolgt der Eigentumsübergang im Zweifel erst mit vollständiger Zahlung. Der Käufer kann die Sache bereits physisch erhalten haben. Was bei Rücktritt oder mit Weiterverarbeitung gilt, ist gesondert zu prüfen."
+            }
+          ]
+        ]
+      },
+      {
+        "id": "abschnitt-2",
+        "title": "Vereinbarungen unterscheiden",
+        "paragraphs": [
+          [
+            {
+              "text": "Zahlungsziel regelt die Fälligkeit. Eine vereinbarte Lieferklausel kann Kosten und Gefahr zwischen Käufer und Verkäufer verteilen. Das Eigentum bedarf einer eigenen rechtlichen Einordnung."
+            }
+          ]
+        ]
+      },
+      {
+        "id": "praxisbeispiel",
+        "title": "Praxisbeispiel",
+        "paragraphs": [
+          [
+            {
+              "text": "Die Ware ist am vereinbarten Ort angekommen. Das Zahlungsziel beträgt 30 Tage und ein einfacher Eigentumsvorbehalt wurde vereinbart."
+            }
+          ]
+        ]
+      },
+      {
+        "id": "kurzfrage",
+        "title": "Kurzfrage zum Schluss",
+        "paragraphs": [
+          [
+            {
+              "text": "Sind der Empfang der Ware, die Fälligkeit und der Eigentumsübergang notwendigerweise derselbe Zeitpunkt?"
+            }
+          ]
+        ],
+        "hint": {
+          "label": "SELBSTKONTROLLE",
+          "title": "Musterantwort",
+          "content": "Nein. Der Käufer erhält die Ware bereits. Zahlung und Eigentumsübergang richten sich nach Zahlungsziel und Eigentumsvorbehalt. Ein vereinbarter Gefahrübergang ist separat zu prüfen."
+        }
+      }
+    ]
+  },
+  {
+    "id": "logistik-abfallschluessel-nachweise",
+    "chapterId": "logistik-abfallschluessel-nachweise",
+    "subjectId": "logistik",
+    "title": "Abfallschlüssel, Register und Entsorgungsnachweis",
+    "number": "5.6",
+    "intro": "Abfälle werden nach Herkunft und Beschaffenheit eingeordnet. Bei gefährlichen Abfällen sind Nachweise besonders wichtig.",
+    "updatedAt": 1794960000000,
+    "version": 1,
+    "sections": [
+      {
+        "id": "abschnitt-1",
+        "title": "Abfallschlüssel und Einstufung",
+        "paragraphs": [
+          [
+            {
+              "text": "Das Europäische Abfallverzeichnis wird in Deutschland über die Abfallverzeichnis-Verordnung angewendet. Ein Sternchen kennzeichnet dort als gefährlich eingestufte Abfallarten. Bei der Zuordnung zählen Herkunft und tatsächliche Zusammensetzung."
+            }
+          ]
+        ]
+      },
+      {
+        "id": "abschnitt-2",
+        "title": "Geplanten und tatsächlichen Weg belegen",
+        "paragraphs": [
+          [
+            {
+              "text": "§ 50 KrWG unterscheidet im Grundsatz zwischen Nachweis vor Beginn und Dokumentation des tatsächlichen Verbleibs. Für Register, elektronische Nachweise, Ausnahmen und einzelne Stoffströme sind die einschlägigen Vorschriften zu prüfen."
+            }
+          ]
+        ]
+      },
+      {
+        "id": "praxisbeispiel",
+        "title": "Praxisbeispiel",
+        "paragraphs": [
+          [
+            {
+              "text": "Ein Betrieb sammelt ölhaltige Rückstände separat. Vor Abholung klärt er Abfallschlüssel, Einordnung, Annahmestelle und benötigte Nachweise."
+            }
+          ]
+        ]
+      },
+      {
+        "id": "kurzfrage",
+        "title": "Kurzfrage zum Schluss",
+        "paragraphs": [
+          [
+            {
+              "text": "Warum reicht eine Rechnung des Entsorgers allein nicht zur Einordnung des Vorgangs?"
+            }
+          ]
+        ],
+        "hint": {
+          "label": "SELBSTKONTROLLE",
+          "title": "Musterantwort",
+          "content": "Sie ersetzt nicht die Einstufung und nicht automatisch die vorgeschriebenen Nachweise zum vorgesehenen und tatsächlichen Verbleib."
+        }
+      }
+    ]
+  },
+  {
+    "id": "logistik-verkehrsorganisation",
+    "chapterId": "logistik-verkehrsorganisation",
+    "subjectId": "logistik",
+    "title": "Verkehrsketten, Hub-and-Spoke und Containerverkehr",
+    "number": "3.2.6",
+    "intro": "Diese Transportbegriffe beschreiben unterschiedliche Entscheidungen: den Wechsel des Verkehrsträgers, die Lage der Umschlagpunkte oder die gemeinsame Nutzung einer Ladeeinheit.",
+    "updatedAt": 1794960000000,
+    "version": 1,
+    "sections": [
+      {
+        "id": "abschnitt-1",
+        "title": "Verkehrsketten unterscheiden",
+        "paragraphs": [
+          [
+            {
+              "text": "Multimodal bedeutet, dass mehrere Verkehrsträger eingesetzt werden. Im intermodalen Verkehr wechselt eine Ladeeinheit den Verkehrsträger, ohne die Ware selbst umzuschlagen. Kombinierter Verkehr ist eine Form davon, bei der der Hauptlauf typischerweise per Schiene oder Schiff erfolgt. Im Huckepackverkehr wird eine straßentaugliche Einheit auf der Schiene befördert. Bei der Rollenden Landstraße können ganze Lastzüge per Bahn reisen. RoRo steht für rollenden Umschlag auf oder von einem Schiff."
+            }
+          ]
+        ]
+      },
+      {
+        "id": "abschnitt-2",
+        "title": "Netze und Container organisieren",
+        "paragraphs": [
+          [
+            {
+              "text": "Bei Hub-and-Spoke laufen Sendungen über zentrale Knoten und werden neu gebündelt. FCL bezeichnet eine Containerbuchung für eine einzelne Sendung beziehungsweise einen Kunden, auch wenn der Container nicht ganz gefüllt ist. Bei LCL teilen sich mehrere Sendungen einen Container. TEU beschreibt Kapazität in Einheiten eines 20-Fuß-Containers. Surcharges sind Zuschläge, die bei einem Angebotsvergleich transparent berücksichtigt werden."
+            }
+          ]
+        ]
+      },
+      {
+        "id": "abschnitt-3",
+        "title": "Gebrochene und durchgehende Beförderung",
+        "paragraphs": [
+          [
+            {
+              "text": "In einem gebrochenen Transport wechseln Gut oder Ladeeinheit das Beförderungsmittel. Eine durchgehende Direktfahrt vermeidet solche Wechsel. Tourenplanung ordnet Aufträge und Stopps so zu, dass Kapazität, Lieferzeiten und Fahrtstrecken zusammenpassen."
+            }
+          ]
+        ]
+      },
+      {
+        "id": "praxisbeispiel",
+        "title": "Praxisbeispiel",
+        "paragraphs": [
+          [
+            {
+              "text": "Ein Spediteur bündelt drei kleinere Sendungen im selben Container. Der Container geht per Schiff nach Europa und von dort ungeöffnet auf der Schiene ins Inland."
+            }
+          ]
+        ]
+      },
+      {
+        "id": "kurzfrage",
+        "title": "Kurzfrage zum Schluss",
+        "paragraphs": [
+          [
+            {
+              "text": "Welche Begriffe passen zur Belegung des Containers und zum Wechsel von Schiff auf Schiene?"
+            }
+          ]
+        ],
+        "hint": {
+          "label": "SELBSTKONTROLLE",
+          "title": "Musterantwort",
+          "content": "Die gebündelte Containerbelegung ist LCL. Schiff und Schiene bilden eine intermodale Kette, weil die Ware beim Wechsel im Container bleibt."
+        }
+      }
+    ]
+  },
+  {
+    "id": "logistik-transportdokumente-glossar",
+    "chapterId": "logistik-transportdokumente-glossar",
+    "subjectId": "logistik",
+    "title": "Transportdokumente, Dienstleister und Verfolgung",
+    "number": "3.4.10",
+    "intro": "Ein Auftrag kann mehrere Beförderungspapiere, Dienstleister und Statusinformationen umfassen. Jedes Dokument hat einen konkreten Zweck.",
+    "updatedAt": 1794960000000,
+    "version": 1,
+    "sections": [
+      {
+        "id": "abschnitt-1",
+        "title": "Dokumente nach Verkehrsträger",
+        "paragraphs": [
+          [
+            {
+              "text": "AWB ist der Luftfrachtbrief. Bill of Lading oder Konnossement bezeichnet ein Seefrachtdokument, das je nach Form auch die Verfügung über die Ware verkörpern kann. Eine Pro-forma-Rechnung kann etwa bei Mustern zur Beschreibung und Wertangabe dienen. Sie ist für sich keine Zahlungsaufforderung. Ein Avis kündigt Ankunft und Sendungsdaten an."
+            }
+          ]
+        ]
+      },
+      {
+        "id": "abschnitt-2",
+        "title": "Rollen, Identifikation und Nachweis",
+        "paragraphs": [
+          [
+            {
+              "text": "Ein Frachtenvermittler vermittelt Beförderungsverträge. Ein Havariekommissar kann Schadensursache und -umfang feststellen. Tracking zeigt den aktuellen Sendungsstatus, Tracing macht frühere Stationen nachvollziehbar. Die GS1-Identifikation GTIN bezeichnet einen Artikel, die SSCC beziehungsweise NVE eine konkrete logistische Einheit. Ein Stauplan stellt die vorgesehene Beladung dar. Eine Haftbarhaltung macht einen möglichen Anspruch gegenüber dem zuständigen Beteiligten geltend oder behält ihn vor."
+            }
+          ]
+        ]
+      },
+      {
+        "id": "praxisbeispiel",
+        "title": "Praxisbeispiel",
+        "paragraphs": [
+          [
+            {
+              "text": "Zwei gleiche Kartons tragen dieselbe Artikelkennung, sind aber zwei eigenständige Versandeinheiten und haben jeweils eine eigene SSCC."
+            }
+          ]
+        ]
+      },
+      {
+        "id": "kurzfrage",
+        "title": "Kurzfrage zum Schluss",
+        "paragraphs": [
+          [
+            {
+              "text": "Welche Kennung hilft, genau einen vermissten Versandkarton in den Statusmeldungen zu verfolgen?"
+            }
+          ]
+        ],
+        "hint": {
+          "label": "SELBSTKONTROLLE",
+          "title": "Musterantwort",
+          "content": "Die Kennung der konkreten Versandeinheit, hier die SSCC. Die GTIN identifiziert den Artikeltyp und unterscheidet die beiden Kartons nicht."
+        }
+      }
+    ]
+  },
+  {
+    "id": "logistik-gefahrgut-verkehrstraeger",
+    "chapterId": "logistik-gefahrgut-verkehrstraeger",
+    "subjectId": "logistik",
+    "title": "Gefahrgut: Regelwerke und Zuständigkeiten",
+    "number": "3.2.7",
+    "intro": "Gefahrgut erfordert je nach Verkehrsträger eine besondere Einordnung. Eine falsche Zuordnung kann Auswirkungen auf Annahme, Kennzeichnung und Dokumente haben.",
+    "updatedAt": 1794960000000,
+    "version": 1,
+    "sections": [
+      {
+        "id": "abschnitt-1",
+        "title": "Regelwerke zuordnen",
+        "paragraphs": [
+          [
+            {
+              "text": "ADR betrifft die Straße, RID die Eisenbahn, ADN die Binnenwasserstraßen und der IMDG-Code die Seeschifffahrt. Für Luftfracht sind die luftverkehrsspezifischen Vorschriften und die IATA Dangerous Goods Regulations relevant. Eine UN-Nummer identifiziert einen Stoff oder eine Stoffgruppe. Gefahrenklassen ordnen die Gefährdung ein."
+            }
+          ]
+        ]
+      },
+      {
+        "id": "abschnitt-2",
+        "title": "An Schnittstellen prüfen",
+        "paragraphs": [
+          [
+            {
+              "text": "Bei kombinierter Beförderung ist für jeden Abschnitt zu prüfen, welche Anforderungen gelten. Gefahrgutdaten, Kennzeichnung und Dokumente werden vom zuständigen Fachpersonal geprüft. Eine Freigabe für die Straße lässt sich nicht automatisch auf die Luftfracht übertragen."
+            }
+          ]
+        ]
+      },
+      {
+        "id": "praxisbeispiel",
+        "title": "Praxisbeispiel",
+        "paragraphs": [
+          [
+            {
+              "text": "Ein Teil der Transportkette soll kurzfristig von Straße auf Luft verlegt werden. Die bisherige Sendungsfreigabe ist auf den Straßentransport bezogen."
+            }
+          ]
+        ]
+      },
+      {
+        "id": "kurzfrage",
+        "title": "Kurzfrage zum Schluss",
+        "paragraphs": [
+          [
+            {
+              "text": "Was muss vor dem Wechsel des Verkehrsträgers geklärt werden?"
+            }
+          ]
+        ],
+        "hint": {
+          "label": "SELBSTKONTROLLE",
+          "title": "Musterantwort",
+          "content": "Die zuständige Stelle prüft, welche Anforderungen für die Luftfracht gelten und ob Annahme, Verpackung, Kennzeichnung und Dokumente für diesen Abschnitt geeignet sind."
+        }
+      }
+    ]
+  },
+  {
+    "id": "logistik-zoll-und-aussenhandel-glossar",
+    "chapterId": "logistik-zoll-und-aussenhandel-glossar",
+    "subjectId": "logistik",
+    "title": "Transit, Kabotage, Intrastat und Freihandelszonen",
+    "number": "5.2.11",
+    "intro": "Im grenzüberschreitenden Güterverkehr sind Zollstatus, Verkehrsrecht und Statistik verschiedene Fragen.",
+    "updatedAt": 1794960000000,
+    "version": 1,
+    "sections": [
+      {
+        "id": "abschnitt-1",
+        "title": "Transit und Kabotage",
+        "paragraphs": [
+          [
+            {
+              "text": "Transit bezeichnet die Durchfuhr. Ein Zollversandverfahren regelt gegebenenfalls die Überwachung unterwegs. Das Carnet TIR ist ein Dokument des internationalen TIR-Versandverfahrens. Kabotage bezeichnet hier einen innerstaatlichen Transport durch einen ausländischen Verkehrsunternehmer. Dafür gelten die einschlägigen Marktzugangsregeln."
+            }
+          ]
+        ]
+      },
+      {
+        "id": "abschnitt-2",
+        "title": "Zollunion, Abkommen und Statistik",
+        "paragraphs": [
+          [
+            {
+              "text": "Eine Freihandelszone gewährt Zollvorteile nach den jeweiligen Regeln, während ihre Partner grundsätzlich eigene Außenzölle behalten. Eine Zollunion verwendet einen gemeinsamen Außentarif. Intrastat ist eine Meldung für die Statistik des innergemeinschaftlichen Warenverkehrs, soweit die Meldevoraussetzungen erfüllt sind. Sie ist von der Zollanmeldung zu unterscheiden."
+            }
+          ]
+        ]
+      },
+      {
+        "id": "praxisbeispiel",
+        "title": "Praxisbeispiel",
+        "paragraphs": [
+          [
+            {
+              "text": "Unionsware geht von Deutschland nach Frankreich. Ein anderer Auftrag betrifft Ware aus einem Drittland, die unter Zollüberwachung bis zur Bestimmungsstelle weiterfährt."
+            }
+          ]
+        ]
+      },
+      {
+        "id": "kurzfrage",
+        "title": "Kurzfrage zum Schluss",
+        "paragraphs": [
+          [
+            {
+              "text": "Warum können beim ersten Auftrag Statistikpflichten und beim zweiten ein Zollversandverfahren relevant sein?"
+            }
+          ]
+        ],
+        "hint": {
+          "label": "SELBSTKONTROLLE",
+          "title": "Musterantwort",
+          "content": "Intrastat betrifft unter den jeweiligen Voraussetzungen die Statistik des innergemeinschaftlichen Warenverkehrs. Ein Zollversandverfahren betrifft die überwachte Beförderung von Waren bis zur Bestimmungsstelle."
+        }
+      }
+    ]
+  },
+  {
+    "id": "logistik-digitale-schnittstellen",
+    "chapterId": "logistik-digitale-schnittstellen",
+    "subjectId": "logistik",
+    "title": "ERP, WMS und TMS im selben Auftrag",
+    "number": "1.1.8",
+    "intro": "Wenn mehrere Systeme an einem Auftrag arbeiten, müssen Kennungen und Statusübergaben eindeutig sein.",
+    "updatedAt": 1794960000000,
+    "version": 1,
+    "sections": [
+      {
+        "id": "abschnitt-1",
+        "title": "Aufgaben der Systeme",
+        "paragraphs": [
+          [
+            {
+              "text": "Ein ERP verknüpft kaufmännische und betriebliche Vorgänge wie Bestellung, Auftrag und Rechnung. Ein WMS verwaltet beispielsweise Lagerplätze und Lagerbewegungen. Ein TMS plant oder verfolgt Transporte. Funktionen können in einem System gebündelt oder unterschiedlich verteilt sein."
+            }
+          ]
+        ]
+      },
+      {
+        "id": "abschnitt-2",
+        "title": "Daten und Rückmeldungen verbinden",
+        "paragraphs": [
+          [
+            {
+              "text": "Eine gemeinsame Auftrags- oder Sendungsreferenz ordnet Bestellung, Packstück, Avis und Ablieferbeleg einander zu. Vereinbare, welches System welche Daten führt und wie Korrekturen, fehlende Meldungen oder doppelte Übertragungen erkannt werden. EDI bezeichnet den strukturierten elektronischen Austausch von Geschäftsdaten zwischen Systemen."
+            }
+          ]
+        ]
+      },
+      {
+        "id": "abschnitt-3",
+        "title": "Über Unternehmensgrenzen zusammenarbeiten",
+        "paragraphs": [
+          [
+            {
+              "text": "Efficient Consumer Response (ECR) beschreibt die abgestimmte Zusammenarbeit von Handel und Herstellern, um Kundenbedarf früh zu erkennen und Prozesse daran auszurichten. Geteilte Abverkaufsdaten können helfen, Quellen und Senken eines Warenstroms gezielter zu verbinden. Eine Quelle gibt Material ab, eine Senke nimmt es auf oder verbraucht es."
+            }
+          ]
+        ]
+      },
+      {
+        "id": "praxisbeispiel",
+        "title": "Praxisbeispiel",
+        "paragraphs": [
+          [
+            {
+              "text": "Das ERP übergibt den Auftrag ans WMS. Das WMS meldet die tatsächlich bereitgestellten Packstücke. Das TMS nutzt diese Daten zur Übergabe und gibt Zustellzeit sowie Belegreferenz zurück."
+            }
+          ]
+        ]
+      },
+      {
+        "id": "kurzfrage",
+        "title": "Kurzfrage zum Schluss",
+        "paragraphs": [
+          [
+            {
+              "text": "Warum sollte der Versand die tatsächliche Packstückzahl aus dem WMS übernehmen?"
+            }
+          ]
+        ],
+        "hint": {
+          "label": "SELBSTKONTROLLE",
+          "title": "Musterantwort",
+          "content": "Die Sollmenge aus dem Auftrag kann von der tatsächlichen Sendung abweichen. Die bestätigte Packstückzahl hält Transportauftrag und physische Übergabe konsistent."
+        }
+      }
+    ]
+  },
+  {
+    "id": "logistik-lieferkettenstoerung",
+    "chapterId": "logistik-lieferkettenstoerung",
+    "subjectId": "logistik",
+    "title": "Lieferkettenrisiken und Notfallplanung",
+    "number": "1.2.14",
+    "intro": "Eine Störung wird kritisch, wenn die Zeit bis zum Ausfall kürzer ist als die Zeit bis zur wirksamen Gegenmaßnahme.",
+    "updatedAt": 1794960000000,
+    "version": 1,
+    "sections": [
+      {
+        "id": "abschnitt-1",
+        "title": "Abhängigkeiten bewerten",
+        "paragraphs": [
+          [
+            {
+              "text": "Sammle je kritischem Teil bekannte Bezugsquellen, gemeinsame Vorlieferanten, freigegebene Alternativen und Wiederbeschaffungszeiten. Bewerte Wahrscheinlichkeit und Wirkung eines Ausfalls. Ein seltenes Risiko kann Vorrang haben, wenn Stillstand oder Kundenausfall drohen."
+            }
+          ]
+        ]
+      },
+      {
+        "id": "abschnitt-2",
+        "title": "Reaktion planen",
+        "paragraphs": [
+          [
+            {
+              "text": "Vergleiche Bestandsreichweite mit der Vorlaufzeit der Alternativen. Prüfe Eilbezug, Materialersatz, Verlagerung, Produktionsreihenfolge oder Bestandsaufbau. Lege Verantwortliche, Auslöser und Kommunikationswege fest."
+            }
+          ]
+        ]
+      },
+      {
+        "id": "praxisbeispiel",
+        "title": "Praxisbeispiel",
+        "paragraphs": [
+          [
+            {
+              "text": "Der Vorrat eines Sonderclips reicht vier Arbeitstage. Ein freigegebener Ersatzlieferant braucht sechs Arbeitstage. Für ausgewählte Aufträge gibt es eine technisch zugelassene Alternative."
+            }
+          ]
+        ]
+      },
+      {
+        "id": "kurzfrage",
+        "title": "Kurzfrage zum Schluss",
+        "paragraphs": [
+          [
+            {
+              "text": "Warum genügt die Ersatzquelle allein nicht und welche Maßnahme kann die Lücke verkürzen?"
+            }
+          ]
+        ],
+        "hint": {
+          "label": "SELBSTKONTROLLE",
+          "title": "Musterantwort",
+          "content": "Zwischen Bestandsende und Ersatzlieferung liegen zwei Arbeitstage. Der Betrieb kann zulässige Alternativteile einsetzen, Aufträge umpriorisieren oder eine nachweislich schnellere Lieferung prüfen."
+        }
+      }
+    ]
+  },
+  {
+    "id": "logistik-otif",
+    "chapterId": "logistik-otif",
+    "subjectId": "logistik",
+    "title": "OTIF und Lieferkennzahlen richtig kombinieren",
+    "number": "2.1.5",
+    "intro": "OTIF steht für On Time In Full. Eine Lieferung zählt im gewählten Modell nur dann, wenn sie pünktlich und vollständig ist.",
+    "updatedAt": 1794960000000,
+    "version": 1,
+    "sections": [
+      {
+        "id": "abschnitt-1",
+        "title": "Verlässliche Bezugsgröße wählen",
+        "paragraphs": [
+          [
+            {
+              "text": "Lege fest, ob du Aufträge, Lieferungen oder Positionen zählst und welches Zeitfenster als pünktlich gilt. Mögliche Kennzahl: pünktlich und vollständig erfüllte Aufträge ÷ fällige Aufträge × 100. Warenverfügbarkeit, Termintreue und Vollständigkeit helfen bei der Ursachenanalyse."
+            }
+          ]
+        ]
+      },
+      {
+        "id": "abschnitt-2",
+        "title": "Gemeinsame Erfüllung zählt",
+        "paragraphs": [
+          [
+            {
+              "text": "Für OTIF brauchst du die Schnittmenge der pünktlichen und vollständigen Fälle. Zwei separat gemessene Prozentwerte bestimmen ohne Einzelfalldaten nicht automatisch die gemeinsame Quote."
+            }
+          ]
+        ]
+      },
+      {
+        "id": "praxisbeispiel",
+        "title": "Praxisbeispiel",
+        "paragraphs": [
+          [
+            {
+              "text": "100 Aufträge sind fällig. 92 sind pünktlich und 95 vollständig. 89 erfüllen beide Kriterien."
+            }
+          ]
+        ],
+        "tabs": [
+          {
+            "title": "Rechenweg",
+            "content": "OTIF = 89 ÷ 100 × 100 = 89 %. Die einzelne Termintreue beträgt 92 %, die Vollständigkeit 95 %."
+          }
+        ]
+      },
+      {
+        "id": "kurzfrage",
+        "title": "Kurzfrage zum Schluss",
+        "paragraphs": [
+          [
+            {
+              "text": "Zählt ein pünktlicher Auftrag mit fehlender Ware für OTIF?"
+            }
+          ]
+        ],
+        "hint": {
+          "label": "SELBSTKONTROLLE",
+          "title": "Musterantwort",
+          "content": "Nein. Er zählt für Termintreue, verfehlt aber die gemeinsame Anforderung aus Pünktlichkeit und Vollständigkeit."
+        }
+      }
+    ]
+  },
+  {
+    "id": "logistik-cross-docking",
+    "chapterId": "logistik-cross-docking",
+    "subjectId": "logistik",
+    "title": "Cross-Docking und direkter Umschlag",
+    "number": "3.4.9",
+    "intro": "Cross-Docking verbindet Wareneingang und Warenausgang mit möglichst wenig Zwischenlagerung.",
+    "updatedAt": 1794960000000,
+    "version": 1,
+    "sections": [
+      {
+        "id": "abschnitt-1",
+        "title": "Direkt durch den Umschlagpunkt",
+        "paragraphs": [
+          [
+            {
+              "text": "Beim Cross-Docking wird eintreffende Ware einer ausgehenden Sendung zugeordnet. Je nach Konzept ist sie bereits passend vorsortiert oder wird im Umschlagpunkt sortiert und gebündelt. Zeitfenster, eindeutige Kennzeichnung und zuverlässige Avise sind entscheidend."
+            }
+          ]
+        ]
+      },
+      {
+        "id": "abschnitt-2",
+        "title": "Einlagerung als Alternative",
+        "paragraphs": [
+          [
+            {
+              "text": "Ein reguläres Lager kann ungleichmäßige Ankunft und Abfahrt puffern. Direkter Umschlag spart Ein- und Auslagerung, reagiert aber empfindlicher auf fehlende Ware, verspätete Fahrzeuge oder nicht abgestimmte Abfahrten."
+            }
+          ]
+        ]
+      },
+      {
+        "id": "praxisbeispiel",
+        "title": "Praxisbeispiel",
+        "paragraphs": [
+          [
+            {
+              "text": "Ware von drei Lieferanten trifft morgens im Umschlaglager ein und wird nach Filialen auf fest eingeplante Fahrzeuge verteilt. Eine verspätete Lieferung kann den Abfahrtsplan beeinflussen."
+            }
+          ]
+        ]
+      },
+      {
+        "id": "kurzfrage",
+        "title": "Kurzfrage zum Schluss",
+        "paragraphs": [
+          [
+            {
+              "text": "Welche Voraussetzung spart Zeit und welches Risiko steigt beim Cross-Docking?"
+            }
+          ]
+        ],
+        "hint": {
+          "label": "SELBSTKONTROLLE",
+          "title": "Musterantwort",
+          "content": "Abgestimmte Anlieferungen, Abfahrten und Sendungsdaten erlauben direkten Umschlag. Der geringere Lagerpuffer macht Verspätungen und Fehlmengen schneller wirksam."
+        }
+      }
+    ]
+  },
+  {
+    "id": "logistik-transportkosten-co2",
+    "chapterId": "logistik-transportkosten-co2",
+    "subjectId": "logistik",
+    "title": "Verkehrsträgerwahl nach Kosten, Zeit und CO₂e",
+    "number": "3.2.5",
+    "intro": "Ein Transportvergleich wird fair, wenn dieselbe Sendung und die gesamte Strecke einschließlich Vorlauf, Hauptlauf und Nachlauf betrachtet werden.",
+    "updatedAt": 1794960000000,
+    "version": 1,
+    "sections": [
+      {
+        "id": "abschnitt-1",
+        "title": "Messbasis bestimmen",
+        "paragraphs": [
+          [
+            {
+              "text": "Vergleiche Kosten je Sendung, Laufzeit und Treibhausgasemissionen in CO₂-Äquivalenten. Bei gemeinsamen Fahrten werden Kosten und Emissionen nach einer nachvollziehbaren Methode aufgeteilt. Leerfahrten, Terminalbewegungen und Anschlüsse können das Ergebnis verändern."
+            }
+          ]
+        ]
+      },
+      {
+        "id": "abschnitt-2",
+        "title": "Anforderungen zuerst prüfen",
+        "paragraphs": [
+          [
+            {
+              "text": "Eliminiere Optionen, die eine zwingende Anforderung wie einen Liefertermin verfehlen. Rechne bei den verbleibenden Optionen vergleichbar. Faktoren, Systemgrenze und Datenqualität müssen erkennbar sein."
+            }
+          ]
+        ]
+      },
+      {
+        "id": "praxisbeispiel",
+        "title": "Praxisbeispiel",
+        "paragraphs": [
+          [
+            {
+              "text": "Für dieselbe Sendung gelten fiktive Vergleichswerte. Direktfahrt: 540 €, 1 Tag, 160 kg CO₂e. Sammelgut: 390 €, 2 Tage, 110 kg. Kombinierter Verkehr: 420 €, 3 Tage, 80 kg. Der Kunde erlaubt maximal 2 Tage."
+            }
+          ]
+        ],
+        "tabs": [
+          {
+            "title": "Rechenweg",
+            "content": "Kombinierter Verkehr scheidet für diese Frist aus. Sammelgut spart gegenüber der Direktfahrt 150 € und 50 kg CO₂e, also 31,25 % der Vergleichsemissionen der Direktfahrt."
+          }
+        ]
+      },
+      {
+        "id": "kurzfrage",
+        "title": "Kurzfrage zum Schluss",
+        "paragraphs": [
+          [
+            {
+              "text": "Warum ist die Option mit den niedrigsten Emissionen in diesem Fall nicht die geeignete Auswahl?"
+            }
+          ]
+        ],
+        "hint": {
+          "label": "SELBSTKONTROLLE",
+          "title": "Musterantwort",
+          "content": "Die zulässige Laufzeit ist eine Mindestanforderung. Der kombinierte Verkehr verfehlt sie. Unter den verbleibenden Optionen ist das Sammelgut im Beispiel günstiger und emissionsärmer."
+        }
+      }
+    ]
+  },
+  {
+    "id": "logistik-fall-nachbestellrechnung",
+    "chapterId": "logistik-fall-nachbestellrechnung",
+    "subjectId": "logistik",
+    "title": "Übungsfall: Bestellzeitpunkt, Bestellmenge und Kostensenkung",
+    "number": "2.4",
+    "intro": "Ein Lagerbetrieb will vom bisherigen Bestelllos auf eine wirtschaftlichere Menge umstellen. Die Versorgung muss dabei unverändert gesichert bleiben.",
+    "updatedAt": 1794960000000,
+    "version": 1,
+    "sections": [
+      {
+        "id": "abschnitt-1",
+        "title": "Bestand und Verbrauch",
+        "paragraphs": [
+          [
+            {
+              "text": "Der Jahresbedarf liegt bei 12.000 Stück an 250 Arbeitstagen. Der aktuelle Bestand beträgt 552 Stück, offene Bestellungen gibt es nicht. Die Wiederbeschaffungszeit beträgt vier Arbeitstage und der Sicherheitsbestand 120 Stück. Der Verbrauch ist gleichmäßig."
+            }
+          ]
+        ]
+      },
+      {
+        "id": "abschnitt-2",
+        "title": "Kosten und bisherige Menge",
+        "paragraphs": [
+          [
+            {
+              "text": "Eine Bestellung kostet 60 €. Die Lagerhaltung kostet 4 € je Stück und Jahr. Bisher bestellt der Betrieb 1.200 Stück je Bestellung. Der Einstandspreis und der Sicherheitsbestand bleiben beim Vergleich unverändert."
+            }
+          ]
+        ]
+      },
+      {
+        "id": "praxisbeispiel",
+        "title": "Bearbeitungshinweis",
+        "paragraphs": [
+          [
+            {
+              "text": "Verwende beim Kostenvergleich nur jährliche Bestell- und Lagerhaltungskosten. Rechne für die Ersparnis mit den bisherigen Kosten als Basis."
+            }
+          ]
+        ]
+      },
+      {
+        "id": "kurzfrage",
+        "title": "Aufgaben",
+        "paragraphs": [
+          [
+            {
+              "text": "1. Ermittle den Meldebestand und den Arbeitstag, an dem bei unverändertem Verbrauch bestellt werden muss."
+            }
+          ],
+          [
+            {
+              "text": "2. Berechne optimale Bestellmenge und jährliche Bestellhäufigkeit."
+            }
+          ],
+          [
+            {
+              "text": "3. Vergleiche die jährlichen Kosten beider Mengen und berechne die prozentuale Ersparnis."
+            }
+          ]
+        ],
+        "hint": {
+          "label": "SELBSTKONTROLLE",
+          "title": "Musterlösung",
+          "content": "1. Tagesbedarf = 12.000 ÷ 250 = 48 Stück. Meldebestand = 4 × 48 + 120 = 312 Stück. (552 − 312) ÷ 48 = 5 Arbeitstage.\n2. Optimales Los = √(2 × 12.000 × 60 ÷ 4) = 600 Stück. Häufigkeit = 12.000 ÷ 600 = 20 Bestellungen im Jahr.\n3. Alt: 10 × 60 € + (1.200 ÷ 2 + 120) × 4 € = 3.480 €. Neu: 20 × 60 € + (600 ÷ 2 + 120) × 4 € = 2.880 €. Ersparnis = 600 € ÷ 3.480 € × 100 ≈ 17,24 %."
+        }
+      }
+    ]
+  },
+  {
+    "id": "logistik-fall-verladung",
+    "chapterId": "logistik-fall-verladung",
+    "subjectId": "logistik",
+    "title": "Übungsfall: Verladung und Verantwortlichkeiten",
+    "number": "3.14",
+    "intro": "Bei einem innerdeutschen Straßentransport sollen drei verpackte Maschinen abgeholt werden. An der Rampe werden offene Punkte vor der Übergabe festgestellt.",
+    "updatedAt": 1794960000000,
+    "version": 1,
+    "sections": [
+      {
+        "id": "abschnitt-1",
+        "title": "Ausgangslage",
+        "paragraphs": [
+          [
+            {
+              "text": "Der Absender stellt die Ladeeinheiten bereit. Eine Einheit kann sich auf ihrem Träger bewegen. Die Disposition hat zudem eine Position vorgeschlagen, die der eingesetzte Frachtführer für die Lastverteilung beanstandet. Für die Rolle der Parteien werden keine abweichenden Zuständigkeiten unterstellt."
+            }
+          ]
+        ]
+      },
+      {
+        "id": "abschnitt-2",
+        "title": "Zusätzliche Abweichung",
+        "paragraphs": [
+          [
+            {
+              "text": "An einer Kiste wird vor der Übernahme ein äußerlich erkennbarer Schaden entdeckt. Warenzustand und Übernahme sollen nachvollziehbar bleiben."
+            }
+          ]
+        ]
+      },
+      {
+        "id": "praxisbeispiel",
+        "title": "Bearbeitungshinweis",
+        "paragraphs": [
+          [
+            {
+              "text": "Ordne zuerst die Sicherheitsfragen zu. Entscheide dann, wie der Zustand bei Übergabe dokumentiert werden soll."
+            }
+          ]
+        ]
+      },
+      {
+        "id": "kurzfrage",
+        "title": "Aufgaben",
+        "paragraphs": [
+          [
+            {
+              "text": "1. Erkläre beförderungssichere und betriebssichere Verladung an den beiden Auffälligkeiten."
+            }
+          ],
+          [
+            {
+              "text": "2. Was ist vor Abfahrt zu tun?"
+            }
+          ],
+          [
+            {
+              "text": "3. Wie hältst du die sichtbare Beschädigung bei der Übernahme fest?"
+            }
+          ]
+        ],
+        "hint": {
+          "label": "SELBSTKONTROLLE",
+          "title": "Musterlösung",
+          "content": "1. Die bewegliche Einheit betrifft die sichere Verladung des Guts. Die beanstandete Position betrifft die Betriebssicherheit des Fahrzeugs. Für das Grundmodell sind die Rollen nach § 412 HGB und die Pflichten im Straßenverkehr getrennt zu beachten.\n2. Ladeeinheit und Fahrzeugposition prüfen, Mängel beheben und erst nach geeigneter Sicherung und Freigabe abfahren.\n3. Zustand konkret dokumentieren, Packstück und Sendung eindeutig benennen und den Vermerk in den Übernahmeunterlagen festhalten."
+        }
+      }
+    ]
+  },
+  {
+    "id": "logistik-fall-zoll-veredelung",
+    "chapterId": "logistik-fall-zoll-veredelung",
+    "subjectId": "logistik",
+    "title": "Übungsfall: Zolltarif und aktive oder passive Veredelung",
+    "number": "5.7",
+    "intro": "Ein Maschinenbauer vergleicht zwei Lieferketten für die Bearbeitung von Metallteilen.",
+    "updatedAt": 1794960000000,
+    "version": 1,
+    "sections": [
+      {
+        "id": "abschnitt-1",
+        "title": "Variante A",
+        "paragraphs": [
+          [
+            {
+              "text": "Nicht-Unionswaren sollen aus einem Drittland zur Beschichtung in die EU gelangen und danach wieder ausgeführt werden. Der Betrieb prüft, welches Zollverfahren für die vorübergehende Bearbeitung passt."
+            }
+          ]
+        ]
+      },
+      {
+        "id": "abschnitt-2",
+        "title": "Variante B",
+        "paragraphs": [
+          [
+            {
+              "text": "Unionswaren sollen vorübergehend aus der EU zur Beschichtung in ein Drittland gelangen und anschließend wieder eingeführt werden. Der Betrieb muss das Verfahren und die benötigten Unterlagen vorab klären."
+            }
+          ]
+        ]
+      },
+      {
+        "id": "praxisbeispiel",
+        "title": "Bearbeitungshinweis",
+        "paragraphs": [
+          [
+            {
+              "text": "Beginne mit Warenstatus und Bewegungsrichtung. Ordne dann TARIC und ATLAS dem passenden Arbeitsschritt zu."
+            }
+          ]
+        ]
+      },
+      {
+        "id": "kurzfrage",
+        "title": "Aufgaben",
+        "paragraphs": [
+          [
+            {
+              "text": "1. Welche Funktion haben TARIC und ATLAS?"
+            }
+          ],
+          [
+            {
+              "text": "2. Welche Veredelungsart kommt für Variante A und welche für Variante B infrage?"
+            }
+          ],
+          [
+            {
+              "text": "3. Was muss der Betrieb zusätzlich vor der Umsetzung prüfen?"
+            }
+          ]
+        ],
+        "hint": {
+          "label": "SELBSTKONTROLLE",
+          "title": "Musterlösung",
+          "content": "1. TARIC liefert Informationen zu tariflichen und handelspolitischen Maßnahmen. ATLAS ist das elektronische Verfahren der deutschen Zollverwaltung zur Abwicklung des konkreten Vorgangs.\n2. A ist aktive Veredelung, da Nicht-Unionswaren zur Bearbeitung in die EU gelangen. B ist passive Veredelung, da Unionswaren zur Bearbeitung vorübergehend hinausgehen.\n3. Unter anderem Verfahrensvoraussetzungen, etwaige Bewilligung, Kennzeichnung oder Zuordnung der Ware, Fristen und die Regeln für die Erledigung beziehungsweise Wiedereinfuhr."
         }
       }
     ]

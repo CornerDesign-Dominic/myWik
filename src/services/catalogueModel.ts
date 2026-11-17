@@ -20,6 +20,13 @@ export function isCatalogue(value:unknown):value is Catalogue {
   if(!s.paragraphs.every(p=>Array.isArray(p)&&p.every(t=>object(t)&&typeof t.text==='string'&&optionalId(t.termId))))return false;
   if(s.tabs!==undefined&&(!Array.isArray(s.tabs)||!s.tabs.every(t=>object(t)&&str(t.title)&&typeof t.content==='string')))return false;
   if(s.hint!==undefined&&(!object(s.hint)||!str(s.hint.title)||typeof s.hint.content!=='string'||(s.hint.label!==undefined&&!str(s.hint.label))))return false;
+  if(s.inventoryChart!==undefined){
+   const chart=s.inventoryChart;
+   if(!object(chart)||!str(chart.description)||!Array.isArray(chart.points)||chart.points.length<2||chart.points.length>40)return false;
+   if(!chart.points.every(point=>Array.isArray(point)&&point.length===2&&point.every(number)))return false;
+   const validTicks=(ticks:unknown)=>Array.isArray(ticks)&&ticks.length<=8&&ticks.every(number);
+   if(!validTicks(chart.days)||!validTicks(chart.levels))return false;
+  }
   return true;
  };
  if(!articles.every(a=>object(a)&&id(a.id)&&subjectIds.has(a.subjectId)&&chapterIds.has(a.chapterId)&&str(a.title)&&str(a.number)&&typeof a.intro==='string'&&number(a.updatedAt)&&number(a.version)&&Array.isArray(a.sections)&&a.sections.length>0&&a.sections.length<=200&&a.sections.every(validSection)))return false;

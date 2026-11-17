@@ -189,7 +189,7 @@ export const logisticsDeepening: Lesson[] = [
     answer: 'Die bloße Lagerung löst im beschriebenen Modell noch keine Abrechnung aus. Die Entnahme bestimmt, welche Mengen abgerechnet und zur Bestandsauffüllung gemeldet werden.',
   },
   {
-    id: 'kommissionierzeit', parent: 'lagerhaltung', number: '2.2.3', title: 'Kommissionierzeit berechnen und verbessern',
+    id: 'kommissionierzeit', parent: 'kommissionierverfahren', number: '2.2.2.2', title: 'Kommissionierzeit berechnen und verbessern',
     intro: 'Die Kommissionierzeit setzt sich aus mehreren Tätigkeiten zusammen. Wer sie einzeln erfasst, kann Verbesserungen gezielt prüfen.',
     sections: [
       ['Zeiten richtig zuordnen', 'Das Buch unterteilt in Basis-, Weg-, Greif-, Tot- und Verteilzeit. Zur Basiszeit gehören vorbereitende Tätigkeiten, zur Wegzeit die Wege zwischen Entnahmen und zur Greifzeit die Entnahme selbst. Such- oder Nebenaktivitäten und persönliche oder organisatorische Unterbrechungen werden nach dem vorgegebenen Modell erfasst.'],
@@ -223,7 +223,7 @@ export const logisticsDeepening: Lesson[] = [
     answer: 'Regelmäßige Mengen lassen sich mit Terminalzeiten und Fahrplan abstimmen. Beim dringenden Ersatzteil können zusätzliche Übergaben und Abfahrtszeiten den engen Termin gefährden.',
   },
   {
-    id: 'distributionsstufen', parent: 'wertschoepfung', number: '3.7', title: 'Einstufige und mehrstufige Distribution',
+    id: 'distributionsstufen', parent: 'distribution', number: '3.4.2', title: 'Einstufige und mehrstufige Distribution',
     intro: 'Die Zahl der Lagerstufen beeinflusst Kundennähe, Umschlag und Kapitalbindung. Hier geht es um die Lagerstruktur der physischen Distribution.',
     sections: [
       ['Lagerstufen unterscheiden', 'In einem einstufigen System werden Kunden beispielsweise aus einem Zentrallager versorgt. In einem mehrstufigen System gelangen Waren über weitere Lagerstufen, etwa regionale Auslieferungslager, zum Kunden. Die Zahl der Lagerstufen ist nicht gleich der Zahl der eingesetzten Verkehrsträger.'],
@@ -234,7 +234,7 @@ export const logisticsDeepening: Lesson[] = [
     answer: 'Regionale Bestände verkürzen bei den häufig benötigten kritischen Teilen den Lieferweg. Bei seltenen Artikeln würde die Verteilung auf mehrere Standorte viel Bestand binden.',
   },
   {
-    id: 'transportvertraege', parent: 'wertschoepfung', number: '3.8', title: 'Fracht-, Speditions- und Lagervertrag',
+    id: 'transportvertraege', parent: 'distribution', number: '3.4.3', title: 'Fracht-, Speditions- und Lagervertrag',
     intro: 'Transportaufträge können verschiedene Pflichten auslösen. Die zugesagte Leistung ist für die Einordnung entscheidend.',
     sections: [
       ['Vertragstypen unterscheiden', 'Im Frachtvertrag schuldet der Frachtführer Beförderung und Ablieferung (§ 407 HGB). Der Spediteur schuldet im Speditionsvertrag die Organisation der Versendung (§§ 453, 454 HGB). Beim Lagervertrag schuldet der Lagerhalter Lagerung und Aufbewahrung (§ 467 HGB).'],
@@ -245,7 +245,7 @@ export const logisticsDeepening: Lesson[] = [
     answer: 'Der Spediteur organisiert die Versendung, der Frachtführer befördert und liefert ab, der Lagerhalter lagert und bewahrt das Gut auf.',
   },
   {
-    id: 'frachtbrief', parent: 'wertschoepfung', number: '3.9', title: 'Frachtbrief, Warenangaben und Ablieferbeleg',
+    id: 'frachtbrief', parent: 'distribution', number: '3.4.4', title: 'Frachtbrief, Warenangaben und Ablieferbeleg',
     intro: 'Transportdokumente sollen den Auftrag eindeutig beschreiben und nachvollziehbar machen, wann und in welchem Zustand Ware übernommen oder abgeliefert wurde.',
     sections: [
       ['Frachtbrief einordnen', '§ 408 HGB nennt unter anderem Absender, Empfänger, Übernahme- und Ablieferstelle, Warenart, Verpackung, Packstücke und Gewicht als mögliche Inhalte. Ein beiderseits unterzeichneter Frachtbrief hat nach § 409 HGB Beweiswirkung für Abschluss und Inhalt des Frachtvertrags sowie für die Übernahme, bis das Gegenteil bewiesen ist.'],
@@ -256,7 +256,7 @@ export const logisticsDeepening: Lesson[] = [
     answer: 'Damit später nachvollziehbar bleibt, dass nur sieben Packstücke übernommen wurden, und sich eine Minderübernahme von einem späteren Verlust unterscheiden lässt.',
   },
   {
-    id: 'frachtfuehrerhaftung', parent: 'wertschoepfung', number: '3.10', title: 'Frachtführerhaftung: HGB und CMR',
+    id: 'frachtfuehrerhaftung', parent: 'distribution', number: '3.4.5', title: 'Frachtführerhaftung: HGB und CMR',
     intro: 'Bei Verlust, Beschädigung oder Verspätung kommt es darauf an, welches Regelwerk gilt und welche Art von Schaden vorliegt.',
     sections: [
       ['Regelwerk ermitteln', '§ 425 HGB erfasst unter anderem Verlust und Beschädigung zwischen Übernahme und Ablieferung sowie Schäden durch Lieferfristüberschreitung. Die CMR gilt grundsätzlich für entgeltliche Straßengüterbeförderungen, wenn Übernahme- und Ablieferort in verschiedenen Staaten liegen und mindestens einer Vertragsstaat ist. Das Übereinkommen kennt Ausnahmen.'],
@@ -279,7 +279,7 @@ export const logisticsDeepening: Lesson[] = [
     answer: 'Formschluss hält die Ladung durch direkte Begrenzung. Niederzurren erhöht die Anpresskraft, damit die Reibung einer Bewegung stärker entgegenwirkt.',
   },
   {
-    id: 'rueckfuehrung', parent: 'wertschoepfung', number: '3.11', title: 'Rückführung, Wiederverwendung und Recycling',
+    id: 'rueckfuehrung', parent: 'entsorgung', number: '3.6.7', title: 'Rückführung, Wiederverwendung und Recycling',
     intro: 'Rücksendungen, Mehrwegträger und Produktionsreste gehen in unterschiedliche Prozesse. Die erste Entscheidung betrifft Zustand und mögliche weitere Nutzung.',
     sections: [
       ['Rückläufer trennen und bewerten', 'Gebrauchsfähige Mehrwegbehälter gehen nach Kontrolle wieder in den Umlauf. Defekte Rückläufer werden nach Zustand und Status geprüft. Je nach Fall kommen Reparatur, Teilegewinnung, Recycling oder ein anderer Entsorgungsweg infrage.'],
@@ -462,6 +462,10 @@ export const logisticsDeepening: Lesson[] = [
     ],
     example: 'Mindestens alle fünf Arbeitstage wird geprüft. Wiederbeschaffungszeit: drei Arbeitstage. Verbrauch: 20 Stück je Arbeitstag. Sicherheitsbestand: 40 Stück. Die Bestandsposition bei der Prüfung beträgt 135 Stück.',
     calculation: 'Schutzzeit = 5 + 3 = 8 Arbeitstage. Sollbestand = 8 × 20 + 40 = 200 Stück. Auffüllmenge = 200 − 135 = 65 Stück.',
+    inventoryChart: {
+      description: 'Ohne offene Zugänge entspricht der physische Bestand am Tag 0 der Bestandsposition von 135 Stück. Die erste Bestellung von 65 Stück trifft am Tag 3 bei 75 Stück ein. Am Prüftag 5 liegen 100 Stück auf Lager. Die zweite Bestellung über 100 Stück trifft am Tag 8 bei 40 Stück ein.',
+      points: [[0, 135], [3, 75], [3, 140], [5, 100], [8, 40], [8, 140]], days: [0, 3, 5, 8], levels: [40, 100, 140],
+    },
     question: 'Warum genügt es bei der Rechnung nicht, allein die drei Tage Wiederbeschaffungszeit anzusetzen?',
     answer: 'Die nächste Bestellung kann erst bei der nächsten Prüfung ausgelöst werden. Der heute aufgefüllte Bestand muss auch den Verbrauch zwischen dieser Prüfung und der anschließenden Lieferung abdecken.',
   },
@@ -477,7 +481,7 @@ export const logisticsDeepening: Lesson[] = [
     answer: 'Die Charge wird gemäß Prüfplan zunächst nicht freigegeben. Die Stichprobe zeigt eine Abweichung, bestimmt aber nicht die genaue Fehlerzahl in der ganzen Charge.',
   },
   {
-    id: 'cmr-vorbehalte', parent: 'wertschoepfung', number: '3.13', title: 'Schadensanzeige und Vorbehalte bei HGB und CMR',
+    id: 'cmr-vorbehalte', parent: 'distribution', number: '3.4.6', title: 'Schadensanzeige und Vorbehalte bei HGB und CMR',
     intro: 'Ein Transportvermerk hält den Zustand der Ware fest. Bei Schäden und Verspätung können Inhalt, Zeitpunkt und Empfänger der Anzeige rechtlich entscheidend sein.',
     sections: [
       ['Schadensarten trennen', 'Sichtbarer Verlust oder Schaden sollte bei Ablieferung gegenüber dem Frachtführer konkret festgehalten werden. Unter § 438 HGB und Art. 30 CMR kann das Ausbleiben eines rechtzeitigen Vorbehalts bei Güterschäden eine Vermutung ordnungsgemäßer Ablieferung begründen. Für später erkennbare Schäden gelten eigene Vorgaben.'],

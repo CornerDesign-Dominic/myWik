@@ -199,4 +199,4 @@ export const glossary: GlossaryTerm[] = [
   ...logisticsGlossary,
 ];
 
-export const contentVersion = 5;
+export const contentVersion = 6;

@@ -1,5 +1,7 @@
-import type { Article, Chapter, GlossaryTerm } from '../types';
+import type { Article, Chapter, GlossaryTerm, InventoryChart } from '../types';
 import { logisticsDeepening } from './logistik-vertiefung';
+import { logisticsBook } from './logistik-buch';
+import { logisticsPractice } from './logistik-praxis';
 
 export interface Lesson {
   id: string;
@@ -15,6 +17,7 @@ export interface Lesson {
   answer: string;
   glossary?: [term: string, definition: string];
   practiceCase?: true;
+  inventoryChart?: InventoryChart;
 }
 
 const introductoryLessons: Lesson[] = [
@@ -213,6 +216,10 @@ const introductoryLessons: Lesson[] = [
     ],
     example: 'Ein Betrieb verbraucht im Schnitt 12 Stück je Arbeitstag. Die Lieferzeit beträgt fünf Arbeitstage, der Sicherheitsbestand 20 Stück.',
     calculation: 'Meldebestand = 12 × 5 + 20 = 80 Stück. Im Grundmodell überbrücken 60 Stück den erwarteten Verbrauch bis zur Lieferung, 20 bleiben als Puffer.',
+    inventoryChart: {
+      description: 'Am Tag 0 wird beim Meldebestand von 80 Stück bestellt. Bis Tag 5 sinkt der Bestand auf 20 Stück. Die Lieferung von 100 Stück erhöht ihn auf 120 Stück. Am Tag 8 sind noch 84 Stück vorhanden.',
+      points: [[0, 80], [5, 20], [5, 120], [8, 84]], days: [0, 5, 8], levels: [20, 80, 120],
+    },
     question: 'Wann wird bei den gegebenen Zahlen im Bestellpunktverfahren bestellt, und wie unterscheidet sich das vom Rhythmusverfahren?',
     answer: 'Bei Erreichen von 80 Stück. Im Rhythmusverfahren prüft der Betrieb zu einem festen Termin und bestimmt dann die Auffüllmenge.',
     glossary: ['Meldebestand', 'Bestandsschwelle, bei deren Erreichen im Bestellpunktverfahren der Nachschub ausgelöst wird.'],
@@ -290,7 +297,7 @@ const introductoryLessons: Lesson[] = [
     glossary: ['Lagerumschlag', 'Verhältnis des Verbrauchs oder Wareneinsatzes zum durchschnittlichen Bestand im gleichen Zeitraum.'],
   },
   {
-    id: 'kommissionierung', parent: 'lagerhaltung', number: '2.2.2', title: 'Kommissionierung und Bereitstellung',
+    id: 'kommissionierung', parent: 'kommissionierverfahren', number: '2.2.2.1', title: 'Kommissionierung und Bereitstellung',
     intro: 'Bei der Kommissionierung stellt das Lager Artikel und Mengen nach einem Auftrag zusammen.',
     sections: [
       ['Mensch zur Ware oder Ware zum Menschen', 'Bei Mensch-zur-Ware geht die kommissionierende Person zu den Lagerplätzen. Bei Ware-zum-Menschen befördert etwa ein automatisches Lagersystem die Behälter zur Station. Die Wahl hängt von Auftragsmenge, Sortiment, Wegen und Investitionskosten ab.'],
@@ -302,7 +309,7 @@ const introductoryLessons: Lesson[] = [
     glossary: ['Kommissionierung', 'Auftragsbezogenes Zusammenstellen von Artikeln in den jeweils geforderten Mengen.'],
   },
   {
-    id: 'fertigungsprinzipien', parent: 'wertschoepfung', number: '3.1', title: 'Werkstattfertigung, Fertigungsinseln und Fließfertigung',
+    id: 'fertigungsprinzipien', parent: 'fertigungsarten', number: '3.1.0', title: 'Werkstattfertigung, Fertigungsinseln und Fließfertigung',
     intro: 'Die Anordnung von Arbeitsplätzen beeinflusst Wege, Durchlaufzeiten und Flexibilität in der Produktion.',
     sections: [
       ['Werkstatt und Fließfertigung', 'Bei der Werkstattfertigung stehen gleichartige Arbeitsplätze zusammen. Aufträge nehmen je nach Bearbeitung einen anderen Weg. Das hilft bei Varianten, kann aber Wege und Wartezeiten erhöhen. In der Fließfertigung folgen Arbeitsplätze der Bearbeitungsfolge. Das begünstigt wiederholte Abläufe, macht die Linie aber empfindlicher für Störungen an einzelnen Stationen.'],
@@ -335,7 +342,7 @@ const introductoryLessons: Lesson[] = [
     answer: 'Bei drohendem Stillstand zählt die kurze, verlässliche Laufzeit der Direktfahrt. Regelmäßige Sendungen mit mehr Vorlauf können gebündelt werden und verursachen häufig weniger Kosten je Sendung.',
   },
   {
-    id: 'verpackung', parent: 'wertschoepfung', number: '3.3', title: 'Funktionen der Verpackung',
+    id: 'verpackung', parent: 'verpackungen', number: '3.3.1', title: 'Funktionen der Verpackung',
     intro: 'Eine Verpackung schützt die Ware, erleichtert ihre Handhabung und vermittelt Informationen für Lager und Transport.',
     sections: [
       ['Schutz, Handhabung und Information', 'Je nach Produkt muss die Verpackung etwa Stöße, Feuchtigkeit oder Verschmutzung abhalten. Sie bildet eine handhabbare Einheit und trägt Angaben zur Identifikation oder Behandlung der Ware. Wähle die Verpackung anhand der Belastungen entlang der gesamten Transportkette.'],
@@ -346,7 +353,7 @@ const introductoryLessons: Lesson[] = [
     answer: 'Er schützt die Module, erleichtert das Handhaben als Einheit und liefert über den Code Informationen zur Identifikation und Verfolgung.',
   },
   {
-    id: 'warenausgang', parent: 'wertschoepfung', number: '3.4', title: 'Warenausgang und Distribution',
+    id: 'warenausgang', parent: 'distribution', number: '3.4.1', title: 'Warenausgang und Distribution',
     intro: 'Der Warenausgang macht aus einem fertigen Auftrag eine übergabefähige Sendung. Die Distribution plant, wie die Sendung ihren Empfänger erreicht.',
     sections: [
       ['Versandbereit machen', 'Prüfe Artikel und Menge, verpacke die Ware, kennzeichne die Packstücke und stelle Unterlagen bereit. Gleiche Packstücke, Lieferadresse, Zeitfenster und Transportauftrag ab, bevor die Sendung übergeben und der Warenausgang gebucht wird.'],
@@ -379,7 +386,7 @@ const introductoryLessons: Lesson[] = [
     answer: 'Die stabile Ladeeinheit beantwortet nur einen Teil der Sicherungsfrage. Auch auf dem Fahrzeug müssen insbesondere Lastverteilung und Sicherung gegen Bewegungen für die Fahrt stimmen.',
   },
   {
-    id: 'entsorgungslogistik', parent: 'wertschoepfung', number: '3.6', title: 'Entsorgungslogistik und Abfallhierarchie',
+    id: 'entsorgungslogistik', parent: 'entsorgung', number: '3.6.0', title: 'Entsorgungslogistik und Abfallhierarchie',
     intro: 'Entsorgungslogistik organisiert den Umgang mit Reststoffen und Abfällen. Getrennte Stoffströme halten geeignete Verwertungswege offen.',
     sections: [
       ['Fünf Stufen', 'Die Abfallhierarchie nach § 6 KrWG beginnt mit Vermeidung. Darauf folgen Vorbereitung zur Wiederverwendung, Recycling, sonstige Verwertung und schließlich Beseitigung. Vermeidung setzt an, bevor Abfall entsteht. Bei der Vorbereitung zur Wiederverwendung werden bereits zu Abfall gewordene Produkte etwa geprüft oder repariert.'],
@@ -391,7 +398,7 @@ const introductoryLessons: Lesson[] = [
     glossary: ['Abfallhierarchie', 'Gesetzliche Rangfolge der Abfallvermeidung und Abfallbewirtschaftung nach § 6 KrWG.'],
   },
   {
-    id: 'produktportfolio', parent: 'rationalisierung', number: '4.1', title: 'Produktportfolio und logistische Komplexität',
+    id: 'produktportfolio', parent: 'portfolio', number: '4.1.2', title: 'Produktportfolio und logistische Komplexität',
     intro: 'Jede zusätzliche Variante kann einen eigenen Bestand, eigene Stammdaten und zusätzliche Umrüstungen verursachen. Der Betrieb kann Varianten vereinfachen, ohne jeden Kundenwunsch aufzugeben.',
     sections: [
       ['Varianten und Aufwand betrachten', 'Vergleiche Absatz, Deckungsbeitrag und strategische Bedeutung mit dem Aufwand für Einkauf, Lager und Fertigung. Berücksichtige Auslaufteile, Ersatzteilbedarf und bestehende Kundenzusagen. Ein niedriger Absatz allein sagt wenig darüber aus, ob eine Variante sinnvoll ist.'],
@@ -545,7 +552,7 @@ const subjectId = 'logistik';
 const updatedAt = Date.UTC(2026, 10, 17);
 const deepeningUpdatedAt = Date.UTC(2026, 10, 18);
 const chapterId = (id: string) => `${subjectId}-${id}`;
-const lessons = [...introductoryLessons, ...logisticsDeepening];
+const lessons = [...introductoryLessons, ...logisticsDeepening, ...logisticsBook, ...logisticsPractice];
 
 const groups = [
   ['analysetechniken', 'beschaffung', '1.2.5', 'Analysetechniken'],
@@ -553,8 +560,14 @@ const groups = [
   ['materialwirtschaft', 'lager', '2.1', 'Materialwirtschaft'],
   ['lagerhaltung', 'lager', '2.2', 'Lagerhaltung'],
   ['lagerung', 'lagerhaltung', '2.2.1', 'Lagerung'],
+  ['kommissionierverfahren', 'lagerhaltung', '2.2.2', 'Kommissionierung'],
+  ['fertigungsarten', 'wertschoepfung', '3.1', 'Fertigungsprinzipien'],
   ['transportsysteme', 'wertschoepfung', '3.2', 'Transportsysteme'],
+  ['verpackungen', 'wertschoepfung', '3.3', 'Verpackung'],
+  ['distribution', 'wertschoepfung', '3.4', 'Warenausgang und Distribution'],
   ['verladung', 'wertschoepfung', '3.5', 'Verladung'],
+  ['entsorgung', 'wertschoepfung', '3.6', 'Entsorgungslogistik'],
+  ['portfolio', 'rationalisierung', '4.1', 'Portfolio und Standardisierung'],
   ['verschwendung', 'rationalisierung', '4.3', 'Prozesse auf Verschwendung prüfen'],
   ['vertragsgrundlagen', 'rechtsaspekte', '5.1', 'Einkaufs- und Verkaufsverträge'],
   ['zollrecht', 'rechtsaspekte', '5.2', 'Zollrecht bei Import und Export'],
@@ -573,7 +586,7 @@ export const logisticsChapters: Chapter[] = [
 export const logisticsArticles: Article[] = lessons.map(lesson => ({
   id: chapterId(lesson.id), chapterId: chapterId(lesson.id), subjectId,
   title: lesson.title, number: lesson.number, intro: lesson.intro,
-  updatedAt: logisticsDeepening.includes(lesson) ? deepeningUpdatedAt : updatedAt, version: 1,
+  updatedAt: introductoryLessons.includes(lesson) ? updatedAt : deepeningUpdatedAt, version: 1,
   sections: [
     ...lesson.sections.map(([title, ...paragraphs], index) => ({
       id: `abschnitt-${index + 1}`, title, paragraphs: paragraphs.map(text => [{ text }]),
@@ -581,6 +594,7 @@ export const logisticsArticles: Article[] = lessons.map(lesson => ({
     {
       id: 'praxisbeispiel', title: lesson.practiceCase ? 'Bearbeitungshinweis' : 'Praxisbeispiel', paragraphs: [[{ text: lesson.example }]],
       tabs: lesson.calculation ? [{ title: 'Rechenweg', content: lesson.calculation }] : undefined,
+      inventoryChart: lesson.inventoryChart,
     },
     {
       id: 'kurzfrage', title: lesson.practiceCase ? 'Aufgaben' : 'Kurzfrage zum Schluss',

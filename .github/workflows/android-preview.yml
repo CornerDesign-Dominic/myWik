@@ -71,6 +71,17 @@ jobs:
         run: |
           chmod +x gradlew
           ./gradlew :app:assembleRelease --no-daemon --max-workers=2 -PreactNativeArchitectures=arm64-v8a -Pandroid.enableMinifyInReleaseBuilds=false -Porg.gradle.jvmargs="-Xmx4096m -XX:MaxMetaspaceSize=1024m"
+      - name: Verify APK version, signature, and offline bundle
+        run: |
+          apk=android/app/build/outputs/apk/release/app-release.apk
+          tools="$ANDROID_HOME/build-tools/37.0.0"
+          version=$(node -p "require('./app.json').expo.version")
+          version_code=$(node -p "require('./app.json').expo.android.versionCode")
+          "$tools/aapt2" dump badging "$apk" > apk-badging.txt
+          grep -F "package: name='de.mywik.app.preview' versionCode='$version_code' versionName='$version'" apk-badging.txt
+          "$tools/apksigner" verify --print-certs "$apk"
+          unzip -Z1 "$apk" > apk-entries.txt
+          grep -Fx 'assets/index.android.bundle' apk-entries.txt
       - uses: actions/upload-artifact@v4
         with:
           name: mywik-android-test-apk
