@@ -19,7 +19,7 @@ export function isCatalogue(value:unknown):value is Catalogue {
   if(!object(s)||!id(s.id)||!str(s.title)||!Array.isArray(s.paragraphs))return false;
   if(!s.paragraphs.every(p=>Array.isArray(p)&&p.every(t=>object(t)&&typeof t.text==='string'&&optionalId(t.termId))))return false;
   if(s.tabs!==undefined&&(!Array.isArray(s.tabs)||!s.tabs.every(t=>object(t)&&str(t.title)&&typeof t.content==='string')))return false;
-  if(s.hint!==undefined&&(!object(s.hint)||!str(s.hint.title)||typeof s.hint.content!=='string'))return false;
+  if(s.hint!==undefined&&(!object(s.hint)||!str(s.hint.title)||typeof s.hint.content!=='string'||(s.hint.label!==undefined&&!str(s.hint.label))))return false;
   return true;
  };
  if(!articles.every(a=>object(a)&&id(a.id)&&subjectIds.has(a.subjectId)&&chapterIds.has(a.chapterId)&&str(a.title)&&str(a.number)&&typeof a.intro==='string'&&number(a.updatedAt)&&number(a.version)&&Array.isArray(a.sections)&&a.sections.length>0&&a.sections.length<=200&&a.sections.every(validSection)))return false;

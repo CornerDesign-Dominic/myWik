@@ -1,5 +1,111 @@
 [
   {
+    "id": "aufgaben-der-logistik-und-die-6-r",
+    "subjectId": "logistik",
+    "chapterId": "logistik-6-r",
+    "title": "Aufgaben der Logistik und die 6 R",
+    "number": "1.1.1",
+    "updatedAt": 1794873600000,
+    "version": 1,
+    "intro": "Bei einem Kunden fällt eine Maschine aus. Damit sie wieder läuft, braucht das Werk bis 10 Uhr ein passendes Ersatzteil. Das Lager muss wissen, welches Teil gebraucht wird, der Versand muss den richtigen Standort kennen und die Disposition muss einen Transport organisieren, der den Termin hält.",
+    "sections": [
+      {
+        "id": "aufgaben",
+        "title": "Was macht die Logistik?",
+        "paragraphs": [
+          [
+            {
+              "text": "Logistik plant, steuert und kontrolliert den "
+            },
+            {
+              "text": "Materialfluss",
+              "termId": "logistik-materialfluss"
+            },
+            {
+              "text": " und den "
+            },
+            {
+              "text": "Informationsfluss",
+              "termId": "logistik-informationsfluss"
+            },
+            {
+              "text": "."
+            }
+          ],
+          [
+            {
+              "text": "Zum Materialfluss gehören das Lagern, Zusammenstellen und Transportieren von Waren. Der Informationsfluss liefert die Angaben, die dafür nötig sind, etwa Artikelnummer, Bestand, Lieferadresse und Liefertermin. Eine Zustellbestätigung meldet anschließend zurück, ob die Ware angekommen ist."
+            }
+          ]
+        ]
+      },
+      {
+        "id": "sechs-r",
+        "title": "Die 6 R am Beispiel",
+        "paragraphs": [
+          [
+            {
+              "text": "Die "
+            },
+            {
+              "text": "6 R der Logistik",
+              "termId": "logistik-sechs-r"
+            },
+            {
+              "text": " beschreiben, woran du eine gut abgewickelte Lieferung erkennst."
+            }
+          ],
+          [
+            {
+              "text": "Richtiges Material. Das Ersatzteil passt zum Maschinenmodell. Die Artikelnummer stimmt."
+            }
+          ],
+          [
+            {
+              "text": "Richtige Menge. Das Lager stellt genau das eine bestellte Teil bereit."
+            }
+          ],
+          [
+            {
+              "text": "Richtige Qualität. Das Teil ist unbeschädigt und einsatzbereit."
+            }
+          ],
+          [
+            {
+              "text": "Richtiger Ort. Die Lieferung geht zum Werk, in dem die Maschine ausgefallen ist."
+            }
+          ],
+          [
+            {
+              "text": "Richtiger Zeitpunkt. Das Teil ist bis 10 Uhr am vereinbarten Übergabeort."
+            }
+          ],
+          [
+            {
+              "text": "Richtiger Preis. Die Disposition wählt eine wirtschaftliche Transportlösung, die den Termin einhält. Bei einem drohenden Produktionsstillstand kann eine teurere Direktfahrt sinnvoll sein."
+            }
+          ]
+        ]
+      },
+      {
+        "id": "kurzfrage",
+        "title": "Kurzfrage zum Schluss",
+        "paragraphs": [
+          [
+            {
+              "text": "Wie prüfst du anhand der 6 R, ob der Ersatzteilauftrag logistisch richtig abgewickelt wurde?"
+            }
+          ]
+        ],
+        "hint": {
+          "label": "SELBSTKONTROLLE",
+          "title": "Musterantwort",
+          "content": "Ich prüfe, ob genau ein passendes, unbeschädigtes Ersatzteil bis 10 Uhr am vereinbarten Übergabeort im richtigen Werk angekommen ist. Außerdem prüfe ich, ob die Transportlösung angesichts der Dringlichkeit wirtschaftlich war."
+        }
+      }
+    ]
+  },
+  {
     "id": "deckungsbeitrag",
     "subjectId": "rechnungswesen",
     "chapterId": "rw-db",

@@ -25,7 +25,7 @@ function SectionExtras({ section, onCard, onNote, onChat }: { section: ArticleSe
     </View> : null}
     {section.hint ? <View style={[styles.hint, { borderColor: colors.border }]}>
       <Pressable accessibilityRole="button" aria-expanded={hintOpen} accessibilityState={{ expanded: hintOpen }} onPress={() => setHintOpen(!hintOpen)} style={styles.hintTitle}>
-        <View style={{ flex: 1 }}><Muted>HINWEIS</Muted><Text style={[styles.hintText, { color: colors.text }]}>{section.hint.title}</Text></View>
+        <View style={{ flex: 1 }}><Muted>{section.hint.label ?? 'HINWEIS'}</Muted><Text style={[styles.hintText, { color: colors.text }]}>{section.hint.title}</Text></View>
         {hintOpen ? <ChevronUp size={18} color={colors.muted} /> : <ChevronDown size={18} color={colors.muted} />}
       </Pressable>
       {hintOpen && <Body style={{ paddingTop: 8 }}>{section.hint.content}</Body>}

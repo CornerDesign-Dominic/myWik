@@ -35,9 +35,17 @@ export const chapters: Chapter[] = [
   { id: 'marketing-ziele', subjectId: 'marketing', parentId: 'marketing-planung', number: '1.2', title: 'Marketingziele und Strategien' },
   { id: 'marketing-mix', subjectId: 'marketing', number: '2', title: 'Marketinginstrumente' },
   { id: 'marketing-vertrieb', subjectId: 'marketing', number: '3', title: 'Vertrieb und Kundenmanagement' },
-  { id: 'logistik-grundlagen', subjectId: 'logistik', number: '1', title: 'Grundlagen und Ziele der Logistik' },
-  { id: 'logistik-beschaffung', subjectId: 'logistik', number: '2', title: 'Beschaffungslogistik' },
-  { id: 'logistik-lager', subjectId: 'logistik', number: '3', title: 'Lager- und Distributionslogistik' },
+  { id: 'logistik-einkauf', subjectId: 'logistik', number: '1', title: 'Einkauf und Beschaffung' },
+  { id: 'logistik-grundlagen', subjectId: 'logistik', parentId: 'logistik-einkauf', number: '1.1', title: 'Grundlagen der Logistik' },
+  { id: 'logistik-6-r', subjectId: 'logistik', parentId: 'logistik-grundlagen', number: '1.1.1', title: 'Aufgaben der Logistik und die 6 R', articleId: 'aufgaben-der-logistik-und-die-6-r' },
+  { id: 'logistik-teilbereiche', subjectId: 'logistik', parentId: 'logistik-grundlagen', number: '1.1.2', title: 'Teilbereiche der Logistik' },
+  { id: 'logistik-zielkonflikte', subjectId: 'logistik', parentId: 'logistik-grundlagen', number: '1.1.3', title: 'Ziele und Zielkonflikte' },
+  { id: 'logistik-beschaffung', subjectId: 'logistik', parentId: 'logistik-einkauf', number: '1.2', title: 'Einkaufsprozess' },
+  { id: 'logistik-beschaffungsplanung', subjectId: 'logistik', parentId: 'logistik-einkauf', number: '1.3', title: 'Beschaffungsprozess' },
+  { id: 'logistik-lager', subjectId: 'logistik', number: '2', title: 'Materialwirtschaft und Lagerhaltung' },
+  { id: 'logistik-wertschoepfung', subjectId: 'logistik', number: '3', title: 'Wertschöpfungskette' },
+  { id: 'logistik-rationalisierung', subjectId: 'logistik', number: '4', title: 'Aspekte der Rationalisierung' },
+  { id: 'logistik-rechtsaspekte', subjectId: 'logistik', number: '5', title: 'Spezielle Rechtsaspekte' },
   { id: 'bwl-grundlagen', subjectId: 'bwl', number: '1', title: 'Betriebliche Grundfunktionen' },
   { id: 'bwl-rechtsformen', subjectId: 'bwl', number: '2', title: 'Rechtsformen und Unternehmensverbindungen' },
   { id: 'vwl-maerkte', subjectId: 'vwl', number: '1', title: 'Märkte und Preisbildung' },
@@ -63,6 +71,41 @@ export const chapters: Chapter[] = [
 
 const updatedAt = Date.UTC(2026, 10, 16);
 export const articles: Article[] = [
+  {
+    id: 'aufgaben-der-logistik-und-die-6-r', subjectId: 'logistik', chapterId: 'logistik-6-r',
+    title: 'Aufgaben der Logistik und die 6 R', number: '1.1.1', updatedAt: Date.UTC(2026, 10, 17), version: 1,
+    intro: 'Bei einem Kunden fällt eine Maschine aus. Damit sie wieder läuft, braucht das Werk bis 10 Uhr ein passendes Ersatzteil. Das Lager muss wissen, welches Teil gebraucht wird, der Versand muss den richtigen Standort kennen und die Disposition muss einen Transport organisieren, der den Termin hält.',
+    sections: [
+      {
+        id: 'aufgaben', title: 'Was macht die Logistik?',
+        paragraphs: [
+          [{ text: 'Logistik plant, steuert und kontrolliert den ' }, { text: 'Materialfluss', termId: 'logistik-materialfluss' }, { text: ' und den ' }, { text: 'Informationsfluss', termId: 'logistik-informationsfluss' }, { text: '.' }],
+          [{ text: 'Zum Materialfluss gehören das Lagern, Zusammenstellen und Transportieren von Waren. Der Informationsfluss liefert die Angaben, die dafür nötig sind, etwa Artikelnummer, Bestand, Lieferadresse und Liefertermin. Eine Zustellbestätigung meldet anschließend zurück, ob die Ware angekommen ist.' }],
+        ],
+      },
+      {
+        id: 'sechs-r', title: 'Die 6 R am Beispiel',
+        paragraphs: [
+          [{ text: 'Die ' }, { text: '6 R der Logistik', termId: 'logistik-sechs-r' }, { text: ' beschreiben, woran du eine gut abgewickelte Lieferung erkennst.' }],
+          [{ text: 'Richtiges Material. Das Ersatzteil passt zum Maschinenmodell. Die Artikelnummer stimmt.' }],
+          [{ text: 'Richtige Menge. Das Lager stellt genau das eine bestellte Teil bereit.' }],
+          [{ text: 'Richtige Qualität. Das Teil ist unbeschädigt und einsatzbereit.' }],
+          [{ text: 'Richtiger Ort. Die Lieferung geht zum Werk, in dem die Maschine ausgefallen ist.' }],
+          [{ text: 'Richtiger Zeitpunkt. Das Teil ist bis 10 Uhr am vereinbarten Übergabeort.' }],
+          [{ text: 'Richtiger Preis. Die Disposition wählt eine wirtschaftliche Transportlösung, die den Termin einhält. Bei einem drohenden Produktionsstillstand kann eine teurere Direktfahrt sinnvoll sein.' }],
+        ],
+      },
+      {
+        id: 'kurzfrage', title: 'Kurzfrage zum Schluss',
+        paragraphs: [[{ text: 'Wie prüfst du anhand der 6 R, ob der Ersatzteilauftrag logistisch richtig abgewickelt wurde?' }]],
+        hint: {
+          label: 'SELBSTKONTROLLE',
+          title: 'Musterantwort',
+          content: 'Ich prüfe, ob genau ein passendes, unbeschädigtes Ersatzteil bis 10 Uhr am vereinbarten Übergabeort im richtigen Werk angekommen ist. Außerdem prüfe ich, ob die Transportlösung angesichts der Dringlichkeit wirtschaftlich war.',
+        },
+      },
+    ],
+  },
   {
     id: 'deckungsbeitrag', subjectId: 'rechnungswesen', chapterId: 'rw-db', title: 'Der Deckungsbeitrag', number: '1.2.1', updatedAt, version: 1,
     intro: 'Was bleibt von einem Verkauf übrig, um Fixkosten zu decken und Gewinn zu erzielen? Der Deckungsbeitrag macht genau diesen Zusammenhang sichtbar.',
@@ -144,6 +187,9 @@ export const articles: Article[] = [
 ];
 
 export const glossary: GlossaryTerm[] = [
+  { id: 'logistik-materialfluss', subjectId: 'logistik', term: 'Materialfluss', definition: 'Physischer Weg von Material und Waren durch Transport, Umschlag und Lagerung.', articleId: 'aufgaben-der-logistik-und-die-6-r' },
+  { id: 'logistik-informationsfluss', subjectId: 'logistik', term: 'Informationsfluss', definition: 'Weitergabe der Daten, mit denen Beteiligte den Materialfluss planen, steuern und kontrollieren.', example: 'Der Versand übermittelt dem Transportdienstleister den Lieferort und das Zeitfenster.', articleId: 'aufgaben-der-logistik-und-die-6-r' },
+  { id: 'logistik-sechs-r', subjectId: 'logistik', term: '6 R der Logistik', definition: 'Richtiges Material in richtiger Menge und Qualität am richtigen Ort, zum richtigen Zeitpunkt und zum richtigen Preis bereitstellen.', articleId: 'aufgaben-der-logistik-und-die-6-r' },
   { id: 'deckungsbeitrag', subjectId: 'rechnungswesen', term: 'Deckungsbeitrag', definition: 'Differenz zwischen Erlösen und variablen Kosten. Der Deckungsbeitrag dient der Deckung der Fixkosten und darüber hinaus der Gewinnerzielung.', example: '80 € Nettoverkaufspreis − 35 € variable Stückkosten = 45 € Stückdeckungsbeitrag.', articleId: 'deckungsbeitrag' },
   { id: 'variable-kosten', subjectId: 'rechnungswesen', term: 'Variable Kosten', definition: 'Kosten, deren Höhe sich mit der Beschäftigung beziehungsweise Ausbringungsmenge verändert. Der Verlauf kann proportional, progressiv oder degressiv sein.', example: 'Bei konstantem Materialverbrauch je Stück steigen die gesamten Materialkosten mit der produzierten Stückzahl.', articleId: 'deckungsbeitrag' },
   { id: 'fixkosten', subjectId: 'rechnungswesen', term: 'Fixkosten', definition: 'Kosten, die innerhalb eines bestimmten Beschäftigungsbereichs und einer betrachteten Zeitspanne unabhängig von der Beschäftigung anfallen.', example: 'Eine vereinbarte monatliche Hallenmiete bleibt innerhalb der bestehenden Kapazität gleich, auch wenn weniger produziert wird.', articleId: 'deckungsbeitrag' },
@@ -151,4 +197,4 @@ export const glossary: GlossaryTerm[] = [
   { id: 'vollstaendige-handlung', subjectId: 'personal', term: 'Vollständige Handlung', definition: 'Modell einer selbstständig bewältigten beruflichen Handlung mit den Phasen Informieren, Planen, Entscheiden, Ausführen, Kontrollieren und Bewerten.', example: 'Eine Arbeitsaufgabe wird nicht nur ausgeführt: Lernende planen zuvor ihr Vorgehen und prüfen sowie reflektieren danach das Ergebnis.', articleId: 'leittextmethode' },
 ];
 
-export const contentVersion = 2;
+export const contentVersion = 3;
