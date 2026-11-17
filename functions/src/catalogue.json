@@ -3143,5 +3143,2829 @@
         }
       }
     ]
+  },
+  {
+    "id": "logistik-informationslogistik",
+    "chapterId": "logistik-informationslogistik",
+    "subjectId": "logistik",
+    "title": "Informationslogistik und Schnittstellen",
+    "number": "1.1.4",
+    "intro": "Ein Status hilft erst dann weiter, wenn die nächste Stelle weiß, zu welchem Auftrag er gehört und was sie damit tun soll.",
+    "updatedAt": 1794960000000,
+    "version": 1,
+    "sections": [
+      {
+        "id": "abschnitt-1",
+        "title": "Vorauslaufend, begleitend und nachlaufend",
+        "paragraphs": [
+          [
+            {
+              "text": "Eine Bestellung kündigt den Bedarf an. Ein Versandavis begleitet den Materialfluss, indem es die Ankunft vorbereitet. Ein Ablieferbeleg oder eine Abweichungsmeldung schließt den Vorgang ab. Je nach Prozess laufen Informationen auch entgegen der Warenrichtung."
+            }
+          ]
+        ]
+      },
+      {
+        "id": "abschnitt-2",
+        "title": "Übergaben gestalten",
+        "paragraphs": [
+          [
+            {
+              "text": "Lege fest, wer welche Daten wann übermittelt. Auftragsnummer, Artikelkennung und Zeitstempel verbinden Informationen aus verschiedenen Systemen. Für fehlende oder widersprüchliche Meldungen braucht es eine zuständige Stelle."
+            }
+          ]
+        ]
+      },
+      {
+        "id": "praxisbeispiel",
+        "title": "Praxisbeispiel",
+        "paragraphs": [
+          [
+            {
+              "text": "Das Lager bekommt vor Ankunft ein Avis mit Menge und Zeitfenster. Fehlende Packstücke meldet es danach mit derselben Auftragsnummer an Einkauf und Disposition."
+            }
+          ]
+        ]
+      },
+      {
+        "id": "kurzfrage",
+        "title": "Kurzfrage zum Schluss",
+        "paragraphs": [
+          [
+            {
+              "text": "Warum sollte das Lager den Fehlbestand mit derselben Auftragsnummer melden?"
+            }
+          ]
+        ],
+        "hint": {
+          "label": "SELBSTKONTROLLE",
+          "title": "Musterantwort",
+          "content": "So können Einkauf und Disposition die Abweichung unmittelbar der Bestellung und dem Avis zuordnen und auf denselben Vorgang reagieren."
+        }
+      }
+    ]
+  },
+  {
+    "id": "logistik-supply-chain-management",
+    "chapterId": "logistik-supply-chain-management",
+    "subjectId": "logistik",
+    "title": "Supply-Chain-Management und Peitscheneffekt",
+    "number": "1.1.5",
+    "intro": "Supply-Chain-Management koordiniert die Zusammenarbeit vom Vorlieferanten bis zum Kunden. Bestellmengen können entlang dieser Kette stärker schwanken als der tatsächliche Absatz.",
+    "updatedAt": 1794960000000,
+    "version": 1,
+    "sections": [
+      {
+        "id": "abschnitt-1",
+        "title": "Wertschöpfungskette vernetzen",
+        "paragraphs": [
+          [
+            {
+              "text": "Die Wertschöpfungskette beschreibt aufeinanderfolgende Beiträge zur Leistung. Supply-Chain-Management stimmt Material, Informationen und Entscheidungen über Unternehmensgrenzen hinweg ab. Gemeinsame Bestandsdaten und abgestimmte Lieferpläne machen Engpässe früher sichtbar."
+            }
+          ]
+        ]
+      },
+      {
+        "id": "abschnitt-2",
+        "title": "Peitscheneffekt begrenzen",
+        "paragraphs": [
+          [
+            {
+              "text": "Bestellbündelung, gegenseitige Sicherheitsaufschläge und verzögerte Absatzzahlen können Schwankungen verstärken. Kleinere Abrufmengen und gemeinsam genutzte Absatz- oder Verbrauchsdaten helfen, die Planung näher an den tatsächlichen Bedarf zu bringen."
+            }
+          ]
+        ]
+      },
+      {
+        "id": "praxisbeispiel",
+        "title": "Praxisbeispiel",
+        "paragraphs": [
+          [
+            {
+              "text": "Der Handel verkauft 10 zusätzliche Pumpen und bestellt vorsichtshalber 20 nach. Der Hersteller wertet diese Bestellung als steigende Nachfrage und bestellt 35 zusätzliche Baugruppen."
+            }
+          ]
+        ]
+      },
+      {
+        "id": "kurzfrage",
+        "title": "Kurzfrage zum Schluss",
+        "paragraphs": [
+          [
+            {
+              "text": "Woran erkennst du den Peitscheneffekt, und welche Information könnte ihn abschwächen?"
+            }
+          ]
+        ],
+        "hint": {
+          "label": "SELBSTKONTROLLE",
+          "title": "Musterantwort",
+          "content": "Aus 10 zusätzlichen Verkäufen werden 20 bestellte Pumpen und 35 Baugruppen. Wenn die Partner den tatsächlichen Absatz sehen, können sie Nachfrage und Sicherheitsaufschläge besser unterscheiden."
+        }
+      }
+    ]
+  },
+  {
+    "id": "logistik-kontraktlogistik",
+    "chapterId": "logistik-kontraktlogistik",
+    "subjectId": "logistik",
+    "title": "Kontraktlogistik und Leistungsintegration",
+    "number": "1.1.6",
+    "intro": "In der Kontraktlogistik übernimmt ein Dienstleister langfristig ein auf einen Kunden zugeschnittenes Leistungspaket.",
+    "updatedAt": 1794960000000,
+    "version": 1,
+    "sections": [
+      {
+        "id": "abschnitt-1",
+        "title": "Leistungen verbinden",
+        "paragraphs": [
+          [
+            {
+              "text": "Ein Auftrag kann Transport, Lagerbetrieb, Kommissionierung, Retouren und weitere Leistungen wie Etikettieren bündeln. Je mehr Prozesse der Dienstleister übernimmt, desto wichtiger werden gemeinsame Daten, klare Übergaben und ein abgestimmtes Vorgehen bei Störungen."
+            }
+          ]
+        ]
+      },
+      {
+        "id": "abschnitt-2",
+        "title": "Leistung messbar vereinbaren",
+        "paragraphs": [
+          [
+            {
+              "text": "Beschreibe Auftragsumfang, Zeitfenster, Mengenschwankungen und Qualitätsziele. Lege fest, wie die Partner Kennzahlen messen und wie Änderungen oder ein Wechsel des Dienstleisters abgewickelt werden."
+            }
+          ]
+        ]
+      },
+      {
+        "id": "praxisbeispiel",
+        "title": "Praxisbeispiel",
+        "paragraphs": [
+          [
+            {
+              "text": "Ein Dienstleister betreibt das Ersatzteillager eines Herstellers und übernimmt Bestandsführung, Versand und Retouren. Gemessen wird unter anderem, welcher Anteil der bis 15 Uhr eingehenden Aufträge am selben Tag versendet wird."
+            }
+          ]
+        ]
+      },
+      {
+        "id": "kurzfrage",
+        "title": "Kurzfrage zum Schluss",
+        "paragraphs": [
+          [
+            {
+              "text": "Warum braucht der Hersteller bei diesem Modell Zugriff auf Bestands- und Versanddaten?"
+            }
+          ]
+        ],
+        "hint": {
+          "label": "SELBSTKONTROLLE",
+          "title": "Musterantwort",
+          "content": "Er muss Kunden verlässliche Auskünfte geben, die vereinbarte Leistung prüfen und bei Engpässen noch eingreifen können."
+        }
+      }
+    ]
+  },
+  {
+    "id": "logistik-einkaufsorganisation",
+    "chapterId": "logistik-einkaufsorganisation",
+    "subjectId": "logistik",
+    "title": "Einkaufsorganisation und Einkaufsaufgaben",
+    "number": "1.2.6",
+    "intro": "Einkauf lässt sich nach Organisationsform und Aufgabenebene betrachten. Ein Betrieb kann strategisch zentral und bei täglichen Abrufen dezentral arbeiten.",
+    "updatedAt": 1794960000000,
+    "version": 1,
+    "sections": [
+      {
+        "id": "abschnitt-1",
+        "title": "Zentral oder dezentral?",
+        "paragraphs": [
+          [
+            {
+              "text": "Ein Zentraleinkauf bündelt Bedarfe und nutzt gemeinsame Konditionen. Dezentrale Einheiten sind näher am konkreten Bedarf und entscheiden oft schneller. Bei einer Mischform verhandelt die Zentrale Rahmenverträge, während Standorte innerhalb der Vereinbarung selbst bestellen."
+            }
+          ]
+        ]
+      },
+      {
+        "id": "abschnitt-2",
+        "title": "Strategisch und operativ",
+        "paragraphs": [
+          [
+            {
+              "text": "Strategischer Einkauf gestaltet Beschaffungsmärkte, Lieferantenstruktur und Verträge. Operativer Einkauf bearbeitet Bestellungen, Bestätigungen und Termine. Zuständigkeiten, Bestellgrenzen und Eskalationswege verbinden beide Ebenen."
+            }
+          ]
+        ]
+      },
+      {
+        "id": "praxisbeispiel",
+        "title": "Praxisbeispiel",
+        "paragraphs": [
+          [
+            {
+              "text": "Drei Werke beziehen Standardhandschuhe aus einem zentral ausgehandelten Rahmenvertrag. Jedes Werk ruft seinen tatsächlichen Monatsbedarf selbst ab."
+            }
+          ]
+        ]
+      },
+      {
+        "id": "kurzfrage",
+        "title": "Kurzfrage zum Schluss",
+        "paragraphs": [
+          [
+            {
+              "text": "Welche Aufgaben übernimmt in dem Beispiel der strategische und welche der operative Einkauf?"
+            }
+          ]
+        ],
+        "hint": {
+          "label": "SELBSTKONTROLLE",
+          "title": "Musterantwort",
+          "content": "Der strategische Einkauf bündelt den Bedarf und verhandelt den Rahmenvertrag. Die Werke übernehmen beim operativen Einkauf Abrufe und Terminverfolgung."
+        }
+      }
+    ]
+  },
+  {
+    "id": "logistik-make-or-buy",
+    "chapterId": "logistik-make-or-buy",
+    "subjectId": "logistik",
+    "title": "Make-or-Buy und kritische Menge",
+    "number": "1.2.7",
+    "intro": "Bei Make-or-Buy vergleicht ein Unternehmen Eigenfertigung und Fremdbezug. Entscheidend sind Kosten, Kapazität und die Folgen für Qualität und Versorgung.",
+    "updatedAt": 1794960000000,
+    "version": 1,
+    "sections": [
+      {
+        "id": "abschnitt-1",
+        "title": "Relevante Kosten abgrenzen",
+        "paragraphs": [
+          [
+            {
+              "text": "Berücksichtige Kosten, die sich zwischen den Alternativen tatsächlich ändern. Bei konstanter Stückkostenbasis liegt die kritische Menge dort, wo beide Gesamtkosten gleich sind. Bei knapper Kapazität können entgangene Deckungsbeiträge hinzukommen."
+            }
+          ]
+        ]
+      },
+      {
+        "id": "abschnitt-2",
+        "title": "Risiken und Fähigkeiten einbeziehen",
+        "paragraphs": [
+          [
+            {
+              "text": "Prüfe verfügbares Know-how, Qualitätskontrolle, Lieferzeiten und Abhängigkeiten. Ein rechnerischer Vorteil ist nur nutzbar, wenn die Kapazität und die Annahmen für die geplante Menge tragfähig sind."
+            }
+          ]
+        ]
+      },
+      {
+        "id": "praxisbeispiel",
+        "title": "Praxisbeispiel",
+        "paragraphs": [
+          [
+            {
+              "text": "Eigenfertigung kostet zusätzlich 24.000 € fix und 12 € je Stück. Ein Lieferant nimmt 18 € je Stück. Zusätzliche Bezugskosten fallen im Beispiel nicht an."
+            }
+          ]
+        ],
+        "tabs": [
+          {
+            "title": "Rechenweg",
+            "content": "24.000 + 12 × Menge = 18 × Menge. Kritische Menge = 24.000 ÷ 6 = 4.000 Stück. Bei 5.000 Stück kostet Eigenfertigung 84.000 €, Fremdbezug 90.000 €."
+          }
+        ]
+      },
+      {
+        "id": "kurzfrage",
+        "title": "Kurzfrage zum Schluss",
+        "paragraphs": [
+          [
+            {
+              "text": "Welche Alternative ist bei 5.000 Stück günstiger und welche Voraussetzung prüfst du zusätzlich?"
+            }
+          ]
+        ],
+        "hint": {
+          "label": "SELBSTKONTROLLE",
+          "title": "Musterantwort",
+          "content": "Eigenfertigung ist rechnerisch 6.000 € günstiger. Der Betrieb muss unter anderem prüfen, ob die Fertigungskapazität dafür frei ist."
+        }
+      }
+    ]
+  },
+  {
+    "id": "logistik-beschaffungsmarktforschung",
+    "chapterId": "logistik-beschaffungsmarktforschung",
+    "subjectId": "logistik",
+    "title": "Beschaffungsmarktforschung und Datenquellen",
+    "number": "1.2.8",
+    "intro": "Beschaffungsmarktforschung hilft, neue Bezugsquellen zu finden und Veränderungen bei Preis, Kapazität oder Versorgung rechtzeitig zu erkennen.",
+    "updatedAt": 1794960000000,
+    "version": 1,
+    "sections": [
+      {
+        "id": "abschnitt-1",
+        "title": "Primär- und Sekundärforschung",
+        "paragraphs": [
+          [
+            {
+              "text": "Sekundärforschung nutzt vorhandene Daten, etwa eigene Einkaufsstatistiken, Datenbanken und Marktberichte. Primärforschung erhebt neue Daten, etwa über Interviews, Anfragen oder Besuche. Wähle die Methode nach Entscheidung, Kosten und Zeitbedarf."
+            }
+          ]
+        ]
+      },
+      {
+        "id": "abschnitt-2",
+        "title": "Daten pflegen und vergleichen",
+        "paragraphs": [
+          [
+            {
+              "text": "Dokumentiere Herkunft, Datum und Gültigkeit von Preisen, Kapazitäten und Lieferzeiten. Gleiche Lieferantenselbstauskünfte bei kritischen Teilen mit unabhängigen Hinweisen, Referenzen oder eigenen Erfahrungen ab."
+            }
+          ]
+        ]
+      },
+      {
+        "id": "praxisbeispiel",
+        "title": "Praxisbeispiel",
+        "paragraphs": [
+          [
+            {
+              "text": "Ein Einkäufer wertet vorhandene Marktdaten aus und fragt anschließend bei drei ausgewählten Unternehmen aktuelle Serienkapazitäten ab."
+            }
+          ]
+        ]
+      },
+      {
+        "id": "kurzfrage",
+        "title": "Kurzfrage zum Schluss",
+        "paragraphs": [
+          [
+            {
+              "text": "Welche Tätigkeit ist Primärforschung und welche Sekundärforschung?"
+            }
+          ]
+        ],
+        "hint": {
+          "label": "SELBSTKONTROLLE",
+          "title": "Musterantwort",
+          "content": "Vorhandene Marktdaten auszuwerten ist Sekundärforschung. Neue Angaben zur Serienkapazität direkt zu erheben ist Primärforschung."
+        }
+      }
+    ]
+  },
+  {
+    "id": "logistik-lieferantenaudit",
+    "chapterId": "logistik-lieferantenaudit",
+    "subjectId": "logistik",
+    "title": "Lieferantenaudit und Lieferantenentwicklung",
+    "number": "1.2.9",
+    "intro": "Eine Bewertung zeigt die erzielte Leistung. Ein Audit untersucht, ob die Abläufe des Lieferanten geeignet sind, die Anforderungen dauerhaft zu erfüllen.",
+    "updatedAt": 1794960000000,
+    "version": 1,
+    "sections": [
+      {
+        "id": "abschnitt-1",
+        "title": "Bewertung und Audit verbinden",
+        "paragraphs": [
+          [
+            {
+              "text": "Kennzahlen erfassen beispielsweise Fehlerquote, Mengen- und Termintreue. Im Audit prüft der Betrieb nach festgelegten Kriterien, wie der Lieferant arbeitet. Mögliche Nachweise sind Prüfprotokolle, Rückverfolgbarkeit und der Umgang mit Abweichungen."
+            }
+          ]
+        ]
+      },
+      {
+        "id": "abschnitt-2",
+        "title": "Maßnahmen nachhalten",
+        "paragraphs": [
+          [
+            {
+              "text": "Halte Feststellungen mit Belegen fest und vereinbare Verantwortliche, Fristen und Wirksamkeitskontrolle. Je nach Auswirkung kann eine engere Prüfung vorübergehend sinnvoll sein."
+            }
+          ]
+        ]
+      },
+      {
+        "id": "praxisbeispiel",
+        "title": "Praxisbeispiel",
+        "paragraphs": [
+          [
+            {
+              "text": "Ein Lieferant hat wiederholt falsche Chargenkennzeichnungen. Beim Audit wird geprüft, wie Labeldaten übernommen und vor der Freigabe kontrolliert werden."
+            }
+          ]
+        ]
+      },
+      {
+        "id": "kurzfrage",
+        "title": "Kurzfrage zum Schluss",
+        "paragraphs": [
+          [
+            {
+              "text": "Warum beantwortet die Fehlerquote die Frage nach der Ursache noch nicht?"
+            }
+          ]
+        ],
+        "hint": {
+          "label": "SELBSTKONTROLLE",
+          "title": "Musterantwort",
+          "content": "Die Quote zeigt die Häufigkeit der Fehler. Das Audit prüft den betroffenen Ablauf und kann zeigen, an welchem Schritt die falschen Daten entstehen."
+        }
+      }
+    ]
+  },
+  {
+    "id": "logistik-wertanalyse",
+    "chapterId": "logistik-wertanalyse",
+    "subjectId": "logistik",
+    "title": "Wertanalyse und Funktionskosten",
+    "number": "1.2.5.3",
+    "intro": "Die Wertanalyse fragt, welche Funktionen ein Produkt oder Prozess erfüllen muss und wie man sie wirtschaftlicher bereitstellen kann.",
+    "updatedAt": 1794960000000,
+    "version": 1,
+    "sections": [
+      {
+        "id": "abschnitt-1",
+        "title": "Funktion und Kosten erfassen",
+        "paragraphs": [
+          [
+            {
+              "text": "Beschreibe die geforderte Wirkung, etwa ein empfindliches Bauteil beim Transport zu schützen. Ermittle die Kosten der bisherigen Lösung und entwickle Alternativen, die die erforderliche Funktion weiterhin erfüllen."
+            }
+          ]
+        ]
+      },
+      {
+        "id": "abschnitt-2",
+        "title": "Alternativen prüfen",
+        "paragraphs": [
+          [
+            {
+              "text": "Vergleiche Kosten, Leistung und Risiken über den relevanten Zeitraum. Prüfe durch einen geeigneten Versuch, ob die günstigere Lösung die Anforderungen tatsächlich erfüllt."
+            }
+          ]
+        ]
+      },
+      {
+        "id": "praxisbeispiel",
+        "title": "Praxisbeispiel",
+        "paragraphs": [
+          [
+            {
+              "text": "Ein Betrieb ersetzt bei gleichbleibendem Transportschutz eine teure Einzelverpackung durch einen mehrfach verwendbaren Einsatz."
+            }
+          ]
+        ]
+      },
+      {
+        "id": "kurzfrage",
+        "title": "Kurzfrage zum Schluss",
+        "paragraphs": [
+          [
+            {
+              "text": "Wieso wird vor der Umstellung die Schutzwirkung geprüft?"
+            }
+          ]
+        ],
+        "hint": {
+          "label": "SELBSTKONTROLLE",
+          "title": "Musterantwort",
+          "content": "Der geringere Preis reicht nur dann für einen Wertvorteil, wenn die notwendige Funktion erhalten bleibt und keine zusätzlichen Schäden entstehen."
+        }
+      }
+    ]
+  },
+  {
+    "id": "logistik-regressionsanalyse",
+    "chapterId": "logistik-regressionsanalyse",
+    "subjectId": "logistik",
+    "title": "Regressionsanalyse und Trendprognose",
+    "number": "1.3.2.6",
+    "intro": "Eine lineare Regression beschreibt einen Zusammenhang durch eine Gerade. In der Bedarfsplanung kann die Zeit die Einflussgröße sein, wenn der Verbrauch einen Trend zeigt.",
+    "updatedAt": 1794960000000,
+    "version": 1,
+    "sections": [
+      {
+        "id": "abschnitt-1",
+        "title": "Gerade lesen und nutzen",
+        "paragraphs": [
+          [
+            {
+              "text": "In einer Trendgeraden y = a + b × t ist a der rechnerische Ausgangswert bei t = 0, b die Änderung je Periode. Die klassische lineare Schätzung sucht die Gerade, für die die Summe der quadrierten vertikalen Abweichungen am kleinsten ist."
+            }
+          ]
+        ]
+      },
+      {
+        "id": "abschnitt-2",
+        "title": "Prognosegrenzen erkennen",
+        "paragraphs": [
+          [
+            {
+              "text": "Prüfe, ob der bisherige Verlauf tatsächlich ungefähr linear ist. Saison, Ausreißer und Strukturbrüche können eine Extrapolation unbrauchbar machen. Eine beobachtete statistische Beziehung belegt für sich keine Ursache."
+            }
+          ]
+        ]
+      },
+      {
+        "id": "praxisbeispiel",
+        "title": "Praxisbeispiel",
+        "paragraphs": [
+          [
+            {
+              "text": "Für drei Monate mit t = 1, 2 und 3 wurden 100, 125 und 140 Stück verbraucht. Der mittlere Monat ist t̄ = 2, der mittlere Verbrauch ȳ = 121,67 Stück."
+            }
+          ]
+        ],
+        "tabs": [
+          {
+            "title": "Rechenweg",
+            "content": "Steigung b = Σ[(t − t̄) × (y − ȳ)] ÷ Σ[(t − t̄)²]. Der Zähler beträgt bei t − t̄ = −1, 0, 1 insgesamt 40. Der Nenner beträgt 2. Also b = 20 und a = ȳ − b × t̄ ≈ 81,67. Für Monat 4: 81,67 + 20 × 4 ≈ 161,67 Stück."
+          }
+        ]
+      },
+      {
+        "id": "kurzfrage",
+        "title": "Kurzfrage zum Schluss",
+        "paragraphs": [
+          [
+            {
+              "text": "Welchen Verbrauch prognostiziert die Gerade im vierten Monat, und wann wäre diese Prognose fragwürdig?"
+            }
+          ]
+        ],
+        "hint": {
+          "label": "SELBSTKONTROLLE",
+          "title": "Musterantwort",
+          "content": "Sie ergibt rund 162 Stück. Die Prognose ist fragwürdig, wenn etwa ein Sondereffekt oder ein Saisonwechsel dazu führt, dass der bisherige lineare Trend abbricht."
+        }
+      }
+    ]
+  },
+  {
+    "id": "logistik-lieferbereitschaft",
+    "chapterId": "logistik-lieferbereitschaft",
+    "subjectId": "logistik",
+    "title": "Sicherheitsbestand und Lieferbereitschaftsgrad",
+    "number": "1.3.6",
+    "intro": "Der Sicherheitsbestand puffert ungeplante Nachfrage und schwankende Wiederbeschaffungszeiten. Welche Bestandshöhe sinnvoll ist, hängt vom gewünschten Service und den Kosten ab.",
+    "updatedAt": 1794960000000,
+    "version": 1,
+    "sections": [
+      {
+        "id": "abschnitt-1",
+        "title": "Menge und Bedarfssituationen unterscheiden",
+        "paragraphs": [
+          [
+            {
+              "text": "Im mengenbezogenen Lieferbereitschaftsgrad teilst du die sofort aus Vorrat gedeckte Menge durch die nachgefragte Menge. Ein auf Bedarfssituationen bezogener Servicegrad zählt dagegen die vollständig sofort bedienten Fälle. Verwende den in der Aufgabe definierten Zähler und Nenner."
+            }
+          ]
+        ]
+      },
+      {
+        "id": "abschnitt-2",
+        "title": "Puffer und Termintreue einordnen",
+        "paragraphs": [
+          [
+            {
+              "text": "Ein größerer Puffer kann Fehlmengen senken, bindet aber Kapital. Er hilft nur, wenn er am richtigen Standort und für den richtigen Artikel verfügbar ist. Eine pünktliche Auslieferung misst einen anderen Teil der Leistung."
+            }
+          ]
+        ]
+      },
+      {
+        "id": "praxisbeispiel",
+        "title": "Praxisbeispiel",
+        "paragraphs": [
+          [
+            {
+              "text": "Neun Aufträge zu je einem Stück sind sofort vollständig lieferbar. Ein zehnter Auftrag über zehn Stück kann nur mit sechs Stück sofort bedient werden."
+            }
+          ]
+        ],
+        "tabs": [
+          {
+            "title": "Rechenweg",
+            "content": "Sofort gedeckte Menge: 9 + 6 = 15 Stück von 19 Stück. Mengenbezogen: 15 ÷ 19 × 100 = 78,9 %. Vollständig sofort bediente Fälle: 9 ÷ 10 × 100 = 90 %."
+          }
+        ]
+      },
+      {
+        "id": "kurzfrage",
+        "title": "Kurzfrage zum Schluss",
+        "paragraphs": [
+          [
+            {
+              "text": "Welche beiden Quoten ergeben sich, und weshalb unterscheiden sie sich?"
+            }
+          ]
+        ],
+        "hint": {
+          "label": "SELBSTKONTROLLE",
+          "title": "Musterantwort",
+          "content": "Mengenbezogen 78,9 %, nach vollständig bedienten Bedarfssituationen 90 %. Eine größere Bestellung zählt in der ersten Kennzahl mit mehr Stück, in der zweiten als ein Fall."
+        }
+      }
+    ]
+  },
+  {
+    "id": "logistik-dispositionsstufen",
+    "chapterId": "logistik-dispositionsstufen",
+    "subjectId": "logistik",
+    "title": "Dispositionsstufen und Wiederbeschaffungszeit",
+    "number": "1.3.2.7",
+    "intro": "Taucht dasselbe Teil auf mehreren Ebenen einer Stückliste auf, muss die Planung alle Bedarfe bündeln, bevor sie Bestände verrechnet.",
+    "updatedAt": 1794960000000,
+    "version": 1,
+    "sections": [
+      {
+        "id": "abschnitt-1",
+        "title": "Teile über Ebenen zusammenführen",
+        "paragraphs": [
+          [
+            {
+              "text": "Beim Dispositionsstufenverfahren wird ein Teil der tiefsten Stücklistenebene zugeordnet, auf der es vorkommt. Dadurch können alle abgeleiteten Bedarfe gesammelt werden, bevor für dieses Teil die Nettobedarfsermittlung erfolgt."
+            }
+          ]
+        ]
+      },
+      {
+        "id": "abschnitt-2",
+        "title": "Termin rückwärts planen",
+        "paragraphs": [
+          [
+            {
+              "text": "Ermittle aus dem Bedarfstermin, wann bestellt oder gefertigt werden muss. Je nach Aufgabenstellung umfasst die Wiederbeschaffungszeit Vorbereitung, Lieferung sowie Annahme oder Prüfung bis zur Verfügbarkeit."
+            }
+          ]
+        ]
+      },
+      {
+        "id": "praxisbeispiel",
+        "title": "Praxisbeispiel",
+        "paragraphs": [
+          [
+            {
+              "text": "Ein Teil steckt direkt im Endprodukt und zusätzlich in einer Baugruppe. Der gesamte Bedarf muss am Arbeitstag 20 verfügbar sein. Bestellabwicklung, Lieferung und Prüfung dauern zusammen sechs Arbeitstage."
+            }
+          ]
+        ],
+        "tabs": [
+          {
+            "title": "Rechenweg",
+            "content": "Spätester Beginn der Wiederbeschaffung: Arbeitstag 20 − 6 Arbeitstage = Arbeitstag 14. Beide Teilbedarfe werden vorher auf der zugeordneten Dispositionsstufe zusammengeführt."
+          }
+        ]
+      },
+      {
+        "id": "kurzfrage",
+        "title": "Kurzfrage zum Schluss",
+        "paragraphs": [
+          [
+            {
+              "text": "Warum darf der verfügbare Bestand für das direkt verbaute Teil und das Baugruppenteil nicht getrennt in voller Höhe abgezogen werden?"
+            }
+          ]
+        ],
+        "hint": {
+          "label": "SELBSTKONTROLLE",
+          "title": "Musterantwort",
+          "content": "Beide Bedarfe greifen auf denselben Bestand zu. Würde derselbe Bestand zweimal abgezogen, würde der zu beschaffende Nettobedarf zu niedrig ausfallen."
+        }
+      }
+    ]
+  },
+  {
+    "id": "logistik-beschaffungskennzahlen",
+    "chapterId": "logistik-beschaffungskennzahlen",
+    "subjectId": "logistik",
+    "title": "Kostenkennzahlen und Rahmenvertragsquote",
+    "number": "2.1.3",
+    "intro": "Einkaufskennzahlen zeigen, wie viel ein Vorgang kostet und welcher Anteil des Einkaufs über Verträge gebündelt wurde.",
+    "updatedAt": 1794960000000,
+    "version": 1,
+    "sections": [
+      {
+        "id": "abschnitt-1",
+        "title": "Kosten und Einkaufsvolumen auswerten",
+        "paragraphs": [
+          [
+            {
+              "text": "Kosten je Bestellvorgang ergeben sich aus den Bestellkosten einer Periode geteilt durch die Zahl der Bestellungen. Die Rahmenvertragsquote setzt das Einkaufsvolumen unter Rahmenvertrag ins Verhältnis zum gesamten betrachteten Einkaufsvolumen."
+            }
+          ]
+        ]
+      },
+      {
+        "id": "abschnitt-2",
+        "title": "Materialintensität einordnen",
+        "paragraphs": [
+          [
+            {
+              "text": "Für die Materialintensität setzt du den in der Aufgabe definierten Materialaufwand ins Verhältnis zum Umsatz desselben Zeitraums. Preissteigerung, Sortimentsmix und Produktionsweise können die Quote verändern."
+            }
+          ]
+        ]
+      },
+      {
+        "id": "praxisbeispiel",
+        "title": "Praxisbeispiel",
+        "paragraphs": [
+          [
+            {
+              "text": "1.200 Bestellungen verursachen 36.000 € Prozesskosten. Von 800.000 € Einkauf entfallen 600.000 € auf Rahmenverträge. Der relevante Materialaufwand beträgt 350.000 € bei 1 Mio. € Umsatz."
+            }
+          ]
+        ],
+        "tabs": [
+          {
+            "title": "Rechenweg",
+            "content": "Bestellkosten je Vorgang = 36.000 ÷ 1.200 = 30 €. Rahmenvertragsquote = 600.000 ÷ 800.000 × 100 = 75 %. Materialintensität = 350.000 ÷ 1.000.000 × 100 = 35 %."
+          }
+        ]
+      },
+      {
+        "id": "kurzfrage",
+        "title": "Kurzfrage zum Schluss",
+        "paragraphs": [
+          [
+            {
+              "text": "Was zeigt die Rahmenvertragsquote von 75 %, und welche Aussage über die Zahl der Bestellungen lässt sie zu?"
+            }
+          ]
+        ],
+        "hint": {
+          "label": "SELBSTKONTROLLE",
+          "title": "Musterantwort",
+          "content": "75 % des betrachteten Volumens laufen über Rahmenverträge. Die Quote ist wertbezogen und lässt für sich keinen Rückschluss auf den Anteil an der Zahl der Bestellungen zu."
+        }
+      }
+    ]
+  },
+  {
+    "id": "logistik-lagerzinsen",
+    "chapterId": "logistik-lagerzinsen",
+    "subjectId": "logistik",
+    "title": "Lagerzinsen, Lagerzinssatz und Lagerhaltungskosten",
+    "number": "2.2.1.4",
+    "intro": "Im Warenbestand steckt Kapital. Kalkulatorische Lagerzinsen machen dessen Bindung sichtbar, auch wenn dafür kein einzelner Bankzins abgebucht wird.",
+    "updatedAt": 1794960000000,
+    "version": 1,
+    "sections": [
+      {
+        "id": "abschnitt-1",
+        "title": "Rechenbasis wählen",
+        "paragraphs": [
+          [
+            {
+              "text": "Für einen durchschnittlich über das ganze Jahr gehaltenen Bestandswert rechnest du jährliche Lagerzinsen = durchschnittlicher Bestandswert × Jahreszinssatz. Für einen Warenwert über eine bestimmte Lagerdauer rechnest du Lagerzinssatz = Jahreszinssatz × Lagerdauer ÷ Jahrestage. Verwende die Jahrestage aus der Aufgabe."
+            }
+          ]
+        ]
+      },
+      {
+        "id": "abschnitt-2",
+        "title": "Lagerkosten und Kapitalbindung",
+        "paragraphs": [
+          [
+            {
+              "text": "Lagerhaltungskosten können neben den Lagerzinsen etwa Kosten für Fläche, Personal und Technik enthalten. Ist der Zins bereits im vorgegebenen Lagerhaltungskostensatz enthalten, darf er nicht erneut addiert werden."
+            }
+          ]
+        ]
+      },
+      {
+        "id": "praxisbeispiel",
+        "title": "Praxisbeispiel",
+        "paragraphs": [
+          [
+            {
+              "text": "Der Betrieb rechnet mit 8 % p. a. und 360 Tagen. Eine Warenpartie im Wert von 9.000 € liegt 45 Tage. Der Jahresdurchschnittswert des gesamten Lagers beträgt 50.000 €."
+            }
+          ]
+        ],
+        "tabs": [
+          {
+            "title": "Rechenweg",
+            "content": "Partie: 8 % × 45 ÷ 360 = 1 %. Lagerzinsen = 9.000 € × 1 % = 90 €. Ganzes Lager: 50.000 € × 8 % = 4.000 € jährliche Lagerzinsen."
+          }
+        ]
+      },
+      {
+        "id": "kurzfrage",
+        "title": "Kurzfrage zum Schluss",
+        "paragraphs": [
+          [
+            {
+              "text": "Warum darfst du die Lagerdauer von 45 Tagen bei den Zinsen für den Jahresdurchschnittswert nicht nochmals einrechnen?"
+            }
+          ]
+        ],
+        "hint": {
+          "label": "SELBSTKONTROLLE",
+          "title": "Musterantwort",
+          "content": "Der Jahresdurchschnittswert bildet die durchschnittliche Kapitalbindung über das ganze Jahr ab. Eine zusätzliche Kürzung um 45 Tage wäre eine zweite, hier unpassende Zeitgewichtung."
+        }
+      }
+    ]
+  },
+  {
+    "id": "logistik-lagerreichweite",
+    "chapterId": "logistik-lagerreichweite",
+    "subjectId": "logistik",
+    "title": "Lagerreichweite und Sicherheitskoeffizient",
+    "number": "2.2.1.5",
+    "intro": "Die Lagerreichweite beantwortet, wie lange ein Bestand bei einem gegebenen Verbrauch reicht. Der Sicherheitskoeffizient zeigt den Anteil des Puffers am durchschnittlichen Bestand.",
+    "updatedAt": 1794960000000,
+    "version": 1,
+    "sections": [
+      {
+        "id": "abschnitt-1",
+        "title": "Reichweite planen",
+        "paragraphs": [
+          [
+            {
+              "text": "Durchschnittliche Reichweite = durchschnittlicher Lagerbestand ÷ durchschnittlicher Tagesverbrauch. Für einen operativen Stichtag kann der verfügbare Bestand durch den erwarteten Tagesverbrauch geteilt werden. Vergleiche die Reichweite mit der Wiederbeschaffungszeit und prüfe absehbare Bedarfsspitzen."
+            }
+          ]
+        ]
+      },
+      {
+        "id": "abschnitt-2",
+        "title": "Sicherheitskoeffizient lesen",
+        "paragraphs": [
+          [
+            {
+              "text": "Sicherheitsbestand ÷ durchschnittlicher Lagerbestand × 100 ergibt die Kennzahl in Prozent. Ein hoher Anteil kann auf hohen Pufferbedarf oder auf einen im Verhältnis großen Puffer hinweisen."
+            }
+          ]
+        ]
+      },
+      {
+        "id": "praxisbeispiel",
+        "title": "Praxisbeispiel",
+        "paragraphs": [
+          [
+            {
+              "text": "Im Durchschnitt liegen 600 Stück auf Lager, davon 120 als Sicherheitsbestand. Der Tagesverbrauch beträgt 40 Stück."
+            }
+          ]
+        ],
+        "tabs": [
+          {
+            "title": "Rechenweg",
+            "content": "Reichweite: 600 ÷ 40 = 15 Arbeitstage. Sicherheitskoeffizient: 120 ÷ 600 × 100 = 20 %."
+          }
+        ]
+      },
+      {
+        "id": "kurzfrage",
+        "title": "Kurzfrage zum Schluss",
+        "paragraphs": [
+          [
+            {
+              "text": "Was bedeutet eine durchschnittliche Reichweite von 15 Tagen bei einer Wiederbeschaffungszeit von 12 Tagen?"
+            }
+          ]
+        ],
+        "hint": {
+          "label": "SELBSTKONTROLLE",
+          "title": "Musterantwort",
+          "content": "Der durchschnittliche Bestand entspricht rechnerisch 15 Verbrauchstagen. Für die Bestellung zählen zusätzlich der aktuelle verfügbare Bestand, die erwartete Nachfrage und geplante Zugänge."
+        }
+      }
+    ]
+  },
+  {
+    "id": "logistik-lagerplanung",
+    "chapterId": "logistik-lagerplanung",
+    "subjectId": "logistik",
+    "title": "Lagerplanung, Regalsysteme und Nutzungsgrade",
+    "number": "2.2.1.6",
+    "intro": "Lagerplanung verbindet Flächenbedarf, Zugänglichkeit und Warenfluss. Viel belegte Fläche bedeutet wenig, wenn das Kommissionieren zu lange dauert.",
+    "updatedAt": 1794960000000,
+    "version": 1,
+    "sections": [
+      {
+        "id": "abschnitt-1",
+        "title": "Lagertechnik auswählen",
+        "paragraphs": [
+          [
+            {
+              "text": "Blocklager passen zu stapelbarer, gleichartiger Ware. Palettenregale ermöglichen direkten Zugriff auf einzelne Stellplätze. Durchlaufregale unterstützen eine vorgegebene Richtung für Einlagerung und Entnahme. Die Wahl hängt von Last, Sortiment, Umschlag und Platz ab."
+            }
+          ]
+        ]
+      },
+      {
+        "id": "abschnitt-2",
+        "title": "Fläche und Raum unterscheiden",
+        "paragraphs": [
+          [
+            {
+              "text": "Flächennutzungsgrad = belegte Lagerfläche ÷ vorhandene Lagerfläche × 100. Raumnutzungsgrad verwendet belegtes und vorhandenes Volumen. Lege vorher fest, ob etwa Gang- oder Funktionsflächen zur Vergleichsfläche gehören."
+            }
+          ]
+        ]
+      },
+      {
+        "id": "praxisbeispiel",
+        "title": "Praxisbeispiel",
+        "paragraphs": [
+          [
+            {
+              "text": "Von 500 m² vorhandener Lagerfläche sind 350 m² belegt. Vom betrachteten Volumen von 2.000 m³ sind 900 m³ belegt."
+            }
+          ]
+        ],
+        "tabs": [
+          {
+            "title": "Rechenweg",
+            "content": "Flächennutzung: 350 ÷ 500 × 100 = 70 %. Raumnutzung: 900 ÷ 2.000 × 100 = 45 %."
+          }
+        ]
+      },
+      {
+        "id": "kurzfrage",
+        "title": "Kurzfrage zum Schluss",
+        "paragraphs": [
+          [
+            {
+              "text": "Warum können Flächen- und Raumnutzungsgrad im selben Lager stark auseinanderliegen?"
+            }
+          ]
+        ],
+        "hint": {
+          "label": "SELBSTKONTROLLE",
+          "title": "Musterantwort",
+          "content": "Die Fläche berücksichtigt nur die Grundfläche. Wenn die Höhe wenig genutzt wird, kann trotz hoher Flächenbelegung ein großer Teil des Volumens frei bleiben."
+        }
+      }
+    ]
+  },
+  {
+    "id": "logistik-eigen-fremd-konsignationslager",
+    "chapterId": "logistik-eigen-fremd-konsignationslager",
+    "subjectId": "logistik",
+    "title": "Eigenlager, Fremdlager und Konsignationslager",
+    "number": "2.2.1.7",
+    "intro": "Lagerbetrieb und Eigentum an der Ware sind verschiedene Entscheidungen. Ein Lieferantenbestand kann sich sogar im Lager des Kunden befinden.",
+    "updatedAt": 1794960000000,
+    "version": 1,
+    "sections": [
+      {
+        "id": "abschnitt-1",
+        "title": "Lagerleistung organisieren",
+        "paragraphs": [
+          [
+            {
+              "text": "Im Eigenlager organisiert das Unternehmen den Betrieb selbst. Beim Fremdlager übernimmt ein Dienstleister Lagerleistungen nach Vertrag. Prüfe bei der Auswahl etwa Kapazität, Kostenstruktur, Zugriff und Anbindung an die eigenen Prozesse."
+            }
+          ]
+        ]
+      },
+      {
+        "id": "abschnitt-2",
+        "title": "Konsignation vertraglich einordnen",
+        "paragraphs": [
+          [
+            {
+              "text": "Beim Konsignationslager hält der Lieferant Ware nahe beim Kunden vor. Typischerweise bleibt sie bis zur vereinbarten Entnahme im Eigentum des Lieferanten. Vertraglich zu klären sind unter anderem Entnahmemeldung, Abrechnung, Bestandsgrenzen und Umgang mit Altbeständen."
+            }
+          ]
+        ]
+      },
+      {
+        "id": "praxisbeispiel",
+        "title": "Praxisbeispiel",
+        "paragraphs": [
+          [
+            {
+              "text": "Dichtungen liegen in einem abgegrenzten Bereich auf dem Werksgelände des Käufers. Er meldet jede Entnahme, und der Lieferant rechnet die entnommenen Mengen ab."
+            }
+          ]
+        ]
+      },
+      {
+        "id": "kurzfrage",
+        "title": "Kurzfrage zum Schluss",
+        "paragraphs": [
+          [
+            {
+              "text": "Warum muss der Betrieb Entnahmen buchen, obwohl die Ware bereits auf seinem Gelände liegt?"
+            }
+          ]
+        ],
+        "hint": {
+          "label": "SELBSTKONTROLLE",
+          "title": "Musterantwort",
+          "content": "Die bloße Lagerung löst im beschriebenen Modell noch keine Abrechnung aus. Die Entnahme bestimmt, welche Mengen abgerechnet und zur Bestandsauffüllung gemeldet werden."
+        }
+      }
+    ]
+  },
+  {
+    "id": "logistik-kommissionierzeit",
+    "chapterId": "logistik-kommissionierzeit",
+    "subjectId": "logistik",
+    "title": "Kommissionierzeit berechnen und verbessern",
+    "number": "2.2.3",
+    "intro": "Die Kommissionierzeit setzt sich aus mehreren Tätigkeiten zusammen. Wer sie einzeln erfasst, kann Verbesserungen gezielt prüfen.",
+    "updatedAt": 1794960000000,
+    "version": 1,
+    "sections": [
+      {
+        "id": "abschnitt-1",
+        "title": "Zeiten richtig zuordnen",
+        "paragraphs": [
+          [
+            {
+              "text": "Das Buch unterteilt in Basis-, Weg-, Greif-, Tot- und Verteilzeit. Zur Basiszeit gehören vorbereitende Tätigkeiten, zur Wegzeit die Wege zwischen Entnahmen und zur Greifzeit die Entnahme selbst. Such- oder Nebenaktivitäten und persönliche oder organisatorische Unterbrechungen werden nach dem vorgegebenen Modell erfasst."
+            }
+          ]
+        ]
+      },
+      {
+        "id": "abschnitt-2",
+        "title": "Technik auf die Ursache abstimmen",
+        "paragraphs": [
+          [
+            {
+              "text": "Pick-by-Light zeigt Position und Menge an der Entnahmestelle. Scanner kontrollieren Artikel und Auftragszuordnung. Lange Wege lassen sich oft durch Lagerplatzvergabe oder passende Routen verkürzen."
+            }
+          ]
+        ]
+      },
+      {
+        "id": "praxisbeispiel",
+        "title": "Praxisbeispiel",
+        "paragraphs": [
+          [
+            {
+              "text": "Ein Auftrag benötigt 3 Minuten Basiszeit, 8 Minuten Wegzeit, 4 Minuten Greifzeit, 2 Minuten Totzeit und 1 Minute Verteilzeit."
+            }
+          ]
+        ],
+        "tabs": [
+          {
+            "title": "Rechenweg",
+            "content": "Kommissionierzeit: 3 + 8 + 4 + 2 + 1 = 18 Minuten. Sinkt die Wegzeit um 3 Minuten, bleiben unter sonst gleichen Bedingungen 15 Minuten."
+          }
+        ]
+      },
+      {
+        "id": "kurzfrage",
+        "title": "Kurzfrage zum Schluss",
+        "paragraphs": [
+          [
+            {
+              "text": "Welcher Anteil bietet im Beispiel den größten unmittelbaren Ansatzpunkt für eine bessere Lagerplatzvergabe?"
+            }
+          ]
+        ],
+        "hint": {
+          "label": "SELBSTKONTROLLE",
+          "title": "Musterantwort",
+          "content": "Die Wegzeit ist mit 8 Minuten der größte Anteil. Häufig gemeinsam benötigte Artikel können sinnvoll zueinander platziert werden."
+        }
+      }
+    ]
+  },
+  {
+    "id": "logistik-lagerverwaltung",
+    "chapterId": "logistik-lagerverwaltung",
+    "subjectId": "logistik",
+    "title": "Lagerverwaltung und Bestandsgenauigkeit",
+    "number": "2.2.1.8",
+    "intro": "Wer Artikel, Charge und Lagerplatz zuverlässig bucht, kann freigegebene Bestände schneller finden und Fehlmengen früher erkennen.",
+    "updatedAt": 1794960000000,
+    "version": 1,
+    "sections": [
+      {
+        "id": "abschnitt-1",
+        "title": "Bewegung und Buchung koppeln",
+        "paragraphs": [
+          [
+            {
+              "text": "Buchungen beim Einlagern, Umlagern, Entnehmen und Sperren halten den Systembestand aktuell. Ein Barcode kann Artikel, Charge oder Lagerplatz identifizieren. Entscheidend ist, dass die tatsächliche Bewegung am vorgesehenen Schritt erfasst wird."
+            }
+          ]
+        ]
+      },
+      {
+        "id": "abschnitt-2",
+        "title": "Abweichungen bearbeiten",
+        "paragraphs": [
+          [
+            {
+              "text": "Vergleiche den gezählten Bestand mit dem System und prüfe offene Bewegungen, falsche Plätze und nicht erfasste Entnahmen. Korrigiere die Buchung nach dem betrieblichen Verfahren und beseitige die Ursache der Abweichung."
+            }
+          ]
+        ]
+      },
+      {
+        "id": "praxisbeispiel",
+        "title": "Praxisbeispiel",
+        "paragraphs": [
+          [
+            {
+              "text": "Eine Palette steht am Ersatzplatz, im System ist sie noch am ursprünglichen Platz gebucht. Bei der nächsten Entnahme erscheint sie deshalb als Fehlbestand."
+            }
+          ]
+        ]
+      },
+      {
+        "id": "kurzfrage",
+        "title": "Kurzfrage zum Schluss",
+        "paragraphs": [
+          [
+            {
+              "text": "Wie stellst du den korrekten Bestand wieder her und verhinderst Wiederholungen?"
+            }
+          ]
+        ],
+        "hint": {
+          "label": "SELBSTKONTROLLE",
+          "title": "Musterantwort",
+          "content": "Die Palette wird eindeutig identifiziert und am tatsächlichen Platz gebucht. Künftige Umlagerungen müssen beim Umsetzen erfasst und bestätigt werden."
+        }
+      }
+    ]
+  },
+  {
+    "id": "logistik-kombinierter-verkehr",
+    "chapterId": "logistik-kombinierter-verkehr",
+    "subjectId": "logistik",
+    "title": "Kombinierter Verkehr, Container und Stückgut",
+    "number": "3.2.3",
+    "intro": "Je nach Sendung braucht ein Betrieb einen durchgehenden Lkw, eine gebündelte Stückgutlösung oder mehrere Verkehrsträger.",
+    "updatedAt": 1794960000000,
+    "version": 1,
+    "sections": [
+      {
+        "id": "abschnitt-1",
+        "title": "Verkehrsträger kombinieren",
+        "paragraphs": [
+          [
+            {
+              "text": "Im kombinierten Verkehr läuft ein Hauptabschnitt typischerweise per Schiene oder Schiff. Lkw bedienen Vor- und Nachlauf. Häufig wird die Ladeeinheit, etwa ein Container oder Wechselbehälter, umgeschlagen, während die Ware in ihr bleibt. Terminalzugang, Abfahrtsrhythmus und Laufzeit sind wichtige Kriterien."
+            }
+          ]
+        ]
+      },
+      {
+        "id": "abschnitt-2",
+        "title": "Sendungsgrößen unterscheiden",
+        "paragraphs": [
+          [
+            {
+              "text": "Stückgutnetze bündeln mehrere Sendungen und verteilen sie nach Umschlägen erneut. Kurier-, Express- und Paketdienste bieten je nach Produkt standardisierte oder besonders zeitsensible Lösungen. Eine Komplettladung oder Direktfahrt kann bei großen Mengen oder engem Zeitfenster Vorteile haben."
+            }
+          ]
+        ]
+      },
+      {
+        "id": "praxisbeispiel",
+        "title": "Praxisbeispiel",
+        "paragraphs": [
+          [
+            {
+              "text": "Planbare Container laufen regelmäßig über ein Bahnterminal. Ein einzelnes Ersatzteil mit dringendem Termin geht direkt zum Empfänger."
+            }
+          ]
+        ]
+      },
+      {
+        "id": "kurzfrage",
+        "title": "Kurzfrage zum Schluss",
+        "paragraphs": [
+          [
+            {
+              "text": "Warum eignen sich die planbaren Container eher für den kombinierten Verkehr als das dringende Ersatzteil?"
+            }
+          ]
+        ],
+        "hint": {
+          "label": "SELBSTKONTROLLE",
+          "title": "Musterantwort",
+          "content": "Regelmäßige Mengen lassen sich mit Terminalzeiten und Fahrplan abstimmen. Beim dringenden Ersatzteil können zusätzliche Übergaben und Abfahrtszeiten den engen Termin gefährden."
+        }
+      }
+    ]
+  },
+  {
+    "id": "logistik-distributionsstufen",
+    "chapterId": "logistik-distributionsstufen",
+    "subjectId": "logistik",
+    "title": "Einstufige und mehrstufige Distribution",
+    "number": "3.7",
+    "intro": "Die Zahl der Lagerstufen beeinflusst Kundennähe, Umschlag und Kapitalbindung. Hier geht es um die Lagerstruktur der physischen Distribution.",
+    "updatedAt": 1794960000000,
+    "version": 1,
+    "sections": [
+      {
+        "id": "abschnitt-1",
+        "title": "Lagerstufen unterscheiden",
+        "paragraphs": [
+          [
+            {
+              "text": "In einem einstufigen System werden Kunden beispielsweise aus einem Zentrallager versorgt. In einem mehrstufigen System gelangen Waren über weitere Lagerstufen, etwa regionale Auslieferungslager, zum Kunden. Die Zahl der Lagerstufen ist nicht gleich der Zahl der eingesetzten Verkehrsträger."
+            }
+          ]
+        ]
+      },
+      {
+        "id": "abschnitt-2",
+        "title": "Netz nach Sortiment auslegen",
+        "paragraphs": [
+          [
+            {
+              "text": "Regionale Bestände können kurze Lieferzeiten erleichtern, machen die Verteilung und Bestandssteuerung aber aufwendiger. Langsam drehende Ware lässt sich häufig zentral bündeln. Prüfe die gewünschte Lieferzeit und die Kosten je Artikelgruppe."
+            }
+          ]
+        ]
+      },
+      {
+        "id": "praxisbeispiel",
+        "title": "Praxisbeispiel",
+        "paragraphs": [
+          [
+            {
+              "text": "Kritische Standardersatzteile liegen zentral und in zwei Regionallagern. Seltene Spezialteile werden nur zentral vorgehalten."
+            }
+          ]
+        ]
+      },
+      {
+        "id": "kurzfrage",
+        "title": "Kurzfrage zum Schluss",
+        "paragraphs": [
+          [
+            {
+              "text": "Warum passt ein mehrstufiges Netz eher zu den kritischen Standardteilen als zu den seltenen Spezialteilen?"
+            }
+          ]
+        ],
+        "hint": {
+          "label": "SELBSTKONTROLLE",
+          "title": "Musterantwort",
+          "content": "Regionale Bestände verkürzen bei den häufig benötigten kritischen Teilen den Lieferweg. Bei seltenen Artikeln würde die Verteilung auf mehrere Standorte viel Bestand binden."
+        }
+      }
+    ]
+  },
+  {
+    "id": "logistik-transportvertraege",
+    "chapterId": "logistik-transportvertraege",
+    "subjectId": "logistik",
+    "title": "Fracht-, Speditions- und Lagervertrag",
+    "number": "3.8",
+    "intro": "Transportaufträge können verschiedene Pflichten auslösen. Die zugesagte Leistung ist für die Einordnung entscheidend.",
+    "updatedAt": 1794960000000,
+    "version": 1,
+    "sections": [
+      {
+        "id": "abschnitt-1",
+        "title": "Vertragstypen unterscheiden",
+        "paragraphs": [
+          [
+            {
+              "text": "Im Frachtvertrag schuldet der Frachtführer Beförderung und Ablieferung (§ 407 HGB). Der Spediteur schuldet im Speditionsvertrag die Organisation der Versendung (§§ 453, 454 HGB). Beim Lagervertrag schuldet der Lagerhalter Lagerung und Aufbewahrung (§ 467 HGB)."
+            }
+          ]
+        ]
+      },
+      {
+        "id": "abschnitt-2",
+        "title": "Rollen im Einzelfall prüfen",
+        "paragraphs": [
+          [
+            {
+              "text": "Für den Spediteur können hinsichtlich der Beförderung Frachtführerpflichten gelten, etwa bei Selbsteintritt (§ 458 HGB) oder Spedition zu festen Kosten (§ 459 HGB). Prüfe deshalb den Auftrag und die tatsächliche Rolle des Vertragspartners."
+            }
+          ]
+        ]
+      },
+      {
+        "id": "praxisbeispiel",
+        "title": "Praxisbeispiel",
+        "paragraphs": [
+          [
+            {
+              "text": "Ein Hersteller lässt die Beförderung und Zwischenlagerung organisieren. Der Spediteur beauftragt dazu einen Frachtführer und einen externen Lagerhalter."
+            }
+          ]
+        ]
+      },
+      {
+        "id": "kurzfrage",
+        "title": "Kurzfrage zum Schluss",
+        "paragraphs": [
+          [
+            {
+              "text": "Welche Hauptleistung schulden Spediteur, Frachtführer und Lagerhalter in diesem Beispiel?"
+            }
+          ]
+        ],
+        "hint": {
+          "label": "SELBSTKONTROLLE",
+          "title": "Musterantwort",
+          "content": "Der Spediteur organisiert die Versendung, der Frachtführer befördert und liefert ab, der Lagerhalter lagert und bewahrt das Gut auf."
+        }
+      }
+    ]
+  },
+  {
+    "id": "logistik-frachtbrief",
+    "chapterId": "logistik-frachtbrief",
+    "subjectId": "logistik",
+    "title": "Frachtbrief, Warenangaben und Ablieferbeleg",
+    "number": "3.9",
+    "intro": "Transportdokumente sollen den Auftrag eindeutig beschreiben und nachvollziehbar machen, wann und in welchem Zustand Ware übernommen oder abgeliefert wurde.",
+    "updatedAt": 1794960000000,
+    "version": 1,
+    "sections": [
+      {
+        "id": "abschnitt-1",
+        "title": "Frachtbrief einordnen",
+        "paragraphs": [
+          [
+            {
+              "text": "§ 408 HGB nennt unter anderem Absender, Empfänger, Übernahme- und Ablieferstelle, Warenart, Verpackung, Packstücke und Gewicht als mögliche Inhalte. Ein beiderseits unterzeichneter Frachtbrief hat nach § 409 HGB Beweiswirkung für Abschluss und Inhalt des Frachtvertrags sowie für die Übernahme, bis das Gegenteil bewiesen ist."
+            }
+          ]
+        ]
+      },
+      {
+        "id": "abschnitt-2",
+        "title": "Dokumente und Abweichungen",
+        "paragraphs": [
+          [
+            {
+              "text": "Lieferschein, Frachtbrief und Ablieferbeleg dienen unterschiedlichen Zwecken. Fehlen wesentliche Angaben oder sind Verpackung und Kennzeichnung ungenügend, können unter den Voraussetzungen des § 414 HGB Ersatzansprüche des Frachtführers gegen den Absender entstehen."
+            }
+          ]
+        ]
+      },
+      {
+        "id": "praxisbeispiel",
+        "title": "Praxisbeispiel",
+        "paragraphs": [
+          [
+            {
+              "text": "Auf dem Transportauftrag stehen acht Packstücke. An der Rampe werden sieben übernommen. Die Differenz wird vor Abfahrt in den Übernahmeunterlagen festgehalten."
+            }
+          ]
+        ]
+      },
+      {
+        "id": "kurzfrage",
+        "title": "Kurzfrage zum Schluss",
+        "paragraphs": [
+          [
+            {
+              "text": "Warum sollte der Frachtführer die Abweichung vor Abfahrt dokumentieren?"
+            }
+          ]
+        ],
+        "hint": {
+          "label": "SELBSTKONTROLLE",
+          "title": "Musterantwort",
+          "content": "Damit später nachvollziehbar bleibt, dass nur sieben Packstücke übernommen wurden, und sich eine Minderübernahme von einem späteren Verlust unterscheiden lässt."
+        }
+      }
+    ]
+  },
+  {
+    "id": "logistik-frachtfuehrerhaftung",
+    "chapterId": "logistik-frachtfuehrerhaftung",
+    "subjectId": "logistik",
+    "title": "Frachtführerhaftung: HGB und CMR",
+    "number": "3.10",
+    "intro": "Bei Verlust, Beschädigung oder Verspätung kommt es darauf an, welches Regelwerk gilt und welche Art von Schaden vorliegt.",
+    "updatedAt": 1794960000000,
+    "version": 1,
+    "sections": [
+      {
+        "id": "abschnitt-1",
+        "title": "Regelwerk ermitteln",
+        "paragraphs": [
+          [
+            {
+              "text": "§ 425 HGB erfasst unter anderem Verlust und Beschädigung zwischen Übernahme und Ablieferung sowie Schäden durch Lieferfristüberschreitung. Die CMR gilt grundsätzlich für entgeltliche Straßengüterbeförderungen, wenn Übernahme- und Ablieferort in verschiedenen Staaten liegen und mindestens einer Vertragsstaat ist. Das Übereinkommen kennt Ausnahmen."
+            }
+          ]
+        ]
+      },
+      {
+        "id": "abschnitt-2",
+        "title": "Haftung und Grenze getrennt prüfen",
+        "paragraphs": [
+          [
+            {
+              "text": "§ 431 HGB begrenzt die reguläre Haftung bei Verlust oder Beschädigung grundsätzlich gewichtsbezogen, bei Überschreitung der Lieferfrist auf das Dreifache der Fracht. Die CMR hat eigene Regeln für Nachweis, Haftungsgrenzen und Vorbehalte. Daher ist eine HGB-Grenze nicht ungeprüft auf einen CMR-Fall übertragbar."
+            }
+          ]
+        ]
+      },
+      {
+        "id": "praxisbeispiel",
+        "title": "Praxisbeispiel",
+        "paragraphs": [
+          [
+            {
+              "text": "Für einen innerdeutschen Transport beträgt die Fracht 400 €. Ein nachgewiesener Verspätungsschaden liegt bei 1.600 €. Für die Übung werden die reguläre HGB-Grenze und keine Ausnahmen unterstellt."
+            }
+          ]
+        ],
+        "tabs": [
+          {
+            "title": "Rechenweg",
+            "content": "Reguläre Grenze für die Lieferfristüberschreitung: 3 × 400 € = 1.200 €. Unter den genannten Annahmen verbleiben von 1.600 € Schaden höchstens 1.200 €."
+          }
+        ]
+      },
+      {
+        "id": "kurzfrage",
+        "title": "Kurzfrage zum Schluss",
+        "paragraphs": [
+          [
+            {
+              "text": "Was prüfst du zuerst, wenn derselbe Auftrag von Deutschland nach Frankreich geht?"
+            }
+          ]
+        ],
+        "hint": {
+          "label": "SELBSTKONTROLLE",
+          "title": "Musterantwort",
+          "content": "Ob die CMR auf den grenzüberschreitenden Straßengütertransport anwendbar ist. Danach prüfst du ihre Haftungs- und Nachweisregeln für die konkrete Schadensart."
+        }
+      }
+    ]
+  },
+  {
+    "id": "logistik-sicherungsprinzipien",
+    "chapterId": "logistik-sicherungsprinzipien",
+    "subjectId": "logistik",
+    "title": "Formschluss und Kraftschluss bei der Ladungssicherung",
+    "number": "3.5.3",
+    "intro": "Ladung kann durch geeignete Begrenzungen, durch Reibung oder durch eine abgestimmte Kombination gegen Bewegung gesichert werden.",
+    "updatedAt": 1794960000000,
+    "version": 1,
+    "sections": [
+      {
+        "id": "abschnitt-1",
+        "title": "Wirkungsprinzipien unterscheiden",
+        "paragraphs": [
+          [
+            {
+              "text": "Beim Formschluss wirken geeignete Begrenzungen oder geeignete Sicherungsmittel direkt gegen die Bewegung. Beim Niederzurren erhöht die Vorspannung die Anpresskraft und damit die nutzbare Reibung. Für die Praxis müssen Fahrzeugaufbau, Sicherungsmittel und Sicherungskonzept zur konkreten Ladung passen."
+            }
+          ]
+        ]
+      },
+      {
+        "id": "abschnitt-2",
+        "title": "Fahrbewegungen berücksichtigen",
+        "paragraphs": [
+          [
+            {
+              "text": "Beim Bremsen, Anfahren und Ausweichen wirken Kräfte in unterschiedlichen Richtungen. Ob eine Sicherung ausreichend ist, wird nach den anerkannten Regeln der Technik für die konkrete Verladung bestimmt."
+            }
+          ]
+        ]
+      },
+      {
+        "id": "praxisbeispiel",
+        "title": "Praxisbeispiel",
+        "paragraphs": [
+          [
+            {
+              "text": "Eine Ladeeinheit steht in einem Fahrzeug neben einer Lücke. Das bloße Vorhandensein eines Fahrzeugaufbaus sagt noch nichts darüber aus, ob Formschluss tatsächlich wirksam ist."
+            }
+          ]
+        ]
+      },
+      {
+        "id": "kurzfrage",
+        "title": "Kurzfrage zum Schluss",
+        "paragraphs": [
+          [
+            {
+              "text": "Wodurch unterscheidet sich die Sicherungswirkung beim Formschluss von der eines Niederzurrens?"
+            }
+          ]
+        ],
+        "hint": {
+          "label": "SELBSTKONTROLLE",
+          "title": "Musterantwort",
+          "content": "Formschluss hält die Ladung durch direkte Begrenzung. Niederzurren erhöht die Anpresskraft, damit die Reibung einer Bewegung stärker entgegenwirkt."
+        }
+      }
+    ]
+  },
+  {
+    "id": "logistik-rueckfuehrung",
+    "chapterId": "logistik-rueckfuehrung",
+    "subjectId": "logistik",
+    "title": "Rückführung, Wiederverwendung und Recycling",
+    "number": "3.11",
+    "intro": "Rücksendungen, Mehrwegträger und Produktionsreste gehen in unterschiedliche Prozesse. Die erste Entscheidung betrifft Zustand und mögliche weitere Nutzung.",
+    "updatedAt": 1794960000000,
+    "version": 1,
+    "sections": [
+      {
+        "id": "abschnitt-1",
+        "title": "Rückläufer trennen und bewerten",
+        "paragraphs": [
+          [
+            {
+              "text": "Gebrauchsfähige Mehrwegbehälter gehen nach Kontrolle wieder in den Umlauf. Defekte Rückläufer werden nach Zustand und Status geprüft. Je nach Fall kommen Reparatur, Teilegewinnung, Recycling oder ein anderer Entsorgungsweg infrage."
+            }
+          ]
+        ]
+      },
+      {
+        "id": "abschnitt-2",
+        "title": "Stufen anhand der Wirkung unterscheiden",
+        "paragraphs": [
+          [
+            {
+              "text": "Ist ein Gegenstand bereits Abfall, kann eine Prüfung, Reinigung oder Reparatur ihn für die Wiederverwendung vorbereiten. Beim Recycling werden Abfälle stofflich aufbereitet. Energetische Verwertung ist eine andere Verwertungsform. Für die Einordnung kommt es auf den tatsächlichen Vorgang an."
+            }
+          ]
+        ]
+      },
+      {
+        "id": "praxisbeispiel",
+        "title": "Praxisbeispiel",
+        "paragraphs": [
+          [
+            {
+              "text": "Unbeschädigte Kisten werden direkt zurückgeführt. Aussortiertes, bereits zu Abfall gewordenes Kunststoffmaterial wird zu einem neuen Werkstoff verarbeitet."
+            }
+          ]
+        ]
+      },
+      {
+        "id": "kurzfrage",
+        "title": "Kurzfrage zum Schluss",
+        "paragraphs": [
+          [
+            {
+              "text": "Warum ist die Rückführung der intakten Kisten kein Recycling?"
+            }
+          ]
+        ],
+        "hint": {
+          "label": "SELBSTKONTROLLE",
+          "title": "Musterantwort",
+          "content": "Die Kisten werden als Kisten weiter genutzt. Beim Recycling des Kunststoffabfalls entsteht dagegen durch stoffliche Aufbereitung ein Material für neue Anwendungen."
+        }
+      }
+    ]
+  },
+  {
+    "id": "logistik-kanban",
+    "chapterId": "logistik-kanban",
+    "subjectId": "logistik",
+    "title": "Push, Pull und Kanban",
+    "number": "4.3.3",
+    "intro": "Push und Pull unterscheiden sich darin, wodurch Materialnachschub ausgelöst wird. Kanban ist ein mögliches Signal für einen Pull-Prozess.",
+    "updatedAt": 1794960000000,
+    "version": 1,
+    "sections": [
+      {
+        "id": "abschnitt-1",
+        "title": "Vom Plan oder vom Verbrauch aus steuern",
+        "paragraphs": [
+          [
+            {
+              "text": "Beim Push gelangt Material entsprechend einem vorgelagerten Plan in den Prozess. Beim Pull fordert der nachgelagerte Arbeitsbereich Material nach tatsächlichem Verbrauch an. Ein leerer Behälter oder ein digitales Signal kann den Nachschub auslösen."
+            }
+          ]
+        ]
+      },
+      {
+        "id": "abschnitt-2",
+        "title": "Grenzen und Nachschubregeln",
+        "paragraphs": [
+          [
+            {
+              "text": "Definiere Behältermenge, Rückmeldepunkt und Verantwortliche. Das System braucht verlässliche Wiederbeschaffungszeiten und Regeln für Störungen. Stark schwankender Verbrauch oder ein zu langer Nachschubweg können zusätzliche Planung erfordern."
+            }
+          ]
+        ]
+      },
+      {
+        "id": "praxisbeispiel",
+        "title": "Praxisbeispiel",
+        "paragraphs": [
+          [
+            {
+              "text": "Wenn die Montage einen Schraubenbehälter leert, löst das Kanban-Signal die Wiederbefüllung in derselben Standardmenge aus."
+            }
+          ]
+        ]
+      },
+      {
+        "id": "kurzfrage",
+        "title": "Kurzfrage zum Schluss",
+        "paragraphs": [
+          [
+            {
+              "text": "Warum ist das Behältersignal ein Pull-Signal?"
+            }
+          ]
+        ],
+        "hint": {
+          "label": "SELBSTKONTROLLE",
+          "title": "Musterantwort",
+          "content": "Die nachgelagerte Montage löst den Nachschub nach ihrem tatsächlichen Verbrauch aus. Die Teile werden nicht allein aufgrund eines vorgelagerten Zeitplans bereitgestellt."
+        }
+      }
+    ]
+  },
+  {
+    "id": "logistik-vmi-milk-run",
+    "chapterId": "logistik-vmi-milk-run",
+    "subjectId": "logistik",
+    "title": "Vendor Managed Inventory, E-Business und Milk Run",
+    "number": "4.3.4",
+    "intro": "Logistikprozesse lassen sich durch geteilte Bestandsdaten, standardisierte Nachrichten und gebündelte Abholungen vereinfachen.",
+    "updatedAt": 1794960000000,
+    "version": 1,
+    "sections": [
+      {
+        "id": "abschnitt-1",
+        "title": "Bestände gemeinsam steuern",
+        "paragraphs": [
+          [
+            {
+              "text": "Beim Vendor Managed Inventory (VMI) plant der Lieferant den Nachschub innerhalb vereinbarter Grenzen anhand von Bestands- und Verbrauchsdaten. Elektronische Bestellungen, Abrufe und Avise können manuelle Eingaben verringern. VMI beschreibt die Dispositionsverantwortung, Konsignation die Bestands- und Eigentumsregelung. Beides lässt sich kombinieren."
+            }
+          ]
+        ]
+      },
+      {
+        "id": "abschnitt-2",
+        "title": "Abholungen bündeln",
+        "paragraphs": [
+          [
+            {
+              "text": "Ein Milk Run fährt mehrere definierte Abholstellen auf einer abgestimmten Tour an. Regelmäßigkeit und Bündelung können Einzelfahrten reduzieren. Passende Zeitfenster und eine ausreichende Auslastung sind dafür wichtig."
+            }
+          ]
+        ]
+      },
+      {
+        "id": "praxisbeispiel",
+        "title": "Praxisbeispiel",
+        "paragraphs": [
+          [
+            {
+              "text": "Ein Lieferant prüft täglich den Bestand im Kundenlager und plant Nachschub. Ein Fahrzeug sammelt auf einer festen Route bei drei Lieferanten und bringt die Ware gemeinsam ins Werk."
+            }
+          ]
+        ]
+      },
+      {
+        "id": "kurzfrage",
+        "title": "Kurzfrage zum Schluss",
+        "paragraphs": [
+          [
+            {
+              "text": "Welche Entscheidung beschreibt VMI und welche Aufgabe erfüllt der Milk Run?"
+            }
+          ]
+        ],
+        "hint": {
+          "label": "SELBSTKONTROLLE",
+          "title": "Musterantwort",
+          "content": "VMI legt fest, wer den Nachschub anhand von Bestandsdaten disponiert. Der Milk Run bündelt die physische Abholung mehrerer Sendungen."
+        }
+      }
+    ]
+  },
+  {
+    "id": "logistik-vertragssonderformen",
+    "chapterId": "logistik-vertragssonderformen",
+    "subjectId": "logistik",
+    "title": "Abrufvertrag, Sukzessivlieferung und Spezifikationskauf",
+    "number": "5.1.3",
+    "intro": "Wiederkehrende Lieferungen lassen sich durch unterschiedliche Vertragsmodelle steuern. Wichtig ist, wer Mengen, Zeitpunkte und Eigenschaften festlegt.",
+    "updatedAt": 1794960000000,
+    "version": 1,
+    "sections": [
+      {
+        "id": "abschnitt-1",
+        "title": "Abruf und fest vereinbarte Teillieferung",
+        "paragraphs": [
+          [
+            {
+              "text": "Beim Abrufmodell konkretisiert der Käufer Lieferungen im vertraglich vereinbarten Rahmen. Bei einer Sukzessivlieferung wird die Gesamtleistung in zeitlich aufeinanderfolgenden Teilen erbracht. Für die Praxis zählt, welche Mengen und Termine bereits verbindlich feststehen."
+            }
+          ]
+        ]
+      },
+      {
+        "id": "abschnitt-2",
+        "title": "Spezifikation nach Vertragsschluss",
+        "paragraphs": [
+          [
+            {
+              "text": "Beim Spezifikationskauf ist die nähere Bestimmung etwa von Form oder Maß dem Käufer vorbehalten. § 375 HGB verpflichtet ihn, die vorbehaltene Bestimmung zu treffen. Vereinbarte Fristen und technische Grenzen erleichtern die Planung."
+            }
+          ]
+        ]
+      },
+      {
+        "id": "praxisbeispiel",
+        "title": "Praxisbeispiel",
+        "paragraphs": [
+          [
+            {
+              "text": "Ein Hersteller bestellt 600 Gehäuse in sechs festen Teillieferungen zu 100 Stück. Die genaue Farbe jeder Teillieferung bestimmt er bis zum jeweils vereinbarten Stichtag."
+            }
+          ]
+        ]
+      },
+      {
+        "id": "kurzfrage",
+        "title": "Kurzfrage zum Schluss",
+        "paragraphs": [
+          [
+            {
+              "text": "Was ist im Beispiel bereits festgelegt, und was wird später bestimmt?"
+            }
+          ]
+        ],
+        "hint": {
+          "label": "SELBSTKONTROLLE",
+          "title": "Musterantwort",
+          "content": "Die Gesamtmenge, Teilmengen und Liefertermine stehen fest. Die Farbe bestimmt der Käufer später innerhalb der vereinbarten Vorgaben."
+        }
+      }
+    ]
+  },
+  {
+    "id": "logistik-zahlung-skonto",
+    "chapterId": "logistik-zahlung-skonto",
+    "subjectId": "logistik",
+    "title": "Zahlungsbedingungen, Skonto und Lieferantenkredit",
+    "number": "5.1.4",
+    "intro": "Ein Zahlungsziel verschafft Liquidität. Wer dadurch nutzbares Skonto verliert, trägt dafür einen wirtschaftlichen Preis.",
+    "updatedAt": 1794960000000,
+    "version": 1,
+    "sections": [
+      {
+        "id": "abschnitt-1",
+        "title": "Zahlungsoptionen vergleichen",
+        "paragraphs": [
+          [
+            {
+              "text": "Eine Zahlungsbedingung wie 2 % Skonto innerhalb von 10 Tagen, ansonsten 30 Tage netto, stellt zwei Zahlungen gegenüber. Der entgangene Nachlass ist der Preis für die zusätzlichen Tage bezogen auf den Betrag, den der Käufer früher hätte zahlen können."
+            }
+          ]
+        ]
+      },
+      {
+        "id": "abschnitt-2",
+        "title": "Auf das Jahr beziehen",
+        "paragraphs": [
+          [
+            {
+              "text": "Für eine vereinfachte jährliche Vergleichsgröße wird die Periodenbelastung mit Jahrestagen ÷ Zahl der zusätzlichen Kredittage multipliziert. Das ist eine lineare Hochrechnung zum Vergleich und kein über Zinseszins berechneter Effektivzins."
+            }
+          ]
+        ]
+      },
+      {
+        "id": "praxisbeispiel",
+        "title": "Praxisbeispiel",
+        "paragraphs": [
+          [
+            {
+              "text": "Eine Rechnung über 10.000 € bietet 2 % Skonto bei Zahlung bis Tag 10, ansonsten ist der Betrag an Tag 30 fällig. Nutze 360 Tage."
+            }
+          ]
+        ],
+        "tabs": [
+          {
+            "title": "Rechenweg",
+            "content": "Frühzahlung = 9.800 €. Späte Zahlung kostet 200 € mehr und verschafft 20 Tage. Periodenkosten = 200 ÷ 9.800 = 2,04 %. Auf 360 Tage linear hochgerechnet: 2,04 % × 360 ÷ 20 ≈ 36,73 % p. a."
+          }
+        ]
+      },
+      {
+        "id": "kurzfrage",
+        "title": "Kurzfrage zum Schluss",
+        "paragraphs": [
+          [
+            {
+              "text": "Warum wird die Periodenbelastung auf 9.800 € und eine Laufzeit von 20 Tagen bezogen?"
+            }
+          ]
+        ],
+        "hint": {
+          "label": "SELBSTKONTROLLE",
+          "title": "Musterantwort",
+          "content": "9.800 € sind der Betrag, den der Käufer bei Ausnutzung des Skontos früher zahlen müsste. Nur die 20 Tage zwischen Skontofrist und Zahlungsziel bilden die zusätzliche Finanzierung."
+        }
+      }
+    ]
+  },
+  {
+    "id": "logistik-preisgleitklauseln",
+    "chapterId": "logistik-preisgleitklauseln",
+    "subjectId": "logistik",
+    "title": "Preisgleitklauseln und Indexanpassung",
+    "number": "5.1.5",
+    "intro": "Eine Preisgleitklausel kann in länger laufenden Lieferverträgen festlegen, wie ein Preis auf Veränderungen bestimmter Kostenindizes reagiert.",
+    "updatedAt": 1794960000000,
+    "version": 1,
+    "sections": [
+      {
+        "id": "abschnitt-1",
+        "title": "Klausel nachvollziehen",
+        "paragraphs": [
+          [
+            {
+              "text": "Prüfe Ausgangspreis, Basisindex, Anpassungszeitpunkt und den betroffenen Preisanteil. Bei einer anteiligen Klausel bleibt der feste Anteil gleich. Der indexgebundene Anteil ändert sich im Verhältnis des neuen zum alten Index. Die Wirksamkeit einer konkreten Klausel ist eine eigene Frage."
+            }
+          ]
+        ]
+      },
+      {
+        "id": "abschnitt-2",
+        "title": "Auswirkung begrenzen und belegen",
+        "paragraphs": [
+          [
+            {
+              "text": "Kontrolliere, ob Schwellen, Obergrenzen oder Anpassungen nach unten vereinbart sind. Für die Nachrechnung müssen beide Seiten denselben veröffentlichten Index und die vertraglich vorgesehenen Zeitpunkte verwenden."
+            }
+          ]
+        ]
+      },
+      {
+        "id": "praxisbeispiel",
+        "title": "Praxisbeispiel",
+        "paragraphs": [
+          [
+            {
+              "text": "Der Ausgangspreis beträgt 100 €. 40 % sind an einen Materialindex gebunden. Der Index steigt von 100 auf 110. Im Modell gibt es keine weiteren Anpassungen."
+            }
+          ]
+        ],
+        "tabs": [
+          {
+            "title": "Rechenweg",
+            "content": "Fester Anteil: 60 €. Veränderlicher Anteil: 40 € × 110 ÷ 100 = 44 €. Neuer Preis: 60 € + 44 € = 104 €."
+          }
+        ]
+      },
+      {
+        "id": "kurzfrage",
+        "title": "Kurzfrage zum Schluss",
+        "paragraphs": [
+          [
+            {
+              "text": "Warum steigt der Gesamtpreis nur um 4 %, obwohl der Index um 10 % steigt?"
+            }
+          ]
+        ],
+        "hint": {
+          "label": "SELBSTKONTROLLE",
+          "title": "Musterantwort",
+          "content": "Nur 40 % des Preises sind indexgebunden. Der feste Anteil bleibt unverändert, daher ergibt sich 40 % × 10 % = 4 % für den Gesamtpreis."
+        }
+      }
+    ]
+  },
+  {
+    "id": "logistik-zollwert-versand",
+    "chapterId": "logistik-zollwert-versand",
+    "subjectId": "logistik",
+    "title": "Zollwert, Zolltarif und Versandverfahren",
+    "number": "5.2.7",
+    "intro": "Zollwert und Zolltarif helfen, mögliche Zollabgaben zu bestimmen. Das Versandverfahren betrifft die Beförderung unter zollamtlicher Überwachung.",
+    "updatedAt": 1794960000000,
+    "version": 1,
+    "sections": [
+      {
+        "id": "abschnitt-1",
+        "title": "Zollwert und Warennummer",
+        "paragraphs": [
+          [
+            {
+              "text": "Ausgangspunkt ist häufig der Transaktionswert mit den gesetzlich vorgesehenen Zu- und Abschlägen. Die Warennummer ordnet die Ware tariflich ein. Ursprung und weitere Voraussetzungen können bestimmen, welcher Satz im konkreten Fall anwendbar ist."
+            }
+          ]
+        ]
+      },
+      {
+        "id": "abschnitt-2",
+        "title": "Versand und freien Verkehr trennen",
+        "paragraphs": [
+          [
+            {
+              "text": "Im Zollversand können Waren unter zollamtlicher Überwachung zur Bestimmungsstelle befördert werden. Einfuhrabgaben können währenddessen ausgesetzt sein. Die Überlassung zum freien Verkehr ist ein eigenes Verfahren."
+            }
+          ]
+        ]
+      },
+      {
+        "id": "praxisbeispiel",
+        "title": "Praxisbeispiel",
+        "paragraphs": [
+          [
+            {
+              "text": "Für die Übung ist ein Zollwert von 12.500 € bereits ermittelt. Der anzuwendende Wertzollsatz beträgt 4 %. Weitere Abgaben bleiben ausgeklammert."
+            }
+          ]
+        ],
+        "tabs": [
+          {
+            "title": "Rechenweg",
+            "content": "Zoll = 12.500 € × 0,04 = 500 €. Der Satz ist ein Übungswert und kein Zolltarif für eine bestimmte Ware."
+          }
+        ]
+      },
+      {
+        "id": "kurzfrage",
+        "title": "Kurzfrage zum Schluss",
+        "paragraphs": [
+          [
+            {
+              "text": "Warum wird eine Ware durch einen abgeschlossenen Zollversand nicht automatisch zur Unionsware?"
+            }
+          ]
+        ],
+        "hint": {
+          "label": "SELBSTKONTROLLE",
+          "title": "Musterantwort",
+          "content": "Der Versand regelt die überwachte Beförderung. Der Statuswechsel erfordert bei der üblichen Einfuhr eine gesonderte Überlassung zum freien Verkehr."
+        }
+      }
+    ]
+  },
+  {
+    "id": "logistik-gewerbeabfall",
+    "chapterId": "logistik-gewerbeabfall",
+    "subjectId": "logistik",
+    "title": "Gewerbeabfälle: Getrenntsammlung und Dokumentation",
+    "number": "5.4",
+    "intro": "Getrenntsammlung beginnt dort, wo Abfälle entstehen. So bleiben Abfälle für geeignete Verwertungswege verfügbar.",
+    "updatedAt": 1794960000000,
+    "version": 1,
+    "sections": [
+      {
+        "id": "abschnitt-1",
+        "title": "Fraktionen getrennt erfassen",
+        "paragraphs": [
+          [
+            {
+              "text": "§ 3 GewAbfV sieht für gewerbliche Siedlungsabfälle grundsätzlich die getrennte Sammlung und Beförderung bestimmter Fraktionen vor, etwa Papier, Glas, Kunststoffe und Metalle. Prüfe zuerst, welche Regeln für den konkreten Abfallstrom gelten."
+            }
+          ]
+        ]
+      },
+      {
+        "id": "abschnitt-2",
+        "title": "Abweichungen nachvollziehbar halten",
+        "paragraphs": [
+          [
+            {
+              "text": "Die Verordnung sieht unter Voraussetzungen Ausnahmen vor, etwa wenn eine getrennte Sammlung technisch nicht möglich oder wirtschaftlich nicht zumutbar ist. Die erforderliche Dokumentation und der weitere Entsorgungsweg richten sich nach dem konkreten Fall."
+            }
+          ]
+        ]
+      },
+      {
+        "id": "praxisbeispiel",
+        "title": "Praxisbeispiel",
+        "paragraphs": [
+          [
+            {
+              "text": "Im Versand fallen Kartonagen und Kunststofffolien an. Der Betrieb richtet getrennte Stellen ein und dokumentiert die vorgesehenen Übergaben."
+            }
+          ]
+        ]
+      },
+      {
+        "id": "kurzfrage",
+        "title": "Kurzfrage zum Schluss",
+        "paragraphs": [
+          [
+            {
+              "text": "Warum sollten Papier und Kunststoff direkt am Entstehungsort getrennt erfasst werden?"
+            }
+          ]
+        ],
+        "hint": {
+          "label": "SELBSTKONTROLLE",
+          "title": "Musterantwort",
+          "content": "Getrennte Sammlung hält die Fraktionen sauberer und erleichtert ihre geeignete Verwertung. Sie unterstützt zugleich die Erfüllung der einschlägigen Pflichten."
+        }
+      }
+    ]
+  },
+  {
+    "id": "logistik-fall-beschaffung",
+    "chapterId": "logistik-fall-beschaffung",
+    "subjectId": "logistik",
+    "title": "Übungsfall: Nachschub für die Montage",
+    "number": "1.4",
+    "intro": "Ein Maschinenbauer muss bis Donnerstag eine Serie montieren. Die Disposition soll zuerst die Versorgung des Fertigungstermins sichern und anschließend die Lieferantenwahl begründen.",
+    "updatedAt": 1794960000000,
+    "version": 1,
+    "sections": [
+      {
+        "id": "abschnitt-1",
+        "title": "Ausgangsdaten",
+        "paragraphs": [
+          [
+            {
+              "text": "Die Serie umfasst 40 Baugruppen mit je zwei Ventilen. Für die Serie sind fünf zusätzliche Ventile eingeplant. Von 35 Ventilen im Lager sind zehn für andere Aufträge reserviert. Ein bestätigter Zugang von 20 Stück trifft bis Donnerstag ein. Ein weiterer Sicherheitsbestand ist nicht vorgesehen."
+            }
+          ]
+        ]
+      },
+      {
+        "id": "abschnitt-2",
+        "title": "Angebote",
+        "paragraphs": [
+          [
+            {
+              "text": "A liefert die abgeleitete Fehlmenge nach vier Arbeitstagen zu je 20 € netto plus 50 € Fracht. B liefert dieselbe Menge binnen zwei Arbeitstagen zu je 22 € netto inklusive Fracht. Bis Donnerstag stehen zwei Arbeitstage zur Verfügung. Die Termine gelten als bestätigt."
+            }
+          ]
+        ]
+      },
+      {
+        "id": "praxisbeispiel",
+        "title": "Bearbeitungshinweis",
+        "paragraphs": [
+          [
+            {
+              "text": "Prüfe erst, welche Anbieter den Termin erfüllen. Bewerte danach den Preisunterschied und benenne eine Maßnahme für künftige Aufträge."
+            }
+          ]
+        ]
+      },
+      {
+        "id": "kurzfrage",
+        "title": "Aufgaben",
+        "paragraphs": [
+          [
+            {
+              "text": "1. Berechne Brutto- und Nettobedarf."
+            }
+          ],
+          [
+            {
+              "text": "2. Vergleiche die Bezugspreise für die Fehlmenge und begründe die Bestellung."
+            }
+          ],
+          [
+            {
+              "text": "3. Schlage eine Maßnahme vor, mit der der Betrieb solche Engpässe künftig vermeidet."
+            }
+          ]
+        ],
+        "hint": {
+          "label": "SELBSTKONTROLLE",
+          "title": "Musterlösung",
+          "content": "1. Bruttobedarf: 40 × 2 + 5 = 85 Stück. Verfügbar: 35 − 10 + 20 = 45 Stück. Nettobedarf: 85 − 45 = 40 Stück.\n2. A: 40 × 20 € + 50 € = 850 €. B: 40 × 22 € = 880 €. B kostet 30 € mehr, ist aber als einziger Anbieter rechtzeitig lieferfähig.\n3. Zum Beispiel den Wiederbeschaffungsbedarf früher anhand der Produktionsplanung auslösen und für kritische Teile einen belastbaren Reservebezug vereinbaren."
+        }
+      }
+    ]
+  },
+  {
+    "id": "logistik-fall-lager",
+    "chapterId": "logistik-fall-lager",
+    "subjectId": "logistik",
+    "title": "Übungsfall: Bestände und Lagerleistung auswerten",
+    "number": "2.3",
+    "intro": "Ein Ersatzteillager soll Kapitalbindung senken und gleichzeitig die kurzfristige Lieferfähigkeit sichern.",
+    "updatedAt": 1794960000000,
+    "version": 1,
+    "sections": [
+      {
+        "id": "abschnitt-1",
+        "title": "Ausgangsdaten",
+        "paragraphs": [
+          [
+            {
+              "text": "Anfangsbestand: 800 Stück. Endbestand: 1.000 Stück. Jahresverbrauch: 5.400 Stück. Einstandspreis: 25 € pro Stück. Kalkulatorischer Jahreszinssatz: 8 %. Nutze die vereinfachte Durchschnittsrechnung und eine 360-Tage-Basis."
+            }
+          ]
+        ]
+      },
+      {
+        "id": "abschnitt-2",
+        "title": "Service und Maßnahmen",
+        "paragraphs": [
+          [
+            {
+              "text": "Von 100 Kundenaufträgen konnten 92 sofort vollständig aus dem Bestand bedient werden. Bei mehreren Fehlmengen war der Systembestand höher als der freigegebene physische Bestand."
+            }
+          ]
+        ]
+      },
+      {
+        "id": "praxisbeispiel",
+        "title": "Bearbeitungshinweis",
+        "paragraphs": [
+          [
+            {
+              "text": "Berechne Lagerkennzahlen auf einer einheitlichen Mengenbasis. Bewerte die Servicequote separat."
+            }
+          ]
+        ]
+      },
+      {
+        "id": "kurzfrage",
+        "title": "Aufgaben",
+        "paragraphs": [
+          [
+            {
+              "text": "1. Berechne durchschnittlichen Lagerbestand, Umschlag und rechnerische durchschnittliche Lagerdauer."
+            }
+          ],
+          [
+            {
+              "text": "2. Berechne die jährlichen kalkulatorischen Lagerzinsen."
+            }
+          ],
+          [
+            {
+              "text": "3. Bestimme den auftragsbezogenen Servicegrad und nenne den ersten Schritt zur Ursachenklärung."
+            }
+          ]
+        ],
+        "hint": {
+          "label": "SELBSTKONTROLLE",
+          "title": "Musterlösung",
+          "content": "1. Durchschnitt = (800 + 1.000) ÷ 2 = 900 Stück. Umschlag = 5.400 ÷ 900 = 6 pro Jahr. Lagerdauer = 360 ÷ 6 = 60 Tage.\n2. Durchschnittlicher Bestandswert = 900 × 25 € = 22.500 €. Lagerzinsen = 22.500 € × 8 % = 1.800 € pro Jahr.\n3. Servicegrad = 92 ÷ 100 × 100 = 92 %. Zuerst Bestand und Freigabestatus der betroffenen Artikel mit Buchungen und tatsächlichem Bestand abgleichen."
+        }
+      }
+    ]
+  },
+  {
+    "id": "logistik-fall-wertschoepfung",
+    "chapterId": "logistik-fall-wertschoepfung",
+    "subjectId": "logistik",
+    "title": "Übungsfall: Ersatzteilversand und Warenübergabe",
+    "number": "3.12",
+    "intro": "Der Versand muss ein ungeplantes Ersatzteil bis 10 Uhr zustellen. Gleichzeitig wartet eine weniger dringende Standardsendung mit vier Packstücken.",
+    "updatedAt": 1794960000000,
+    "version": 1,
+    "sections": [
+      {
+        "id": "abschnitt-1",
+        "title": "Transportangebote",
+        "paragraphs": [
+          [
+            {
+              "text": "Die Direktfahrt für das Ersatzteil kostet 290 € und ist für Ankunft bis 09:45 Uhr bestätigt. Ein Stückgutdienst berechnet 80 €, liefert jedoch frühestens am Folgetag. Für die Standardsendung ist der Folgetag rechtzeitig."
+            }
+          ]
+        ]
+      },
+      {
+        "id": "abschnitt-2",
+        "title": "Übergabe an der Rampe",
+        "paragraphs": [
+          [
+            {
+              "text": "Auf der Liste der Standardsendung stehen vier Packstücke. An der Rampe sind nur drei bereit. Das Ersatzteil ist separat verpackt und trägt eine eigene Auftragsnummer."
+            }
+          ]
+        ]
+      },
+      {
+        "id": "praxisbeispiel",
+        "title": "Bearbeitungshinweis",
+        "paragraphs": [
+          [
+            {
+              "text": "Unterscheide Serviceanforderungen, die physische Übergabe und die dazugehörigen Informationen."
+            }
+          ]
+        ]
+      },
+      {
+        "id": "kurzfrage",
+        "title": "Aufgaben",
+        "paragraphs": [
+          [
+            {
+              "text": "1. Welche Transportart wählst du für welchen Auftrag? Begründe die Auswahl."
+            }
+          ],
+          [
+            {
+              "text": "2. Wie gehst du mit dem fehlenden Packstück um?"
+            }
+          ],
+          [
+            {
+              "text": "3. Welche beiden Angaben sicherst du beim zeitkritischen Ersatzteil besonders ab, wenn der Kunde mehrere Werke hat?"
+            }
+          ]
+        ],
+        "hint": {
+          "label": "SELBSTKONTROLLE",
+          "title": "Musterlösung",
+          "content": "1. Ersatzteil per Direktfahrt, weil nur diese die 10-Uhr-Frist erfüllt. Standardsendung kann bei geklärter Fehlmenge als Stückgut gehen.\n2. Sendung und Auftrag abgleichen, die Differenz dokumentieren und mit der zuständigen Stelle klären, ob nachkommissioniert oder eine Teillieferung freigegeben wird. Bestätigt wird nur die tatsächliche Übergabe.\n3. Genaues Werk beziehungsweise Tor und verbindliches Lieferzeitfenster."
+        }
+      }
+    ]
+  },
+  {
+    "id": "logistik-fall-rationalisierung",
+    "chapterId": "logistik-fall-rationalisierung",
+    "subjectId": "logistik",
+    "title": "Übungsfall: Durchlaufzeit im Versand senken",
+    "number": "4.4",
+    "intro": "Die Versandabteilung möchte schneller liefern. Bevor sie einen schnelleren Packplatz kauft, erfasst sie den tatsächlichen Ablauf.",
+    "updatedAt": 1794960000000,
+    "version": 1,
+    "sections": [
+      {
+        "id": "abschnitt-1",
+        "title": "Ist-Ablauf",
+        "paragraphs": [
+          [
+            {
+              "text": "Ein Auftrag braucht 12 Minuten zum Kommissionieren, wartet 45 Minuten auf Freigabe und braucht danach 8 Minuten zum Packen. Zusätzlich wird seine Lieferadresse doppelt erfasst. Die Bearbeitungszeiten enthalten diese Eingaben bereits."
+            }
+          ]
+        ]
+      },
+      {
+        "id": "abschnitt-2",
+        "title": "Verbesserungsoptionen",
+        "paragraphs": [
+          [
+            {
+              "text": "Ein neuer Packplatz würde das Packen um 3 Minuten verkürzen. Eine geeignete frühere Freigabe könnte die Wartezeit um 25 Minuten senken. Auswirkung auf Qualität und Fehlerquote soll gemessen werden."
+            }
+          ]
+        ]
+      },
+      {
+        "id": "praxisbeispiel",
+        "title": "Bearbeitungshinweis",
+        "paragraphs": [
+          [
+            {
+              "text": "Vergleiche beide Maßnahmen unter sonst unveränderten Bedingungen. Begründe anschließend die Reihenfolge der Prüfung."
+            }
+          ]
+        ]
+      },
+      {
+        "id": "kurzfrage",
+        "title": "Aufgaben",
+        "paragraphs": [
+          [
+            {
+              "text": "1. Berechne Bearbeitungszeit, Durchlaufzeit und Warteanteil."
+            }
+          ],
+          [
+            {
+              "text": "2. Welche Maßnahme hat rechnerisch den größeren Effekt?"
+            }
+          ],
+          [
+            {
+              "text": "3. Ordne die doppelte Adresserfassung einer Verschwendungsart zu und schlage eine passende Änderung vor."
+            }
+          ]
+        ],
+        "hint": {
+          "label": "SELBSTKONTROLLE",
+          "title": "Musterlösung",
+          "content": "1. Bearbeitung: 12 + 8 = 20 Minuten. Durchlaufzeit: 20 + 45 = 65 Minuten. Warteanteil: 45 ÷ 65 × 100 ≈ 69,2 %.\n2. Frühe Freigabe senkt die Durchlaufzeit auf 40 Minuten, schnelleres Packen allein auf 62 Minuten. Freigabe zuerst prüfen und Qualitätsanforderungen erhalten.\n3. Doppelte Eingabe ist überflüssige Bearbeitung. Die geprüfte Adresse einmal erfassen und kontrolliert ins Versandsystem übernehmen."
+        }
+      }
+    ]
+  },
+  {
+    "id": "logistik-fall-rechtsaspekte",
+    "chapterId": "logistik-fall-rechtsaspekte",
+    "subjectId": "logistik",
+    "title": "Übungsfall: Drittlandsbezug und Wareneingang",
+    "number": "5.5",
+    "intro": "Ein Betrieb kauft 40 Ventile von einem Verkäufer im Drittland. Die Auszubildende bereitet Zollunterlagen und Wareneingang vor.",
+    "updatedAt": 1794960000000,
+    "version": 1,
+    "sections": [
+      {
+        "id": "abschnitt-1",
+        "title": "Einkauf und Zoll",
+        "paragraphs": [
+          [
+            {
+              "text": "Vereinbart ist DAP am Tor des Käufers nach Incoterms® 2020. Der Zollwert ist in der Aufgabe bereits mit 10.000 € ermittelt. Ohne Präferenz beträgt der angenommene Wertzollsatz 5 %. Ein anwendbarer Präferenznachweis wurde bisher nicht vorgelegt."
+            }
+          ]
+        ]
+      },
+      {
+        "id": "abschnitt-2",
+        "title": "Warenannahme",
+        "paragraphs": [
+          [
+            {
+              "text": "Nach der Einfuhr und Ablieferung stellt der Wareneingang beim Abgleich fest, dass drei Ventile nicht der vereinbarten Anschlussgröße entsprechen. Für die Teilaufgabe wird ein beiderseitiges Handelsgeschäft nach deutschem Recht unterstellt."
+            }
+          ]
+        ]
+      },
+      {
+        "id": "praxisbeispiel",
+        "title": "Bearbeitungshinweis",
+        "paragraphs": [
+          [
+            {
+              "text": "Behandle Zoll, Lieferbedingung und Mängelbearbeitung als drei Entscheidungen mit eigenen Voraussetzungen."
+            }
+          ]
+        ]
+      },
+      {
+        "id": "kurzfrage",
+        "title": "Aufgaben",
+        "paragraphs": [
+          [
+            {
+              "text": "1. Berechne den Zoll ohne Präferenz."
+            }
+          ],
+          [
+            {
+              "text": "2. Erkläre, wer unter DAP grundsätzlich die Einfuhrabfertigung übernimmt und an welchem Punkt der Verkäufer nach der Klausel liefert."
+            }
+          ],
+          [
+            {
+              "text": "3. Welche Schritte folgen bei den abweichenden Ventilen?"
+            }
+          ]
+        ],
+        "hint": {
+          "label": "SELBSTKONTROLLE",
+          "title": "Musterlösung",
+          "content": "1. 10.000 € × 5 % = 500 € Zoll. Andere Einfuhrabgaben sind nicht Teil der Aufgabe.\n2. Der Käufer übernimmt grundsätzlich die Einfuhrabfertigung. Der Verkäufer liefert am benannten Tor, indem er die Ware auf dem ankommenden Beförderungsmittel entladebereit bereitstellt.\n3. Die drei Ventile identifizieren, getrennt halten und die Abweichung dokumentieren. Bei einem beiderseitigen Handelsgeschäft den erkennbaren Mangel unverzüglich dem Verkäufer anzeigen (§ 377 HGB)."
+        }
+      }
+    ]
+  },
+  {
+    "id": "logistik-sourcing-baukasten",
+    "chapterId": "logistik-sourcing-baukasten",
+    "subjectId": "logistik",
+    "title": "Unit, Modular und Collective Sourcing",
+    "number": "1.2.10",
+    "intro": "Sourcing lässt sich auch danach einteilen, welche Teile eingekauft werden und ob das Unternehmen alleine oder gemeinsam mit anderen auftritt.",
+    "updatedAt": 1794960000000,
+    "version": 1,
+    "sections": [
+      {
+        "id": "abschnitt-1",
+        "title": "Einzelteile oder Module",
+        "paragraphs": [
+          [
+            {
+              "text": "Beim Unit Sourcing beschafft das Unternehmen einzelne Bauteile und integriert sie selbst. Beim Modular Sourcing kommen vormontierte Funktionseinheiten vom Lieferanten. Das senkt eigenen Koordinationsaufwand, kann aber die Abhängigkeit von einem Modulpartner erhöhen."
+            }
+          ]
+        ]
+      },
+      {
+        "id": "abschnitt-2",
+        "title": "Allein oder gebündelt einkaufen",
+        "paragraphs": [
+          [
+            {
+              "text": "Beim Individual Sourcing führt das Unternehmen die Beschaffung selbst. Beim Collective Sourcing bündeln mehrere Nachfrager geeignete Bedarfe, um zum Beispiel bessere Konditionen zu erreichen. Dafür müssen Spezifikationen, Mengen und Entscheidungsregeln abgestimmt werden."
+            }
+          ]
+        ]
+      },
+      {
+        "id": "praxisbeispiel",
+        "title": "Praxisbeispiel",
+        "paragraphs": [
+          [
+            {
+              "text": "Drei Unternehmen bündeln Bestellungen für gleichartige Schutzverpackungen. Der Maschinenbauer beschafft zugleich eine einbaufertige Bedieneinheit statt zehn Einzelteilen."
+            }
+          ]
+        ]
+      },
+      {
+        "id": "kurzfrage",
+        "title": "Kurzfrage zum Schluss",
+        "paragraphs": [
+          [
+            {
+              "text": "Welche Sourcing-Konzepte verbinden die beiden Entscheidungen?"
+            }
+          ]
+        ],
+        "hint": {
+          "label": "SELBSTKONTROLLE",
+          "title": "Musterantwort",
+          "content": "Die gemeinsame Bestellung ist Collective Sourcing. Die einbaufertige Funktionseinheit ist Modular Sourcing. Beide Begriffe beschreiben unterschiedliche Dimensionen."
+        }
+      }
+    ]
+  },
+  {
+    "id": "logistik-bestellhaeufigkeit",
+    "chapterId": "logistik-bestellhaeufigkeit",
+    "subjectId": "logistik",
+    "title": "Bestellhäufigkeit, Losbestand und Gesamtkosten",
+    "number": "1.3.7",
+    "intro": "Wie oft bestellt wird, hängt von Jahresbedarf und Bestellmenge ab. Bei regelmäßiger Belieferung kann aus der Losgröße auch der durchschnittliche Bestand abgeschätzt werden.",
+    "updatedAt": 1794960000000,
+    "version": 1,
+    "sections": [
+      {
+        "id": "abschnitt-1",
+        "title": "Häufigkeit und Bestand berechnen",
+        "paragraphs": [
+          [
+            {
+              "text": "Bestellungen pro Jahr = Jahresbedarf ÷ Bestellmenge. Bei gleichmäßigem Verbrauch trifft die gesamte Bestellmenge auf einmal ein und der Losbestand sinkt bis zur nächsten Lieferung gleichmäßig. Der durchschnittliche Bestand beträgt in diesem Grundmodell Bestellmenge ÷ 2 plus Sicherheitsbestand."
+            }
+          ]
+        ]
+      },
+      {
+        "id": "abschnitt-2",
+        "title": "Kosten je Variante vergleichen",
+        "paragraphs": [
+          [
+            {
+              "text": "Jährliche Bestellkosten ergeben sich aus Häufigkeit × Kosten je Bestellung. Lagerhaltungskosten ergeben sich aus durchschnittlichem Bestand × Kosten je Stück und Jahr. Preisvorteile und geänderte Kosten müssen bei abweichenden Mengen zusätzlich berücksichtigt werden."
+            }
+          ]
+        ]
+      },
+      {
+        "id": "praxisbeispiel",
+        "title": "Praxisbeispiel",
+        "paragraphs": [
+          [
+            {
+              "text": "Jahresbedarf 12.000 Stück, Bestellmenge 600 Stück, Sicherheitsbestand 100 Stück. Bestellvorgang 45 €, Lagerhaltung 3 € je Stück und Jahr."
+            }
+          ]
+        ],
+        "tabs": [
+          {
+            "title": "Rechenweg",
+            "content": "Häufigkeit = 12.000 ÷ 600 = 20 Bestellungen. Durchschnitt = 600 ÷ 2 + 100 = 400 Stück. Bestellkosten = 20 × 45 € = 900 €. Lagerhaltungskosten = 400 × 3 € = 1.200 €. Zusammen 2.100 € jährlich."
+          }
+        ]
+      },
+      {
+        "id": "kurzfrage",
+        "title": "Kurzfrage zum Schluss",
+        "paragraphs": [
+          [
+            {
+              "text": "Welchen Einfluss hat der konstante Sicherheitsbestand auf die Gesamtkosten dieser Variante?"
+            }
+          ]
+        ],
+        "hint": {
+          "label": "SELBSTKONTROLLE",
+          "title": "Musterantwort",
+          "content": "Er erhöht den Durchschnittsbestand um 100 Stück und damit die jährlichen Lagerhaltungskosten um 300 €. Die Bestellhäufigkeit bleibt bei sonst gleichen Annahmen unverändert."
+        }
+      }
+    ]
+  },
+  {
+    "id": "logistik-bestellrhythmus-rechnen",
+    "chapterId": "logistik-bestellrhythmus-rechnen",
+    "subjectId": "logistik",
+    "title": "Bestellrhythmus und Auffüllmenge berechnen",
+    "number": "1.3.8",
+    "intro": "Bei einem festen Bestellrhythmus muss der Bestand bis zum Eintreffen der Lieferung nach der nächsten Prüfung reichen.",
+    "updatedAt": 1794960000000,
+    "version": 1,
+    "sections": [
+      {
+        "id": "abschnitt-1",
+        "title": "Schutzzeit und Sollbestand",
+        "paragraphs": [
+          [
+            {
+              "text": "Für das einfache Rhythmusmodell addierst du Prüfintervall und Wiederbeschaffungszeit. Multipliziere diese Schutzzeit mit dem erwarteten Tagesverbrauch und addiere den Sicherheitsbestand. Das ergibt den Sollbestand, auf den aufgefüllt wird."
+            }
+          ]
+        ]
+      },
+      {
+        "id": "abschnitt-2",
+        "title": "Bestandsposition berücksichtigen",
+        "paragraphs": [
+          [
+            {
+              "text": "Auffüllmenge = Sollbestand minus Bestandsposition, mindestens null. Zur Bestandsposition zählen im Grundmodell der nutzbare Bestand plus relevante offene Zugänge minus offene Bedarfe, soweit diese noch nicht anderweitig berücksichtigt wurden."
+            }
+          ]
+        ]
+      },
+      {
+        "id": "praxisbeispiel",
+        "title": "Praxisbeispiel",
+        "paragraphs": [
+          [
+            {
+              "text": "Mindestens alle fünf Arbeitstage wird geprüft. Wiederbeschaffungszeit: drei Arbeitstage. Verbrauch: 20 Stück je Arbeitstag. Sicherheitsbestand: 40 Stück. Die Bestandsposition bei der Prüfung beträgt 135 Stück."
+            }
+          ]
+        ],
+        "tabs": [
+          {
+            "title": "Rechenweg",
+            "content": "Schutzzeit = 5 + 3 = 8 Arbeitstage. Sollbestand = 8 × 20 + 40 = 200 Stück. Auffüllmenge = 200 − 135 = 65 Stück."
+          }
+        ]
+      },
+      {
+        "id": "kurzfrage",
+        "title": "Kurzfrage zum Schluss",
+        "paragraphs": [
+          [
+            {
+              "text": "Warum genügt es bei der Rechnung nicht, allein die drei Tage Wiederbeschaffungszeit anzusetzen?"
+            }
+          ]
+        ],
+        "hint": {
+          "label": "SELBSTKONTROLLE",
+          "title": "Musterantwort",
+          "content": "Die nächste Bestellung kann erst bei der nächsten Prüfung ausgelöst werden. Der heute aufgefüllte Bestand muss auch den Verbrauch zwischen dieser Prüfung und der anschließenden Lieferung abdecken."
+        }
+      }
+    ]
+  },
+  {
+    "id": "logistik-pruefplan-stichprobe",
+    "chapterId": "logistik-pruefplan-stichprobe",
+    "subjectId": "logistik",
+    "title": "Prüfplan, Stichprobe und Chargenfreigabe",
+    "number": "2.1.4",
+    "intro": "Eine Qualitätsprüfung soll relevante Abweichungen erkennen und nachvollziehbare Entscheidungen zur Verwendung treffen.",
+    "updatedAt": 1794960000000,
+    "version": 1,
+    "sections": [
+      {
+        "id": "abschnitt-1",
+        "title": "Prüfung vorbereiten",
+        "paragraphs": [
+          [
+            {
+              "text": "Ein Prüfplan legt Merkmale, Methoden, Stichprobenumfang und Entscheidungskriterien fest. Eine Stichprobe verringert den Aufwand, kann aber unerfasste Fehler enthalten. Je nach Risiko kann eine umfassendere Prüfung erforderlich sein."
+            }
+          ]
+        ]
+      },
+      {
+        "id": "abschnitt-2",
+        "title": "Entscheidung dokumentieren",
+        "paragraphs": [
+          [
+            {
+              "text": "Erfasse Charge, Ergebnisse und Freigabestatus. Bei nicht bestandener Prüfung bleibt Ware bis zur Klärung gesperrt oder wird nach betrieblichem Verfahren weiter geprüft. Die Schwellen ergeben sich aus dem Prüfplan."
+            }
+          ]
+        ]
+      },
+      {
+        "id": "praxisbeispiel",
+        "title": "Praxisbeispiel",
+        "paragraphs": [
+          [
+            {
+              "text": "Von zehn zufällig gezogenen Ventilen weichen zwei beim Anschlussmaß ab. Der Prüfplan erlaubt für die gewählte Stichprobe keine Abweichung."
+            }
+          ]
+        ]
+      },
+      {
+        "id": "kurzfrage",
+        "title": "Kurzfrage zum Schluss",
+        "paragraphs": [
+          [
+            {
+              "text": "Welche Entscheidung folgt aus dem Prüfplan, und was lässt sich über die übrigen Ventile sagen?"
+            }
+          ]
+        ],
+        "hint": {
+          "label": "SELBSTKONTROLLE",
+          "title": "Musterantwort",
+          "content": "Die Charge wird gemäß Prüfplan zunächst nicht freigegeben. Die Stichprobe zeigt eine Abweichung, bestimmt aber nicht die genaue Fehlerzahl in der ganzen Charge."
+        }
+      }
+    ]
+  },
+  {
+    "id": "logistik-cmr-vorbehalte",
+    "chapterId": "logistik-cmr-vorbehalte",
+    "subjectId": "logistik",
+    "title": "Schadensanzeige und Vorbehalte bei HGB und CMR",
+    "number": "3.13",
+    "intro": "Ein Transportvermerk hält den Zustand der Ware fest. Bei Schäden und Verspätung können Inhalt, Zeitpunkt und Empfänger der Anzeige rechtlich entscheidend sein.",
+    "updatedAt": 1794960000000,
+    "version": 1,
+    "sections": [
+      {
+        "id": "abschnitt-1",
+        "title": "Schadensarten trennen",
+        "paragraphs": [
+          [
+            {
+              "text": "Sichtbarer Verlust oder Schaden sollte bei Ablieferung gegenüber dem Frachtführer konkret festgehalten werden. Unter § 438 HGB und Art. 30 CMR kann das Ausbleiben eines rechtzeitigen Vorbehalts bei Güterschäden eine Vermutung ordnungsgemäßer Ablieferung begründen. Für später erkennbare Schäden gelten eigene Vorgaben."
+            }
+          ]
+        ]
+      },
+      {
+        "id": "abschnitt-2",
+        "title": "Verspätung separat behandeln",
+        "paragraphs": [
+          [
+            {
+              "text": "Nach Art. 30 Abs. 3 CMR muss ein schriftlicher Vorbehalt an den Frachtführer innerhalb von 21 Tagen abgesendet werden, nachdem das Gut dem Empfänger zur Verfügung gestellt wurde. Nach § 438 Abs. 3 und 4 HGB muss der Empfänger eine Lieferfristüberschreitung dem Frachtführer innerhalb von 21 Tagen nach Ablieferung anzeigen. Für eine Anzeige nach Ablieferung gilt Textform, und die rechtzeitige Absendung genügt."
+            }
+          ]
+        ]
+      },
+      {
+        "id": "praxisbeispiel",
+        "title": "Praxisbeispiel",
+        "paragraphs": [
+          [
+            {
+              "text": "Im internationalen Straßentransport findet der Empfänger bei Ankunft zwei beschädigte Kartons. Die Lieferung kommt außerdem zwei Tage später als vereinbart."
+            }
+          ]
+        ]
+      },
+      {
+        "id": "kurzfrage",
+        "title": "Kurzfrage zum Schluss",
+        "paragraphs": [
+          [
+            {
+              "text": "Warum solltest du den Güterschaden und die Verspätung getrennt dokumentieren?"
+            }
+          ]
+        ],
+        "hint": {
+          "label": "SELBSTKONTROLLE",
+          "title": "Musterantwort",
+          "content": "Güterschäden und Lieferfristüberschreitung unterliegen eigenständigen Voraussetzungen. Der Vermerk über beschädigte Kartons enthält für sich keinen schriftlichen Vorbehalt wegen Verspätung."
+        }
+      }
+    ]
+  },
+  {
+    "id": "logistik-kauf-werk-werklieferung",
+    "chapterId": "logistik-kauf-werk-werklieferung",
+    "subjectId": "logistik",
+    "title": "Kaufvertrag, Werkvertrag und Werklieferungsvertrag",
+    "number": "5.1.6",
+    "intro": "Für die Vertragszuordnung kommt es darauf an, was geliefert oder als Erfolg geschuldet wird.",
+    "updatedAt": 1794960000000,
+    "version": 1,
+    "sections": [
+      {
+        "id": "abschnitt-1",
+        "title": "Kauf und Werk unterscheiden",
+        "paragraphs": [
+          [
+            {
+              "text": "Beim Kauf stehen Übergabe und Eigentumsverschaffung an einer Sache im Vordergrund (§ 433 BGB). Beim Werkvertrag schuldet der Unternehmer einen vereinbarten Erfolg, beispielsweise eine erfolgreich reparierte Anlage (§ 631 BGB)."
+            }
+          ]
+        ]
+      },
+      {
+        "id": "abschnitt-2",
+        "title": "Herzustellende bewegliche Sachen",
+        "paragraphs": [
+          [
+            {
+              "text": "Geht es um die Lieferung einer erst herzustellenden beweglichen Sache, verweist § 650 BGB grundsätzlich auf Kaufrecht. Bei gemischten Verträgen mit Montage oder weiteren Leistungen muss der Vertragsinhalt im Einzelfall geprüft werden."
+            }
+          ]
+        ]
+      },
+      {
+        "id": "praxisbeispiel",
+        "title": "Praxisbeispiel",
+        "paragraphs": [
+          [
+            {
+              "text": "Ein Betrieb bestellt ein lieferbares Standardregal, lässt eine Anlage reparieren und bestellt zusätzlich ein neu anzufertigendes, bewegliches Ersatzteil."
+            }
+          ]
+        ]
+      },
+      {
+        "id": "kurzfrage",
+        "title": "Kurzfrage zum Schluss",
+        "paragraphs": [
+          [
+            {
+              "text": "Welche drei Vertragsmodelle kommen für diese Vorgänge in Betracht?"
+            }
+          ]
+        ],
+        "hint": {
+          "label": "SELBSTKONTROLLE",
+          "title": "Musterantwort",
+          "content": "Beim Standardregal ein Kaufvertrag, bei der Reparatur ein Werkvertrag und beim herzustellenden beweglichen Ersatzteil ein Werklieferungsvertrag mit grundsätzlich anwendbarem Kaufrecht."
+        }
+      }
+    ]
+  },
+  {
+    "id": "logistik-akkreditiv-streckengeschaeft",
+    "chapterId": "logistik-akkreditiv-streckengeschaeft",
+    "subjectId": "logistik",
+    "title": "Dokumentenakkreditiv und Streckengeschäft",
+    "number": "5.1.7",
+    "intro": "Im Außenhandel kann der physische Lieferweg vom Vertragsweg abweichen. Ein Dokumentenakkreditiv kann die Zahlung an bestimmte Nachweise knüpfen.",
+    "updatedAt": 1794960000000,
+    "version": 1,
+    "sections": [
+      {
+        "id": "abschnitt-1",
+        "title": "Liefer- und Vertragsweg unterscheiden",
+        "paragraphs": [
+          [
+            {
+              "text": "Beim Streckengeschäft verkauft ein Händler an den Kunden, der Lieferant versendet aber direkt zum Kunden. Die Geschäftsbeziehungen bleiben bestehen, obwohl der Händler die Ware nicht selbst umschlägt. Lieferhinweise und neutrale Unterlagen können für die Abwicklung wichtig sein."
+            }
+          ]
+        ]
+      },
+      {
+        "id": "abschnitt-2",
+        "title": "Zahlung gegen passende Dokumente",
+        "paragraphs": [
+          [
+            {
+              "text": "Beim Dokumentenakkreditiv knüpft die Bank ihre Zahlungsverpflichtung an die vereinbarte, akkreditivkonforme Dokumentenvorlage. Die Bank prüft grundsätzlich die Dokumente und übernimmt dadurch keine physische Warenprüfung."
+            }
+          ]
+        ]
+      },
+      {
+        "id": "praxisbeispiel",
+        "title": "Praxisbeispiel",
+        "paragraphs": [
+          [
+            {
+              "text": "Ein Händler bestellt Ventile beim Hersteller, der sie direkt zum Endkunden sendet. Für die Zahlung sind bestimmte Handels- und Transportdokumente vereinbart."
+            }
+          ]
+        ]
+      },
+      {
+        "id": "kurzfrage",
+        "title": "Kurzfrage zum Schluss",
+        "paragraphs": [
+          [
+            {
+              "text": "Woran erkennst du das Streckengeschäft, und was prüft die Bank beim Akkreditiv?"
+            }
+          ]
+        ],
+        "hint": {
+          "label": "SELBSTKONTROLLE",
+          "title": "Musterantwort",
+          "content": "Der Hersteller liefert direkt an den Kunden des Händlers. Die Bank prüft, ob die vorgelegten Dokumente die Akkreditivbedingungen erfüllen."
+        }
+      }
+    ]
   }
 ]

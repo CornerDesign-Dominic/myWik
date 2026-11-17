@@ -1,6 +1,7 @@
 import type { Article, Chapter, GlossaryTerm } from '../types';
+import { logisticsDeepening } from './logistik-vertiefung';
 
-interface Lesson {
+export interface Lesson {
   id: string;
   chapterId?: string;
   parent: string;
@@ -13,9 +14,10 @@ interface Lesson {
   question: string;
   answer: string;
   glossary?: [term: string, definition: string];
+  practiceCase?: true;
 }
 
-const lessons: Lesson[] = [
+const introductoryLessons: Lesson[] = [
   {
     id: 'teilbereiche', parent: 'grundlagen', number: '1.1.2', title: 'Teilbereiche der Logistik',
     intro: 'Ein Maschinenbauer liefert ein Ersatzteil bis 10 Uhr. Damit das gelingt, müssen mehrere Teilbereiche ineinandergreifen – vom Nachschub bis zur Rücknahme.',
@@ -541,7 +543,9 @@ const lessons: Lesson[] = [
 
 const subjectId = 'logistik';
 const updatedAt = Date.UTC(2026, 10, 17);
+const deepeningUpdatedAt = Date.UTC(2026, 10, 18);
 const chapterId = (id: string) => `${subjectId}-${id}`;
+const lessons = [...introductoryLessons, ...logisticsDeepening];
 
 const groups = [
   ['analysetechniken', 'beschaffung', '1.2.5', 'Analysetechniken'],
@@ -568,18 +572,20 @@ export const logisticsChapters: Chapter[] = [
 
 export const logisticsArticles: Article[] = lessons.map(lesson => ({
   id: chapterId(lesson.id), chapterId: chapterId(lesson.id), subjectId,
-  title: lesson.title, number: lesson.number, intro: lesson.intro, updatedAt, version: 1,
+  title: lesson.title, number: lesson.number, intro: lesson.intro,
+  updatedAt: logisticsDeepening.includes(lesson) ? deepeningUpdatedAt : updatedAt, version: 1,
   sections: [
     ...lesson.sections.map(([title, ...paragraphs], index) => ({
       id: `abschnitt-${index + 1}`, title, paragraphs: paragraphs.map(text => [{ text }]),
     })),
     {
-      id: 'praxisbeispiel', title: 'Praxisbeispiel', paragraphs: [[{ text: lesson.example }]],
+      id: 'praxisbeispiel', title: lesson.practiceCase ? 'Bearbeitungshinweis' : 'Praxisbeispiel', paragraphs: [[{ text: lesson.example }]],
       tabs: lesson.calculation ? [{ title: 'Rechenweg', content: lesson.calculation }] : undefined,
     },
     {
-      id: 'kurzfrage', title: 'Kurzfrage zum Schluss', paragraphs: [[{ text: lesson.question }]],
-      hint: { label: 'SELBSTKONTROLLE', title: 'Musterantwort', content: lesson.answer },
+      id: 'kurzfrage', title: lesson.practiceCase ? 'Aufgaben' : 'Kurzfrage zum Schluss',
+      paragraphs: lesson.question.split('\n').map(text => [{ text }]),
+      hint: { label: 'SELBSTKONTROLLE', title: lesson.practiceCase ? 'Musterlösung' : 'Musterantwort', content: lesson.answer },
     },
   ],
 }));
