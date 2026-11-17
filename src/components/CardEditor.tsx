@@ -124,7 +124,7 @@ export function CardEditor({ initial, source = '', onClose, onSaved, frontLabel 
           {suggestions.map((suggestion, index) => {
             const checked = selected.includes(suggestion.id);
             return <View key={suggestion.id} style={{ borderWidth: 1, borderColor: checked ? colors.accent : colors.border, backgroundColor: checked ? colors.accentSoft : colors.surface, borderRadius: 12, overflow: 'hidden' }}>
-              <Pressable accessibilityRole="checkbox" accessibilityLabel={`Vorschlag ${index + 1}: ${suggestion.front}`} accessibilityState={{ checked, disabled: busy }} disabled={busy} onPress={() => toggleSelection(suggestion.id)} style={{ padding: 12, gap: 8, minHeight: 44 }}>
+              <Pressable accessibilityRole="checkbox" accessibilityLabel={`Vorschlag ${index + 1}: ${suggestion.front}`} accessibilityState={{ checked, disabled: busy }} aria-checked={checked} disabled={busy} onPress={() => toggleSelection(suggestion.id)} style={{ padding: 12, gap: 8, minHeight: 44 }}>
                 <Row><Text aria-hidden style={{ color: checked ? colors.accent : colors.muted, fontSize: 23 }}>{checked ? '☑' : '☐'}</Text><Text style={{ color: colors.text, fontSize: 16, lineHeight: 23, fontWeight: '600', flex: 1 }}>{suggestion.front}</Text></Row>
                 <Body>{suggestion.back}</Body>
               </Pressable>
