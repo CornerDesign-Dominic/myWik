@@ -909,6 +909,19 @@ test('the marketing catalogue opens an offline article, its matrix and its gloss
   await expect(page.getByRole('dialog').getByText('Ansoff-Matrix', { exact: true })).toBeVisible();
 });
 
+test('the leadership catalogue opens a teaching matrix from the offline bundle', async ({ page }) => {
+  const lesson = fixtureArticles.find(article => article.id === 'fz-situative-fuehrung')!;
+  const matrix = lesson.sections.find(section => section.matrix)?.matrix;
+  expect(matrix).toBeDefined();
+  await isolateCloud(page);
+  await page.goto('/');
+  await page.getByRole('button', { name: /^Fächer/ }).click();
+  await page.getByRole('button', { name: /^Führung und Zusammenarbeit,/ }).click();
+  await openChapter(page, new RegExp(lesson.number.replaceAll('.', '\\.') + ' '));
+  await expect(page.getByTestId('page-header').getByRole('heading', { name: lesson.title, exact: true })).toBeVisible();
+  await expect(page.getByText(matrix!.description, { exact: true })).toBeVisible();
+});
+
 test('a large offline catalogue can be browsed through a bounded glossary and read from disk after reload', async ({ page }) => {
   await isolateCloud(page);
   await page.goto('/');

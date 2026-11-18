@@ -2,6 +2,7 @@ import type { Article, Chapter, GlossaryTerm, Subject } from '../types';
 import { logisticsArticles, logisticsChapters, logisticsGlossary } from './logistik';
 import { transferSection } from './logistik-standard';
 import { marketingArticles, marketingChapters, marketingGlossary } from './marketing';
+import { leadershipArticles, leadershipChapters, leadershipGlossary } from './fuehrung';
 
 export const subjects: Subject[] = [
   { id: 'bwl', title: 'BWL', subtitle: 'Betriebliche Entscheidungen verstehen', icon: 'building' },
@@ -62,9 +63,7 @@ export const chapters: Chapter[] = [
   { id: 'controlling-grundlagen', subjectId: 'controlling', number: '1', title: 'Aufgaben und Instrumente des Controllings' },
   { id: 'controlling-planung', subjectId: 'controlling', number: '2', title: 'Planung, Budgetierung und Kontrolle' },
   { id: 'controlling-kennzahlen', subjectId: 'controlling', number: '3', title: 'Kennzahlen und Berichtswesen' },
-  { id: 'fz-fuehrung', subjectId: 'fuehrung-zusammenarbeit', number: '1', title: 'Führungsverhalten und Führungsinstrumente' },
-  { id: 'fz-kommunikation', subjectId: 'fuehrung-zusammenarbeit', number: '2', title: 'Kommunikation und Zusammenarbeit' },
-  { id: 'fz-konflikte', subjectId: 'fuehrung-zusammenarbeit', number: '3', title: 'Konfliktmanagement und Moderation' },
+  ...leadershipChapters,
 ];
 
 const updatedAt = Date.UTC(2026, 10, 16);
@@ -196,6 +195,7 @@ export const articles: Article[] = [
   },
   ...logisticsArticles,
   ...marketingArticles,
+  ...leadershipArticles,
 ];
 
 export const glossary: GlossaryTerm[] = [
@@ -209,6 +209,7 @@ export const glossary: GlossaryTerm[] = [
   { id: 'vollstaendige-handlung', subjectId: 'personal', term: 'Vollständige Handlung', definition: 'Modell einer selbstständig bewältigten beruflichen Handlung mit den Phasen Informieren, Planen, Entscheiden, Ausführen, Kontrollieren und Bewerten.', example: 'Eine Arbeitsaufgabe wird nicht nur ausgeführt: Lernende planen zuvor ihr Vorgehen und prüfen sowie reflektieren danach das Ergebnis.', articleId: 'leittextmethode' },
   ...logisticsGlossary,
   ...marketingGlossary,
+  ...leadershipGlossary,
 ];
 
-export const contentVersion = 8;
+export const contentVersion = 9;
