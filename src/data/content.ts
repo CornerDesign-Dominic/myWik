@@ -4,6 +4,8 @@ import { transferSection } from './logistik-standard';
 import { marketingArticles, marketingChapters, marketingGlossary } from './marketing';
 import { leadershipArticles, leadershipChapters, leadershipGlossary } from './fuehrung';
 import { lawArticles, lawChapters, lawGlossary } from './recht';
+import { operatingAccountingArticles, operatingAccountingChapters, operatingAccountingGlossary } from './rw-betrieblich';
+import { controllingArticles, controllingChapters, controllingGlossary } from './controlling';
 import { accountingArticles, accountingChapters, accountingGlossary, contributionMarginNumber } from './rechnungswesen';
 
 export const subjects: Subject[] = [
@@ -24,7 +26,7 @@ export const subjects: Subject[] = [
 ];
 
 export const chapters: Chapter[] = [
-  ...accountingChapters,
+  ...[...accountingChapters, ...operatingAccountingChapters].sort((a, b) => a.number.localeCompare(b.number, 'de', { numeric: true })),
   { id: 'personal-ausbildung', subjectId: 'personal', number: '1', title: 'Ausbildung' },
   { id: 'personal-methoden', subjectId: 'personal', parentId: 'personal-ausbildung', number: '1.1', title: 'Ausbildungsmethoden' },
   { id: 'personal-leittext', subjectId: 'personal', parentId: 'personal-methoden', number: '1.1.1', title: 'Leittextmethode', articleId: 'leittextmethode' },
@@ -56,9 +58,7 @@ export const chapters: Chapter[] = [
   { id: 'if-dynamisch', subjectId: 'investition-finanzierung', parentId: 'if-investition', number: '1.2', title: 'Dynamische Verfahren der Investitionsrechnung' },
   { id: 'if-finanzierungsarten', subjectId: 'investition-finanzierung', number: '2', title: 'Finanzierungsarten' },
   { id: 'if-liquiditaet', subjectId: 'investition-finanzierung', number: '3', title: 'Finanzplanung und Liquidität' },
-  { id: 'controlling-grundlagen', subjectId: 'controlling', number: '1', title: 'Aufgaben und Instrumente des Controllings' },
-  { id: 'controlling-planung', subjectId: 'controlling', number: '2', title: 'Planung, Budgetierung und Kontrolle' },
-  { id: 'controlling-kennzahlen', subjectId: 'controlling', number: '3', title: 'Kennzahlen und Berichtswesen' },
+  ...controllingChapters,
   ...leadershipChapters,
 ];
 
@@ -112,7 +112,7 @@ export const articles: Article[] = [
     ],
   },
   {
-    id: 'deckungsbeitrag', subjectId: 'rechnungswesen', chapterId: 'rw-db', title: 'Der Deckungsbeitrag', number: contributionMarginNumber, updatedAt, version: 1,
+    id: 'deckungsbeitrag', subjectId: 'rechnungswesen', chapterId: 'rw-db', title: 'Der Deckungsbeitrag', number: contributionMarginNumber, updatedAt: Date.UTC(2026, 10, 18), version: 2,
     intro: 'Was bleibt von einem Verkauf übrig, um Fixkosten zu decken und Gewinn zu erzielen? Der Deckungsbeitrag macht genau diesen Zusammenhang sichtbar.',
     sections: [
       {
@@ -157,6 +157,19 @@ export const articles: Article[] = [
         ],
         hint: { title: 'Verbindung zur Break-even-Analyse', content: 'Bei konstantem Preis und konstanten variablen Stückkosten gilt: Break-even-Menge = Fixkosten ÷ Stückdeckungsbeitrag, sofern der Stückdeckungsbeitrag positiv ist. Im Lampenbeispiel: 6.000 € ÷ 45 €/Stück = 133,33… Stück. Bei nur ganzen Lampen sind mindestens 134 Stück nötig, um keinen Verlust zu erzielen.' },
       },
+      transferSection(
+        'Ein Betrieb verkauft 150 Stück zu 50 € netto. Variable Stückkosten betragen 28 €, Fixkosten 4.000 €. Wie hoch sind Gesamtdeckungsbeitrag und Betriebsergebnis?',
+        'Der Stückdeckungsbeitrag beträgt 22 €. 150 × 22 € = 3.300 € Gesamtdeckungsbeitrag. Nach 4.000 € Fixkosten bleiben −700 € Betriebsergebnis.',
+      ),
+      {
+        id: 'weiterlernen', title: 'Weiterlernen',
+        paragraphs: [
+          [{ text: 'Break-even-Analyse und Gewinnschwelle', articleId: 'rw-break-even' }],
+          [{ text: 'Mehrstufige Deckungsbeitragsrechnung', articleId: 'rw-fixkostendeckung' }],
+          [{ text: 'Preisuntergrenzen und Auftragsannahme', articleId: 'rw-preisuntergrenzen' }],
+          [{ text: 'Übungsfall zur Engpassplanung', articleId: 'rw-fall-teilkosten' }],
+        ],
+      },
     ],
   },
   {
@@ -194,6 +207,8 @@ export const articles: Article[] = [
   ...leadershipArticles,
   ...lawArticles,
   ...accountingArticles,
+  ...operatingAccountingArticles,
+  ...controllingArticles,
 ];
 
 export const glossary: GlossaryTerm[] = [
@@ -210,6 +225,8 @@ export const glossary: GlossaryTerm[] = [
   ...leadershipGlossary,
   ...lawGlossary,
   ...accountingGlossary,
+  ...operatingAccountingGlossary,
+  ...controllingGlossary,
 ];
 
-export const contentVersion = 11;
+export const contentVersion = 12;
