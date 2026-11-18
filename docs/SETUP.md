@@ -65,6 +65,8 @@ Sobald die Workflow-Datei im Hauptbranch vorhanden ist, kann nach dieser Freigab
 
 Nach einem erfolgreichen Lauf unter **Artifacts → mywik-android-test-apk** die ZIP-Datei herunterladen, entpacken und `app-release.apk` auf dem Handy installieren. Der Build ist für ARM64-Android-Geräte bestimmt. Android kann eine ausdrückliche Erlaubnis zur Installation aus dieser Quelle verlangen.
 
+**Einstellungen → App-Updates → Nach Updates schauen** erkennt veröffentlichte GitHub-Releases mit dem Tag `vX.Y.Z-preview` und der Datei `myWik-X.Y.Z-Samsung.apk`. Verwende diese Namen für freigegebene, signaturkompatible Updates. Die App öffnet den direkten Download, und Android bestätigt anschließend die Installation über die vorhandene Vorschau-App.
+
 Die App heißt **myWik** und verwendet nur im Workflow die Kennung `de.mywik.app.preview`. Sie ist mit dem öffentlichen Testschlüssel aus der Expo-Vorlage signiert und darf **nicht** als Store-/Produktionsbuild veröffentlicht werden. Sie kann neben einer späteren Produktionsapp installiert werden. Lokale Daten der Preview bleiben eine separate Installation; Cloud-Daten werden nach Anmeldung über dasselbe Firebase-Konto synchronisiert.
 
 Die native Projektgenerierung und die Testsignierung wurden geprüft. Ein vollständiger Gradle-/APK-Build war am 16. November 2026 erfolgreich: [erster Testbuild](https://github.com/CornerDesign-Dominic/myWik/actions/runs/43961565620). Nach weiteren Änderungen ist jeweils der neue Workflow-Lauf maßgeblich. GitHub Actions muss für das Repository aktiviert sein. Der erste Build kann wegen der Downloads und nativen Kompilierung länger dauern.

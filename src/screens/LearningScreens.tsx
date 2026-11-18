@@ -1,11 +1,13 @@
-import React, { useEffect, useMemo, useState } from 'react';
-import { Alert, Modal, Platform, Pressable, ScrollView, StyleSheet, Switch, Text, TextInput, View } from 'react-native';
+import React, { useEffect, useMemo, useRef, useState } from 'react';
+import { Alert, Linking, Modal, Platform, Pressable, ScrollView, StyleSheet, Switch, Text, TextInput, View } from 'react-native';
+import { expo as appConfig } from '../../app.json';
 import { useStore } from '../state/Store';
 import { useTheme } from '../components/ui';
 import { content, useContentIndex } from '../services/contentSync';
 import { syncReminders } from '../services/reminders';
 import { learningSummary } from '../services/learningProgress';
 import { useCurrentTime } from '../services/useCurrentTime';
+import { androidReleasesUrl, checkAndroidUpdate, type AndroidUpdate } from '../services/androidUpdates';
 import type { ReminderCategory, ReminderSetting, ThemeMode } from '../types';
 
 function confirmDelete(message: string, remove: () => void) {
@@ -90,10 +92,74 @@ export function RecommendationsScreen({ onArticle }: { onArticle: (id: string) =
   return <ScrollView contentContainerStyle={styles.page}><Title>MeiWik Empfehlungen</Title>{!items.length && <Box><Copy>Keine Empfehlungen fällig.</Copy></Box>}{items.map(item => <Box key={item.id}><Text style={[styles.eyebrow, { color: c.accent }]}>{subjectName(item.subjectId)}</Text><Text style={[styles.sectionTitle, { color: c.text }]}>{item.title}</Text><Copy>{item.reason}</Copy><View style={styles.row}><Action title="Artikel wiederholen" primary onPress={() => onArticle(item.articleId)} /><Action title="Geschafft" onPress={() => store.updateRecommendation(item.id, 'done')} /><Action title="Morgen" onPress={() => store.updateRecommendation(item.id, 'snoozed')} /><Action title="Verwerfen" onPress={() => store.updateRecommendation(item.id, 'dismissed')} /></View></Box>)}</ScrollView>;
 }
 
+function AndroidUpdateSettings({ installedVersion }: { installedVersion: string }) {
+  const colors = usePalette();
+  const request = useRef<AbortController | null>(null);
+  const [checking, setChecking] = useState(false);
+  const [update, setUpdate] = useState<AndroidUpdate | null>(null);
+  const [status, setStatus] = useState<'current' | 'unavailable' | null>(null);
+  const [downloadError, setDownloadError] = useState(false);
+  useEffect(() => () => {
+    request.current?.abort();
+    request.current = null;
+  }, []);
+
+  async function check() {
+    if (request.current) return;
+    const controller = new AbortController();
+    request.current = controller;
+    const timeout = setTimeout(() => controller.abort(), 12_000);
+    setChecking(true);
+    setUpdate(null);
+    setStatus(null);
+    setDownloadError(false);
+    try {
+      const next = await checkAndroidUpdate(installedVersion, controller.signal);
+      if (request.current !== controller) return;
+      setUpdate(next);
+      if (!next) setStatus('current');
+    } catch {
+      if (request.current === controller) setStatus('unavailable');
+    } finally {
+      clearTimeout(timeout);
+      if (request.current === controller) {
+        request.current = null;
+        setChecking(false);
+      }
+    }
+  }
+
+  async function open(url: string) {
+    setDownloadError(false);
+    try { await Linking.openURL(url); }
+    catch { setDownloadError(true); }
+  }
+
+  return <Box>
+    <Text style={[styles.sectionTitle, { color: colors.text }]}>App-Updates</Text>
+    <Copy muted>Installierte Version {installedVersion}</Copy>
+    <Action title={checking ? 'Suche nach Updates …' : 'Nach Updates schauen'} disabled={checking} onPress={() => void check()} />
+    {status === 'current' && <Text accessibilityLiveRegion="polite" style={[styles.copy, { color: colors.text }]}>Deine App ist auf dem neuesten Stand.</Text>}
+    {status === 'unavailable' && <>
+      <Text accessibilityRole="alert" style={[styles.copy, { color: colors.text }]}>Die Suche nach Updates ist gerade nicht möglich.</Text>
+      <Action title="Veröffentlichungen öffnen" onPress={() => void open(androidReleasesUrl)} />
+    </>}
+    {update && <>
+      <Text accessibilityLiveRegion="polite" style={[styles.copy, { color: colors.text }]}>Version {update.version} ist verfügbar.</Text>
+      <Action title="APK herunterladen" primary onPress={() => void open(update.downloadUrl)} />
+      <Copy muted>Öffne die heruntergeladene APK und wähle „Aktualisieren“. Lass myWik dabei installiert, damit deine Lerndaten erhalten bleiben.</Copy>
+    </>}
+    {downloadError && <Text accessibilityRole="alert" style={[styles.copy, { color: colors.text }]}>Der Link konnte nicht geöffnet werden.</Text>}
+  </Box>;
+}
+
 export function SettingsScreen() {
   const { articles, version } = useContentIndex();
   const store = useStore();
   const c = usePalette();
+  // The APK workflow sets this package in app.json before embedding the JS bundle.
+  const canCheckAndroidUpdates = Platform.OS === 'web'
+    || (Platform.OS === 'android' && appConfig.android.package === 'de.mywik.app.preview');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [busy, setBusy] = useState(false);
@@ -122,6 +188,7 @@ export function SettingsScreen() {
   const labels: Record<ReminderCategory, string> = { learning: 'Lernerinnerung', recommendations: 'MeiWik Empfehlungen', news: 'Neues in der App' };
   const syncLabels = { local: 'Nur auf diesem Gerät', syncing: 'Wird synchronisiert …', synced: 'Mit der Cloud synchronisiert', error: 'Synchronisierung benötigt Aufmerksamkeit' };
   return <ScrollView contentContainerStyle={styles.page} keyboardShouldPersistTaps="handled"><Title>Einstellungen</Title>
+    {canCheckAndroidUpdates && <AndroidUpdateSettings installedVersion={appConfig.version} />}
     <Box><Text style={[styles.sectionTitle, { color: c.text }]}>Darstellung</Text><View style={styles.row}>{([['system', 'Wie Gerät'], ['light', 'Hell'], ['dark', 'Dunkel']] as [ThemeMode, string][]).map(([mode, label]) => <Action key={mode} title={label} primary={store.data.settings.theme === mode} onPress={() => store.updateSettings({ theme: mode })} />)}</View></Box>
     <Box><Text style={[styles.sectionTitle, { color: c.text }]}>Dein Konto</Text>{store.user ? <><Copy>{store.user.email ?? 'Angemeldet'}</Copy><Copy muted>{syncLabels[store.syncState]}</Copy><View style={styles.row}><Action title="Jetzt synchronisieren" disabled={busy || !store.online} onPress={() => run(store.syncNow)} /><Action title="Abmelden" disabled={busy} onPress={() => run(store.signOut)} /></View></> : <><Input label="E-Mail" keyboardType="email-address" value={email} onChangeText={setEmail} /><Input label="Passwort" value={password} onChangeText={setPassword} secureTextEntry /><View style={styles.row}><Action title="Anmelden" primary disabled={busy || !email.trim() || !password || !store.online} onPress={() => run(() => store.signIn(email.trim(), password))} /><Action title="Konto erstellen" disabled={busy || !email.trim() || password.length < 6 || !store.online} onPress={() => run(() => store.register(email.trim(), password))} /></View><Copy muted>Für ein neues Konto mindestens 6 Zeichen verwenden.</Copy></>}</Box>
     {!!store.conflicts.length && <Box><Text style={[styles.sectionTitle,{color:c.text}]}>Gesicherte Konfliktversionen</Text><Copy muted>Bei gleichzeitiger Bearbeitung wurden diese Fassungen auf diesem Gerät gesichert. Wiederherstellen legt eine neue Notiz oder Karte an.</Copy>{store.conflicts.map(item=>{const v=item.value as Record<string,unknown>;return <Box key={item.revision}><Copy>{item.kind==='card'?String(v.front):String(v.text)}</Copy>{item.kind==='card'&&<Copy>{String(v.back)}</Copy>}<View style={styles.row}><Action title="Als neue Kopie wiederherstellen" onPress={()=>store.restoreConflict(item.revision)}/><Action title="Konfliktkopie verwerfen" onPress={()=>confirmDelete('Diese lokale Konfliktkopie verwerfen?',()=>store.dismissConflict(item.revision))}/></View></Box>})}</Box>}

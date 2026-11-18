@@ -1,6 +1,8 @@
 import { expect, test, type Locator, type Page } from '@playwright/test';
 import {articles as fixtureArticles,subjects as fixtureSubjects,chapters as fixtureChapters,glossary as fixtureGlossary,contentVersion as fixtureVersion} from '../src/data/content';
 import { catalogueIndex, tenfoldCatalogue } from './catalogueFixture';
+import { androidReleasesApi, androidReleasesUrl } from '../src/services/androidUpdates';
+import { expo as appConfig } from '../app.json';
 
 test.beforeEach(async ({ page }) => {
   await page.addInitScript(() => {
@@ -876,4 +878,40 @@ test('a long article opens at its saved section before presenting the reading vi
   await openLogisticsChapter(page,/1\.2\.5\.1 ABC-Analyse/);
   await expect(page.getByRole('heading',{name:'Transferfrage',exact:true})).toBeInViewport();
   await expect(page.getByRole('heading',{name:'ABC-Analyse',exact:true})).not.toBeInViewport();
+});
+
+test('settings check for updates and open the published APK download', async ({ page }) => {
+  await isolateCloud(page);
+  await page.addInitScript(() => {
+    window.open = url => { (window as Window & { updateDownload?: string }).updateDownload = String(url); return null; };
+  });
+  let nextVersion = appConfig.version;
+  let reachable = true;
+  const download = () => `${androidReleasesUrl}/download/v${nextVersion}-preview/myWik-${nextVersion}-Samsung.apk`;
+  await page.route(androidReleasesApi, route => {
+    if (!reachable) return route.fulfill({ status: 503 });
+    return route.fulfill({ json: [{
+      tag_name: `v${nextVersion}-preview`, draft: false, published_at: '2026-11-18T13:00:00Z',
+      assets: [{ name: `myWik-${nextVersion}-Samsung.apk`, state: 'uploaded', size: 36_000_000, browser_download_url: download() }],
+    }] });
+  });
+  await page.goto('/');
+  await page.getByRole('button', { name: 'Einstellungen', exact: true }).click();
+  const check = page.getByRole('button', { name: 'Nach Updates schauen', exact: true });
+  await expect(page.getByText(`Installierte Version ${appConfig.version}`, { exact: true })).toBeVisible();
+  await check.click();
+  await expect(page.getByText('Deine App ist auf dem neuesten Stand.')).toBeVisible();
+
+  const [major, minor, patch] = appConfig.version.split('.').map(Number);
+  nextVersion = `${major}.${minor}.${patch + 1}`;
+  await check.click();
+  await expect(page.getByText(`Version ${nextVersion} ist verfügbar.`)).toBeVisible();
+  const apk = page.getByRole('button', { name: 'APK herunterladen', exact: true });
+  await apk.click();
+  await expect.poll(() => page.evaluate(() => (window as Window & { updateDownload?: string }).updateDownload)).toBe(download());
+
+  reachable = false;
+  await check.click();
+  await expect(page.getByRole('alert').filter({ hasText: 'Die Suche nach Updates ist gerade nicht möglich.' })).toBeVisible();
+  await expect(apk).toHaveCount(0);
 });
