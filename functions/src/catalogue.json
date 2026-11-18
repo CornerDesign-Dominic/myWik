@@ -147,7 +147,7 @@
     "subjectId": "rechnungswesen",
     "chapterId": "rw-db",
     "title": "Der Deckungsbeitrag",
-    "number": "1.2.1",
+    "number": "3.5.2",
     "updatedAt": 1794787200000,
     "version": 1,
     "intro": "Was bleibt von einem Verkauf übrig, um Fixkosten zu decken und Gewinn zu erzielen? Der Deckungsbeitrag macht genau diesen Zusammenhang sichtbar.",
@@ -59893,6 +59893,3313 @@
             }
           ]
         ]
+      }
+    ],
+    "updatedAt": 1794960000000,
+    "version": 1
+  },
+  {
+    "id": "rw-rechnungssysteme",
+    "subjectId": "rechnungswesen",
+    "chapterId": "rw-rechnungssysteme",
+    "number": "1.1",
+    "title": "Teilbereiche und Rechengrößen des Rechnungswesens",
+    "intro": "Das betriebliche Rechnungswesen erfasst Geschäftsvorfälle und liefert Zahlen für Abschluss, Kalkulation, Analyse und Planung. Dieselbe Lieferung kann je nach Frage in einem anderen Monat oder mit einem anderen Wert eingehen.",
+    "sections": [
+      {
+        "id": "bereiche",
+        "title": "Vier Aufgaben für dieselben Unternehmensdaten",
+        "paragraphs": [
+          [
+            {
+              "text": "Die "
+            },
+            {
+              "text": "Finanzbuchhaltung",
+              "articleId": "rw-fibu"
+            },
+            {
+              "text": " erfasst Geschäftsvorfälle nach maßgeblichen Regeln und liefert Bilanz und GuV. Die Kosten- und Leistungsrechnung (KLR) ermittelt intern Kosten, Leistungen und Betriebsergebnisse. Die betriebswirtschaftliche Auswertung bereitet Ist-Zahlen für Vergleiche und Entscheidungen auf. Die "
+            },
+            {
+              "text": "Planungsrechnung",
+              "articleId": "rw-planungsinhalt"
+            },
+            {
+              "text": " bewertet künftige Maßnahmen und liefert Sollgrößen."
+            }
+          ],
+          [
+            {
+              "text": "Eine Spedition erfasst eine Frachtforderung in der Finanzbuchhaltung, kalkuliert den Tourendeckungsbeitrag in der KLR, vergleicht die Marge mit dem Vorjahr und plant den Geldeingang für die Folgewoche. Betrag, Zweck und Zeitpunkt müssen je Sicht geklärt werden."
+            }
+          ]
+        ]
+      },
+      {
+        "id": "abgrenzung",
+        "title": "Zahlung, Geldvermögen, Erfolg und Leistung",
+        "paragraphs": [
+          [
+            {
+              "text": "Ein- und Auszahlungen verändern den Zahlungsmittelbestand aus Kasse und Bank. Einnahmen und Ausgaben verändern das "
+            },
+            {
+              "text": "Geldvermögen",
+              "termId": "rw-geldvermoegen"
+            },
+            {
+              "text": ". Eine Darlehensauszahlung an den Betrieb erhöht seine Bankmittel und gleich hohe Verbindlichkeiten. Sie ist Einzahlung ohne Einnahme und ohne Ertrag."
+            }
+          ],
+          [
+            {
+              "text": "Ertrag und "
+            },
+            {
+              "text": "Aufwand",
+              "termId": "rw-aufwand"
+            },
+            {
+              "text": " verändern den Periodenerfolg. "
+            },
+            {
+              "text": "Kosten",
+              "termId": "rw-kosten"
+            },
+            {
+              "text": " und Leistungen messen betriebszweckbezogenen Verbrauch beziehungsweise Leistungserstellung. Eine Spende kann Aufwand sein, bleibt im gewöhnlichen Produktionsbetrieb aber außerhalb der KLR. Die "
+            },
+            {
+              "text": "Abgrenzungsrechnung",
+              "articleId": "rw-abgrenzung"
+            },
+            {
+              "text": " erklärt die Überleitung."
+            }
+          ],
+          [
+            {
+              "text": "Ein Händler kauft im Januar Ware für 2.000 € auf Ziel. Die Verbindlichkeit mindert das Geldvermögen im Januar. Bei der Zahlung im Februar sinken Bank und Verbindlichkeit um 2.000 €, das Geldvermögen bleibt gegenüber unmittelbar davor gleich. Bei Verkauf im März werden die 2.000 € Warenverbrauch Aufwand und typischerweise Kosten. Im Beispiel bleiben Umsatzsteuer und Nebenkosten außer Betracht."
+            }
+          ]
+        ]
+      },
+      {
+        "id": "kurzfrage",
+        "title": "Kurzfrage",
+        "paragraphs": [
+          [
+            {
+              "text": "Welche Rechnung beantwortet die Frage, ob ein einzelner Transport seine variablen Kosten deckt?"
+            }
+          ]
+        ],
+        "hint": {
+          "label": "SELBSTKONTROLLE",
+          "title": "Musterantwort",
+          "content": "Die Kosten- und Leistungsrechnung stellt dem Nettoerlös die zurechenbaren variablen Kosten gegenüber."
+        }
+      },
+      {
+        "id": "transferfrage",
+        "title": "Transferfrage",
+        "paragraphs": [
+          [
+            {
+              "text": "Ein Kunde zahlt heute eine gestern gebuchte Forderung von 600 €. Was verändert sich heute?"
+            }
+          ]
+        ],
+        "hint": {
+          "label": "SELBSTKONTROLLE",
+          "title": "Musterantwort",
+          "content": "Bank +600 €, Forderungen −600 €. Es entsteht eine Einzahlung. Geldvermögen und Erfolg bleiben durch die Zahlung unverändert."
+        }
+      }
+    ],
+    "updatedAt": 1794960000000,
+    "version": 1
+  },
+  {
+    "id": "rw-gob",
+    "subjectId": "rechnungswesen",
+    "chapterId": "rw-gob",
+    "number": "1.2",
+    "title": "Grundsätze ordnungsmäßiger Buchführung (GoB)",
+    "intro": "Buchführung muss Geschäftsvorfälle nachvollziehbar dokumentieren. Die GoB sichern unter anderem Vollständigkeit, sachliche Richtigkeit und Prüfbarkeit. Die GoBD konkretisieren steuerliche Anforderungen beim Einsatz elektronischer Verfahren.",
+    "sections": [
+      {
+        "id": "grundsaetze",
+        "title": "Vom Geschäftsvorfall bis zum Abschluss nachvollziehen",
+        "paragraphs": [
+          [
+            {
+              "text": "Nach den "
+            },
+            {
+              "text": "GoB",
+              "termId": "rw-gob-begriff"
+            },
+            {
+              "text": " soll ein sachverständiger Dritter Geschäftsvorfälle und Unternehmenslage in angemessener Zeit nachvollziehen können. Geschäftsvorfälle sind vollständig, richtig, zeitgerecht, geordnet und nach den geltenden Regeln grundsätzlich einzeln zu erfassen. Der Beleg stellt die Verbindung zwischen Vorgang und Buchung her. Die Prüfung muss vom Beleg zur Abschlusszahl und umgekehrt möglich sein."
+            }
+          ],
+          [
+            {
+              "text": "Buchungen dürfen nicht so geändert werden, dass ihr ursprünglicher Inhalt unkenntlich wird. Korrekturen erfolgen etwa über Storno und Neubuchung mit Bezug zur ursprünglichen Buchung. Ein Änderungsprotokoll und geregelte Zugriffsrechte sichern den Prüfpfad. Bei Barbewegungen ist die tägliche Erfassung nach § 146 AO zu beachten."
+            }
+          ]
+        ]
+      },
+      {
+        "id": "digital",
+        "title": "Elektronische Belege und Kontrollen",
+        "paragraphs": [
+          [
+            {
+              "text": "Eine elektronische Eingangsrechnung wird mit Eingangsdatum, Belegbezug, Kontierung und Freigabe erfasst. Bei einer strukturierten E-Rechnung muss der steuerlich relevante strukturierte Teil erhalten bleiben. Ein reiner Ausdruck verliert die maschinell auswertbaren Daten. Eine Verfahrensdokumentation beschreibt Systeme, Datenflüsse, Rollen sowie Ablage und Zugriff."
+            }
+          ],
+          [
+            {
+              "text": "Bei der Migration zwischen Buchhaltungssystemen müssen die aufbewahrungspflichtigen Daten und ihr Kontext innerhalb der gesetzlichen Anforderungen verfügbar bleiben. § 257 HGB und § 147 AO sehen grundsätzlich zehn Jahre für Bücher und Abschlüsse, acht Jahre für Buchungsbelege und sechs Jahre für Handels- beziehungsweise Geschäftsbriefe vor. Beginn, Sonderfälle und möglicher Fristablauf hängen vom einschlägigen Recht und Einzelfall ab."
+            }
+          ]
+        ]
+      },
+      {
+        "id": "quellen",
+        "title": "Quellen und Rechtsstand",
+        "paragraphs": [
+          [
+            {
+              "text": "Quellenabgleich am 18. November 2026. Für Prüfungsaufgaben gilt der vorgegebene Rechtsstand."
+            }
+          ],
+          [
+            {
+              "text": "§§ 238, 239, 257 HGB und §§ 146, 147 AO. https://www.gesetze-im-internet.de/hgb/ · https://www.gesetze-im-internet.de/ao_1977/"
+            }
+          ],
+          [
+            {
+              "text": "BMF, GoBD und Änderung vom 14. Juli 2025. https://www.bundesfinanzministerium.de/Content/DE/Downloads/BMF_Schreiben/Weitere_Steuerthemen/Abgabenordnung/2025-07-14-GoBD-2-aenderung.html"
+            }
+          ]
+        ]
+      },
+      {
+        "id": "kurzfrage",
+        "title": "Kurzfrage",
+        "paragraphs": [
+          [
+            {
+              "text": "Was bedeutet progressive und retrograde Prüfbarkeit?"
+            }
+          ]
+        ],
+        "hint": {
+          "label": "SELBSTKONTROLLE",
+          "title": "Musterantwort",
+          "content": "Progressiv verfolge ich den Beleg zur Buchung und zum Abschluss. Retrograd gehe ich von der Abschlussposition über die Buchung zurück zum Beleg."
+        }
+      },
+      {
+        "id": "transferfrage",
+        "title": "Transferfrage",
+        "paragraphs": [
+          [
+            {
+              "text": "Eine falsch erfasste Lieferantenrechnung fällt nach Freigabe auf. Wie korrigierst du sie?"
+            }
+          ]
+        ],
+        "hint": {
+          "label": "SELBSTKONTROLLE",
+          "title": "Musterantwort",
+          "content": "Mit nachvollziehbarer Stornierung oder protokollierter Berichtigung und korrekter Kontierung. Ursprünglicher Eintrag, Belegbezug und Zeitpunkt der Korrektur bleiben erkennbar."
+        }
+      }
+    ],
+    "updatedAt": 1794960000000,
+    "version": 1
+  },
+  {
+    "id": "rw-buchfuehrungspflicht",
+    "subjectId": "rechnungswesen",
+    "chapterId": "rw-buchfuehrungspflicht",
+    "number": "1.3",
+    "title": "Buchführungspflicht nach HGB und AO",
+    "intro": "Die handelsrechtliche und die steuerrechtliche Buchführungspflicht haben verschiedene Anknüpfungspunkte. Prüfe Rechtsform und Kaufmannseigenschaft, dann Befreiungen und eigenständige steuerliche Pflichten.",
+    "sections": [
+      {
+        "id": "handelsrecht",
+        "title": "Handelsrechtliche Pflicht und Befreiung",
+        "paragraphs": [
+          [
+            {
+              "text": "Die "
+            },
+            {
+              "text": "GoB",
+              "articleId": "rw-gob"
+            },
+            {
+              "text": " regeln die sachgerechte Ausführung. § 238 HGB knüpft die "
+            },
+            {
+              "text": "Buchführungspflicht",
+              "termId": "rw-buchfuehrungspflicht-begriff"
+            },
+            {
+              "text": " an die Kaufmannseigenschaft. Für Einzelkaufleute greift § 241a HGB bei höchstens 800.000 € Umsatzerlösen und höchstens 80.000 € Jahresüberschuss an zwei aufeinanderfolgenden Abschlussstichtagen. Bei Neugründung genügt der erste Abschlussstichtag. § 242 Abs. 4 HGB ergänzt die Befreiung von Eröffnungsbilanz und Jahresabschluss. Die Befreiung gilt für Einzelkaufleute, eine GmbH fällt als Kapitalgesellschaft nicht darunter."
+            }
+          ],
+          [
+            {
+              "text": "Beispiel: Eine Einzelkauffrau weist an zwei aufeinanderfolgenden Stichtagen 770.000 € und 790.000 € Umsatzerlöse sowie 65.000 € und 79.000 € Jahresüberschuss aus. Beide Werte bleiben jeweils im Rahmen der Befreiung. Eine GmbH mit genau denselben Zahlen bleibt handelsrechtlich buchführungspflichtig."
+            }
+          ]
+        ]
+      },
+      {
+        "id": "steuerrecht",
+        "title": "Abgeleitete und originäre steuerliche Pflicht",
+        "paragraphs": [
+          [
+            {
+              "text": "§ 140 AO übernimmt außersteuerliche Pflichten, soweit sie für die Besteuerung von Bedeutung sind. § 141 AO kann für Gewerbetreibende und Land- und Forstwirte pro Betrieb eine eigenständige Pflicht auslösen. Beim Gewerbebetrieb genügt grundsätzlich mehr als 800.000 € Gesamtumsatz im Sinne des dort genannten Umsatzsteuerrechts im Kalenderjahr oder mehr als 80.000 € Gewinn aus Gewerbebetrieb im Wirtschaftsjahr. Für Land- und Forstwirtschaft gelten die in der Norm genannten Bezugsgrößen."
+            }
+          ],
+          [
+            {
+              "text": "Die originäre Pflicht beginnt grundsätzlich mit dem Wirtschaftsjahr nach Bekanntgabe der Mitteilung des Finanzamts. Bei fehlender gesetzlicher Pflicht und fehlender freiwilliger Buchführung mit Abschluss kommt die Einnahmenüberschussrechnung nach § 4 Abs. 3 EStG in Betracht. Auch dann können einzelne Aufzeichnungs- und Belegpflichten bestehen."
+            }
+          ]
+        ]
+      },
+      {
+        "id": "quellen",
+        "title": "Quellen und Rechtsstand",
+        "paragraphs": [
+          [
+            {
+              "text": "Quellenabgleich am 18. November 2026. Für Prüfungsaufgaben gilt der vorgegebene Rechtsstand."
+            }
+          ],
+          [
+            {
+              "text": "§§ 238, 241a, 242 HGB. https://www.gesetze-im-internet.de/hgb/"
+            }
+          ],
+          [
+            {
+              "text": "§§ 140 und 141 AO. https://www.gesetze-im-internet.de/ao_1977/__140.html · https://www.gesetze-im-internet.de/ao_1977/__141.html"
+            }
+          ],
+          [
+            {
+              "text": "§ 4 Abs. 3 EStG. https://www.gesetze-im-internet.de/estg/__4.html"
+            }
+          ]
+        ]
+      },
+      {
+        "id": "kurzfrage",
+        "title": "Kurzfrage",
+        "paragraphs": [
+          [
+            {
+              "text": "Wie unterscheiden sich die beiden Wege nach AO?"
+            }
+          ]
+        ],
+        "hint": {
+          "label": "SELBSTKONTROLLE",
+          "title": "Musterantwort",
+          "content": "§ 140 AO übernimmt eine bereits bestehende außersteuerliche Pflicht. § 141 AO begründet bei seinen eigenen Voraussetzungen eine steuerliche Pflicht."
+        }
+      },
+      {
+        "id": "transferfrage",
+        "title": "Transferfrage",
+        "paragraphs": [
+          [
+            {
+              "text": "Ein gewerblicher Betrieb ohne Pflicht nach § 140 AO erzielt 760.000 € relevanten Gesamtumsatz und 86.000 € Gewinn. Welche Folge kann eintreten?"
+            }
+          ]
+        ],
+        "hint": {
+          "label": "SELBSTKONTROLLE",
+          "title": "Musterantwort",
+          "content": "Die Gewinngrenze genügt für § 141 AO. Die Pflicht beginnt grundsätzlich mit dem Wirtschaftsjahr nach Bekanntgabe des entsprechenden Hinweises."
+        }
+      }
+    ],
+    "updatedAt": 1794960000000,
+    "version": 1
+  },
+  {
+    "id": "rw-bewertung",
+    "subjectId": "rechnungswesen",
+    "chapterId": "rw-bewertung",
+    "number": "1.4",
+    "title": "Bilanzierungs- und Bewertungsgrundsätze",
+    "intro": "Bilanzierung entscheidet über Ansatz und Ausweis. Bewertung bestimmt den Betrag. Beides wirkt auf Vermögensbild und Periodenerfolg.",
+    "sections": [
+      {
+        "id": "ansatz",
+        "title": "Ansatz vor Bewertung prüfen",
+        "paragraphs": [
+          [
+            {
+              "text": "§ 246 HGB verlangt grundsätzlich vollständigen Ansatz und getrennten Ausweis von Vermögensgegenständen und Schulden. Gesetzliche Verrechnungsausnahmen, etwa für bestimmtes Deckungsvermögen, sind gesondert zu prüfen. § 248 HGB erlaubt unter Voraussetzungen den Ansatz selbst geschaffener immaterieller Vermögensgegenstände des Anlagevermögens. Selbst geschaffene Marken bleiben vom Ansatz ausgeschlossen."
+            }
+          ],
+          [
+            {
+              "text": "§ 252 HGB nennt Bilanzidentität, Unternehmensfortführung, Einzelbewertung, "
+            },
+            {
+              "text": "Vorsichtsprinzip",
+              "termId": "rw-vorsicht"
+            },
+            {
+              "text": ", periodengerechte Abgrenzung und Bewertungsstetigkeit. Die Einzelbewertung lässt gesetzlich geregelte Ausnahmen zu. Beispiele sind Gruppenbewertung nach § 240 Abs. 4 und Verbrauchsfolgeverfahren nach § 256 HGB für geeignete gleichartige Vorräte. Bei Schulden gilt der Erfüllungsbetrag, bei Rückstellungen der notwendige Erfüllungsbetrag nach vernünftiger kaufmännischer Beurteilung. Laufzeitabhängige Abzinsungsvorgaben sind gesondert zu prüfen. Das Realisationsprinzip erfasst Gewinne bei Realisation. Das Imparitätsprinzip berücksichtigt vorhersehbare Risiken und Verluste, die bis zum Stichtag entstanden sind, auch bei Bekanntwerden bis zur Aufstellung. Prüfe, ob eine spätere Information einen schon bestehenden Zustand erhellt oder einen neuen Vorgang beschreibt."
+            }
+          ]
+        ]
+      },
+      {
+        "id": "zugang",
+        "title": "Zugang und Folgebewertung",
+        "paragraphs": [
+          [
+            {
+              "text": "Die "
+            },
+            {
+              "text": "Anschaffungskosten",
+              "termId": "rw-anschaffungskosten"
+            },
+            {
+              "text": " einer Maschine mit 50.000 € Nettopreis, 2.000 € Fracht und 1.000 € Rabatt betragen 51.000 €. Bei fünf Jahren Nutzungsdauer und linearer Abschreibung ohne Restwert entstehen bei voller Jahresnutzung 10.200 € planmäßige Abschreibung. Der Buchwert nach einem Jahr beträgt 40.800 €. Abziehbare Vorsteuer gehört im Beispiel nicht zu den Anschaffungskosten."
+            }
+          ],
+          [
+            {
+              "text": "Handelsrechtliche Herstellungskosten umfassen insbesondere Material- und Fertigungskosten einschließlich angemessener produktionsbezogener Gemeinkosten und Werteverzehr. Für angemessene allgemeine Verwaltungskosten und bestimmte Sozialaufwendungen während der Herstellung bestehen Wahlrechte. Forschungs- und Vertriebskosten dürfen nicht einbezogen werden. Herstellungsbezogene Fremdkapitalzinsen können unter § 255 Abs. 3 HGB einbezogen werden."
+            }
+          ],
+          [
+            {
+              "text": "Bei voraussichtlich dauernder Wertminderung im Anlagevermögen ist außerplanmäßig abzuschreiben. Für Finanzanlagen gibt es bei vorübergehender Minderung ein Wahlrecht. Im Umlaufvermögen greift das strengere Niederstwertprinzip auch bei vorübergehender Minderung. Fallen die Abschreibungsgründe weg, ist grundsätzlich zuzuschreiben, begrenzt durch die fortgeführten Anschaffungs- oder Herstellungskosten. Für den entgeltlich erworbenen Geschäfts- oder Firmenwert gilt diese Wertaufholung nicht."
+            }
+          ]
+        ]
+      },
+      {
+        "id": "quellen",
+        "title": "Quellen und Rechtsstand",
+        "paragraphs": [
+          [
+            {
+              "text": "Quellenabgleich am 18. November 2026. Für Prüfungsaufgaben gilt der vorgegebene Rechtsstand."
+            }
+          ],
+          [
+            {
+              "text": "§§ 240, 246, 248, 252, 253, 255 und 256 HGB. https://www.gesetze-im-internet.de/hgb/"
+            }
+          ]
+        ]
+      },
+      {
+        "id": "kurzfrage",
+        "title": "Kurzfrage",
+        "paragraphs": [
+          [
+            {
+              "text": "Warum prüfst du Ansatz vor Bewertung?"
+            }
+          ]
+        ],
+        "hint": {
+          "label": "SELBSTKONTROLLE",
+          "title": "Musterantwort",
+          "content": "Die Bewertung legt den Betrag fest. Zuerst muss klar sein, ob und wo der Sachverhalt im Abschluss erfasst wird."
+        }
+      },
+      {
+        "id": "transferfrage",
+        "title": "Transferfrage",
+        "paragraphs": [
+          [
+            {
+              "text": "Handelsware kostete 20.000 €. Der beizulegende Wert am Stichtag beträgt 17.000 €. Am nächsten Stichtag steigt er bei weiter vorhandenem Bestand auf 22.000 €. Welche Beträge gelten?"
+            }
+          ]
+        ],
+        "hint": {
+          "label": "SELBSTKONTROLLE",
+          "title": "Musterantwort",
+          "content": "Zuerst 17.000 € nach dem strengen Niederstwertprinzip. Später Zuschreibung um 3.000 € auf höchstens 20.000 € Anschaffungskosten."
+        }
+      }
+    ],
+    "updatedAt": 1794960000000,
+    "version": 1
+  },
+  {
+    "id": "rw-fall-grundlagen",
+    "subjectId": "rechnungswesen",
+    "chapterId": "rw-fall-grundlagen",
+    "number": "1.5",
+    "title": "Übungsfall: Maschinenkauf und digitale Belege",
+    "intro": "Ein Betrieb entscheidet über Buchführungspflicht und bewertet eine neu angeschaffte Anlage. Der Fall verbindet Rechtsgrundlage, Belegverarbeitung und Ergebniswirkung.",
+    "sections": [
+      {
+        "id": "fall",
+        "title": "Ausgangslage und Auftrag",
+        "paragraphs": [
+          [
+            {
+              "text": "Eine neu gegründete GmbH kauft am 1. Januar eine Maschine für 30.000 € netto. Transport und Montage kosten 1.500 € und 2.500 € netto. Der Lieferant gewährt 2.000 € Rabatt auf den Maschinenpreis. Die Maschine ist sofort betriebsbereit und wird vier Jahre linear ohne Restwert abgeschrieben. Die strukturierte E-Rechnung und die Inbetriebnahmebestätigung liegen vor. Umsatz und Gewinn bleiben unter 800.000 € und 80.000 €."
+            }
+          ],
+          [
+            {
+              "text": "Begründe die Buchführungspflicht, bestimme Anschaffungskosten und Buchwert nach einem Jahr und erkläre, wie Rechnung und Inbetriebnahme dokumentiert werden. Abziehbare Vorsteuer und Wertminderungen bleiben in der Rechnung außen vor."
+            }
+          ]
+        ]
+      },
+      {
+        "id": "loesung",
+        "title": "Begründeter Lösungsweg",
+        "paragraphs": [
+          [
+            {
+              "text": "Die GmbH bleibt als Kapitalgesellschaft buchführungspflichtig. Die Befreiung nach § 241a HGB gilt für Einzelkaufleute. Die steuerliche Folgepflicht ergibt sich über § 140 AO. Nach § 255 HGB betragen die Anschaffungskosten 30.000 € − 2.000 € + 1.500 € + 2.500 € = 32.000 €. Die planmäßige Abschreibung beträgt 32.000 € ÷ 4 Jahre = 8.000 €/Jahr. Der Buchwert zum Jahresende beträgt 24.000 €."
+            }
+          ],
+          [
+            {
+              "text": "Die E-Rechnung bleibt mit strukturierten Daten, Buchungsbezug und Freigabe verfügbar. Die Inbetriebnahmebestätigung dokumentiert die Betriebsbereitschaft für den Abschreibungsbeginn. Die Aktivierung ordnet den Mehrperiodennutzen dem Anlagevermögen zu. Die Abschreibung verteilt ihn über die Nutzungsdauer."
+            }
+          ]
+        ]
+      },
+      {
+        "id": "kurzfrage",
+        "title": "Kurzfrage",
+        "paragraphs": [
+          [
+            {
+              "text": "Welche Aufwendungen erhöhen hier den Zugangswert?"
+            }
+          ]
+        ],
+        "hint": {
+          "label": "SELBSTKONTROLLE",
+          "title": "Musterantwort",
+          "content": "Direkt zurechenbare Fracht und Montage erhöhen die Anschaffungskosten. Der Rabatt mindert sie."
+        }
+      },
+      {
+        "id": "transferfrage",
+        "title": "Transferfrage",
+        "paragraphs": [
+          [
+            {
+              "text": "Ein separat vereinbarter Wartungsvertrag kostet 800 € für das erste Nutzungsjahr. Wie wirkt er?"
+            }
+          ]
+        ],
+        "hint": {
+          "label": "SELBSTKONTROLLE",
+          "title": "Musterantwort",
+          "content": "Bei laufender Wartung entsteht periodischer Aufwand von 800 €. Anschaffungskosten und planmäßige Abschreibung der Maschine bleiben unverändert."
+        }
+      }
+    ],
+    "updatedAt": 1794960000000,
+    "version": 1
+  },
+  {
+    "id": "rw-fibu",
+    "subjectId": "rechnungswesen",
+    "chapterId": "rw-fibu",
+    "number": "2.1",
+    "title": "Aufgaben, Bereiche und Adressaten der Finanzbuchhaltung",
+    "intro": "Die Finanzbuchhaltung erfasst Belege systematisch und dokumentiert Vermögen, Schulden und Erfolg. Normalerweise führt der Weg vom Grundbuch über das Hauptbuch in den Jahresabschluss.",
+    "sections": [
+      {
+        "id": "adressaten",
+        "title": "Wer nutzt die Finanzbuchhaltung und wofür?",
+        "paragraphs": [
+          [
+            {
+              "text": "Geschäftsleitung und Eigentümer nutzen Zahlen für Vermögensübersicht, Ergebnisbeurteilung, Ausschüttung und Entscheidungen. Banken interessieren sich für Bonität und Schuldendienst, Lieferanten für Zahlungsfähigkeit, Finanzbehörden für die Besteuerungsgrundlagen. Abschlussprüfer benötigen einen durchgängigen Prüfpfad. Öffentlichkeit und andere Anspruchsgruppen erhalten Informationen im Umfang veröffentlichter Abschlüsse."
+            }
+          ],
+          [
+            {
+              "text": "Die Finanzbuchhaltung dokumentiert Geschäftsvorfälle, weist Forderungen und Schulden nach, ermöglicht Rechenschaft und liefert Daten für Abschluss, Steuern und interne Auswertungen. Die Geschäftsleitung benötigt zusätzlich aktuelle operative Angaben. Eine alte Bilanz kann beispielsweise keinen tagesaktuellen Zahlungsstatus ersetzen."
+            }
+          ]
+        ]
+      },
+      {
+        "id": "buecher",
+        "title": "Grundbuch, Hauptbuch und Nebenbücher",
+        "paragraphs": [
+          [
+            {
+              "text": "Das Grundbuch erfasst Geschäftsvorfälle chronologisch, das "
+            },
+            {
+              "text": "Hauptbuch",
+              "termId": "rw-hauptbuch"
+            },
+            {
+              "text": " systematisiert sie sachlich auf Konten. Ein "
+            },
+            {
+              "text": "Nebenbuch",
+              "termId": "rw-nebenbuch"
+            },
+            {
+              "text": " kann einzelne Kunden, Lieferanten, Anlagen oder Löhne detailliert abbilden. Die Summe der Kundenforderungen im Debitorennebenbuch stimmt bei gleicher Abgrenzung mit dem Sammelkonto im Hauptbuch überein."
+            }
+          ],
+          [
+            {
+              "text": "Eine Ausgangsrechnung über 3.000 € netto erzeugt eine Forderung und Umsatzerlös. Im Debitorennebenbuch erscheinen Kunde, Fälligkeit und offener Posten. Bei Geldeingang wird der Posten ausgeglichen. Stimmt das Sammelkonto nicht mit der Liste überein, prüfst du unter anderem Abstimmstichtag, Schnittstellen und Direktbuchungen. Bei Anlagen sind entsprechende Kontrollen zwischen Anlagenspiegel und Hauptbuch möglich."
+            }
+          ]
+        ]
+      },
+      {
+        "id": "kurzfrage",
+        "title": "Kurzfrage",
+        "paragraphs": [
+          [
+            {
+              "text": "Welches Buch zeigt Geschäftsvorfälle nach Zeit, welches nach Konten?"
+            }
+          ]
+        ],
+        "hint": {
+          "label": "SELBSTKONTROLLE",
+          "title": "Musterantwort",
+          "content": "Das Grundbuch zeigt sie zeitlich, das Hauptbuch nach Konten."
+        }
+      },
+      {
+        "id": "transferfrage",
+        "title": "Transferfrage",
+        "paragraphs": [
+          [
+            {
+              "text": "Eine Bank fragt nach Bonität und die Disposition nach offenen Rechnungen eines Kunden. Welche Daten verwendest du?"
+            }
+          ]
+        ],
+        "hint": {
+          "label": "SELBSTKONTROLLE",
+          "title": "Musterantwort",
+          "content": "Für die Bank eignen sich aufbereitete Abschlusszahlen, ergänzt um aktuelle Liquiditäts- und Schuldendienstdaten. Für die Disposition ist das abgestimmte Debitorennebenbuch mit Fälligkeiten geeignet."
+        }
+      }
+    ],
+    "updatedAt": 1794960000000,
+    "version": 1
+  },
+  {
+    "id": "rw-bilanz",
+    "subjectId": "rechnungswesen",
+    "chapterId": "rw-bilanz",
+    "number": "2.2.1",
+    "title": "Inventur, Inventar und Aufbau der Bilanz",
+    "intro": "Die Bilanz zeigt Vermögen und Kapital zu einem Stichtag. Das Inventar liefert eine detaillierte Bestandsübersicht und wird aus Büchern und Inventur abgeleitet.",
+    "sections": [
+      {
+        "id": "inventur",
+        "title": "Vom Bestand zur gegliederten Übersicht",
+        "paragraphs": [
+          [
+            {
+              "text": "Bei der "
+            },
+            {
+              "text": "Inventur",
+              "termId": "rw-inventur"
+            },
+            {
+              "text": " werden körperliche Bestände gezählt, gemessen oder gewogen. Bank, Forderungen und Schulden werden anhand geeigneter Unterlagen festgestellt. Die Aufnahme muss auch wirtschaftlich fremde Bestände und Bestände bei Dritten korrekt zuordnen. Eine Bestandsdifferenz wird untersucht und nachvollziehbar korrigiert. Neben der Stichtagsinventur kommen unter den gesetzlichen Voraussetzungen etwa permanente Inventur durch laufende Bestandsaufzeichnungen, zeitverschobene Inventur mit Fortschreibung oder Rückrechnung und anerkannte Stichprobenverfahren in Betracht. Die Auswahl hängt von Bestandsqualität, Zugang zu Belegen und vertretbarer Genauigkeit ab."
+            }
+          ],
+          [
+            {
+              "text": "Das Inventar führt Bestände ausführlich nach Art, Menge und Wert auf. Die "
+            },
+            {
+              "text": "Bilanz",
+              "termId": "rw-bilanz-begriff"
+            },
+            {
+              "text": " verdichtet diese Positionen. Aktiva zeigen die Mittelverwendung, insbesondere Anlage- und Umlaufvermögen. Passiva zeigen die Herkunft der Mittel, unter anderem Eigenkapital, Rückstellungen und Verbindlichkeiten. Rechnungsabgrenzungsposten und weitere Positionen folgen dem einschlägigen Schema. § 266 HGB regelt die Gliederung für Kapitalgesellschaften mit größenabhängigen Erleichterungen."
+            }
+          ]
+        ]
+      },
+      {
+        "id": "bilanzgleichung",
+        "title": "Bilanzgleichung und vier Veränderungen",
+        "paragraphs": [
+          [
+            {
+              "text": "Ein Unternehmen hat Maschinen von 70.000 €, Vorräte von 20.000 € und Bankmittel von 10.000 €. Aktiva = 100.000 €. Bei 40.000 € Fremdkapital ergeben sich 60.000 € Eigenkapital. Ein Maschinenkauf per Bank verschiebt Aktivposten (Aktivtausch). Wird eine Lieferantenschuld durch ein Bankdarlehen abgelöst, verschieben sich Passivposten (Passivtausch)."
+            }
+          ],
+          [
+            {
+              "text": "Ein Wareneinkauf auf Ziel erhöht Vorräte und Schulden gleichermaßen (Bilanzverlängerung). Die spätere Überweisung vermindert Bank und Lieferantenschulden gleichermaßen (Bilanzverkürzung). Diese Beispiele sind unmittelbar erfolgsneutral. Andere Vorgänge verändern über ihren Erfolg das Eigenkapital."
+            }
+          ]
+        ]
+      },
+      {
+        "id": "quellen",
+        "title": "Quellen und Rechtsstand",
+        "paragraphs": [
+          [
+            {
+              "text": "Quellenabgleich am 18. November 2026. Für Prüfungsaufgaben gilt der vorgegebene Rechtsstand."
+            }
+          ],
+          [
+            {
+              "text": "§§ 240–242 und 266 HGB. https://www.gesetze-im-internet.de/hgb/"
+            }
+          ]
+        ]
+      },
+      {
+        "id": "kurzfrage",
+        "title": "Kurzfrage",
+        "paragraphs": [
+          [
+            {
+              "text": "Wie hängen Inventur, Inventar und Bilanz zusammen?"
+            }
+          ]
+        ],
+        "hint": {
+          "label": "SELBSTKONTROLLE",
+          "title": "Musterantwort",
+          "content": "Die Inventur ermittelt Bestände. Das Inventar dokumentiert sie einzeln. Die Bilanz fasst sie zum Stichtag in Positionen zusammen."
+        }
+      },
+      {
+        "id": "transferfrage",
+        "title": "Transferfrage",
+        "paragraphs": [
+          [
+            {
+              "text": "Ein Betrieb zahlt 5.000 € eines Darlehens per Bank zurück. Wie ändert sich die Bilanz?"
+            }
+          ]
+        ],
+        "hint": {
+          "label": "SELBSTKONTROLLE",
+          "title": "Musterantwort",
+          "content": "Bank und Darlehensschuld sinken jeweils um 5.000 €. Die Bilanzsumme sinkt um 5.000 €, das Eigenkapital bleibt bei reiner Tilgung gleich."
+        }
+      }
+    ],
+    "updatedAt": 1794960000000,
+    "version": 1
+  },
+  {
+    "id": "rw-konten",
+    "subjectId": "rechnungswesen",
+    "chapterId": "rw-konten",
+    "number": "2.2.2",
+    "title": "Bestandskonten, Erfolgskonten und Buchungssätze",
+    "intro": "Doppelte Buchführung bildet jeden Geschäftsfall in Soll und Haben ab. Bestandskonten erklären Veränderungen der Bilanz, Erfolgskonten führen Erträge und Aufwendungen in die GuV.",
+    "sections": [
+      {
+        "id": "systematik",
+        "title": "Kontoseite aus der Kontoart ableiten",
+        "paragraphs": [
+          [
+            {
+              "text": "Auf einem aktiven "
+            },
+            {
+              "text": "Bestandskonto",
+              "termId": "rw-bestandskonto"
+            },
+            {
+              "text": " stehen Anfangsbestand und Zugänge im Soll, Abgänge im Haben. Passivkonten funktionieren umgekehrt. Auf "
+            },
+            {
+              "text": "Erfolgskonten",
+              "termId": "rw-erfolgskonto"
+            },
+            {
+              "text": " stehen Aufwendungen im Soll und Erträge im Haben. Soll und Haben bezeichnen Kontoseiten. Bei einem Buchungssatz steht das Sollkonto vor „an“ und das Habenkonto dahinter. Die Summen beider Seiten müssen gleich sein. Die "
+            },
+            {
+              "text": "Bilanz",
+              "articleId": "rw-bilanz"
+            },
+            {
+              "text": " hilft bei der Einordnung eines Bestandskontos."
+            }
+          ],
+          [
+            {
+              "text": "Eröffnung: Aktivkonto an Eröffnungsbilanzkonto, Eröffnungsbilanzkonto an Passivkonto. Abschluss: Schlussbilanzkonto an Aktivkonto, Passivkonto an Schlussbilanzkonto. Erfolgskonten starten ohne Anfangsbestand. Abschluss: GuV an Aufwandskonto und Ertragskonto an GuV. Ein Gewinn wird im vereinfachten Schema mit GuV an Eigenkapital abgeschlossen, ein Verlust umgekehrt."
+            }
+          ]
+        ]
+      },
+      {
+        "id": "beispiel",
+        "title": "Frachtrechnung und Zahlung getrennt buchen",
+        "paragraphs": [
+          [
+            {
+              "text": "Ein Unternehmen erbringt eine Leistung für 1.000 € netto auf Ziel. Unterstellt sind 19 % Umsatzsteuer sowie Erfassung von Forderung und Steuer mit der Rechnung. Buchung: Forderungen 1.190 € an Umsatzerlöse 1.000 € und Umsatzsteuer 190 €. Der spätere Eingang lautet Bank 1.190 € an Forderungen 1.190 €. Er erzeugt keinen neuen Umsatz."
+            }
+          ],
+          [
+            {
+              "text": "Für eine bezogene Leistung über 400 € netto und 76 € abziehbare Vorsteuer lautet die Buchung Fremdleistungen 400 € und Vorsteuer 76 € an Verbindlichkeiten 476 €. Die Zahlung lautet Verbindlichkeiten 476 € an Bank 476 €. Vorsteuer und Umsatzsteuer sind im Beispiel erfolgsneutral. Eine Zahlung auf eine verkehrte Kundennummer fällt möglicherweise erst beim Abgleich offener Posten auf, obwohl Soll und Haben insgesamt stimmen."
+            }
+          ]
+        ]
+      },
+      {
+        "id": "kurzfrage",
+        "title": "Kurzfrage",
+        "paragraphs": [
+          [
+            {
+              "text": "Wo steht der Zugang auf einem Verbindlichkeitenkonto?"
+            }
+          ]
+        ],
+        "hint": {
+          "label": "SELBSTKONTROLLE",
+          "title": "Musterantwort",
+          "content": "Im Haben, weil es sich um ein Passivkonto handelt."
+        }
+      },
+      {
+        "id": "transferfrage",
+        "title": "Transferfrage",
+        "paragraphs": [
+          [
+            {
+              "text": "Eine bereits gebuchte Lieferantenschuld von 714 € wird vollständig überwiesen. Wie buchst du und wie wirkt der Vorgang auf die GuV?"
+            }
+          ]
+        ],
+        "hint": {
+          "label": "SELBSTKONTROLLE",
+          "title": "Musterantwort",
+          "content": "Verbindlichkeiten 714 € an Bank 714 €. Beide Bestandskonten sinken. Die Zahlung erzeugt keinen neuen Aufwand."
+        }
+      }
+    ],
+    "updatedAt": 1794960000000,
+    "version": 1
+  },
+  {
+    "id": "rw-guv",
+    "subjectId": "rechnungswesen",
+    "chapterId": "rw-guv",
+    "number": "2.2.3",
+    "title": "Gewinn-und-Verlust-Rechnung und Periodenabschluss",
+    "intro": "Die GuV stellt Erträge und Aufwendungen eines Geschäftsjahrs gegenüber. Sie erklärt den Jahreserfolg und ergänzt die stichtagsbezogene Bilanz.",
+    "sections": [
+      {
+        "id": "periodenabschluss",
+        "title": "Erfolg der richtigen Periode zuordnen",
+        "paragraphs": [
+          [
+            {
+              "text": "Die "
+            },
+            {
+              "text": "Gewinn-und-Verlust-Rechnung",
+              "termId": "rw-guv-begriff"
+            },
+            {
+              "text": " ermittelt den Jahreserfolg unabhängig vom Zahlungszeitpunkt. Bilanz und GuV bilden nach § 242 HGB den Jahresabschluss. Für Kapitalgesellschaften gelten ergänzende Vorgaben insbesondere zu Anhang und gegebenenfalls Lagebericht. Der Lagebericht ist rechtlich ein gesondertes Berichtsinstrument."
+            }
+          ],
+          [
+            {
+              "text": "Vorausgezahlte Januar-Miete im Dezember führt bei Vorliegen von § 250 HGB zu einem aktiven "
+            },
+            {
+              "text": "Rechnungsabgrenzungsposten",
+              "termId": "rw-rap"
+            },
+            {
+              "text": ". Vorausvereinnahmte Miete für Januar führt zum passiven RAP. Eine im Dezember bezogene, erst im Januar fällige Leistung gehört als Aufwand in den Dezember. Bei feststehender Schuld wird eine Verbindlichkeit erfasst, bei qualifizierter Ungewissheit ist eine Rückstellung zu prüfen. Wird etwa vor dem Stichtag ein Gewährleistungsfall verursacht, dessen voraussichtliche Erfüllung 5.000 € kostet, kann der Aufwand bereits in dieser Periode entstehen. Ansatz und notwendiger Erfüllungsbetrag werden nach den Voraussetzungen aus § 249 und § 253 HGB beurteilt."
+            }
+          ]
+        ]
+      },
+      {
+        "id": "verfahren",
+        "title": "Gesamt- und Umsatzkostenverfahren vergleichen",
+        "paragraphs": [
+          [
+            {
+              "text": "Das Gesamtkostenverfahren nach § 275 HGB gliedert die betrieblichen Aufwendungen nach Arten und berücksichtigt Bestandsänderungen und andere aktivierte Eigenleistungen. Das Umsatzkostenverfahren ordnet Kosten nach Funktionen zu und stellt den Umsatzerlösen die Herstellungskosten der abgesetzten Leistungen gegenüber. Bei gleicher Bewertung und vollständiger Zuordnung stimmen die Ergebnisse überein."
+            }
+          ],
+          [
+            {
+              "text": "Ein Unternehmen produziert 100 Stück für je 40 € Herstellkosten und verkauft 80 Stück für je 70 €. Vertriebskosten betragen 500 €, weitere Positionen bleiben außen vor. Gesamtkostenverfahren: 5.600 € Umsatz + 800 € Bestandserhöhung − 4.000 € Herstellaufwand − 500 € Vertrieb = 1.900 €. Umsatzkostenverfahren: 5.600 € − 3.200 € Herstellkosten des Absatzes − 500 € Vertrieb = 1.900 €. Die 800 € Bestandserhöhung sind kein Geldeingang."
+            }
+          ]
+        ]
+      },
+      {
+        "id": "quellen",
+        "title": "Quellen und Rechtsstand",
+        "paragraphs": [
+          [
+            {
+              "text": "Quellenabgleich am 18. November 2026. Für Prüfungsaufgaben gilt der vorgegebene Rechtsstand."
+            }
+          ],
+          [
+            {
+              "text": "§§ 242, 249, 250, 264 und 275 HGB. https://www.gesetze-im-internet.de/hgb/"
+            }
+          ]
+        ]
+      },
+      {
+        "id": "kurzfrage",
+        "title": "Kurzfrage",
+        "paragraphs": [
+          [
+            {
+              "text": "Warum berücksichtigt das Gesamtkostenverfahren Bestandserhöhungen?"
+            }
+          ]
+        ],
+        "hint": {
+          "label": "SELBSTKONTROLLE",
+          "title": "Musterantwort",
+          "content": "Die Produktionsaufwendungen betreffen die gesamte Produktion. Die Bestandserhöhung berücksichtigt den Wert der produzierten, noch nicht verkauften Einheiten."
+        }
+      },
+      {
+        "id": "transferfrage",
+        "title": "Transferfrage",
+        "paragraphs": [
+          [
+            {
+              "text": "Ein Unternehmen zahlt am 1. Dezember 12.000 € für zwölf Monate Versicherung. Wie viel Aufwand gehört ins laufende Kalenderjahr?"
+            }
+          ]
+        ],
+        "hint": {
+          "label": "SELBSTKONTROLLE",
+          "title": "Musterantwort",
+          "content": "1.000 € entfallen auf Dezember. 11.000 € sind als aktiver RAP abzugrenzen und im Folgejahr aufzulösen."
+        }
+      }
+    ],
+    "updatedAt": 1794960000000,
+    "version": 1
+  },
+  {
+    "id": "rw-fall-fibu",
+    "subjectId": "rechnungswesen",
+    "chapterId": "rw-fall-fibu",
+    "number": "2.3",
+    "title": "Übungsfall: Vom Frachtauftrag zum Jahresabschluss",
+    "intro": "Ein Transport im Dezember wird erst im Januar bezahlt. Gleichzeitig muss die Spedition eine Vorauszahlung und eine ausstehende Lieferantenrechnung abgrenzen.",
+    "sections": [
+      {
+        "id": "fall",
+        "title": "Ausgangslage und Auftrag",
+        "paragraphs": [
+          [
+            {
+              "text": "Eine Spedition fakturiert im Dezember einen vollständig erbrachten Transport für 9.000 € netto auf Ziel. Ein Unternehmer hat im Dezember eine zugehörige Leistung von 5.000 € erbracht. Die in Höhe und Grund feststehende Schuld ist im Januar fällig. Im Dezember fließen außerdem 1.200 € Versicherung für Januar bis März ab. Für den Fall bleibt die Umsatzsteuer außen vor."
+            }
+          ],
+          [
+            {
+              "text": "Formuliere die Dezemberbuchungen, ermittle Ergebnis und Zahlungsmitteländerung aus den Vorgängen und erkläre die Januarwirkung, wenn Kunde und Unternehmer zahlen beziehungsweise bezahlt werden."
+            }
+          ]
+        ]
+      },
+      {
+        "id": "loesung",
+        "title": "Buchungssätze und Abschlusswirkung",
+        "paragraphs": [
+          [
+            {
+              "text": "Forderungen 9.000 € an Umsatzerlöse 9.000 €. Fremdleistungen 5.000 € an Verbindlichkeiten 5.000 €. Aktiver RAP 1.200 € an Bank 1.200 €. Ergebnis im Dezember = 9.000 € − 5.000 € = 4.000 €. Die einzige Zahlung im Dezember ist der Versicherungsabfluss von 1.200 €."
+            }
+          ],
+          [
+            {
+              "text": "Im Januar werden Bank an Forderungen mit 9.000 € und Verbindlichkeiten an Bank mit 5.000 € gebucht. Zusätzlich wird der Januar-Anteil Versicherungsaufwand 400 € an aktiven RAP 400 € erfasst. Der Zahlungssaldo aus den beschriebenen Januarvorgängen beträgt +4.000 €, das Januarergebnis daraus −400 €."
+            }
+          ]
+        ]
+      },
+      {
+        "id": "kurzfrage",
+        "title": "Kurzfrage",
+        "paragraphs": [
+          [
+            {
+              "text": "Welche Beträge aus dem Fall stehen am Dezemberstichtag in der Bilanz?"
+            }
+          ]
+        ],
+        "hint": {
+          "label": "SELBSTKONTROLLE",
+          "title": "Musterantwort",
+          "content": "Forderung 9.000 €, Verbindlichkeit 5.000 €, aktiver RAP 1.200 € und ein um 1.200 € gesunkener Bankbestand. Der Dezembererfolg von 4.000 € erhöht im vereinfachten Fall das Eigenkapital."
+        }
+      },
+      {
+        "id": "transferfrage",
+        "title": "Transferfrage",
+        "paragraphs": [
+          [
+            {
+              "text": "Der Kunde zahlt im Januar nur 6.000 € an. Wie ändert sich die Auswertung gegenüber der vollständigen Zahlung?"
+            }
+          ]
+        ],
+        "hint": {
+          "label": "SELBSTKONTROLLE",
+          "title": "Musterantwort",
+          "content": "Die Forderung bleibt mit 3.000 € offen. Der Januar-Zahlungssaldo beträgt +1.000 €. Der Zahlungsvorgang verändert die GuV weiterhin nicht."
+        }
+      }
+    ],
+    "updatedAt": 1794960000000,
+    "version": 1
+  },
+  {
+    "id": "rw-grundlagen",
+    "subjectId": "rechnungswesen",
+    "chapterId": "rw-grundlagen",
+    "number": "3.1.1",
+    "title": "Ausrichtung, Aufbau und Aufgaben der Kosten- und Leistungsrechnung",
+    "intro": "Die KLR misst, was die betriebliche Leistungserstellung verbraucht und erwirtschaftet. Ihre Struktur richtet sich nach der Entscheidung, die mit den Zahlen getroffen werden soll.",
+    "sections": [
+      {
+        "id": "teilrechnungen",
+        "title": "Welche Kosten, wo entstanden, wofür angefallen?",
+        "paragraphs": [
+          [
+            {
+              "text": "Die Kostenartenrechnung erfasst, welche "
+            },
+            {
+              "text": "Kosten",
+              "termId": "rw-kosten"
+            },
+            {
+              "text": " anfallen. Die Kostenstellenrechnung ordnet sie betrieblichen Verantwortungs- oder Leistungsbereichen zu. Die Kostenträgerrechnung zeigt, wofür die Kosten angefallen sind, etwa für ein Produkt, einen Transportauftrag oder eine Produktgruppe. Einzelkosten können direkt auf Kostenträger gebucht werden. Gemeinkosten laufen meist über Kostenstellen."
+            }
+          ],
+          [
+            {
+              "text": "Den "
+            },
+            {
+              "text": "Leistungen",
+              "termId": "rw-leistung"
+            },
+            {
+              "text": " werden für das Betriebsergebnis die Kosten der betrachteten Periode gegenübergestellt. Für einen Auftrag interessiert oft der Stückwert, für eine Sparte das Monatsergebnis. Die "
+            },
+            {
+              "text": "Kostenträgerzeitrechnung",
+              "articleId": "rw-kostentraegerzeit"
+            },
+            {
+              "text": " zeigt den Zusammenhang zwischen Produktion, Absatz und Beständen."
+            }
+          ]
+        ]
+      },
+      {
+        "id": "einsatz",
+        "title": "Zurechnung an der Entscheidung ausrichten",
+        "paragraphs": [
+          [
+            {
+              "text": "In der Spedition werden Fremdfrachtkosten direkt dem Auftrag zugeordnet. Gemeinsame Dispositionskosten laufen über eine Kostenstelle und können anhand beobachteter Bearbeitungszeit verteilt werden. Für die Monatskontrolle ist zusätzlich relevant, ob der Aufwand aus außergewöhnlichen Schadensfällen in der Leistungskalkulation ein repräsentatives Bild erzeugt."
+            }
+          ],
+          [
+            {
+              "text": "Ein Produktionsbetrieb nutzt Stückkosten für Vorkalkulation, Nachkalkulation und Bestandsbewertung innerhalb der jeweils passenden Bewertungsregeln. Für kurzfristige Zusatzaufträge prüft er veränderliche und zusätzlich vermeidbare Kosten. Für den Kapazitätsaufbau benötigt er auch die entstandenen Fixkosten, die geplante Auslastung und Risiken."
+            }
+          ]
+        ]
+      },
+      {
+        "id": "kurzfrage",
+        "title": "Kurzfrage",
+        "paragraphs": [
+          [
+            {
+              "text": "Welche drei Fragen beantwortet die KLR?"
+            }
+          ]
+        ],
+        "hint": {
+          "label": "SELBSTKONTROLLE",
+          "title": "Musterantwort",
+          "content": "Welche Kosten sind entstanden, wo sind sie entstanden, wofür sind sie angefallen?"
+        }
+      },
+      {
+        "id": "transferfrage",
+        "title": "Transferfrage",
+        "paragraphs": [
+          [
+            {
+              "text": "Eine Wartungsstelle repariert Maschinen mehrerer Fertigungsstellen. Wie gelangen ihre Kosten in die Kalkulation?"
+            }
+          ]
+        ],
+        "hint": {
+          "label": "SELBSTKONTROLLE",
+          "title": "Musterantwort",
+          "content": "Die Kosten werden als Kostenarten erfasst und der Wartungsstelle zugeordnet. Deren Leistungen werden an Fertigungsstellen verrechnet. Die Fertigungsstellen geben ihre Kosten mit geeigneten Bezugsgrößen an die Kostenträger weiter."
+        }
+      }
+    ],
+    "updatedAt": 1794960000000,
+    "version": 1
+  },
+  {
+    "id": "rw-abgrenzung",
+    "subjectId": "rechnungswesen",
+    "chapterId": "rw-abgrenzung",
+    "number": "3.1.4",
+    "title": "Abgrenzungsrechnung und kalkulatorische Kosten",
+    "intro": "Die Abgrenzungsrechnung leitet das Gesamtergebnis der Finanzbuchhaltung in das Betriebsergebnis der KLR über. Dabei ändert sich teilweise auch die von der Buchhaltung übernommene Bewertung.",
+    "sections": [
+      {
+        "id": "systematik",
+        "title": "Neutralen Erfolg ausgrenzen und Kosten umbewerten",
+        "paragraphs": [
+          [
+            {
+              "text": "Betriebsfremde, periodenfremde und je nach Rechnungszweck außergewöhnliche Posten werden gesondert beurteilt. Eine Spende eines Herstellers ist typischerweise betriebsfremd. Die "
+            },
+            {
+              "text": "Rechengrößen des Rechnungswesens",
+              "articleId": "rw-rechnungssysteme"
+            },
+            {
+              "text": " helfen, diese Unterscheidung schon beim Geschäftsvorfall zu treffen. Eine Nachbelastung für eine frühere Periode ist periodenfremd. Der Saldo neutraler Erträge und Aufwendungen ist das "
+            },
+            {
+              "text": "neutrale Ergebnis",
+              "termId": "rw-neutrales-ergebnis"
+            },
+            {
+              "text": ". Betrieblich übliche Aufwendungen werden als Grundkosten in gleicher Höhe übernommen, soweit die KLR sie gleich bewertet."
+            }
+          ],
+          [
+            {
+              "text": "Anderskosten",
+              "termId": "rw-anderskosten"
+            },
+            {
+              "text": " ersetzen einen betrieblichen Aufwand durch einen anderen Wert, etwa bei kalkulatorischer Abschreibung nach wirtschaftlicher Nutzungsdauer und geeignetem Wertmaßstab. "
+            },
+            {
+              "text": "Zusatzkosten",
+              "termId": "rw-zusatzkosten"
+            },
+            {
+              "text": " ergänzen Kosten ohne Aufwand, etwa kalkulatorischen Unternehmerlohn im Einzelunternehmen. Beim kalkulatorischen Zins und Wagnis sind Bezugsbasis und bereits erfasste Beträge zu prüfen. Ein bereits im Ansatz enthaltener Aufwand darf bei der Überleitung nicht doppelt eingehen. Beispiel für kalkulatorische Zinsen: Bei 150.000 € durchschnittlich gebundenem betriebsnotwendigem Kapital und einem Kalkulationszins von 6 % entstehen 9.000 € pro Jahr. Enthält der FiBu-Aufwand 4.000 € Zinsen, die dieser Ansatz ersetzen soll, ist die kostenrechnerische Mehrbelastung 5.000 €. Betriebsnotwendiges Vermögen und gegebenenfalls zinsfreies Abzugskapital sind nach der verwendeten Aufgabenmethode abzugrenzen. Kalkulatorische Einzelwagnisse lassen sich aus repräsentativen Schadensdaten und einer geeigneten Bezugsgröße ableiten. Versicherte oder bereits anders kalkulierte Risiken dürfen nicht doppelt erfasst werden."
+            }
+          ]
+        ]
+      },
+      {
+        "id": "ueberleitung",
+        "title": "Unternehmens- und Betriebsergebnis abstimmen",
+        "paragraphs": [
+          [
+            {
+              "text": "Ein Betrieb meldet Erträge 120.000 € und Aufwand 102.000 €, darunter 2.000 € Spenden und 8.000 € bilanzielle Abschreibung. Der Ertrag enthält 3.000 € betriebsfremde Erträge. Kalkulatorische Abschreibung = 10.000 €, Unternehmerlohn = 5.000 €. Gesamtergebnis = 18.000 €, neutrales Ergebnis = 3.000 € − 2.000 € = 1.000 €."
+            }
+          ],
+          [
+            {
+              "text": "Betriebliche Leistungen = 117.000 €. Kosten = 102.000 € − 2.000 € − 8.000 € + 10.000 € + 5.000 € = 107.000 €. Betriebsergebnis = 10.000 €. Kontrolle: 18.000 € − 1.000 € neutrales Ergebnis − 7.000 € kostenrechnerische Korrektur = 10.000 €. Für einen Fuhrpark kann eine auf Ersatzbeschaffung ausgerichtete Kalkulation zu höheren Abschreibungen als in der Finanzbuchhaltung führen."
+            }
+          ]
+        ]
+      },
+      {
+        "id": "kurzfrage",
+        "title": "Kurzfrage",
+        "paragraphs": [
+          [
+            {
+              "text": "Wie unterscheidest du Anders- und Zusatzkosten?"
+            }
+          ]
+        ],
+        "hint": {
+          "label": "SELBSTKONTROLLE",
+          "title": "Musterantwort",
+          "content": "Anderskosten ersetzen Aufwand durch einen anderen Betrag. Zusatzkosten ergänzen einen Betrag ohne entsprechenden Aufwand."
+        }
+      },
+      {
+        "id": "transferfrage",
+        "title": "Transferfrage",
+        "paragraphs": [
+          [
+            {
+              "text": "Gesamtergebnis 25.000 €, neutraler Aufwand 3.000 €, kein neutraler Ertrag. Die kalkulatorische Abschreibung liegt 1.000 € über der bilanziellen. Wie hoch ist das Betriebsergebnis?"
+            }
+          ]
+        ],
+        "hint": {
+          "label": "SELBSTKONTROLLE",
+          "title": "Musterantwort",
+          "content": "25.000 € + 3.000 € − 1.000 € = 27.000 €. Der neutrale Aufwand fällt weg und der zusätzliche kalkulatorische Werteverzehr mindert das Ergebnis."
+        }
+      }
+    ],
+    "updatedAt": 1794960000000,
+    "version": 1
+  },
+  {
+    "id": "rw-kostenarten",
+    "subjectId": "rechnungswesen",
+    "chapterId": "rw-kostenarten",
+    "number": "3.2",
+    "title": "Kostenarten erfassen und gliedern",
+    "intro": "Die Kostenartenrechnung ermittelt den Verbrauch und ordnet ihn nach sachlichen Merkmalen. Dieselben Kosten lassen sich nach Zurechenbarkeit und nach Beschäftigungsverhalten unterschiedlich einteilen.",
+    "sections": [
+      {
+        "id": "erfassung",
+        "title": "Verbrauch und Bewertung dokumentieren",
+        "paragraphs": [
+          [
+            {
+              "text": "Kosten werden etwa als Material-, Personal-, Fremdleistungs-, Abschreibungs- oder Raumkosten erfasst. Materialverbrauch kann bei vollständiger Bestandsbewertung aus Anfangsbestand + Zugang − Endbestand bestimmt werden. Bei 200 kg Anfangsbestand, 700 kg Zugang und 150 kg Endbestand ergibt sich 750 kg Verbrauch. Bei einheitlich 4 €/kg entstehen 3.000 € Materialkosten. Bei unterschiedlichen Preisen ist ein geeignetes, konsistentes Bewertungsverfahren erforderlich."
+            }
+          ],
+          [
+            {
+              "text": "Lagerentnahmescheine erlauben die Zuordnung nach Auftrag und die Analyse von Ausschuss. Die Inventurmethode liefert vor allem den Gesamtverbrauch. In der Logistik stammen Einzelkosten oft aus auftragsbezogenen Frachtabrechnungen, für gemeinsame Energie- oder Verwaltungskosten werden weitere Bezugsgrößen benötigt."
+            }
+          ]
+        ]
+      },
+      {
+        "id": "dimensionen",
+        "title": "Zurechenbarkeit und Beschäftigungswirkung trennen",
+        "paragraphs": [
+          [
+            {
+              "text": "Einzelkosten",
+              "termId": "rw-einzelkosten"
+            },
+            {
+              "text": " lassen sich dem jeweiligen Bezugsobjekt direkt zurechnen. "
+            },
+            {
+              "text": "Gemeinkosten",
+              "termId": "rw-gemeinkosten"
+            },
+            {
+              "text": " benötigen einen Verteilungsschlüssel. Unechte Gemeinkosten wären direkt verfolgbar, werden aber aus Wirtschaftlichkeitsgründen gemeinsam erfasst. Ein Spezialwerkzeug nur für einen Kundenauftrag kann diesem direkt zugerechnet werden, auch wenn der Aufwand innerhalb dieses Auftrags mengenunabhängig ist."
+            }
+          ],
+          [
+            {
+              "text": "Variable Kosten",
+              "termId": "variable-kosten"
+            },
+            {
+              "text": " verändern sich mit einer Beschäftigungsgröße, "
+            },
+            {
+              "text": "Fixkosten",
+              "termId": "fixkosten"
+            },
+            {
+              "text": " bleiben im betrachteten Bereich und Zeitraum konstant. Eine Hallenmiete kann bei Überschreiten der Kapazität sprunghaft steigen. Variable Kosten können proportional, degressiv oder progressiv verlaufen. Ein Stromtarif kann Grundpreis und verbrauchsabhängigen Teil enthalten. Dokumentiere Bezugsgröße, Zeithorizont und Kapazitätsbereich."
+            }
+          ]
+        ]
+      },
+      {
+        "id": "kurzfrage",
+        "title": "Kurzfrage",
+        "paragraphs": [
+          [
+            {
+              "text": "Warum können Gemeinkosten variabel sein?"
+            }
+          ]
+        ],
+        "hint": {
+          "label": "SELBSTKONTROLLE",
+          "title": "Musterantwort",
+          "content": "Die Einteilung nach Zurechenbarkeit ist unabhängig vom Beschäftigungsverhalten. Gemeinsam gemessener Fertigungsstrom kann bei höherer Produktion steigen und zugleich über Stellen verteilt werden."
+        }
+      },
+      {
+        "id": "transferfrage",
+        "title": "Transferfrage",
+        "paragraphs": [
+          [
+            {
+              "text": "Ein exklusives Werkzeug für Auftrag A kostet einmalig 900 €, unabhängig von der Stückzahl. Wie klassifizierst du es?"
+            }
+          ]
+        ],
+        "hint": {
+          "label": "SELBSTKONTROLLE",
+          "title": "Musterantwort",
+          "content": "Auftragsbezogene Einzelkosten und innerhalb dieses Auftrags bei unveränderter Werkzeuganforderung mengenfix. Vor Auftragsannahme sind die 900 € zusätzlich entscheidungsrelevant."
+        }
+      }
+    ],
+    "updatedAt": 1794960000000,
+    "version": 1
+  },
+  {
+    "id": "rw-bab",
+    "subjectId": "rechnungswesen",
+    "chapterId": "rw-bab",
+    "number": "3.3.1",
+    "title": "Kostenstellen und Betriebsabrechnungsbogen (BAB)",
+    "intro": "Der BAB verteilt Gemeinkosten auf Kostenstellen und verrechnet innerbetriebliche Leistungen. Das Ergebnis sind Kosten je Endkostenstelle als Ausgangspunkt für Zuschlags- und Verrechnungssätze.",
+    "sections": [
+      {
+        "id": "primaer",
+        "title": "Primärkosten zuordnen",
+        "paragraphs": [
+          [
+            {
+              "text": "Kostenstellen sind betriebliche Abrechnungsbereiche, etwa Fertigung, Lager, Verwaltung oder Wartung. Der "
+            },
+            {
+              "text": "Betriebsabrechnungsbogen",
+              "termId": "rw-bab-begriff"
+            },
+            {
+              "text": " verbindet Kostenarten und Stellen. Direkt messbare Beträge werden der Stelle unmittelbar zugeordnet. Für gemeinsam anfallende Aufwendungen eignet sich ein verursachungsnaher Schlüssel wie gemessene kWh für Energie oder Nutzfläche für vergleichbar genutzte Mietflächen."
+            }
+          ],
+          [
+            {
+              "text": "Ein Lager belegt 600 m², die Werkstatt 400 m². Bei 20.000 € gemeinsamer Miete und gleicher Kostenintensität je m² sind 12.000 € und 8.000 € zu verrechnen. Der Schlüssel ist zu überprüfen, wenn etwa beheizte und unbeheizte Flächen unterschiedlich hohe Kosten auslösen."
+            }
+          ]
+        ]
+      },
+      {
+        "id": "sekundaer",
+        "title": "Innerbetriebliche Leistungen weiterverrechnen",
+        "paragraphs": [
+          [
+            {
+              "text": "Eine Wartungsstelle verursacht 18.000 € und erbringt 300 Stunden, davon 100 für Material und 200 für Fertigung. Satz = 18.000 € ÷ 300 h = 60 €/h. Material erhält 6.000 €, Fertigung 12.000 €. Die Wartungsstelle wird um insgesamt 18.000 € entlastet. Der BAB soll nach der Umlage die Gesamtkosten der betrachteten Stellen erhalten."
+            }
+          ],
+          [
+            {
+              "text": "Beim Anbauverfahren werden gegenseitige Hilfsstellenleistungen übergangen und nur an Endstellen verrechnet. Das Stufenleiterverfahren berücksichtigt Leistungen an nachgelagerte Hilfsstellen, Rückleistungen an bereits abgerechnete Stellen bleiben außen vor. Das Gleichungsverfahren erfasst wechselseitige Leistungen vollständig. Bezieht etwa A 10 h von B und B 20 h von A, lauten die Gleichungen bei Gesamtleistungen 100 h und 200 h und Primärkosten 9.000 € und 18.000 €: 100 × a = 9.000 + 10 × b und 200 × b = 18.000 + 20 × a. Daraus folgen a = 100 €/h und b = 100 €/h. Rechne Zwischenschritte möglichst ungerundet."
+            }
+          ]
+        ]
+      },
+      {
+        "id": "kurzfrage",
+        "title": "Kurzfrage",
+        "paragraphs": [
+          [
+            {
+              "text": "Wodurch unterscheiden sich primäre und sekundäre Kosten einer Stelle?"
+            }
+          ]
+        ],
+        "hint": {
+          "label": "SELBSTKONTROLLE",
+          "title": "Musterantwort",
+          "content": "Primäre Kosten stammen aus extern bezogenen Faktoren oder unmittelbar erfasstem betrieblichen Verbrauch. Sekundäre Kosten entstehen durch den Bezug innerbetrieblicher Leistungen anderer Stellen."
+        }
+      },
+      {
+        "id": "transferfrage",
+        "title": "Transferfrage",
+        "paragraphs": [
+          [
+            {
+              "text": "Die IT-Stelle mit 12.000 € Gesamtkosten liefert 80 von 200 gleichartigen Serviceeinheiten ans Lager. Wie viel wird verrechnet?"
+            }
+          ]
+        ],
+        "hint": {
+          "label": "SELBSTKONTROLLE",
+          "title": "Musterantwort",
+          "content": "12.000 € ÷ 200 Einheiten = 60 €/Einheit. Das Lager erhält 80 × 60 € = 4.800 €."
+        }
+      }
+    ],
+    "updatedAt": 1794960000000,
+    "version": 1
+  },
+  {
+    "id": "rw-zuschlagssaetze",
+    "subjectId": "rechnungswesen",
+    "chapterId": "rw-zuschlagssaetze",
+    "number": "3.3.2",
+    "title": "Gemeinkostenzuschläge und Kostenüberdeckung ermitteln",
+    "intro": "Ein Zuschlagssatz verrechnet Gemeinkosten im Verhältnis zu einer definierten Wertbasis. Bei mengenbezogener Basis verwendet man einen Verrechnungssatz, beispielsweise Euro je Maschinenstunde.",
+    "sections": [
+      {
+        "id": "basis",
+        "title": "Kostentopf und Bezugsgröße aufeinander abstimmen",
+        "paragraphs": [
+          [
+            {
+              "text": "Gemeinkostenzuschlagssatz",
+              "termId": "rw-zuschlagssatz"
+            },
+            {
+              "text": " = Gemeinkosten ÷ Zuschlagsbasis × 100 %. In einer typischen Industriekalkulation dienen Materialeinzelkosten der Materialstelle und Fertigungslöhne der Fertigungsstelle als Basis. Verwaltungs- und Vertriebsgemeinkosten werden häufig auf die Herstellkosten des Umsatzes bezogen. Die Aufgabe kann eine andere sachlich begründete Bezugsbasis vorgeben."
+            }
+          ],
+          [
+            {
+              "text": "Nach der "
+            },
+            {
+              "text": "Umlage im BAB",
+              "articleId": "rw-bab"
+            },
+            {
+              "text": " weist die Abrechnung 18.000 € Materialgemeinkosten bei 120.000 € Materialeinzelkosten und 42.000 € Fertigungsgemeinkosten bei 60.000 € Fertigungslöhnen aus. Die Sätze betragen 15 % und 70 %. Mit 8.000 Fertigungsstunden entspräche der Fertigungstopf alternativ 5,25 €/h. Diese Bezugsgrößen sind unterschiedliche Modelle für denselben Kostentopf."
+            }
+          ]
+        ]
+      },
+      {
+        "id": "deckung",
+        "title": "Normalkosten und Istkosten vergleichen",
+        "paragraphs": [
+          [
+            {
+              "text": "Ein Normalzuschlag von 20 % wird auf 100.000 € tatsächliche Zuschlagsbasis angewendet. Verrechnet werden 20.000 €. Bei 22.000 € Istgemeinkosten ergibt sich 2.000 € Unterdeckung. Sind die Istgemeinkosten 19.000 €, ergibt sich 1.000 € Überdeckung. Die Differenz erklärt noch nicht ihre Ursache. Steigende Energiepreise, Beschäftigungsänderungen oder eine ungeeignete Basis wirken unterschiedlich."
+            }
+          ],
+          [
+            {
+              "text": "Ein Vertrieb mit gleicher Zahl von Aufträgen, aber höherem Warenwert kann bei wertbasierter Verrechnung rechnerisch mehr Gemeinkosten erhalten, obwohl die Arbeitszeit gleich bleibt. Auftragszahl oder Bearbeitungszeit können hier bessere Treiber sein. Bei einer Basis von null lässt sich der Satz nicht berechnen."
+            }
+          ]
+        ]
+      },
+      {
+        "id": "kurzfrage",
+        "title": "Kurzfrage",
+        "paragraphs": [
+          [
+            {
+              "text": "Wie unterscheiden sich Zuschlags- und Verrechnungssatz?"
+            }
+          ]
+        ],
+        "hint": {
+          "label": "SELBSTKONTROLLE",
+          "title": "Musterantwort",
+          "content": "Ein Zuschlag setzt zwei Geldbeträge ins Verhältnis und wird in Prozent angegeben. Ein Verrechnungssatz teilt Kosten durch eine Leistungsmenge und hat beispielsweise die Einheit €/h."
+        }
+      },
+      {
+        "id": "transferfrage",
+        "title": "Transferfrage",
+        "paragraphs": [
+          [
+            {
+              "text": "33.000 € werden verrechnet, tatsächlich sind 30.000 € Gemeinkosten angefallen. Wie liest du die Abweichung?"
+            }
+          ]
+        ],
+        "hint": {
+          "label": "SELBSTKONTROLLE",
+          "title": "Musterantwort",
+          "content": "Die Kostenstelle hat 3.000 € Überdeckung. Für deren Ursache brauchst du weitere Angaben zu Preisen, Verbrauch und Beschäftigung."
+        }
+      }
+    ],
+    "updatedAt": 1794960000000,
+    "version": 1
+  },
+  {
+    "id": "rw-fall-bab",
+    "subjectId": "rechnungswesen",
+    "chapterId": "rw-fall-bab",
+    "number": "3.3.3",
+    "title": "Übungsfall: Wartungskosten und Zuschlagssätze im BAB",
+    "intro": "Ein Fertigungsbetrieb verteilt Gemeinkosten anhand beobachteter Leistungen und bildet daraus die Sätze für die Auftragskalkulation.",
+    "sections": [
+      {
+        "id": "fall",
+        "title": "Ausgangslage und Auftrag",
+        "paragraphs": [
+          [
+            {
+              "text": "Primäre Gemeinkosten: Wartung 15.000 €, Material 8.000 €, Fertigung 28.000 €. Die Wartung erbringt 100 h für Material und 400 h für Fertigung. Materialeinzelkosten sind 110.000 €, Fertigungslöhne 50.000 €. Ermittle nach der Umlage die Endkosten und Zuschläge. Kalkuliere für einen Auftrag mit 800 € Material und 600 € Fertigungslöhnen die Herstellkosten. Weitere Kosten fallen im Modell nicht an."
+            }
+          ]
+        ]
+      },
+      {
+        "id": "loesung",
+        "title": "Von der Umlage bis zum Auftrag",
+        "paragraphs": [
+          [
+            {
+              "text": "Wartungssatz = 15.000 € ÷ 500 h = 30 €/h. Material erhält 3.000 € und Fertigung 12.000 €. Endkosten sind 11.000 € und 40.000 €. Kontrollsumme vor und nach Umlage = 51.000 €. Zuschläge = 11.000 ÷ 110.000 = 10 % und 40.000 ÷ 50.000 = 80 %."
+            }
+          ],
+          [
+            {
+              "text": "Herstellkosten Auftrag = 800 € + 80 € Materialgemeinkosten + 600 € + 480 € Fertigungsgemeinkosten = 1.960 €. Bei hoher Automatisierung kann dieser Fertigungszuschlag arbeitsintensive Aufträge stärker belasten als ihre tatsächliche Maschinenbeanspruchung rechtfertigt."
+            }
+          ]
+        ]
+      },
+      {
+        "id": "kurzfrage",
+        "title": "Kurzfrage",
+        "paragraphs": [
+          [
+            {
+              "text": "Warum taucht Wartung im Auftragsbetrag nicht noch einmal als eigene Position auf?"
+            }
+          ]
+        ],
+        "hint": {
+          "label": "SELBSTKONTROLLE",
+          "title": "Musterantwort",
+          "content": "Sie ist bereits in den Endkostenstellen und damit in deren Zuschlägen enthalten."
+        }
+      },
+      {
+        "id": "transferfrage",
+        "title": "Transferfrage",
+        "paragraphs": [
+          [
+            {
+              "text": "Bei gleicher Gesamtkostensumme benötigt Material 150 h und Fertigung 350 h. Welche Sätze folgen?"
+            }
+          ]
+        ],
+        "hint": {
+          "label": "SELBSTKONTROLLE",
+          "title": "Musterantwort",
+          "content": "Material erhält 4.500 € und kommt auf 12.500 €. Zuschlag = 11,36 % gerundet. Fertigung erhält 10.500 € und kommt auf 38.500 €. Zuschlag = 77 %."
+        }
+      }
+    ],
+    "updatedAt": 1794960000000,
+    "version": 1
+  },
+  {
+    "id": "rw-kostentraegerzeit",
+    "subjectId": "rechnungswesen",
+    "chapterId": "rw-kostentraegerzeit",
+    "number": "3.4.1",
+    "title": "Kostenträgerzeitrechnung und Betriebsergebnis",
+    "intro": "Die Kostenträgerzeitrechnung stellt Leistungen und Kosten einer Periode gegenüber. Sie erklärt, wie Produktion, Absatz und Lagerbewegungen das Betriebsergebnis beeinflussen.",
+    "sections": [
+      {
+        "id": "methoden",
+        "title": "Gesamtkosten- und Umsatzkostenverfahren in der KLR",
+        "paragraphs": [
+          [
+            {
+              "text": "Die "
+            },
+            {
+              "text": "Kostenträgerzeitrechnung",
+              "termId": "rw-kostentraegerzeit-begriff"
+            },
+            {
+              "text": " zeigt Periodenergebnisse. Die Stückrechnung zeigt Kosten je Einheit und liefert Bewertungsgrundlagen. Im Gesamtkostenverfahren werden zu den Umsatzerlösen Bestandsmehrungen addiert und Bestandsminderungen abgezogen. Dazu kommen gegebenenfalls selbsterstellte Leistungen. Davon werden die Kosten der Periode abgezogen."
+            }
+          ],
+          [
+            {
+              "text": "Das Umsatzkostenverfahren zieht von den Erlösen die Selbstkosten der abgesetzten Leistungen ab. Herstellkosten des Absatzes = Herstellkosten der Produktion + Bestandsminderung − Bestandsmehrung, wenn die Änderungen mit der geeigneten Kostenbasis bewertet sind. Anschließend berücksichtigt es insbesondere Verwaltung und Vertrieb. Die "
+            },
+            {
+              "text": "handelsrechtliche GuV",
+              "articleId": "rw-guv"
+            },
+            {
+              "text": " folgt eigenen Ansatz- und Bewertungsvorschriften."
+            }
+          ]
+        ]
+      },
+      {
+        "id": "beispiel",
+        "title": "Herstellkosten der Produktion mit denen des Absatzes abstimmen",
+        "paragraphs": [
+          [
+            {
+              "text": "Ein Betrieb produziert 1.000 Stück zu 30 €/Stück und verkauft 900 zu 55 €/Stück. Verwaltung und Vertrieb kosten in der Periode 7.000 €. Es gibt keinen Anfangsbestand. Leistung einschließlich Bestandsmehrung = 49.500 € + 3.000 €. Gesamtkosten = 30.000 € + 7.000 €. Betriebsergebnis = 15.500 €."
+            }
+          ],
+          [
+            {
+              "text": "Nach dem Umsatzkostenverfahren sind Herstellkosten des Absatzes 900 × 30 € = 27.000 €. Selbstkosten des Absatzes = 27.000 € + 7.000 € = 34.000 €. Betriebsergebnis = 49.500 € − 34.000 € = 15.500 €. Bei Dienstleistungen ohne lagerfähige Leistungen sind Produktions- und Absatzmengen häufig gleich. Unfertige Aufträge können trotzdem Periodenabgrenzung erfordern."
+            }
+          ]
+        ]
+      },
+      {
+        "id": "kurzfrage",
+        "title": "Kurzfrage",
+        "paragraphs": [
+          [
+            {
+              "text": "Welche Frage unterscheidet Stück- und Zeitrechnung?"
+            }
+          ]
+        ],
+        "hint": {
+          "label": "SELBSTKONTROLLE",
+          "title": "Musterantwort",
+          "content": "Die Stückrechnung fragt nach den Kosten je Einheit. Die Zeitrechnung ermittelt Kosten und Ergebnis der gesamten betrachteten Periode."
+        }
+      },
+      {
+        "id": "transferfrage",
+        "title": "Transferfrage",
+        "paragraphs": [
+          [
+            {
+              "text": "Produktion 100 Stück zu 20 €. Absatz 110 Stück. Zehn Stück stammen aus dem Anfangsbestand zu 20 €. Welche Herstellkosten hat der Absatz?"
+            }
+          ]
+        ],
+        "hint": {
+          "label": "SELBSTKONTROLLE",
+          "title": "Musterantwort",
+          "content": "2.000 € Herstellkosten der Produktion + 200 € Bestandsminderung = 2.200 € Herstellkosten des Absatzes."
+        }
+      }
+    ],
+    "updatedAt": 1794960000000,
+    "version": 1
+  },
+  {
+    "id": "rw-zuschlagskalkulation",
+    "subjectId": "rechnungswesen",
+    "chapterId": "rw-zuschlagskalkulation",
+    "number": "3.4.2",
+    "title": "Zuschlagskalkulation für Fertigungsaufträge",
+    "intro": "Die Zuschlagskalkulation addiert zu direkt zurechenbaren Kosten die anhand betrieblicher Zuschlagssätze verrechneten Gemeinkosten. Sie eignet sich für unterschiedlich zusammengesetzte Aufträge mit geeigneten Zuschlagsbasen.",
+    "sections": [
+      {
+        "id": "schema",
+        "title": "Herstell- und Selbstkosten in Stufen bestimmen",
+        "paragraphs": [
+          [
+            {
+              "text": "Materialkosten = Materialeinzelkosten + Materialgemeinkosten. Fertigungskosten = Fertigungseinzelkosten + Fertigungsgemeinkosten + Sondereinzelkosten der Fertigung. Beide Blöcke ergeben die Herstellkosten. Für die "
+            },
+            {
+              "text": "Selbstkosten",
+              "termId": "rw-selbstkosten"
+            },
+            {
+              "text": " werden insbesondere Verwaltungsgemeinkosten, Vertriebsgemeinkosten und Sondereinzelkosten des Vertriebs ergänzt."
+            }
+          ],
+          [
+            {
+              "text": "Die differenzierende Kalkulation nutzt unterschiedliche "
+            },
+            {
+              "text": "Gemeinkostenzuschlagssätze",
+              "termId": "rw-zuschlagssatz"
+            },
+            {
+              "text": ". Eine summarische Kalkulation nutzt eine gemeinsame Basis und ist einfacher. Sie kann Aufträge mit sehr verschiedener Material- und Fertigungsintensität verzerren. Die "
+            },
+            {
+              "text": "Maschinenstundensatzrechnung",
+              "articleId": "rw-maschinenstundensatz"
+            },
+            {
+              "text": " verbessert bei hohem Maschineneinsatz die Zurechnung."
+            }
+          ]
+        ]
+      },
+      {
+        "id": "anwendung",
+        "title": "Fertigungsauftrag vorberechnen",
+        "paragraphs": [
+          [
+            {
+              "text": "Material 500 € mit 12 % Zuschlag ergibt 560 €. Fertigungslöhne 300 € mit 80 % Zuschlag plus 40 € Spezialwerkzeug ergeben 580 €. Herstellkosten = 1.140 €. Verwaltung 8 % und Vertrieb 5 % auf Herstellkosten ergeben 91,20 € und 57 €. Mit 25 € Sonderverpackung im Vertrieb entstehen 1.313,20 € Selbstkosten."
+            }
+          ],
+          [
+            {
+              "text": "Bei 10 % Gewinnzuschlag auf Selbstkosten ergibt sich ein Barverkaufspreis von 1.444,52 € netto. Skonto und Rabatt werden anschließend auf der jeweiligen höheren Preisstufe berücksichtigt. In einem Servicebetrieb können Technikerstunden an die Stelle von Fertigungslöhnen treten, sofern die Kosten dadurch sachgerechter zugerechnet werden."
+            }
+          ]
+        ]
+      },
+      {
+        "id": "kurzfrage",
+        "title": "Kurzfrage",
+        "paragraphs": [
+          [
+            {
+              "text": "Auf welche Basis beziehst du den im Beispiel angegebenen Gewinnzuschlag?"
+            }
+          ]
+        ],
+        "hint": {
+          "label": "SELBSTKONTROLLE",
+          "title": "Musterantwort",
+          "content": "Auf 1.313,20 € Selbstkosten. Die Bezugsgröße wird bei der Aufgabe jeweils aus dem vorgegebenen Schema übernommen."
+        }
+      },
+      {
+        "id": "transferfrage",
+        "title": "Transferfrage",
+        "paragraphs": [
+          [
+            {
+              "text": "Materialeinzelkosten 200 € mit 15 % Zuschlag. Fertigungseinzelkosten 100 € mit 70 % Zuschlag, keine Sonderkosten. Verwaltung und Vertrieb zusammen 10 % der Herstellkosten. Wie hoch sind die Selbstkosten?"
+            }
+          ]
+        ],
+        "hint": {
+          "label": "SELBSTKONTROLLE",
+          "title": "Musterantwort",
+          "content": "Material 230 € plus Fertigung 170 € ergibt 400 € Herstellkosten. Mit 40 € Zuschlag ergeben sich 440 € Selbstkosten."
+        }
+      }
+    ],
+    "updatedAt": 1794960000000,
+    "version": 1
+  },
+  {
+    "id": "rw-maschinenstundensatz",
+    "subjectId": "rechnungswesen",
+    "chapterId": "rw-maschinenstundensatz",
+    "number": "3.4.3",
+    "title": "Zuschlagskalkulation mit Maschinenstundensätzen",
+    "intro": "Ein Maschinenstundensatz verrechnet maschinenabhängige Kosten nach der geplanten oder tatsächlichen Nutzung. Die übrigen Fertigungsgemeinkosten erhalten eine gesonderte Bezugsbasis.",
+    "sections": [
+      {
+        "id": "stundensatz",
+        "title": "Kostenpool und Nutzungsstunden bestimmen",
+        "paragraphs": [
+          [
+            {
+              "text": "Der "
+            },
+            {
+              "text": "Maschinenstundensatz",
+              "termId": "rw-maschinenstundensatz-begriff"
+            },
+            {
+              "text": " umfasst je nach Modell kalkulatorische Abschreibung, Zinsen, Raumkosten, Wartung, Energie und weitere maschinenabhängige Kosten. Prüfe, ob Rüstzeiten, Stillstand und Wartungsfenster im Stundennenner stehen. Auch fixe Maschinenkosten können im Satz enthalten sein."
+            }
+          ],
+          [
+            {
+              "text": "Fixe Maschinenkosten 72.000 €/Jahr, geplante Nutzung 1.800 h/Jahr, variable Kosten 12 €/h. Fixer Anteil = 40 €/h, Gesamtsatz = 52 €/h. Ein Auftrag mit 3 h erhält 156 € Maschinenkosten. Zusätzlich werden 80 € Fertigungslöhne und 25 % Restgemeinkosten darauf, also 20 €, angesetzt. Fertigungskosten = 256 €."
+            }
+          ]
+        ]
+      },
+      {
+        "id": "entscheidung",
+        "title": "Auslastung und Doppelzählung prüfen",
+        "paragraphs": [
+          [
+            {
+              "text": "Bei 1.200 h und unveränderten Fixkosten steigt der Satz auf 72 €/h. Der Anstieg entsteht aus der Fixkostenverteilung, während die sprunghaft ausgewiesenen Stückkosten für einen einzelnen Zusatzauftrag nicht vollständig zusätzlich anfallen. Für die kurzfristige Entscheidung prüfst du die zusätzlichen Kosten und mögliche Engpässe."
+            }
+          ],
+          [
+            {
+              "text": "Trenne maschinenabhängige Kosten aus dem allgemeinen Fertigungstopf, bevor der Restzuschlag berechnet wird. Ein Umschlaglager kann dasselbe Verfahren auf Staplerstunden anwenden. Bei sehr unterschiedlichen Einsätzen sind getrennte Pools oder mehrere Treiber sachgerechter."
+            }
+          ]
+        ]
+      },
+      {
+        "id": "kurzfrage",
+        "title": "Kurzfrage",
+        "paragraphs": [
+          [
+            {
+              "text": "Warum müssen Maschinenkosten aus dem Restgemeinkostenpool entfernt werden?"
+            }
+          ]
+        ],
+        "hint": {
+          "label": "SELBSTKONTROLLE",
+          "title": "Musterantwort",
+          "content": "Sie würden andernfalls sowohl mit den Maschinenstunden als auch mit dem Restzuschlag verrechnet."
+        }
+      },
+      {
+        "id": "transferfrage",
+        "title": "Transferfrage",
+        "paragraphs": [
+          [
+            {
+              "text": "Eine Anlage verursacht 60.000 € fixe Kosten und 10 €/h variable Kosten. 2.000 h sind planbar. Was kosten 2,5 h laut Vollkostensatz?"
+            }
+          ]
+        ],
+        "hint": {
+          "label": "SELBSTKONTROLLE",
+          "title": "Musterantwort",
+          "content": "60.000 € ÷ 2.000 h = 30 €/h fix. Gesamt 40 €/h. Auf den Auftrag entfallen 2,5 × 40 € = 100 €."
+        }
+      }
+    ],
+    "updatedAt": 1794960000000,
+    "version": 1
+  },
+  {
+    "id": "rw-divisionskalkulation",
+    "subjectId": "rechnungswesen",
+    "chapterId": "rw-divisionskalkulation",
+    "number": "3.4.4",
+    "title": "Ein- und mehrstufige Divisionskalkulation",
+    "intro": "Die Divisionskalkulation teilt Kosten durch die zugehörige Leistungsmenge. Sie passt für homogene Produkte oder Leistungen. Getrennte Stufen bilden unterschiedliche Produktions- und Absatzmengen ab.",
+    "sections": [
+      {
+        "id": "stufen",
+        "title": "Den Nenner passend zur Kostenstufe wählen",
+        "paragraphs": [
+          [
+            {
+              "text": "Die einstufige "
+            },
+            {
+              "text": "Divisionskalkulation",
+              "termId": "rw-divisionskalkulation-begriff"
+            },
+            {
+              "text": " teilt Gesamtkosten durch die einheitliche Ausbringungs- und Absatzmenge. Bei 60.000 € Kosten und 10.000 gleichartigen Einheiten ohne Bestandsänderung sind das 6 €/Einheit."
+            }
+          ],
+          [
+            {
+              "text": "Bei getrennten Produktions- und Absatzmengen teilst du in der zweistufigen Kalkulation Herstellkosten durch Produktionsmenge und Verwaltungs- und Vertriebskosten durch Absatzmenge. 48.000 € Herstellung ÷ 12.000 Stück = 4 €/Stück. 9.000 € Verwaltung und Vertrieb ÷ 9.000 Stück = 1 €/abgesetztes Stück. Selbstkosten je abgesetztes Stück = 5 €. Die im Beispiel zusätzlich produzierten 3.000 Stück werden zu 4 € je Stück als Bestand betrachtet."
+            }
+          ]
+        ]
+      },
+      {
+        "id": "mehrstufig",
+        "title": "Zwischenprodukte und unterschiedliche Durchsätze abbilden",
+        "paragraphs": [
+          [
+            {
+              "text": "In der mehrstufigen Kalkulation werden Vorstufenkosten nur mit den tatsächlich übertragenen Einheiten weitergegeben. Stufe A erzeugt 1.000 Rohlinge für 8.000 €, also 8 €/Rohling. Stufe B verarbeitet 800 davon ohne Schwund und verursacht zusätzliche 4.000 €, also 5 €/Fertigstück. Ein Fertigstück kostet 13 €. Die übrigen 200 Rohlinge behalten den Wert von 1.600 € in Stufe A."
+            }
+          ],
+          [
+            {
+              "text": "Bei Schwund sind Einsatz- und Ausbringungsmenge getrennt zu dokumentieren. Für einen Palettenumschlag kann ein Stücksatz passen, solange Paletten vergleichbare Bearbeitung beanspruchen. Bei deutlich unterschiedlichem Aufwand sind Äquivalenzziffern oder getrennte Kalkulationen geeigneter."
+            }
+          ]
+        ]
+      },
+      {
+        "id": "kurzfrage",
+        "title": "Kurzfrage",
+        "paragraphs": [
+          [
+            {
+              "text": "Warum kann der Herstellkostensatz einen anderen Nenner als der Vertriebssatz haben?"
+            }
+          ]
+        ],
+        "hint": {
+          "label": "SELBSTKONTROLLE",
+          "title": "Musterantwort",
+          "content": "Herstellkosten beziehen sich auf produzierte Einheiten und Vertriebskosten im beschriebenen Modell auf abgesetzte Einheiten."
+        }
+      },
+      {
+        "id": "transferfrage",
+        "title": "Transferfrage",
+        "paragraphs": [
+          [
+            {
+              "text": "Produktion 5.000 Stück, Absatz 4.000 Stück, Herstellkosten 25.000 €, Verwaltung und Vertrieb 12.000 €. Was kostet ein verkauftes Stück?"
+            }
+          ]
+        ],
+        "hint": {
+          "label": "SELBSTKONTROLLE",
+          "title": "Musterantwort",
+          "content": "25.000 € ÷ 5.000 + 12.000 € ÷ 4.000 = 5 € + 3 € = 8 €."
+        }
+      }
+    ],
+    "updatedAt": 1794960000000,
+    "version": 1
+  },
+  {
+    "id": "rw-aequivalenzziffern",
+    "subjectId": "rechnungswesen",
+    "chapterId": "rw-aequivalenzziffern",
+    "number": "3.4.5",
+    "title": "Äquivalenzziffernkalkulation für verwandte Sorten",
+    "intro": "Die Äquivalenzziffernkalkulation rechnet verwandte Sorten auf eine gemeinsame Basiseinheit um. Sie verteilt gemeinsame Kosten entlang begründeter relativer Verbrauchsverhältnisse.",
+    "sections": [
+      {
+        "id": "rechnung",
+        "title": "Recheneinheiten bilden und Kosten zurückverteilen",
+        "paragraphs": [
+          [
+            {
+              "text": "Wähle eine Basissorte mit "
+            },
+            {
+              "text": "Äquivalenzziffer",
+              "termId": "rw-aequivalenzziffer"
+            },
+            {
+              "text": " 1. Bestimme weitere Faktoren zum Beispiel aus Materialgewicht oder Bearbeitungszeit. Multipliziere Menge und Faktor je Sorte. Teile die gemeinsamen Kosten durch die Summe der Recheneinheiten und multipliziere den Satz mit dem jeweiligen Faktor."
+            }
+          ],
+          [
+            {
+              "text": "Sorte A: 1.000 Stück × 1 = 1.000 Recheneinheiten. Sorte B: 500 × 1,4 = 700. Sorte C: 300 × 2 = 600. Summe = 2.300. Bei 46.000 € Kosten beträgt der Satz 20 €/Recheneinheit. A kostet 20 €, B 28 €, C 40 € pro Stück. Kontrolle: 20.000 € + 14.000 € + 12.000 € = 46.000 €."
+            }
+          ]
+        ]
+      },
+      {
+        "id": "eignung",
+        "title": "Geeignete Faktoren je Kostentopf wählen",
+        "paragraphs": [
+          [
+            {
+              "text": "In einer Druckerei kann Papierverbrauch andere Verhältnisse haben als Rüstzeit. Eine mehrstufige Rechnung nutzt getrennte Faktoren für Material, Fertigung und gegebenenfalls weitere Stufen. Liegen stark unterschiedliche Prozesse oder kundenindividuelle Einzelkosten vor, müssen diese getrennt erfasst oder andere Kalkulationsverfahren genutzt werden."
+            }
+          ],
+          [
+            {
+              "text": "Die Ziffern drücken eine Annahme über Kostenverhältnisse aus. Setzt der Betrieb die Faktoren schlicht mit Verkaufspreisverhältnissen gleich, erklärt die Rechnung keine Kostenursachen. Überprüfe sie mit Messdaten und bei Prozessänderungen."
+            }
+          ]
+        ]
+      },
+      {
+        "id": "kurzfrage",
+        "title": "Kurzfrage",
+        "paragraphs": [
+          [
+            {
+              "text": "Was bedeutet der Faktor 1,4?"
+            }
+          ]
+        ],
+        "hint": {
+          "label": "SELBSTKONTROLLE",
+          "title": "Musterantwort",
+          "content": "Unter dem gewählten Kostentreiber beansprucht ein Stück dieser Sorte 1,4-mal so viele Recheneinheiten wie die Basissorte."
+        }
+      },
+      {
+        "id": "transferfrage",
+        "title": "Transferfrage",
+        "paragraphs": [
+          [
+            {
+              "text": "A: 400 Stück mit Faktor 1. B: 200 Stück mit Faktor 1,5. Gemeinsame Kosten 7.000 €. Welche Stückkosten entstehen?"
+            }
+          ]
+        ],
+        "hint": {
+          "label": "SELBSTKONTROLLE",
+          "title": "Musterantwort",
+          "content": "700 Recheneinheiten. Der Satz beträgt 10 €. A kostet 10 €/Stück, B 15 €/Stück."
+        }
+      }
+    ],
+    "updatedAt": 1794960000000,
+    "version": 1
+  },
+  {
+    "id": "rw-handelskalkulation",
+    "subjectId": "rechnungswesen",
+    "chapterId": "rw-handelskalkulation",
+    "number": "3.4.6",
+    "title": "Handelswarenkalkulation vorwärts und rückwärts",
+    "intro": "Die Handelskalkulation baut den Verkaufspreis aus Einkauf, Handlungskosten, Gewinn und Verkaufskonditionen auf. Prozentangaben beziehen sich auf bestimmte Preisstufen.",
+    "sections": [
+      {
+        "id": "einkauf",
+        "title": "Vom Listeneinkauf zum Selbstkostenpreis",
+        "paragraphs": [
+          [
+            {
+              "text": "Bei 1.000 € Listeneinkaufspreis netto und 10 % Liefererrabatt ergibt sich 900 € Zieleinkaufspreis. 2 % Liefererskonto auf 900 € sind 18 €. Bareinkaufspreis = 882 €. Mit 18 € Bezugskosten beträgt der "
+            },
+            {
+              "text": "Bezugspreis",
+              "termId": "rw-bezugspreis"
+            },
+            {
+              "text": " 900 €. 20 % Handlungskostenzuschlag ergeben 180 €. Selbstkosten = 1.080 €."
+            }
+          ],
+          [
+            {
+              "text": "Handlungskosten sind etwa Lagerung, Personal, Verwaltung und Vertrieb. Der Zuschlagsfuß ist hier der Bezugspreis. Im Rahmen einer Angebotsprüfung kann die Kalkulation rückwärts vom vorgegebenen Marktpreis ausgehen."
+            }
+          ]
+        ]
+      },
+      {
+        "id": "verkauf",
+        "title": "Rabatt und Skonto auf der richtigen Basis rechnen",
+        "paragraphs": [
+          [
+            {
+              "text": "Mit 10 % Gewinnzuschlag auf 1.080 € ergeben sich 1.188 € Barverkaufspreis. Bei 2 % Kundenskonto beträgt der Zielverkaufspreis 1.188 € ÷ 0,98 = 1.212,24 € gerundet. Bei 10 % Kundenrabatt beträgt der Listenverkaufspreis netto 1.188 € ÷ 0,98 ÷ 0,90 = 1.346,94 €. Bei angenommenen 19 % Umsatzsteuer ergibt sich gerundet 1.602,86 € brutto."
+            }
+          ],
+          [
+            {
+              "text": "Rückwärts: Ein Markt-Listenpreis von 1.250 € netto ergibt nach 10 % Rabatt und 2 % Skonto 1.102,50 € Barverkaufspreis. Abzüglich 1.080 € Selbstkosten beträgt der Gewinn 22,50 €, also 2,08 % Gewinnzuschlag. Das ist eine Differenzkalkulation. Die "
+            },
+            {
+              "text": "Handelsspanne",
+              "termId": "rw-handelsspanne"
+            },
+            {
+              "text": " auf Barpreis beträgt (1.102,50 € − 900 €) ÷ 1.102,50 € = 18,37 %. Der Aufschlag auf Bezugspreis ist dagegen 22,50 %. Die Kennzahlen beantworten unterschiedliche Fragen."
+            }
+          ]
+        ]
+      },
+      {
+        "id": "kurzfrage",
+        "title": "Kurzfrage",
+        "paragraphs": [
+          [
+            {
+              "text": "Warum wird vorwärts durch 0,98 geteilt?"
+            }
+          ]
+        ],
+        "hint": {
+          "label": "SELBSTKONTROLLE",
+          "title": "Musterantwort",
+          "content": "Der Barpreis entspricht nach 2 % Skonto 98 % des höheren Zielverkaufspreises."
+        }
+      },
+      {
+        "id": "transferfrage",
+        "title": "Transferfrage",
+        "paragraphs": [
+          [
+            {
+              "text": "Der Kunde soll nach 20 % Rabatt 160 € netto zahlen. Welchen Listenpreis brauchst du ohne Skonto? Wie hoch ist die Handelsspanne auf dem erzielten Preis bei 100 € Bezugspreis?"
+            }
+          ]
+        ],
+        "hint": {
+          "label": "SELBSTKONTROLLE",
+          "title": "Musterantwort",
+          "content": "160 € ÷ 0,80 = 200 € Listenpreis. (160 € − 100 €) ÷ 160 € = 37,5 % Handelsspanne."
+        }
+      }
+    ],
+    "updatedAt": 1794960000000,
+    "version": 1
+  },
+  {
+    "id": "rw-fall-kalkulation",
+    "subjectId": "rechnungswesen",
+    "chapterId": "rw-fall-kalkulation",
+    "number": "3.4.7",
+    "title": "Übungsfall: Maschinenauftrag kalkulieren und Angebot prüfen",
+    "intro": "Ein Betrieb kombiniert direkte Kosten, einen Maschinenstundensatz und Gemeinkostenzuschläge und prüft das Ergebnis gegen einen Marktpreis.",
+    "sections": [
+      {
+        "id": "fall",
+        "title": "Ausgangslage und Auftrag",
+        "paragraphs": [
+          [
+            {
+              "text": "Ein Auftrag benötigt 600 € Material, 200 € Fertigungslöhne und 4 Maschinenstunden. Materialgemeinkosten = 15 % der Materialeinzelkosten. Maschinenkosten = 45 €/h. Restfertigungsgemeinkosten = 30 % der Fertigungslöhne. Verwaltung und Vertrieb zusammen = 12 % der Herstellkosten. Der angestrebte Gewinnzuschlag beträgt 10 % der Selbstkosten. Der Kunde erhält 5 % Rabatt, Skonto bleibt außen vor. Berechne Herstellkosten, Selbstkosten, Listenpreis netto und den Gewinn bei einem Marktlistenpreis von 1.400 €."
+            }
+          ]
+        ]
+      },
+      {
+        "id": "loesung",
+        "title": "Preis und Gewinn rückwärts prüfen",
+        "paragraphs": [
+          [
+            {
+              "text": "Materialkosten = 600 € + 90 € = 690 €. Fertigungskosten = 200 € + 180 € + 60 € = 440 €. Herstellkosten = 1.130 €. Verwaltung und Vertrieb = 135,60 €. Selbstkosten = 1.265,60 €. Zielerlös nach Rabatt = 1.265,60 € × 1,10 = 1.392,16 €. Listenpreis = 1.392,16 € ÷ 0,95 = 1.465,43 € gerundet."
+            }
+          ],
+          [
+            {
+              "text": "Beim Marktlistenpreis 1.400 € erhält der Betrieb 1.330 € netto. Gewinn = 64,40 €, Gewinnzuschlag = 5,09 % gerundet. Der Auftrag deckt die kalkulierten Vollkosten, verfehlt aber das Gewinnziel. Für eine Ausnahmeentscheidung prüfst du Auslastung, Alternativen und Preisfolgen."
+            }
+          ]
+        ]
+      },
+      {
+        "id": "kurzfrage",
+        "title": "Kurzfrage",
+        "paragraphs": [
+          [
+            {
+              "text": "Weshalb wird der Rabatt auf eine höhere Preisstufe bezogen?"
+            }
+          ]
+        ],
+        "hint": {
+          "label": "SELBSTKONTROLLE",
+          "title": "Musterantwort",
+          "content": "Der erforderliche Nettoerlös stellt nur 95 % des Listenpreises dar."
+        }
+      },
+      {
+        "id": "transferfrage",
+        "title": "Transferfrage",
+        "paragraphs": [
+          [
+            {
+              "text": "Der nutzungsbezogene Maschinensatz steigt für denselben Auftrag um 5 €/h. Wie hoch sind die neuen Selbstkosten bei unveränderten Sätzen?"
+            }
+          ]
+        ],
+        "hint": {
+          "label": "SELBSTKONTROLLE",
+          "title": "Musterantwort",
+          "content": "Herstellkosten steigen um 4 × 5 € = 20 € auf 1.150 €. Verwaltung und Vertrieb betragen 138 €. Selbstkosten = 1.288 €."
+        }
+      }
+    ],
+    "updatedAt": 1794960000000,
+    "version": 1
+  },
+  {
+    "id": "rw-vollkosten-teilkosten",
+    "subjectId": "rechnungswesen",
+    "chapterId": "rw-vollkosten-teilkosten",
+    "number": "3.5.1",
+    "title": "Vollkosten- und Teilkostenrechnung vergleichen",
+    "intro": "Vollkosten verteilen fixe und variable Kosten auf Leistungen. Die Teilkostenrechnung weist für Entscheidungen einen ausgewählten Kostenanteil je Leistung aus. In der Deckungsbeitragsrechnung sind das typischerweise die variablen Kosten.",
+    "sections": [
+      {
+        "id": "vergleich",
+        "title": "Kosten je Einheit richtig interpretieren",
+        "paragraphs": [
+          [
+            {
+              "text": "Ein Betrieb hat 10.000 € Fixkosten im Monat und variable Kosten von 20 €/Stück. Bei 1.000 Stück betragen die "
+            },
+            {
+              "text": "Vollkosten",
+              "termId": "rw-vollkosten"
+            },
+            {
+              "text": " 30 €/Stück. Bei 500 Stück steigen sie auf 40 €/Stück, obwohl jeder zusätzliche Artikel weiterhin 20 € variable Kosten verursacht. Das Absinken der Auslastung erklärt die Erhöhung der zugerechneten Fixkosten je Stück."
+            }
+          ],
+          [
+            {
+              "text": "Die "
+            },
+            {
+              "text": "Teilkostenrechnung",
+              "termId": "rw-teilkosten-begriff"
+            },
+            {
+              "text": " setzt Erlöse und variable Kosten ins Verhältnis und zeigt, welchen Betrag ein Auftrag zur Fixkostendeckung beisteuert. Für langfristige Preise sind zusätzlich Kapazitätskosten und ein realistisches Absatzprogramm zu prüfen. Vollkostensätze helfen bei der Kalkulation, reagieren aber auf Beschäftigung und Verteilungsschlüssel."
+            }
+          ]
+        ]
+      },
+      {
+        "id": "ergebnis",
+        "title": "Bestandsänderungen und mehrstufige Fixkosten",
+        "paragraphs": [
+          [
+            {
+              "text": "Werden Bestände in einer internen Vollkostenrechnung auch mit fixen Produktionskosten bewertet, verbleibt bei Lageraufbau ein Teil der Fixkosten im Bestand. In der variablen Teilkostenrechnung werden diese Fixkosten der Periode belastet. 200 zusätzliche Stück mit je 5 € fixen Herstellkosten können das Vollkostenergebnis unter sonst gleichen Annahmen um 1.000 € höher ausweisen."
+            }
+          ],
+          [
+            {
+              "text": "Die "
+            },
+            {
+              "text": "einstufige Deckungsbeitragsrechnung",
+              "articleId": "deckungsbeitrag"
+            },
+            {
+              "text": " zieht gemeinsame Fixkosten als Block ab. Eine mehrstufige Rechnung zieht zuerst direkt zurechenbare Produktfixkosten ab, dann etwa Produktgruppen- und Unternehmensfixkosten auf der passenden Ebene. Nach dem Ausweis ist gesondert zu prüfen, wann Fixkosten entfallen können. Eine gruppenbezogene Miete bleibt bei Einstellung eines einzelnen Produkts häufig bestehen."
+            }
+          ]
+        ]
+      },
+      {
+        "id": "kurzfrage",
+        "title": "Kurzfrage",
+        "paragraphs": [
+          [
+            {
+              "text": "Warum begründet ein negativer Vollkostengewinn je Produkt noch keine Einstellung?"
+            }
+          ]
+        ],
+        "hint": {
+          "label": "SELBSTKONTROLLE",
+          "title": "Musterantwort",
+          "content": "Zugerechnete Fixkosten können bei Einstellung bestehen bleiben. Entscheidend sind entfallende Erlöse, tatsächlich eingesparte Kosten und die alternative Kapazitätsnutzung."
+        }
+      },
+      {
+        "id": "transferfrage",
+        "title": "Transferfrage",
+        "paragraphs": [
+          [
+            {
+              "text": "Ein Produkt liefert 8.000 € Deckungsbeitrag und erhält 10.000 € gemeinsame Fixkosten zugerechnet. Was passiert bei Einstellung, wenn sich sonst nichts ändert?"
+            }
+          ]
+        ],
+        "hint": {
+          "label": "SELBSTKONTROLLE",
+          "title": "Musterantwort",
+          "content": "Das Betriebsergebnis sinkt um 8.000 €. Die gemeinsamen Fixkosten fallen unverändert an."
+        }
+      }
+    ],
+    "updatedAt": 1794960000000,
+    "version": 1
+  },
+  {
+    "id": "rw-break-even",
+    "subjectId": "rechnungswesen",
+    "chapterId": "rw-break-even",
+    "number": "3.5.3",
+    "title": "Break-even-Analyse und Sicherheitsabstand",
+    "intro": "An der Gewinnschwelle decken Erlöse die Gesamtkosten. Das Modell zeigt, wie Absatzmenge, Preise und Kosten das Ergebnis innerhalb eines betrachteten Bereichs verändern.",
+    "sections": [
+      {
+        "id": "modell",
+        "title": "Gewinnschwelle berechnen",
+        "paragraphs": [
+          [
+            {
+              "text": "Bei konstantem Nettoverkaufspreis p und variablen Kosten kv je Stück gilt E = p × x und K = Kf + kv × x. Die "
+            },
+            {
+              "text": "Gewinnschwelle",
+              "termId": "rw-gewinnschwelle"
+            },
+            {
+              "text": " folgt aus E = K. Damit gilt x = Kf ÷ (p − kv), wenn der Stückdeckungsbeitrag positiv ist. Die erste mindestens kostendeckende ganze Stückzahl wird aufgerundet. Bei einem nicht positiven Stückdeckungsbeitrag und positiven Fixkosten erreicht das Modell keine Gewinnschwelle."
+            }
+          ],
+          [
+            {
+              "text": "Beispiel: Fixkosten 6.000 €, Preis 80 €/Stück, variable Stückkosten 40 €/Stück. Deckungsbeitrag 40 €/Stück. Gewinnschwelle = 6.000 € ÷ 40 €/Stück = 150 Stück. Schwellenumsatz = 150 × 80 € = 12.000 €. Bei erwartetem Absatz 200 Stück liegt der Sicherheitsabstand bei 50 Stück oder 25 % des erwarteten Absatzes. Das erwartete Ergebnis beträgt 2.000 €."
+            }
+          ]
+        ]
+      },
+      {
+        "id": "grafik",
+        "title": "Erlöse und Kosten im Verlauf",
+        "paragraphs": [
+          [
+            {
+              "text": "Die Erlöslinie startet bei 0 €. Die Gesamtkosten starten bei 6.000 €. Oberhalb der Schnittmenge bei 150 Stück steigen die Erlöse schneller als die Gesamtkosten."
+            }
+          ]
+        ],
+        "lineChart": {
+          "xLabel": "Absatz (Stück)",
+          "yLabel": "Euro",
+          "points": [
+            [
+              0,
+              0
+            ],
+            [
+              150,
+              12000
+            ],
+            [
+              200,
+              16000
+            ]
+          ],
+          "reference": [
+            [
+              0,
+              6000
+            ],
+            [
+              200,
+              14000
+            ]
+          ],
+          "xTicks": [
+            0,
+            50,
+            100,
+            150,
+            200
+          ],
+          "yTicks": [
+            0,
+            4000,
+            8000,
+            12000,
+            16000
+          ],
+          "description": "Durchgezogen: Erlöse. Gestrichelt: Gesamtkosten. Der Schnittpunkt liegt bei 150 Stück und 12.000 €."
+        }
+      },
+      {
+        "id": "grenzen",
+        "title": "Zielgewinn und Sortimentsmix berücksichtigen",
+        "paragraphs": [
+          [
+            {
+              "text": "Für einen Zielgewinn addierst du ihn im Zähler zu den Fixkosten. Bei mehreren Produkten kannst du bei stabilem Absatzmix mit einem Modellwarenkorb oder einer gewichteten Deckungsbeitragsquote rechnen. Beträgt die Quote über das Sortiment 30 % der Erlöse, sind bei 6.000 € Fixkosten 6.000 € ÷ 0,30 = 20.000 € Umsatz nötig. Ein anderer Mix verändert die Gewinnschwelle. Für einen Dienstleister mit Schichtgrenzen müssen sprungfixe Kosten im jeweils gültigen Mengenbereich geprüft werden."
+            }
+          ]
+        ]
+      },
+      {
+        "id": "kurzfrage",
+        "title": "Kurzfrage",
+        "paragraphs": [
+          [
+            {
+              "text": "Wie ändert sich die Schwelle, wenn der Stückdeckungsbeitrag steigt?"
+            }
+          ]
+        ],
+        "hint": {
+          "label": "SELBSTKONTROLLE",
+          "title": "Musterantwort",
+          "content": "Bei gleichen Fixkosten sinkt die erforderliche Absatzmenge, solange das lineare Modell gilt."
+        }
+      },
+      {
+        "id": "transferfrage",
+        "title": "Transferfrage",
+        "paragraphs": [
+          [
+            {
+              "text": "Fixkosten 9.000 €, Preis 55 €, variable Stückkosten 30 €, Zielgewinn 1.500 €. Wie viele Stück sind nötig?"
+            }
+          ]
+        ],
+        "hint": {
+          "label": "SELBSTKONTROLLE",
+          "title": "Musterantwort",
+          "content": "(9.000 € + 1.500 €) ÷ 25 €/Stück = 420 Stück."
+        }
+      }
+    ],
+    "updatedAt": 1794960000000,
+    "version": 1
+  },
+  {
+    "id": "rw-preisuntergrenzen",
+    "subjectId": "rechnungswesen",
+    "chapterId": "rw-preisuntergrenzen",
+    "number": "3.5.4",
+    "title": "Preisuntergrenzen und relativer Deckungsbeitrag",
+    "intro": "Eine Preisuntergrenze hängt von der verfügbaren Kapazität, vom Zeithorizont und von der besten Alternative ab. Bei einem Engpass zählt der Beitrag je knapper Einheit.",
+    "sections": [
+      {
+        "id": "untergrenze",
+        "title": "Zusatzauftrag bei freier oder knapper Kapazität",
+        "paragraphs": [
+          [
+            {
+              "text": "Kurzfristig deckt der Mindestpreis bei freier Kapazität die durch den Auftrag zusätzlich verursachten Kosten. Bei 30 Stück mit je 70 € variablen Kosten und 300 € einmaligen Rüstkosten beträgt die Preisuntergrenze (2.100 € + 300 €) ÷ 30 = 80 €/Stück. Gemeinsame Fixkosten, die in beiden Alternativen unverändert anfallen, ändern diese Rechnung nicht."
+            }
+          ],
+          [
+            {
+              "text": "Verdrängt der Auftrag einen Beitrag aus der besten Alternative, addiere diese "
+            },
+            {
+              "text": "Opportunitätskosten",
+              "termId": "rw-opportunitaetskosten"
+            },
+            {
+              "text": ". Beträgt der entgangene Deckungsbeitrag 600 €, steigt die kurzfristige Untergrenze auf 100 €/Stück. Auf längere Sicht muss das gesamte Leistungsprogramm die erforderlichen Kosten und Kapazitäten decken. Eine aus Vollkosten abgeleitete langfristige Preisuntergrenze hängt daher auch von Absatz und Zurechnung ab."
+            }
+          ]
+        ]
+      },
+      {
+        "id": "engpass",
+        "title": "Deckungsbeiträge pro Engpasseinheit vergleichen",
+        "paragraphs": [
+          [
+            {
+              "text": "Produkt A liefert 40 €/Stück und braucht 20 Maschinenminuten. Produkt B liefert 30 €/Stück und braucht 10 Minuten. Der "
+            },
+            {
+              "text": "relative Deckungsbeitrag",
+              "termId": "rw-relativer-db"
+            },
+            {
+              "text": " beträgt für A 2 €/min und für B 3 €/min. Bei einem einzigen Engpass wird B im linearen Modell bis zur Absatzgrenze bevorzugt. Berücksichtige ganzzahlige Stücke, Restkapazitäten, Mindestmengen und Lieferzusagen. Mehrere Engpässe können eine Optimierung des gesamten Programms erfordern."
+            }
+          ],
+          [
+            {
+              "text": "Eine Disposition kann statt Maschinenminuten begrenzte Ladezeiten oder verfügbare Tourenkapazität verwenden. Beim Fremdbezug vergleicht der Betrieb den Bezugspreis einschließlich relevanter Nebenkosten mit vermeidbaren Eigenfertigungskosten und frei werdender nutzbarer Kapazität. Qualitäts- und Lieferfolgen bleiben Teil der Entscheidung."
+            }
+          ]
+        ]
+      },
+      {
+        "id": "kurzfrage",
+        "title": "Kurzfrage",
+        "paragraphs": [
+          [
+            {
+              "text": "Wodurch unterscheidet sich der absolute vom relativen Stückdeckungsbeitrag?"
+            }
+          ]
+        ],
+        "hint": {
+          "label": "SELBSTKONTROLLE",
+          "title": "Musterantwort",
+          "content": "Der absolute Wert gilt je Stück. Der relative Wert teilt ihn durch den Einsatz des knappen Faktors."
+        }
+      },
+      {
+        "id": "transferfrage",
+        "title": "Transferfrage",
+        "paragraphs": [
+          [
+            {
+              "text": "Ein Auftrag bringt 900 € netto und verursacht 700 € zusätzliche Kosten. Er verdrängt eine Tour mit 250 € Deckungsbeitrag. Wie entscheidest du rein rechnerisch?"
+            }
+          ]
+        ],
+        "hint": {
+          "label": "SELBSTKONTROLLE",
+          "title": "Musterantwort",
+          "content": "Der zusätzliche Beitrag von 200 € liegt 50 € unter dem entgangenen Beitrag. Der wirtschaftliche Mindestpreis liegt bei 950 €."
+        }
+      }
+    ],
+    "updatedAt": 1794960000000,
+    "version": 1
+  },
+  {
+    "id": "rw-fall-teilkosten",
+    "subjectId": "rechnungswesen",
+    "chapterId": "rw-fall-teilkosten",
+    "number": "3.5.5",
+    "title": "Übungsfall: Leistungsprogramm bei Kapazitätsengpass",
+    "intro": "Zwei Auftragstypen teilen sich dieselbe Kapazität. Der Fall verbindet einstufigen Deckungsbeitrag mit Engpassentscheidung und Zusatzauftrag.",
+    "sections": [
+      {
+        "id": "fall",
+        "title": "Ausgangslage und Auftrag",
+        "paragraphs": [
+          [
+            {
+              "text": "A: Preis 210 €, variable Kosten 130 €, benötigt 2 h je Auftrag, höchstens 30 Aufträge. B: Preis 150 €, variable Kosten 100 €, benötigt 1 h, höchstens 40 Aufträge. Es stehen 80 h zur Verfügung. Gemeinsame Fixkosten: 2.400 €. Ermittle optimales Programm und Betriebsergebnis. Ein Zusatzauftrag braucht 4 h und kostet 270 € zusätzlich. Zu welchem Mindestpreis kann er in das volle Programm aufgenommen werden?"
+            }
+          ]
+        ]
+      },
+      {
+        "id": "loesung",
+        "title": "Deckungsbeitrag maximieren und Verdrängung bewerten",
+        "paragraphs": [
+          [
+            {
+              "text": "A liefert 80 €/Auftrag oder 40 €/h, B liefert 50 €/Auftrag oder 50 €/h. Zuerst 40 B mit 40 h, danach 20 A mit 40 h. Gesamtdeckungsbeitrag = 40 × 50 € + 20 × 80 € = 3.600 €. Betriebsergebnis = 3.600 € − 2.400 € = 1.200 €."
+            }
+          ],
+          [
+            {
+              "text": "Für den Zusatzauftrag entfallen zwei Aufträge A mit zusammen 160 € Deckungsbeitrag. Mindestpreis = 270 € + 160 € = 430 €. Bei 430 € bleibt das Ergebnis gleich. Der verbleibende Kapazitätsmix muss im konkreten Fall umsetzbar sein."
+            }
+          ]
+        ]
+      },
+      {
+        "id": "kurzfrage",
+        "title": "Kurzfrage",
+        "paragraphs": [
+          [
+            {
+              "text": "Warum belegt B im Fall zuerst Kapazität?"
+            }
+          ]
+        ],
+        "hint": {
+          "label": "SELBSTKONTROLLE",
+          "title": "Musterantwort",
+          "content": "B liefert je knapper Stunde 50 €, A liefert 40 €. B wird bis zur Absatzgrenze bevorzugt."
+        }
+      },
+      {
+        "id": "transferfrage",
+        "title": "Transferfrage",
+        "paragraphs": [
+          [
+            {
+              "text": "Die Kapazität steigt dauerhaft auf 100 h, ohne zusätzliche Fixkosten. Welches Ergebnis folgt bei gleichem Absatzlimit?"
+            }
+          ]
+        ],
+        "hint": {
+          "label": "SELBSTKONTROLLE",
+          "title": "Musterantwort",
+          "content": "40 B und 30 A benötigen 100 h. Gesamtdeckungsbeitrag = 2.000 € + 2.400 € = 4.400 €. Betriebsergebnis = 2.000 €."
+        }
+      }
+    ],
+    "updatedAt": 1794960000000,
+    "version": 1
+  },
+  {
+    "id": "rw-auswertungsdaten",
+    "subjectId": "rechnungswesen",
+    "chapterId": "rw-auswertungsdaten",
+    "number": "4.1.1",
+    "title": "Betriebswirtschaftliche Zahlen aufbereiten und adressatengerecht auswerten",
+    "intro": "Zahlen entfalten Aussagekraft, wenn Zweck, Datenbasis und Bezugsgröße feststehen. Verschiedene Adressaten benötigen unterschiedliche Verdichtungen derselben Daten.",
+    "sections": [
+      {
+        "id": "adressaten",
+        "title": "Mit der Entscheidung beginnen",
+        "paragraphs": [
+          [
+            {
+              "text": "Die Geschäftsleitung braucht Treiber und Maßnahmen, etwa Ergebnis je Sparte und verfügbare Kapazität. Eigenkapitalgeber betrachten Rendite und Risiko. Kreditgeber interessieren sich besonders für Liquidität, Schuldendienst und Sicherheiten. Lieferanten können die Zahlungsfähigkeit für Lieferkonditionen beurteilen. Externe Adressaten haben häufig weniger Zugriff auf Einzel- und Plandaten als das Management."
+            }
+          ],
+          [
+            {
+              "text": "Die Datenquelle kann Bilanz, GuV, Betriebsabrechnung, Statistik oder Liquiditätsplanung sein. Definiere Zeitraum, Währung, Konsolidierungskreis und Bilanzierungsbasis. In der "
+            },
+            {
+              "text": "Strukturbilanz",
+              "termId": "rw-strukturbilanz"
+            },
+            {
+              "text": " werden Posten etwa nach Kapitalbindung und tatsächlicher Fälligkeit verdichtet. Einzelbereinigungen werden separat dokumentiert."
+            }
+          ]
+        ]
+      },
+      {
+        "id": "beispiel",
+        "title": "Berichtetes Ergebnis zur Vergleichszahl überleiten",
+        "paragraphs": [
+          [
+            {
+              "text": "Eine Spedition meldet 100.000 € Gewinn vor Steuern, darin 30.000 € einmaliger Gewinn aus Anlagenverkauf. Für die Frage nach laufender Ertragskraft ergibt sich eine bereinigte Größe von 70.000 €. Der berichtete Wert bleibt Ausgangspunkt. Bei der Liquiditätsanalyse werden der Verkaufserlös und gegebenenfalls die Zahlung anders ausgewertet als der Buchgewinn."
+            }
+          ],
+          [
+            {
+              "text": "In einem Dashboard gehören Definition, Zeitraum und Datenstand zur Kennzahl. Wenn ein Verkaufserlös von 50.000 € und ein Buchwert von 20.000 € zum Gewinn von 30.000 € führen, kann die Führung daraus sowohl Verkaufsergebnis als auch Investitionscashflow ableiten, sofern der Preis tatsächlich zugeflossen ist. Für den Schuldendienst braucht sie zusätzlich Fälligkeiten und freie Zahlungsmittel."
+            }
+          ]
+        ]
+      },
+      {
+        "id": "kurzfrage",
+        "title": "Kurzfrage",
+        "paragraphs": [
+          [
+            {
+              "text": "Warum gehört die Datenbasis in einen Kennzahlenbericht?"
+            }
+          ]
+        ],
+        "hint": {
+          "label": "SELBSTKONTROLLE",
+          "title": "Musterantwort",
+          "content": "Sie macht die Zahl prüfbar und zeigt, welche Vergleichswerte und Schlussfolgerungen sachlich zulässig sind."
+        }
+      },
+      {
+        "id": "transferfrage",
+        "title": "Transferfrage",
+        "paragraphs": [
+          [
+            {
+              "text": "Im Ergebnis vor Steuern von 150.000 € steckt ein einmaliger Aufwand von 20.000 €. Was berichtest du zur laufenden Ertragskraft?"
+            }
+          ]
+        ],
+        "hint": {
+          "label": "SELBSTKONTROLLE",
+          "title": "Musterantwort",
+          "content": "Berichtet 150.000 €, bereinigt unter dieser Annahme 170.000 €. Art und Betrag der Bereinigung werden erläutert. Für Liquidität und künftige Risiken ist der Aufwand gesondert einzuordnen."
+        }
+      }
+    ],
+    "updatedAt": 1794960000000,
+    "version": 1
+  },
+  {
+    "id": "rw-vergleiche",
+    "subjectId": "rechnungswesen",
+    "chapterId": "rw-vergleiche",
+    "number": "4.1.2",
+    "title": "Betriebsvergleich, Zeitvergleich und Soll-Ist-Vergleich",
+    "intro": "Vergleiche helfen, Abweichungen zu erkennen und ihre Ursachen einzugrenzen. Aussagekräftig werden sie erst bei vergleichbaren Perioden und Definitionen.",
+    "sections": [
+      {
+        "id": "vergleichsarten",
+        "title": "Vergleichsmaßstab passend zur Frage wählen",
+        "paragraphs": [
+          [
+            {
+              "text": "Ein Zeitvergleich verfolgt dieselbe Einheit über mehrere Perioden. Nutze zuvor die "
+            },
+            {
+              "text": "Aufbereitung der Daten",
+              "articleId": "rw-auswertungsdaten"
+            },
+            {
+              "text": ", damit Unterschiede in Abgrenzung oder Einmaleffekten erkennbar sind. Ein "
+            },
+            {
+              "text": "Betriebsvergleich",
+              "termId": "rw-betriebsvergleich"
+            },
+            {
+              "text": " nutzt andere Unternehmen oder Betriebsteile als Maßstab. Der Soll-Ist-Vergleich misst Abweichungen von einer geplanten Größe. Kläre bei jedem Vergleich Saison, Leistungsumfang, Produktmix, Preisniveau und Rechnungsgrundlagen. Für Kostenentwicklungen können absolute Werte, Stückwerte und Indizes verschiedene Ursachen sichtbar machen."
+            }
+          ],
+          [
+            {
+              "text": "Bei Umsatz 800.000 € im Basisjahr und 920.000 € im Folgejahr ergeben sich +120.000 €, +15 % und Index 115 bei Basis 100. Wächst die Absatzmenge zugleich um 20 %, sinkt der Durchschnittserlös je Einheit auf 1,15 ÷ 1,20 = 95,83 % des alten Niveaus. Ein anderer Produktmix kann den Rückgang erklären, auch bei unveränderten Einzelpreisen."
+            }
+          ]
+        ]
+      },
+      {
+        "id": "interpretation",
+        "title": "Unterschiede nach Ursachen untersuchen",
+        "paragraphs": [
+          [
+            {
+              "text": "Depot A meldet 5 €/Sendung, B 6 €/Sendung. Prüfe, ob in beiden Zahlen dieselben Leistungen enthalten sind und ob Sendungsgewicht, Distanzen und Auslastung vergleichbar sind. Ein guter Vergleich arbeitet mit ähnlichen Kohorten oder getrennten Teilkennzahlen."
+            }
+          ],
+          [
+            {
+              "text": "Bei Quoten unterscheide Prozentpunkte und relative Veränderung. Eine Marge von 8 % auf 10 % steigt um 2 Prozentpunkte und relativ um 25 %. Bei null oder negativem Ausgangswert kann die relative Veränderungsrate unbrauchbar sein. In diesem Fall eignen sich absolute Veränderungen und erklärende Teilgrößen."
+            }
+          ]
+        ]
+      },
+      {
+        "id": "kurzfrage",
+        "title": "Kurzfrage",
+        "paragraphs": [
+          [
+            {
+              "text": "Wann liefert ein Soll-Ist-Vergleich eine handlungsfähige Aussage?"
+            }
+          ]
+        ],
+        "hint": {
+          "label": "SELBSTKONTROLLE",
+          "title": "Musterantwort",
+          "content": "Wenn Plan und Ist konsistent abgegrenzt sind und die Abweichung auf prüfbare Treiber wie Menge, Preis oder Produktmix zurückgeführt wird."
+        }
+      },
+      {
+        "id": "transferfrage",
+        "title": "Transferfrage",
+        "paragraphs": [
+          [
+            {
+              "text": "Stückkosten steigen im Winter um 8 %. Welche zwei Vergleichsprobleme prüfst du vor einer Effizienzaussage?"
+            }
+          ]
+        ],
+        "hint": {
+          "label": "SELBSTKONTROLLE",
+          "title": "Musterantwort",
+          "content": "Vergleiche zunächst mit derselben Wintersaison und prüfe Leistungsumfang oder Auslastung. Zusätzlich können Preisänderungen bei Einsatzfaktoren oder eine veränderte Produktmischung die Abweichung erklären."
+        }
+      }
+    ],
+    "updatedAt": 1794960000000,
+    "version": 1
+  },
+  {
+    "id": "rw-eigenkapitalrentabilitaet",
+    "subjectId": "rechnungswesen",
+    "chapterId": "rw-eigenkapitalrentabilitaet",
+    "number": "4.2.1",
+    "title": "Eigenkapitalrentabilität und Leverage-Effekt",
+    "intro": "Eigenkapitalrentabilität setzt einen Periodenerfolg der Eigentümer ins Verhältnis zum gebundenen Eigenkapital. Die Kennzahl bildet Rendite und Finanzierungsstruktur gemeinsam ab.",
+    "sections": [
+      {
+        "id": "rechnung",
+        "title": "Periodenerfolg auf durchschnittliches Kapital beziehen",
+        "paragraphs": [
+          [
+            {
+              "text": "Eigenkapitalrentabilität",
+              "termId": "rw-ekr"
+            },
+            {
+              "text": " = Jahresüberschuss ÷ durchschnittliches Eigenkapital × 100 %. Beispiel: Anfang 380.000 €, Ende 420.000 €, ohne unterjährige Strukturbrüche. Durchschnitt = 400.000 €. Ein Jahresüberschuss von 48.000 € ergibt 12 %. Je nach Aufgabenstellung ist eine andere Kapitalbasis oder Erfolgsdefinition vorgegeben. Kapitalzuführungen während des Jahres können eine zeitgewichtete Betrachtung erfordern."
+            }
+          ],
+          [
+            {
+              "text": "Die Kennzahl misst buchwertbezogene Rentabilität. Ein sehr kleiner oder negativer Eigenkapitalnenner macht sie schwer interpretierbar. Entnahmen, Ausschüttungen, Stichtagseffekte und Bewertungsregeln beeinflussen den Vergleich. Für eine Eigentümerentscheidung gehören Risiko und Liquidität dazu."
+            }
+          ]
+        ]
+      },
+      {
+        "id": "hebel",
+        "title": "Finanzierungseinfluss erklären",
+        "paragraphs": [
+          [
+            {
+              "text": "Im vereinfachten Vorsteuermodell gilt EKR = GKR + (GKR − Fremdkapitalzinssatz) × Fremdkapital ÷ Eigenkapital. Erzielt die Investition 10 % Gesamtkapitalrendite und kostet Fremdkapital 6 %, ergeben sich bei gleichen Fremd- und Eigenkapitalbeträgen 14 % Eigenkapitalrentabilität vor Steuern."
+            }
+          ],
+          [
+            {
+              "text": "Sinkt im selben Modell die Gesamtkapitalrendite auf 4 %, fällt die EKR auf 2 %. Höhere Verschuldung verstärkt Ergebnis- und Liquiditätsrisiken. Vorsteuerrendite, Nachsteuerrendite und Kapitalkosten dürfen nur auf jeweils konsistenter Basis verglichen werden."
+            }
+          ]
+        ]
+      },
+      {
+        "id": "kurzfrage",
+        "title": "Kurzfrage",
+        "paragraphs": [
+          [
+            {
+              "text": "Warum wird durchschnittliches Eigenkapital genutzt?"
+            }
+          ]
+        ],
+        "hint": {
+          "label": "SELBSTKONTROLLE",
+          "title": "Musterantwort",
+          "content": "Der Zähler erfasst einen Periodenerfolg. Ein geeigneter Durchschnitt bildet die über die Periode gebundenen Mittel besser ab als ein einzelner Stichtag."
+        }
+      },
+      {
+        "id": "transferfrage",
+        "title": "Transferfrage",
+        "paragraphs": [
+          [
+            {
+              "text": "Gewinn 36.000 €, Eigenkapital Anfang 260.000 €, Ende 340.000 €. Wie hoch ist die EKR bei einfacher Durchschnittsbildung?"
+            }
+          ]
+        ],
+        "hint": {
+          "label": "SELBSTKONTROLLE",
+          "title": "Musterantwort",
+          "content": "Durchschnitt 300.000 €. 36.000 € ÷ 300.000 € × 100 % = 12 %."
+        }
+      }
+    ],
+    "updatedAt": 1794960000000,
+    "version": 1
+  },
+  {
+    "id": "rw-gesamtkapitalrentabilitaet",
+    "subjectId": "rechnungswesen",
+    "chapterId": "rw-gesamtkapitalrentabilitaet",
+    "number": "4.2.2",
+    "title": "Gesamtkapitalrentabilität und Kapitalumschlag",
+    "intro": "Die Gesamtkapitalrentabilität beurteilt, welchen Erfolg das gesamte eingesetzte Kapital erwirtschaftet. Die Erfolgsgröße soll zu Eigen- und Fremdkapital gemeinsam passen.",
+    "sections": [
+      {
+        "id": "formel",
+        "title": "Finanzierungskosten beim Zähler berücksichtigen",
+        "paragraphs": [
+          [
+            {
+              "text": "Die traditionelle Prüfungsformel für "
+            },
+            {
+              "text": "Gesamtkapitalrentabilität",
+              "termId": "rw-gkr"
+            },
+            {
+              "text": " lautet (Gewinn + Fremdkapitalzinsen) ÷ durchschnittliches Gesamtkapital × 100 %. Der Zähler ergänzt den bereits als Aufwand abgezogenen Kapitalertrag der Fremdkapitalgeber. Kläre die vorgegebene Gewinngröße und Steuerebene. Ein operatives Modell kann stattdessen beispielsweise EBIT auf das dazu passende Kapital beziehen. Zu EBIT werden Zinsen nicht erneut addiert."
+            }
+          ],
+          [
+            {
+              "text": "Unterstellt sind Gewinn vor Steuern 60.000 €, Fremdkapitalzinsen 20.000 € und durchschnittliches Gesamtkapital 800.000 €. Die Vorsteuerrendite nach der traditionellen Formel beträgt 10 %. Für einen Vergleich zwischen Betrieben sind stille Reserven, Leasing, außerordentliche Effekte und Kapitalintensität zu berücksichtigen."
+            }
+          ]
+        ]
+      },
+      {
+        "id": "zerlegung",
+        "title": "Marge und Kapitalbindung gemeinsam analysieren",
+        "paragraphs": [
+          [
+            {
+              "text": "Verwende für Zähler und Kapital durchgängig dieselben Definitionen. Bei 80.000 € finanzierungsbereinigtem Erfolg und 1.600.000 € Umsatz beträgt die korrespondierende Marge 5 %. Der "
+            },
+            {
+              "text": "Kapitalumschlag",
+              "termId": "rw-kapitalumschlag"
+            },
+            {
+              "text": " ist 1.600.000 € ÷ 800.000 € = 2. Das Produkt aus 5 % und 2 ergibt 10 % Rendite. Diese DuPont-Logik trennt Ergebnismarge und Kapitalnutzung."
+            }
+          ],
+          [
+            {
+              "text": "Ein Betrieb kann bei gleicher Marge seine Kapitalrendite durch kürzere Forderungslaufzeiten oder weniger gebundenes Lagerkapital steigern. Prüfe, ob die Kapitalfreisetzung dauerhaft ist und ob Servicegrad oder Lieferfähigkeit darunter leiden."
+            }
+          ]
+        ]
+      },
+      {
+        "id": "kurzfrage",
+        "title": "Kurzfrage",
+        "paragraphs": [
+          [
+            {
+              "text": "Warum werden in der traditionellen Formel Fremdkapitalzinsen addiert?"
+            }
+          ]
+        ],
+        "hint": {
+          "label": "SELBSTKONTROLLE",
+          "title": "Musterantwort",
+          "content": "Der Gewinn enthält sie bereits als Abzug. Für den Erfolg des gesamten Kapitals wird der Kapitalertrag der Fremdkapitalgeber wieder einbezogen."
+        }
+      },
+      {
+        "id": "transferfrage",
+        "title": "Transferfrage",
+        "paragraphs": [
+          [
+            {
+              "text": "Finanzierungsbereinigter Erfolg 54.000 €, Umsatz 900.000 €, durchschnittliches Gesamtkapital 600.000 €. Rechne beide Wege."
+            }
+          ]
+        ],
+        "hint": {
+          "label": "SELBSTKONTROLLE",
+          "title": "Musterantwort",
+          "content": "54.000 € ÷ 600.000 € = 9 %. Alternativ 6 % Marge × 1,5 Kapitalumschlag = 9 %."
+        }
+      }
+    ],
+    "updatedAt": 1794960000000,
+    "version": 1
+  },
+  {
+    "id": "rw-umsatzrentabilitaet",
+    "subjectId": "rechnungswesen",
+    "chapterId": "rw-umsatzrentabilitaet",
+    "number": "4.2.3",
+    "title": "Umsatzrentabilität und Ergebnismargen",
+    "intro": "Die Umsatzrentabilität zeigt, welcher Anteil des Umsatzes als definierter Erfolg verbleibt. Die Wahl des Zählers bestimmt die Aussage.",
+    "sections": [
+      {
+        "id": "varianten",
+        "title": "Netto-, Vorsteuer- und operative Marge unterscheiden",
+        "paragraphs": [
+          [
+            {
+              "text": "Umsatzrentabilität",
+              "termId": "rw-umsatzrentabilitaet-begriff"
+            },
+            {
+              "text": " = gewählte Ergebnisgröße ÷ Netto-Umsatzerlöse × 100 %. Ein Jahresüberschuss von 45.000 € bei 900.000 € Umsatzerlösen entspricht 5 % Nettoumsatzrendite. Bei EBIT von 72.000 € ergibt sich 8 % EBIT-Marge. Die Differenz kann unter anderem auf Finanzierung, Steuern und weitere Definitionsunterschiede zurückgehen."
+            }
+          ],
+          [
+            {
+              "text": "Die Deckungsbeitragsquote setzt den "
+            },
+            {
+              "text": "Deckungsbeitrag",
+              "termId": "deckungsbeitrag"
+            },
+            {
+              "text": " zum Umsatz ins Verhältnis und dient der Teilkostenrechnung. Sie beantwortet vor Abzug der verbleibenden Fixkosten eine andere Frage. Für die Beurteilung einer Sparte muss die Ergebnisdefinition zur zugehörigen Umsatzbasis passen."
+            }
+          ]
+        ]
+      },
+      {
+        "id": "deutung",
+        "title": "Margenänderung und absoluten Erfolg analysieren",
+        "paragraphs": [
+          [
+            {
+              "text": "Ein Betrieb steigert Umsatz von 1 Mio. € auf 1,5 Mio. €. Gewinn steigt von 80.000 € auf 90.000 €. Die Marge sinkt von 8 % auf 6 %, der Gewinn steigt um 10.000 €. Untersuche Preis-, Mengen-, Mix- und Kostenänderungen. Geringere Margen auf zusätzlichem Volumen können wirtschaftlich sein, wenn Kapazität, Risiko und Kapitalbedarf berücksichtigt sind."
+            }
+          ],
+          [
+            {
+              "text": "Bei einer Spedition kann eine Änderung im Leistungsmodell mit mehr zugekauften Leistungen Umsatz und Marge stark verändern. Beide Zahlen werden erst zusammen mit Deckungsbeitrag, Kapitalbindung und Vergleichsdefinition interpretierbar. Eine positive Marge sagt allein wenig über Fälligkeiten aus."
+            }
+          ]
+        ]
+      },
+      {
+        "id": "kurzfrage",
+        "title": "Kurzfrage",
+        "paragraphs": [
+          [
+            {
+              "text": "Welche Marge eignet sich zum direkten Vergleich der operativen Leistung unabhängig von Finanzierung und Ertragsteuern?"
+            }
+          ]
+        ],
+        "hint": {
+          "label": "SELBSTKONTROLLE",
+          "title": "Musterantwort",
+          "content": "Eine konsistent definierte EBIT-Marge eignet sich, sofern Sonderposten und Rechnungsgrundlagen angemessen vergleichbar gemacht werden."
+        }
+      },
+      {
+        "id": "transferfrage",
+        "title": "Transferfrage",
+        "paragraphs": [
+          [
+            {
+              "text": "Der Gewinn bleibt bei 60.000 €, Umsatz steigt von 600.000 € auf 750.000 €. Wie verändert sich die Marge?"
+            }
+          ]
+        ],
+        "hint": {
+          "label": "SELBSTKONTROLLE",
+          "title": "Musterantwort",
+          "content": "Von 10 % auf 8 %, also um 2 Prozentpunkte oder relativ um 20 %."
+        }
+      }
+    ],
+    "updatedAt": 1794960000000,
+    "version": 1
+  },
+  {
+    "id": "rw-fall-kennzahlen",
+    "subjectId": "rechnungswesen",
+    "chapterId": "rw-fall-kennzahlen",
+    "number": "4.3",
+    "title": "Übungsfall: Wachstum und Rentabilität beurteilen",
+    "intro": "Ein Unternehmen steigert den Umsatz und bindet mehr Kapital. Die Auswertung soll zwischen operativer Entwicklung, Eigentümerrendite und Finanzierungsbedarf unterscheiden.",
+    "sections": [
+      {
+        "id": "fall",
+        "title": "Ausgangslage und Auftrag",
+        "paragraphs": [
+          [
+            {
+              "text": "Jahr A: Umsatz 1.200.000 €, Gewinn vor Steuern 72.000 €, Zinsen 18.000 €, durchschnittliches Eigenkapital 450.000 €, durchschnittliches Gesamtkapital 900.000 €. Jahr B: Umsatz 1.500.000 €, Gewinn vor Steuern 75.000 €, Zinsen 33.000 €, durchschnittliches Eigenkapital 500.000 €, durchschnittliches Gesamtkapital 1.200.000 €. Im Gewinn B stecken 15.000 € einmaliger Anlagenverkaufsgewinn. Berechne Umsatz-, Eigen- und Gesamtkapitalrendite vor Steuern und beurteile das Wachstum."
+            }
+          ]
+        ]
+      },
+      {
+        "id": "loesung",
+        "title": "Mehr Umsatz im Verhältnis zu Gewinn und Kapital lesen",
+        "paragraphs": [
+          [
+            {
+              "text": "Umsatzrenditen: A = 72.000 ÷ 1.200.000 = 6 %, B = 75.000 ÷ 1.500.000 = 5 %. EKR: A = 16 %, B = 15 %. GKR: A = (72.000 + 18.000) ÷ 900.000 = 10 %, B = (75.000 + 33.000) ÷ 1.200.000 = 9 %. Der Umsatz wächst um 25 %, der Gewinn steigt um 3.000 €, alle drei Renditen sinken."
+            }
+          ],
+          [
+            {
+              "text": "Bereinigter Gewinn B = 60.000 €, bereinigte Umsatzrendite = 4 %. Management prüft laufende Marge, Kapitalbindung und Zinsentwicklung. Der Kreditgeber benötigt zusätzlich Fälligkeiten, operativen Zahlungsüberschuss und Tilgungsplan. Prüfe beim Vergleich außerdem Marktbedingungen und vergleichbare Rechnungsgrundlagen."
+            }
+          ]
+        ]
+      },
+      {
+        "id": "kurzfrage",
+        "title": "Kurzfrage",
+        "paragraphs": [
+          [
+            {
+              "text": "Warum werden 15.000 € bei der laufenden Ertragskraft korrigiert?"
+            }
+          ]
+        ],
+        "hint": {
+          "label": "SELBSTKONTROLLE",
+          "title": "Musterantwort",
+          "content": "Der einmalige Verkaufsgewinn erhöht das berichtete Ergebnis und wird für die Frage nach wiederkehrender Leistung separat ausgewiesen."
+        }
+      },
+      {
+        "id": "transferfrage",
+        "title": "Transferfrage",
+        "paragraphs": [
+          [
+            {
+              "text": "Bei unverändert 108.000 € finanzierungsbereinigtem Ergebnis sinkt durchschnittliches Gesamtkapital B auf 1.080.000 €. Welche GKR folgt?"
+            }
+          ]
+        ],
+        "hint": {
+          "label": "SELBSTKONTROLLE",
+          "title": "Musterantwort",
+          "content": "108.000 € ÷ 1.080.000 € = 10 %. Die Kapitalrendite steigt um einen Prozentpunkt."
+        }
+      }
+    ],
+    "updatedAt": 1794960000000,
+    "version": 1
+  },
+  {
+    "id": "rw-planungsinhalt",
+    "subjectId": "rechnungswesen",
+    "chapterId": "rw-planungsinhalt",
+    "number": "5.1",
+    "title": "Integrierte Planungsrechnung und Teilpläne",
+    "intro": "Die Planungsrechnung übersetzt Ziele und Annahmen in erwartete Mengen, Ergebnisse, Zahlungen und Bestände. Abgestimmte Teilpläne zeigen, ob eine Maßnahme wirtschaftlich und finanzierbar ist.",
+    "sections": [
+      {
+        "id": "treiber",
+        "title": "Absatz, Leistung und Ressourcen verknüpfen",
+        "paragraphs": [
+          [
+            {
+              "text": "Ein "
+            },
+            {
+              "text": "Teilplan",
+              "termId": "rw-teilplan"
+            },
+            {
+              "text": " liefert Eingaben für weitere Pläne. Absatzmenge × erzielbarer Nettopreis ergibt Planumsatz. Produktion = Absatz + gewünschter Endbestand − Anfangsbestand. Produktion und Stücklisten bestimmen Bedarf, Beschaffung berücksichtigt Lagerziele. Personal, Kapazität und Investitionen werden mit Mengen, Sätzen und Zeitbezug geplant. Bei knappem Personal oder Material muss der Absatzplan auf Machbarkeit zurückgeprüft werden."
+            }
+          ],
+          [
+            {
+              "text": "Ein Betrieb plant 1.000 Stück Absatz, 100 Stück Anfangsbestand und 180 Stück Zielbestand. Geplante Produktion = 1.080 Stück. Bei 2 kg je Stück ergibt sich ein Bedarf von 2.160 kg vor Bestandsänderungen im Materiallager. Werden nur 1.030 Stück Kapazität erreicht, fehlen 50 Stück für den gewünschten Endbestand. Dann werden Menge, Beschaffung oder Schichtmodell abgestimmt."
+            }
+          ]
+        ]
+      },
+      {
+        "id": "integration",
+        "title": "Plan-GuV, Finanzplan und Planbilanz abstimmen",
+        "paragraphs": [
+          [
+            {
+              "text": "Die Plan-GuV stellt erwartete Erträge und Aufwendungen gegenüber. Der "
+            },
+            {
+              "text": "Liquiditätsplan",
+              "termId": "rw-liquiditaetsplan"
+            },
+            {
+              "text": " bildet Zahlungen mit konkreten Terminen ab. Die Planbilanz schreibt Bestände fort. Bei Absatz auf Ziel erzeugt der Umsatz zunächst eine Forderung, bei Kauf einer Maschine entsteht ein Anlageposten und später Abschreibungsaufwand. Tilgung mindert Zahlungsmittel und Schuld. Sie ist kein Aufwand."
+            }
+          ],
+          [
+            {
+              "text": "Ein Betrieb plant 40.000 € Umsatz, davon 25.000 € Zahlung im Monat und 15.000 € Forderungen am Monatsende. Laufende zahlungswirksame Kosten betragen 22.000 €, Abschreibung 3.000 €. Zusätzlich wird eine Anlage für 10.000 € bar erworben. Planerfolg = 15.000 € Gewinn. Zahlungssaldo = 25.000 € − 22.000 € − 10.000 € = −7.000 €. Weitere Effekte bleiben im Modell außen vor. Prüfe daher Gewinnziel und Zahlungsfähigkeit gemeinsam."
+            }
+          ]
+        ]
+      },
+      {
+        "id": "kontrolle",
+        "title": "Soll-Ist-Abweichungen nach Treibern erklären",
+        "paragraphs": [
+          [
+            {
+              "text": "Bei 100 geplanten Aufträgen zu 150 € und 110 tatsächlichen zu 140 € wächst der Umsatz von 15.000 € auf 15.400 €. Mengeneffekt bei Planpreis = (110 − 100) × 150 € = +1.500 €. Preiseffekt bei Istmenge = 110 × (140 € − 150 €) = −1.100 €. Die Summe erklärt +400 €. Andere Reihenfolgen verteilen den Interaktionseffekt anders, daher Methode angeben."
+            }
+          ],
+          [
+            {
+              "text": "Ein flexibles Budget rechnet variable Sollkosten auf die Istbeschäftigung um. Bei 3.000 € fixen Sollkosten und 40 € je Auftrag ergeben 100 Planaufträge 7.000 € Plankosten. Bei 110 Istaufträgen ergibt sich ein flexibles Soll von 7.400 €. Mit 7.700 € Istkosten entfallen 400 € der Gesamtabweichung auf die Beschäftigung und 300 € auf die Abweichung vom flexiblen Soll. So lässt sich der Mengeneffekt vom Mehrverbrauch oder Preisauftrieb trennen. Bei Prognosen mit unsicheren Treibern helfen Basisszenario, ungünstiges Szenario und Sensitivitäten, etwa längere Zahlungsziele, geringerer Absatz und steigende Fremdfrachtpreise."
+            }
+          ]
+        ]
+      },
+      {
+        "id": "kurzfrage",
+        "title": "Kurzfrage",
+        "paragraphs": [
+          [
+            {
+              "text": "Warum kann ein Planüberschuss mit einem Zahlungsmittelrückgang einhergehen?"
+            }
+          ]
+        ],
+        "hint": {
+          "label": "SELBSTKONTROLLE",
+          "title": "Musterantwort",
+          "content": "Aufwände und Erträge folgen der Leistung und Periodenabgrenzung. Zahlungen können später oder früher erfolgen. Investitionszahlungen können den Bestand sofort belasten und den Erfolg nur über Abschreibungen beeinflussen."
+        }
+      },
+      {
+        "id": "transferfrage",
+        "title": "Transferfrage",
+        "paragraphs": [
+          [
+            {
+              "text": "Der geplante Eingang von 12.000 € für bereits fakturierte Leistungen verschiebt sich um einen Monat. Was ändert sich im aktuellen Monat?"
+            }
+          ]
+        ],
+        "hint": {
+          "label": "SELBSTKONTROLLE",
+          "title": "Musterantwort",
+          "content": "Endbestand liquider Mittel sinkt gegenüber dem Plan um 12.000 €, Forderungen steigen um 12.000 €. Die Plan-GuV bleibt bei unveränderter Leistung und Werthaltigkeit gleich."
+        }
+      }
+    ],
+    "updatedAt": 1794960000000,
+    "version": 1
+  },
+  {
+    "id": "rw-planungshorizonte",
+    "subjectId": "rechnungswesen",
+    "chapterId": "rw-planungshorizonte",
+    "number": "5.2",
+    "title": "Planungshorizonte, Budget und rollierende Prognose",
+    "intro": "Planungshorizont und Detaillierung richten sich nach Bindungsdauer und Steuerungsbedarf. Je näher ein Zeitraum rückt, desto genauer lassen sich Mengen, Schichten und Zahlungen planen.",
+    "sections": [
+      {
+        "id": "horizonte",
+        "title": "Langfristige Entscheidungen in kurze Maßnahmen übersetzen",
+        "paragraphs": [
+          [
+            {
+              "text": "Strategische Planung betrachtet langfristige Ausrichtung, Standorte und Geschäftsmodelle. Taktische Planung konkretisiert meist mittelfristige Kapazitäten, Investitionen oder Verträge. Operative Planung übersetzt dies in saisonale Budgets, Monatsmengen, Schichtpläne oder wöchentliche Liquidität. Einheitliche Jahresgrenzen gibt es für diese Kategorien nicht. Die Bindungsdauer entscheidet."
+            }
+          ],
+          [
+            {
+              "text": "Eine Spedition prüft über mehrere Jahre einen zweiten Standort, plant mittelfristig Lager- und Unternehmerverträge und erstellt kurzfristig einen Wochenplan für Auszahlungen. Die Investition muss mit langfristiger Nachfrage und Finanzierung vereinbar sein. Ein Engpass in zwei Wochen erfordert eine Rechnung nach Fälligkeiten."
+            }
+          ]
+        ]
+      },
+      {
+        "id": "prozesse",
+        "title": "Budget, Prognose und Maßnahmen auf denselben Stand beziehen",
+        "paragraphs": [
+          [
+            {
+              "text": "Das "
+            },
+            {
+              "text": "Budget",
+              "termId": "rw-budget"
+            },
+            {
+              "text": " hält den vereinbarten Ziel- und Ressourcenrahmen fest. Ein "
+            },
+            {
+              "text": "rollierender Forecast",
+              "termId": "rw-forecast"
+            },
+            {
+              "text": " aktualisiert die erwartete Entwicklung und verlängert regelmäßig den Ausblick. Bei einem Horizont von zwölf Monaten wird nach Ablauf des Januar beispielsweise erneut für Februar bis Januar geplant. Sollwerte bleiben für Abweichungsanalysen verfügbar."
+            }
+          ],
+          [
+            {
+              "text": "Top-down setzt Ziele und Grenzen, Bottom-up meldet Mengen und Kapazitäten aus den Bereichen. Das Gegenstromverfahren stimmt beide Richtungen ab. Jede wesentliche Planannahme erhält einen Verantwortlichen, eine Datenquelle und einen Aktualisierungsanlass. Für volatile Wochen eignet sich eine kürzere Aktualisierung als für gebundene Mietzahlungen."
+            }
+          ],
+          [
+            {
+              "text": "Ein Händler budgetiert 1,2 Mio. € Umsatz. Nach sechs Monaten und geänderten Absatzannahmen prognostiziert er 1,05 Mio. € für dasselbe Geschäftsjahr. Die Differenz von 150.000 € beschreibt eine erwartete Zielabweichung. Eine Entscheidung über Maßnahmen folgt aus Preis, Menge, Saison und Liquiditätslage."
+            }
+          ]
+        ]
+      },
+      {
+        "id": "kurzfrage",
+        "title": "Kurzfrage",
+        "paragraphs": [
+          [
+            {
+              "text": "Wofür dient ein Forecast zusätzlich zum Budget?"
+            }
+          ]
+        ],
+        "hint": {
+          "label": "SELBSTKONTROLLE",
+          "title": "Musterantwort",
+          "content": "Er zeigt unter aktuellen Annahmen das voraussichtliche Ergebnis und unterstützt Gegenmaßnahmen. Das Budget liefert den vereinbarten Vergleichsmaßstab."
+        }
+      },
+      {
+        "id": "transferfrage",
+        "title": "Transferfrage",
+        "paragraphs": [
+          [
+            {
+              "text": "Ein Lieferant verlangt künftig zwei Wochen früher Zahlung. Welche Planung aktualisierst du zuerst?"
+            }
+          ]
+        ],
+        "hint": {
+          "label": "SELBSTKONTROLLE",
+          "title": "Musterantwort",
+          "content": "Die kurzfristige Liquiditätsplanung nach konkreten Fälligkeiten. Danach prüfe ich Folgen für Finanzierung, Einkaufskonditionen und integrierten Forecast."
+        }
+      }
+    ],
+    "updatedAt": 1794960000000,
+    "version": 1
+  },
+  {
+    "id": "rw-fall-planung",
+    "subjectId": "rechnungswesen",
+    "chapterId": "rw-fall-planung",
+    "number": "5.3",
+    "title": "Übungsfall: Ergebnis, Liquidität und Szenario planen",
+    "intro": "Eine Spedition plant zwei Monate. Verzögerte Kundenzahlungen belasten die Liquidität, obwohl das Geschäft profitabel ist.",
+    "sections": [
+      {
+        "id": "fall",
+        "title": "Ausgangslage und Auftrag",
+        "paragraphs": [
+          [
+            {
+              "text": "Bank Anfang Januar 12.000 €, Forderungen und Verbindlichkeiten zu Beginn jeweils null. Das Anfangseigenkapital beträgt 12.000 €, andere Bestände liegen nicht vor. Umsatz Januar 30.000 €, Februar 36.000 €. Kunden zahlen 60 % im Leistungsmonat, den Rest im Folgemonat. Fremdleistungen Januar 18.000 €, Februar 22.000 €, jeweils vollständig im Folgemonat zahlbar. Laufende fixe Ausgaben und Aufwendungen 9.000 € je Monat. Im Januar wird eine Anlage für 8.000 € bezahlt. Die Abschreibung beträgt in beiden Monaten je 500 €. Umsatzsteuer, Zinsen und weitere Vorgänge bleiben außen vor."
+            }
+          ],
+          [
+            {
+              "text": "Berechne Planerfolg und Bank am Monatsende und erstelle daraus eine vereinfachte Planbilanz für Ende Februar. Prüfe dann den Fall, in dem von den Februarumsätzen nur 30 % sofort eingehen."
+            }
+          ]
+        ]
+      },
+      {
+        "id": "loesung",
+        "title": "Erfolg und Zahlungen getrennt rechnen und abstimmen",
+        "paragraphs": [
+          [
+            {
+              "text": "Januarerfolg = 30.000 € − 18.000 € − 9.000 € − 500 € = 2.500 €. Bank = 12.000 € + 18.000 € − 9.000 € − 8.000 € = 13.000 €. Februarerfolg = 36.000 € − 22.000 € − 9.000 € − 500 € = 4.500 €. Einzahlungen Februar = 12.000 € + 21.600 € = 33.600 €. Auszahlungen = 18.000 € + 9.000 € = 27.000 €. Bank Ende Februar = 19.600 €."
+            }
+          ],
+          [
+            {
+              "text": "Forderungen Ende Februar = 14.400 €. Anlagebuchwert = 8.000 € − 2 × 500 € = 7.000 €. Aktiva = 19.600 € Bank + 14.400 € Forderungen + 7.000 € Anlage = 41.000 €. Auf der Passivseite stehen 22.000 € Fremdleistungsverbindlichkeiten und 19.000 € Eigenkapital aus 12.000 € Anfangswert + 2.500 € + 4.500 € Ergebnissen. Die Bilanz ist ausgeglichen. Sinkt die sofortige Zahlungsquote für Februar auf 30 %, verschieben sich 10.800 € in den März. Bank Ende Februar = 8.800 €, Forderungen = 25.200 €. Der Februarerfolg bleibt im Modell 4.500 €. Liegt die Mindestreserve bei 10.000 €, fehlen 1.200 €. Für untermonatliche Spitzen sind die tatsächlichen Fälligkeiten zu prüfen."
+            }
+          ]
+        ]
+      },
+      {
+        "id": "kurzfrage",
+        "title": "Kurzfrage",
+        "paragraphs": [
+          [
+            {
+              "text": "Warum werden die Januar-Fremdleistungen in beiden Monaten berücksichtigt?"
+            }
+          ]
+        ],
+        "hint": {
+          "label": "SELBSTKONTROLLE",
+          "title": "Musterantwort",
+          "content": "Sie sind im Januar Aufwand und im Februar Auszahlung. Die Verbindlichkeit überbrückt die Zeit zwischen Leistung und Zahlung."
+        }
+      },
+      {
+        "id": "transferfrage",
+        "title": "Transferfrage",
+        "paragraphs": [
+          [
+            {
+              "text": "Die Anlage wird bei gleicher Abschreibung erst im Februar bezahlt. Wie ändern sich die Bankendbestände im Basisszenario?"
+            }
+          ]
+        ],
+        "hint": {
+          "label": "SELBSTKONTROLLE",
+          "title": "Musterantwort",
+          "content": "Ende Januar steigt Bank kalkulatorisch von 13.000 € auf 21.000 €. Ende Februar beträgt Bank nach der Zahlung weiterhin 19.600 €."
+        }
       }
     ],
     "updatedAt": 1794960000000,

@@ -47,7 +47,11 @@ async function openDeckungsbeitrag(page: Page) {
   await page.getByRole('tab', { name: 'Start', exact: true }).click();
   await page.getByRole('button', { name: /^Fächer/ }).click();
   await page.getByRole('button', { name: /^Rechnungswesen,/ }).click();
-  await page.getByRole('button', { name: /1\.2\.1 Deckungsbeitrag/ }).click();
+  await page.getByRole('button', { name: /^1 Grundlegende Aspekte des Rechnungswesens/ }).click();
+  await page.getByRole('button', { name: /^2 Finanzbuchhaltung/ }).click();
+  await page.getByRole('button', { name: /^3\.3 Kostenstellenrechnung/ }).click();
+  await page.getByRole('button', { name: /^3\.4 Kostenträgerzeit-/ }).click();
+  await page.getByRole('button', { name: /3\.5\.2 Deckungsbeitrag/ }).click();
   await expect(page.getByText('Der Deckungsbeitrag', { exact: true })).toBeVisible();
 }
 

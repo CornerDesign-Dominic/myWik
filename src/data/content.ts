@@ -4,6 +4,7 @@ import { transferSection } from './logistik-standard';
 import { marketingArticles, marketingChapters, marketingGlossary } from './marketing';
 import { leadershipArticles, leadershipChapters, leadershipGlossary } from './fuehrung';
 import { lawArticles, lawChapters, lawGlossary } from './recht';
+import { accountingArticles, accountingChapters, accountingGlossary, contributionMarginNumber } from './rechnungswesen';
 
 export const subjects: Subject[] = [
   { id: 'bwl', title: 'BWL', subtitle: 'Betriebliche Entscheidungen verstehen', icon: 'building' },
@@ -23,13 +24,7 @@ export const subjects: Subject[] = [
 ];
 
 export const chapters: Chapter[] = [
-  { id: 'rw-klr', subjectId: 'rechnungswesen', number: '1', title: 'Kosten- und Leistungsrechnung' },
-  { id: 'rw-grundlagen', subjectId: 'rechnungswesen', parentId: 'rw-klr', number: '1.1', title: 'Grundlagen der Kostenrechnung' },
-  { id: 'rw-teilkosten', subjectId: 'rechnungswesen', parentId: 'rw-klr', number: '1.2', title: 'Teilkostenrechnung' },
-  { id: 'rw-db', subjectId: 'rechnungswesen', parentId: 'rw-teilkosten', number: '1.2.1', title: 'Deckungsbeitrag', articleId: 'deckungsbeitrag' },
-  { id: 'rw-break-even', subjectId: 'rechnungswesen', parentId: 'rw-teilkosten', number: '1.2.2', title: 'Break-even-Analyse' },
-  { id: 'rw-preisuntergrenzen', subjectId: 'rechnungswesen', parentId: 'rw-teilkosten', number: '1.2.3', title: 'Preisuntergrenzen' },
-  { id: 'rw-jahresabschluss', subjectId: 'rechnungswesen', number: '2', title: 'Buchführung und Jahresabschluss' },
+  ...accountingChapters,
   { id: 'personal-ausbildung', subjectId: 'personal', number: '1', title: 'Ausbildung' },
   { id: 'personal-methoden', subjectId: 'personal', parentId: 'personal-ausbildung', number: '1.1', title: 'Ausbildungsmethoden' },
   { id: 'personal-leittext', subjectId: 'personal', parentId: 'personal-methoden', number: '1.1.1', title: 'Leittextmethode', articleId: 'leittextmethode' },
@@ -117,7 +112,7 @@ export const articles: Article[] = [
     ],
   },
   {
-    id: 'deckungsbeitrag', subjectId: 'rechnungswesen', chapterId: 'rw-db', title: 'Der Deckungsbeitrag', number: '1.2.1', updatedAt, version: 1,
+    id: 'deckungsbeitrag', subjectId: 'rechnungswesen', chapterId: 'rw-db', title: 'Der Deckungsbeitrag', number: contributionMarginNumber, updatedAt, version: 1,
     intro: 'Was bleibt von einem Verkauf übrig, um Fixkosten zu decken und Gewinn zu erzielen? Der Deckungsbeitrag macht genau diesen Zusammenhang sichtbar.',
     sections: [
       {
@@ -198,6 +193,7 @@ export const articles: Article[] = [
   ...marketingArticles,
   ...leadershipArticles,
   ...lawArticles,
+  ...accountingArticles,
 ];
 
 export const glossary: GlossaryTerm[] = [
@@ -213,6 +209,7 @@ export const glossary: GlossaryTerm[] = [
   ...marketingGlossary,
   ...leadershipGlossary,
   ...lawGlossary,
+  ...accountingGlossary,
 ];
 
-export const contentVersion = 10;
+export const contentVersion = 11;
