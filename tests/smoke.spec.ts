@@ -941,6 +941,25 @@ test('the law catalogue opens an offline case and its collapsible answer', async
   await expect(result).toBeVisible();
 });
 
+test('the management catalogue opens its network planning lesson, glossary and practice answer offline', async ({ page }) => {
+  await isolateCloud(page);
+  await page.goto('/');
+  await page.getByRole('button', { name: /^Fächer/ }).click();
+  await page.getByRole('button', { name: /^Betriebliches Management,/ }).click();
+  await openChapter(page, /Netzplan, kritischer Pfad und Pufferzeit/);
+  await expect(page.getByTestId('page-header').getByRole('heading', {
+    name: 'Netzplan, kritischer Pfad und Pufferzeit', exact: true,
+  })).toBeVisible();
+  await page.getByRole('button', { name: 'kritische Pfad', exact: true }).click();
+  const glossary = page.getByRole('dialog');
+  await expect(glossary.getByText('Kritischer Pfad', { exact: true })).toBeVisible();
+  await glossary.getByRole('button', { name: 'Begriff schließen', exact: true }).click();
+  const answer = page.getByText(/Der Pfad A → C → D wird kritisch/);
+  await expect(answer).toHaveCount(0);
+  await page.getByRole('button', { name: /Musterantwort/ }).last().click();
+  await expect(answer).toBeVisible();
+});
+
 test('a large offline catalogue can be browsed through a bounded glossary and read from disk after reload', async ({ page }) => {
   await isolateCloud(page);
   await page.goto('/');

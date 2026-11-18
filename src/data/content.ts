@@ -7,6 +7,7 @@ import { lawArticles, lawChapters, lawGlossary } from './recht';
 import { operatingAccountingArticles, operatingAccountingChapters, operatingAccountingGlossary } from './rw-betrieblich';
 import { controllingArticles, controllingChapters, controllingGlossary } from './controlling';
 import { accountingArticles, accountingChapters, accountingGlossary, contributionMarginNumber } from './rechnungswesen';
+import { managementArticles, managementChapters, managementGlossary } from './betriebliches-management';
 
 export const subjects: Subject[] = [
   { id: 'bwl', title: 'BWL', subtitle: 'Betriebliche Entscheidungen verstehen', icon: 'building' },
@@ -51,8 +52,7 @@ export const chapters: Chapter[] = [
   { id: 'steuern-arten', subjectId: 'steuern', number: '1', title: 'Steuerarten und Besteuerungsverfahren' },
   { id: 'uf-strategie', subjectId: 'unternehmensfuehrung', number: '1', title: 'Strategische Unternehmensführung' },
   { id: 'uf-organisation', subjectId: 'unternehmensfuehrung', number: '2', title: 'Organisation und Veränderung' },
-  { id: 'bm-planung', subjectId: 'betriebliches-management', number: '1', title: 'Betriebliche Planung und Steuerung' },
-  { id: 'bm-projekt', subjectId: 'betriebliches-management', number: '2', title: 'Projektmanagement' },
+  ...managementChapters,
   { id: 'if-investition', subjectId: 'investition-finanzierung', number: '1', title: 'Investitionsplanung und Investitionsrechnung' },
   { id: 'if-statisch', subjectId: 'investition-finanzierung', parentId: 'if-investition', number: '1.1', title: 'Statische Verfahren der Investitionsrechnung' },
   { id: 'if-dynamisch', subjectId: 'investition-finanzierung', parentId: 'if-investition', number: '1.2', title: 'Dynamische Verfahren der Investitionsrechnung' },
@@ -209,6 +209,7 @@ export const articles: Article[] = [
   ...accountingArticles,
   ...operatingAccountingArticles,
   ...controllingArticles,
+  ...managementArticles,
 ];
 
 export const glossary: GlossaryTerm[] = [
@@ -227,6 +228,7 @@ export const glossary: GlossaryTerm[] = [
   ...accountingGlossary,
   ...operatingAccountingGlossary,
   ...controllingGlossary,
+  ...managementGlossary,
 ];
 
-export const contentVersion = 12;
+export const contentVersion = 13;
