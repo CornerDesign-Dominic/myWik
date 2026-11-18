@@ -5,3 +5,5 @@
 - Auf der Startseite findest du **Einstellungen** direkt über dem Schnellmenü. Die Leiste berücksichtigt den Systemabstand unten.
 
 Auf 0.8.1 kannst du das Update unter **Einstellungen → App-Updates → Nach Updates schauen** herunterladen. Öffne die APK und wähle **Aktualisieren**, während myWik installiert bleibt.
+
+Die Signatur, Paketkennung und eingebettete Offline-Datenbank werden im [Android-Build](https://github.com/CornerDesign-Dominic/myWik/actions/runs/44332350828) geprüft.
