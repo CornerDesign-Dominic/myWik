@@ -7,7 +7,10 @@ import type { Article } from '../types';
 let opening: Promise<SQLiteDatabase> | undefined;
 
 async function openCatalogue() {
-  const directory = new Directory(defaultDatabaseDirectory);
+  // SQLite exposes a native path on Android. Expo FileSystem needs a file URI.
+  const directoryUri = defaultDatabaseDirectory.startsWith('file:')
+    ? defaultDatabaseDirectory : `file://${defaultDatabaseDirectory}`;
+  const directory = new Directory(directoryUri);
   directory.create({ idempotent: true, intermediates: true });
   const name = `mywik-content-${index.hash}.db`;
   const destination = new File(directory, name);
@@ -16,8 +19,8 @@ async function openCatalogue() {
     if (!asset.localUri) throw new Error('Der Offline-Katalog konnte nicht geöffnet werden.');
     const temporary = new File(directory, `${name}.partial`);
     if (temporary.exists) temporary.delete();
-    new File(asset.localUri).copy(temporary);
-    temporary.move(destination);
+    await new File(asset.localUri).copy(temporary);
+    await temporary.move(destination);
   }
   return openDatabaseAsync(name);
 }
