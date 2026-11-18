@@ -37760,7 +37760,7 @@
             },
             {
               "text": "Mitarbeiterbeurteilung",
-              "termId": "fz-begriff-mitarbeiterbeurteilung"
+              "termId": "fz-personalbeurteilung"
             },
             {
               "text": " betrachtet die individuelle Leistung und Entwicklung nach erklärten Kriterien. Sie kann in Entwicklung, Einsatzplanung oder in entsprechende Vergütungsentscheidungen eingehen."
@@ -37954,7 +37954,21 @@
         "paragraphs": [
           [
             {
-              "text": "Personalorientierte Führung hilft, Hindernisse zu klären, Beteiligung zu ermöglichen und Beiträge zwischen Teams zu koordinieren. Mentoring unterstützt längerfristige Entwicklung. Coaching fördert die eigene Reflexion. Rückmeldung aus dem Team informiert die Führung über die Wirkung ihrer Entscheidungen. Betrachte auch "
+              "text": "Personalorientierte Führung hilft, Hindernisse zu klären, Beteiligung zu ermöglichen und Beiträge zwischen Teams zu koordinieren. "
+            },
+            {
+              "text": "Mentoring",
+              "termId": "fz-begriff-mentoring"
+            },
+            {
+              "text": " unterstützt längerfristige Entwicklung. "
+            },
+            {
+              "text": "Coaching",
+              "termId": "fz-begriff-coaching"
+            },
+            {
+              "text": " fördert die eigene Reflexion. Rückmeldung aus dem Team informiert die Führung über die Wirkung ihrer Entscheidungen. Betrachte auch "
             },
             {
               "text": "Motivation im Betrieb",
