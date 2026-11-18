@@ -58,6 +58,14 @@ firebase deploy --only functions:meiwik --project meiwik
 
 Anschließend in der bereits installierten App bei einem neuen Logistikartikel „Neue Kartenvorschläge aus Quelle“ prüfen.
 
+### Bereitstellungsstand vom 18. November 2026
+
+Die Katalogkorrektur aus `fix/meiwik-logistik-karten` ist als `meiwik` in `europe-west1` im Firebase-Projekt `meiwik` bereitgestellt. Firebase meldet die Funktion als `ACTIVE` (Quellgeneration `1794994346555904`). Der Build enthält alle 134 aktuellen Artikel. Die bestehenden UID-Freigaben, Modell- und Verbrauchseinstellungen sowie die Secret-Version wurden übernommen und nach dem Deployment abgeglichen.
+
+Der Backend-Build, acht Backendtests, 66 App-Logiktests und die App-Typprüfung sind bestanden. Der zusätzliche Regressionstest prüft alle Logistikartikel und Abschnitte einschließlich ihrer Musterantworten gegen einen älteren veröffentlichten Katalog. Der produktive Callable-Endpunkt ist erreichbar und weist Aufrufe ohne Anmeldung weiterhin zurück. Ein angemeldeter KI-Aufruf und der Ablauf auf dem Samsung wurden in diesem Durchlauf nicht geprüft.
+
+Für die korrigierte serverseitige Artikelsuche ist keine neue APK erforderlich. Die Vorbelegung der Musterantwort beim Erstellen einer Karte aus der Kurzfrage ist eine Änderung der App und benötigt weiterhin das nächste App-Update.
+
 ## Verbrauchsschutz
 
 Vor jedem OpenAI-Aufruf reserviert eine Firestore-Transaktion ein konservatives Tokenbudget (UTF-8-Payloadbytes plus maximale Ausgabetokens). Diese bewusst großzügige Reservierung bleibt auch bei Timeout oder Anbieterfehler bestehen. Es gibt keine Annahme, dass ein API-Schlüssel allein ein hartes Geldlimit garantiert.
