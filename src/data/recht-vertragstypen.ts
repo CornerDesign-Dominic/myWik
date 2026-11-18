@@ -1,0 +1,457 @@
+import type { Article, ArticleSection, Chapter, GlossaryTerm, RichText } from '../types';
+
+const subjectId = 'recht';
+const updatedAt = Date.UTC(2026, 10, 18);
+const id = (slug: string) => `recht-${slug}`;
+const text = (value: string): RichText => ({ text: value });
+const term = (slug: string, label: string): RichText => ({ text: label, termId: id(`vt-begriff-${slug}`) });
+const existingTerm = (termId: string, label: string): RichText => ({ text: label, termId });
+const link = (articleId: string, label: string): RichText => ({ text: label, articleId });
+type Paragraph = string | RichText[];
+const section = (id: string, title: string, ...paragraphs: Paragraph[]): ArticleSection => ({
+  id, title, paragraphs: paragraphs.map(p => typeof p === 'string' ? [text(p)] : p),
+});
+const check = (id: string, title: string, question: string, answer: string): ArticleSection => ({
+  ...section(id, title, question),
+  hint: { label: 'Selbstkontrolle', title: 'Musterantwort', content: answer },
+});
+const transfer = (question: string, answer: string) => check('transferfrage', 'Transferfrage', question, answer);
+const law = (bgb: string, ...links: string[]) => section('quellen', 'Amtliche Rechtsgrundlagen',
+  `Stand 18.11.2026 · ${bgb}`, ...links);
+const bgb = (number: string) => `https://www.gesetze-im-internet.de/bgb/__${number}.html`;
+const hgb = (number: string) => `https://www.gesetze-im-internet.de/hgb/__${number}.html`;
+
+interface Unit {
+  slug: string;
+  parent?: string;
+  number: string;
+  title: string;
+  intro: string;
+  sections: ArticleSection[];
+}
+
+const units: Unit[] = [
+  {
+    slug: 'vertragstypen', number: '3', title: 'Vertragstypen und Kaufrecht',
+    intro: 'Ein Vertragstyp ergibt sich aus den vereinbarten Hauptleistungen. Die Einordnung bestimmt unter anderem, welche Leistung geschuldet ist, wann sie fällig wird und welche Rechte bei einer Abweichung bestehen.',
+    sections: [
+      section('einordnung', 'Vom Sachverhalt zum Vertragstyp',
+        'Ein Verkauf begründet die Pflicht zur Übergabe und Eigentumsverschaffung. Beim Dienst stehen vereinbarte Tätigkeiten im Mittelpunkt, beim Werk der vereinbarte Erfolg. Miet-, Pacht- oder Leihverträge überlassen einen Gegenstand zur Nutzung. Ein Darlehen sieht typischerweise die Rückzahlung von Geld oder die Rückgabe gleichartiger Sachen vor.',
+        'Kläre bei mehreren Beteiligten jedes Verhältnis separat. Bei einem Lieferantentermin können zum Beispiel Pkw-Miete, Arbeitsvertrag und vorvertragliches Schuldverhältnis nebeneinander bestehen. Geschäftliche Gespräche erzeugen bereits Rücksichtnahmepflichten, wenn die gesetzlichen Voraussetzungen erfüllt sind. Sie erzeugen allein noch keinen Auftrag.',
+        [link('recht-trennung-abstraktion', 'Verpflichtung, Verfügung und Eigentum'), text(' · '), link('recht-kaufvertrag', 'Kauf und Mängel'), text(' · '), link('recht-werkvertrag', 'Werkvertrag'), text(' · '), link('recht-dienstvertrag', 'Dienst und Arbeit'), text(' · '), link('recht-miete-pacht-leihe', 'Gebrauchsüberlassung'), text(' · '), link('recht-darlehen', 'Darlehen')]),
+      section('pruefschritte', 'Anspruch und Rechtsfolge prüfen',
+        'Benenne zuerst, wer von wem was verlangt. Ordne die vereinbarten Leistungen zu. Prüfe Vertrag, Fälligkeit, gegebenenfalls Übergabe oder Abnahme und die konkrete Leistungsabweichung. Bestimme anschließend, ob Erfüllung, Nacherfüllung, Minderung, Rücktritt, Schadensersatz oder eine Einrede relevant ist. B2C, B2B und die Handelsgeschäftseigenschaft können das Ergebnis ändern.',
+        [text('Übe die Kombination mehrerer Verträge in den '), link('recht-vertragstypen-faelle', 'Vertragstypen-Fällen'), text('.')]),
+      law('BGB §§ 241, 311, 433, 488, 535, 581, 598, 611, 611a und 631', bgb('311'), bgb('433'), bgb('631')),
+      transfer('Eine Firma bestellt eine unabhängige Bestandsaufnahme und separat einen fertig montierten, funktionsfähigen Regalsatz. Wie gehst du vor?', 'Prüfe beide Absprachen. Der Schwerpunkt der Bestandsaufnahme kann die Tätigkeit oder ein geschuldeter fertiger Bericht sein. Bei den Regalen klärst du, ob die Lieferung von beweglichen Teilen oder das erfolgreiche Herstellen der fertigen Anlage im Vordergrund steht. Vertragswortlaut, Leistungsbild und Abnahmeregeln helfen bei der Einordnung.'),
+    ],
+  },
+  {
+    slug: 'trennung-abstraktion', parent: 'vertragstypen', number: '3.1', title: 'Trennungsprinzip und Abstraktionsprinzip',
+    intro: 'Das Trennungsprinzip unterscheidet die Pflicht zum Rechtsübergang von dessen Durchführung. Das Abstraktionsprinzip verlangt, die Wirksamkeit der einzelnen Geschäfte unabhängig zu prüfen.',
+    sections: [
+      section('drei-geschaefte', 'Pflicht und Rechtsänderung auseinanderhalten',
+        [text('Ein '), term('verpflichtungsgeschaeft', 'Verpflichtungsgeschäft'), text(' erzeugt eine Leistungspflicht. Der Kauf nach § 433 BGB verpflichtet zur Zahlung und Abnahme sowie zur Übergabe und Übereignung der Sache. Ein '), term('verfuegungsgeschaeft', 'Verfügungsgeschäft'), text(' ändert unmittelbar die Rechtslage, etwa durch Übertragung von Eigentum oder Abtretung einer Forderung.')],
+        [text('Das '), term('trennungsprinzip', 'Trennungsprinzip'), text(' unterscheidet diese Vorgänge. Bei einem Barkauf sind häufig Kaufvertrag, Übereignung der Ware und Übereignung des Bargelds zu prüfen. Das '), term('abstraktionsprinzip', 'Abstraktionsprinzip'), text(' bedeutet, dass Unwirksamkeit auf einer Ebene die andere Ebene nicht automatisch erfasst. Derselbe Umstand kann beide Geschäfte unabhängig beeinträchtigen.')]),
+      section('fehlender-rechtsgrund', 'Bei fehlendem Kaufvertrag gesondert zurückabwickeln',
+        'Gehen zwei Privatpersonen erkennbar von einer Einigung aus, meinen aber unterschiedliche Preise, ist anhand ihrer Erklärungen und des Empfängerhorizonts zu prüfen, ob tatsächlich ein Vertrag zustande kam. Haben sie sich unabhängig davon wirksam über den Eigentumsübergang geeinigt, bleibt die Übereignung möglich. Eigentum kann damit ohne rechtlichen Grund übertragen worden sein.',
+        [text('Wer ohne Rechtsgrund eine bewusste Zuwendung erhalten hat, muss das Erlangte nach § 812 Abs. 1 Satz 1 Alt. 1 BGB grundsätzlich herausgeben. Geht es um eine Sache, ist bei der Rechtsfolge außerdem die Rückübertragung des Eigentums zu prüfen. Der '), link('recht-uebereignung-herausgabe', 'Eigentümeranspruch nach § 985 BGB'), text(' knüpft demgegenüber an bestehendes Eigentum an.')]),
+      section('minderjaehrige', 'Minderjährigkeit auf jeder Ebene prüfen',
+        'Ein 16-Jähriger kauft ohne Zustimmung ein gebrauchtes Rennrad und bezahlt mit geliehenem Geld, das ihm nicht von den Eltern oder mit ihrer Zustimmung zur freien Verfügung gestellt wurde. Der entgeltliche Kauf ist für ihn rechtlich nachteilig und bedarf nach §§ 107, 108 BGB der Einwilligung oder Genehmigung. § 110 greift nach den gegebenen Umständen nicht.',
+        'Die unbedingte Übereignung des Fahrrads an ihn kann isoliert lediglich rechtlich vorteilhaft sein. Wird der Kauf nicht genehmigt, prüfst du die Rückforderung des übertragenen Eigentums aus Bereicherungsrecht. Ob auch die Geldübereignung wirksam ist, bewertest du davon getrennt.',
+        [text('Zur betrieblichen Sicherung von Kaufpreisforderungen: '), link('logistik-eigentum-zahlung-gefahr', 'Eigentum, Zahlung und Gefahrübergang in der Beschaffung'), text('.')]),
+      law('BGB §§ 107–110, 433, 929, 985 und 812', bgb('107'), bgb('108'), bgb('110'), bgb('929'), bgb('812')),
+      transfer('Eine Verkäuferin übergibt eine Maschine ausdrücklich nur zur Besichtigung. Der schriftliche Kaufvertrag enthält bereits den endgültigen Preis. Wer ist nach Übergabe Eigentümer?', 'Der Kauf kann wirksam sein. Die Übergabe zur Besichtigung erfüllt für sich genommen aber keinen Übereignungswillen. Ohne dingliche Einigung nach § 929 bleibt die Verkäuferin Eigentümerin, auch wenn dem Empfänger bereits Besitz eingeräumt wurde.'),
+    ],
+  },
+  {
+    slug: 'uebereignung-herausgabe', parent: 'trennung-abstraktion', number: '3.1.1', title: 'Übereignung und Herausgabe beweglicher Sachen',
+    intro: 'Eigentum beschreibt die rechtliche Zuordnung einer Sache. Besitz beschreibt die tatsächliche Sachherrschaft. Herausgabe und Rückübertragung hängen davon ab, welches Recht bei welcher Person liegt.',
+    sections: [
+      section('uebereignung', 'Einigung, Übergabe und Berechtigung prüfen',
+        [text('Bei der '), term('uebereignung', 'Übereignung'), text(' einer beweglichen Sache nach § 929 Satz 1 BGB müssen sich die Beteiligten über den Eigentumswechsel einig sein. Der bisherige Besitzer gibt seine Sachherrschaft auf und verschafft sie dem Erwerber. Außerdem ist zu prüfen, ob der Veräußerer verfügungsberechtigt ist. Wenn der Erwerber die Sache schon besitzt, genügt unter den Voraussetzungen des § 929 Satz 2 die Einigung.')],
+        'Beim Erwerb vom Nichtberechtigten gelten besondere Gutglaubensvoraussetzungen. § 935 BGB schließt den gutgläubigen Erwerb an abhandengekommenen Sachen grundsätzlich aus und enthält Ausnahmen. Der Abschluss des Kaufvertrags allein beantwortet die Eigentumsfrage nicht.'),
+      section('besitz', 'Unmittelbaren Besitz und Besitzvermittlung unterscheiden',
+        [text('Eine Vermieterin bleibt Eigentümerin und kann nach § 868 BGB mittelbare Besitzerin sein. Die Mieterin erlangt unmittelbaren Besitz. Ein '), term('besitzdiener', 'Besitzdiener'), text(' übt die tatsächliche Gewalt für eine andere Person nach deren Weisungen im Sinne des § 855 BGB aus. Im typischen betrieblichen Einsatz bleibt das Unternehmen daher unmittelbarer Besitzer des von seiner Arbeitnehmerin geführten Mietwagens.')]),
+      section('herausgabe', '§ 985 BGB und Bereicherungsrecht auseinanderhalten',
+        'Nach § 985 BGB kann die Eigentümerin grundsätzlich Herausgabe vom Besitzer verlangen. Prüfe das Eigentum der Anspruchstellerin, den Besitz des Gegners sowie ein Recht zum Besitz nach § 986 und weitere durchgreifende Einwendungen oder Einreden. Während einer vereinbarten Leihfrist kann der Entleiher ein Recht zum Besitz haben.',
+        'Wenn Eigentum bereits ohne rechtlichen Grund übertragen wurde, ist die frühere Eigentümerin grundsätzlich nicht über § 985 anspruchsberechtigt. Dann ist je nach Sachverhalt insbesondere Rückübertragung und Rückgabe nach § 812 BGB zu prüfen.'),
+      law('BGB §§ 854, 855, 868, 929, 932, 935, 985, 986 und 812', bgb('855'), bgb('868'), bgb('929'), bgb('935'), bgb('985'), bgb('986')),
+      transfer('Ein Vermieter fordert eine Maschine zwei Wochen vor Ablauf der vereinbarten Mietzeit ohne weiteren Grund zurück. Hilft § 985 BGB?', 'Der Vermieter ist Eigentümer, der Mieter Besitzer. Der wirksame Vertrag gibt dem Mieter regelmäßig ein Recht zum Besitz bis zum vereinbarten Ende. Dieses Recht steht einem Herausgabeverlangen aus § 985 BGB nach § 986 entgegen.'),
+    ],
+  },
+  {
+    slug: 'kaufvertrag', parent: 'vertragstypen', number: '3.2', title: 'Kaufvertrag, Leistungspflichten und Gefahrübergang',
+    intro: 'Der Kaufvertrag verpflichtet den Verkäufer zur mangelfreien Leistung und den Käufer zur Zahlung des Kaufpreises sowie zur Abnahme der gekauften Sache. Übergabe, Eigentumswechsel und Übergang des Risikos sind getrennt zu prüfen.',
+    sections: [
+      section('hauptpflichten', 'Pflichten beider Seiten zuordnen',
+        [text('Beim '), term('kaufvertrag', 'Kaufvertrag'), text(' schuldet der Verkäufer nach § 433 Abs. 1 BGB Besitz- und Eigentumsverschaffung sowie Freiheit von Sach- und Rechtsmängeln. Der Käufer schuldet Kaufpreis und Abnahme nach Abs. 2. Mit Abnahme ist hier die Entgegennahme der Sache gemeint. Eine Werkabnahme nach § 640 BGB ist rechtlich etwas anderes.')],
+        'Gegenstand, Menge, Qualität, Preis, Lieferort, Termin und Abnahmeregel sollten zusammen betrachtet werden. Bei einem gegenseitigen Vertrag kann bis zur Gegenleistung unter den Voraussetzungen des § 320 BGB ein Leistungsverweigerungsrecht bestehen, soweit keine Vorleistungspflicht gilt.'),
+      section('risiko', 'Sachgefahr von Eigentum und Leistungsart trennen',
+        [text('Der '), existingTerm('logistik-gefahruebergang', 'Gefahrübergang'), text(' bestimmt, wer bei zufälligem Verlust oder zufälliger Verschlechterung das Risiko trägt. Regelmäßig ist die Übergabe nach § 446 maßgeblich, wobei Annahmeverzug der Übergabe gleichstehen kann. Beim Versendungskauf kann § 447 das Risiko bereits mit Übergabe an die Transportperson auf den Käufer verschieben. Für den Verbrauchsgüterkauf gelten die Einschränkungen des § 475 Abs. 2.')],
+        [text('Beispiel: Ein B2B-Lieferant verkauft eine Maschine unter wirksam vereinbartem Eigentumsvorbehalt. Der Käufer hat sie bereits übernommen. Der Gefahrübergang kann erfolgt sein, obwohl das Eigentum erst nach voller Zahlung wechselt. Vertiefung: '), link('recht-trennung-abstraktion', 'Trennung und Abstraktion'), text(' und '), link('logistik-eigentum-zahlung-gefahr', 'Eigentum, Zahlung und Gefahrübergang in der Logistik'), text('.')]),
+      {
+        ...section('abweichungen', 'Vier Störungsarten erkennen',
+          [text('Bestimme zuerst, welche Pflicht betroffen ist und wer sie schuldet. Lies weiter bei '), link('recht-kaufmaengel', 'Kaufmängeln'), text(', bei '), link('recht-kauf-stoerungen', 'Liefer- und Annahmeverzug'), text(' oder beim '), link('recht-zahlungsverzug', 'Zahlungsverzug'), text('.')]),
+        matrix: {
+          columns: ['Zustand oder Entgegennahme', 'Offene Leistung'],
+          rows: ['Verkäuferseite', 'Käuferseite'],
+          cells: [
+            ['Ware mangelhaft: §§ 434–435, 437 BGB', 'Ware fehlt zum Fälligkeitstermin: Lieferverzug nach § 286 BGB prüfen'],
+            ['Ordnungsgemäß angebotene Ware bleibt unangenommen: Annahmeverzug nach §§ 293 ff. BGB prüfen', 'Fälliger Kaufpreis bleibt offen: Zahlungsverzug nach § 286 BGB prüfen'],
+          ],
+          description: 'Mangel und Verzug sind unterschiedliche Ausgangspunkte. Bei ausbleibender Lieferung ist außerdem ein dauerndes Leistungshindernis nach § 275 BGB zu prüfen.',
+        },
+      },
+      law('BGB §§ 320, 433, 446, 447, 449 und 475', bgb('433'), bgb('446'), bgb('447'), bgb('449'), bgb('475')),
+      transfer('Die Abnehmerin erhält einen Liefergegenstand unter Eigentumsvorbehalt. Vor vollständiger Zahlung wird er durch ein zufälliges Ereignis beschädigt. Welche Rechtsfragen trennst du?', 'Prüfe den Eigentumsvorbehalt und den vereinbarten Eigentumsübergang. Die Preisgefahr kann bereits bei Übergabe auf die Käuferin übergegangen sein. Prüfe außerdem, ob ein Mangel schon bei Gefahrübergang vorlag oder die Sache erst danach zufällig beschädigt wurde.'),
+    ],
+  },
+  {
+    slug: 'gattung-stueck-vorrat', parent: 'kaufvertrag', number: '3.2.1', title: 'Gattungsschuld, Stückschuld und Vorratsschuld',
+    intro: 'Die Leistungsbeschreibung entscheidet, ob ein bestimmtes Einzelstück oder ein Stück aus einer vereinbarten Gruppe geschuldet ist. Die Antwort ist besonders wichtig, wenn die vorgesehene Ware untergeht.',
+    sections: [
+      section('schuldarten', 'Den geschuldeten Gegenstand auslegen',
+        [text('Bei der '), existingTerm('recht-begriff-gattungsschuld', 'Gattungsschuld'), text(' bestimmen die Parteien die Leistung durch Merkmale wie Typ, Menge und Ausführung. Ohne weitere Qualitätsabrede schuldet der Schuldner nach § 243 Abs. 1 BGB mittlere Art und Güte. Bei der '), existingTerm('recht-begriff-stueckschuld', 'Stückschuld'), text(' ist die individuelle Sache geschuldet, beispielsweise ein bestimmtes gebrauchtes Aggregat mit Seriennummer.')],
+        [text('Die '), term('vorratsschuld', 'Vorratsschuld'), text(' ist eine auf einen vertraglich bestimmten Vorrat begrenzte Gattungsschuld. Der bloße interne Plan des Verkäufers, aus dem eigenen Lager zu liefern, begrenzt seine Beschaffungspflicht noch nicht. Die Verkehrseigenschaft vertretbarer Sachen nach § 91 ist von der vertraglichen Festlegung der Gattung zu unterscheiden.')]),
+      section('konkretisierung', 'Leistungshandlung und Beschaffungsrisiko bestimmen',
+        [text('Bei einer '), existingTerm('recht-begriff-konkretisierung', 'Konkretisierung'), text(' nach § 243 Abs. 2 hat der Schuldner das seinerseits zur Leistung Erforderliche getan. Was dies bedeutet, hängt vom Leistungsort und der Art der Schuld ab. Bei einer Schickschuld kann etwa ordnungsgemäße Aussonderung und Übergabe an eine geeignete Transportperson zählen. Diese Pflichtfrage ist von der Preisgefahr zu unterscheiden.')],
+        'Wenn das einzig geschuldete Stück dauerhaft untergeht, liegt grundsätzlich Unmöglichkeit der Leistung nach § 275 Abs. 1 vor. Bei einer offenen Gattungsschuld reicht der Verlust des eigenen Vorrats vor Konkretisierung regelmäßig nicht. Bei vertraglich begrenzter Gattung kann der gesamte Verlust des vereinbarten Vorrats anders zu beurteilen sein. Prüfe zusätzlich § 275 Abs. 2 und 3 sowie die Folgen für Gegenleistung und Ersatzansprüche.'),
+      law('BGB §§ 91, 243, 269, 275 und 326', bgb('91'), bgb('243'), bgb('275'), bgb('326')),
+      transfer('Die Werkstatt bestellt einen fabrikneuen Standardmotor und ein individuell benanntes gebrauchtes Getriebe. Beide gehen vor jeder Leistungshandlung beim Händler unter. Muss er Ersatz beschaffen?', 'Der Standardmotor ist regelmäßig eine Gattungsschuld. Solange Ersatz aus der geschuldeten Gattung beschaffbar ist, genügt der Lagerverlust nicht. Das individuell festgelegte Getriebe ist eine Stückschuld und kann bei endgültigem Untergang grundsätzlich nicht durch ein anderes erfüllt werden. Ob Geld oder Schadensersatz geschuldet ist, wird gesondert geprüft.'),
+    ],
+  },
+  {
+    slug: 'kaufsonderformen', parent: 'kaufvertrag', number: '3.2.2', title: 'Kauf auf Probe, nach Probe, auf Abruf und Spezifikationskauf',
+    intro: 'Kaufsonderformen legen fest, ob eine Billigung aussteht, welche Beschaffenheit maßgeblich ist, wer Details bestimmt oder wann Teile der fest gekauften Menge abgerufen werden.',
+    sections: [
+      section('probe', 'Billigung und Beschaffenheitsmaßstab unterscheiden',
+        'Beim Kauf auf Probe oder Besichtigung ist der Kauf im Zweifel aufschiebend durch die Billigung bedingt. Die Käuferin entscheidet nach der Prüfung innerhalb der vereinbarten oder ersatzweise bestimmten angemessenen Frist. Ist die Sache ihr zum Test übergeben, kann Schweigen nach Fristablauf als Billigung zählen. Ein vertragliches Rückgaberecht kann auch abweichend geregelt werden.',
+        'Beim Kauf nach Probe ist die Probe ein Bezug für die geschuldete Beschaffenheit. Der spätere Kauf bindet nach seinem Abschluss. Ein unverbindlicher Probelauf vor einer späteren Bestellung ist vom bereits bedingt geschlossenen Kauf zu unterscheiden.'),
+      section('abruf-spezifikation', 'Zeitpunkt, Menge und Merkmale bestimmen',
+        [text('Beim '), term('abrufkauf', 'Abrufkauf'), text(' ist eine Menge bereits verbindlich gekauft, während Lieferzeitpunkte oder Teilmengen vertragsgemäß abgerufen werden. Ein Rahmenvertrag kann dagegen lediglich Bedingungen für künftige Einzelabschlüsse festlegen. Beim '), existingTerm('logistik-spezifikationskauf', 'Spezifikationskauf'), text(' ist der Kauf verbindlich, einzelne Warenmerkmale bestimmt später der Käufer. § 375 HGB regelt die Bestimmung beim Handelskauf und die Verkäuferrechte bei Verzug damit.')],
+        'Beispiel: 600 Arbeitsjacken verbindlich bestellen, Größen binnen zwei Wochen ergänzen und jeweils 200 Jacken abrufen. Spezifikation der Größen und Abruf der Lieferzeitpunkte lassen sich in derselben Abrede kombinieren.'),
+      section('kommission', 'Absatz- und Rückgaberisiken prüfen',
+        'Warenüberlassung zur Weiterveräußerung mit Zahlung erst beim Verkauf und Rückgabe der Restmenge wird in der Praxis unterschiedlich vereinbart. Prüfe, wer im eigenen Namen und auf wessen Rechnung verkauft. Eine handelsrechtliche Verkaufskommission nach § 383 HGB liegt beim gewerbsmäßigen Verkauf im eigenen Namen für fremde Rechnung vor. Eigentum, Zahlung, Rückgabe und Vergütung ergeben sich aus Konstruktion und Vereinbarung.',
+        [text('Vertiefung zu Kaufsonderformen im Betrieb: '), link('logistik-vertragssonderformen', 'Sonderformen von Kaufverträgen'), text('. Bei der Bindung an Liefertermine hilft '), link('recht-fixkauf', 'Fixkauf und Terminkauf'), text('.')]),
+      law('BGB §§ 434, 454, 455 und HGB §§ 375, 383', bgb('434'), bgb('454'), bgb('455'), hgb('375'), hgb('383')),
+      transfer('Ein Betrieb bestellt nach Sichtung eines Musterfarbtons 400 Bürostühle verbindlich und legt die Zahl je Außenstelle später fest. Ist die Bestellung ein Kauf auf Probe?', 'Ein Kauf nach Probe kann vorliegen, wenn der Musterfarbton Vertragsmaßstab wird. Der verbindliche Vertrag hängt dann nicht von späterer Billigung ab. Die spätere Verteilung kann ein Abruf oder lediglich eine Versandanweisung sein, je nachdem, welche Rechte der Vertrag einräumt.'),
+    ],
+  },
+  {
+    slug: 'fixkauf', parent: 'kaufvertrag', number: '3.2.3', title: 'Terminkauf, Fixgeschäft und Fixhandelskauf',
+    intro: 'Ein konkretes Lieferdatum beantwortet zunächst die Fälligkeitsfrage. Ob eine Nachfrist entfällt und ob spätere Erfüllung noch beansprucht werden kann, hängt von der Bedeutung des Termins und vom einschlägigen Recht ab.',
+    sections: [
+      section('fixarten', 'Den Stellenwert des Liefertermins prüfen',
+        [text('Ein kalendermäßig bestimmter Termin kann die Mahnung im Verzug nach § 286 Abs. 2 Nr. 1 BGB entbehrlich machen. Beim relativen '), term('fixgeschaeft', 'Fixgeschäft'), text(' ist spätere Leistung noch möglich, doch war der Fortbestand des Leistungsinteresses vertraglich an Pünktlichkeit gebunden. § 323 Abs. 2 Nr. 2 eröffnet dann unter seinen Voraussetzungen den Rücktritt ohne Nachfrist. Beim absoluten Fixgeschäft ist nach dem Termin die konkret geschuldete Leistung sinnlos und regelmäßig unmöglich.')],
+        'Eine Arbeitsbühne für einen laufenden Betrieb hat auch am Folgetag einen Nutzen, selbst wenn der Montag als Datum eindeutig genannt wurde. Ein Terminauftrag für die Live-Aufzeichnung einer bereits beendeten Veranstaltung kann später nicht so erbracht werden wie versprochen. Prüfe Vertragsinhalt und Tatsachen statt eines einzelnen Schlagworts.'),
+      section('handelsrecht', 'Fixhandelskauf und Anzeige nach § 376 HGB',
+        [text('Beim '), term('fixhandelskauf', 'Fixhandelskauf'), text(' soll die Leistung nach der Vereinbarung genau zu einer festbestimmten Zeit oder Frist bewirkt werden. Nach Fristablauf kann die berechtigte Partei nach § 376 zurücktreten oder bei Verzug Schadensersatz wegen Nichterfüllung verlangen. Will sie weiterhin Erfüllung verlangen, muss sie sofort nach Ablauf anzeigen, dass sie darauf besteht.')],
+        'Eine solche Erfüllungsanzeige ist etwas anderes als die Mängelrüge nach § 377. Beim Schadensersatz enthält § 376 Regeln für den Marktpreisvergleich und besondere Vorgaben für den Ansatz eines zeitnahen Deckungsgeschäfts. Eine vereinbarte Vertragsstrafe ist gesondert zu prüfen und ergibt sich nicht allein aus § 376.'),
+      law('BGB §§ 275, 286, 323, 339 und HGB §§ 376, 377', bgb('275'), bgb('286'), bgb('323'), hgb('376'), hgb('377')),
+      transfer('Zwei Händler vereinbaren eine fixe Warenlieferung bis Donnerstag 12 Uhr. Nach Ausbleiben will der Käufer die Ware weiterhin. Was prüft und erklärt er?', 'Prüfe, ob die Abrede ein Fixhandelskauf nach § 376 HGB ist. Wenn ja, muss der Käufer dem Verkäufer sofort nach Ablauf anzeigen, dass er auf Erfüllung besteht. Bei einem einfachen kalendermäßig bestimmten Liefertermin gelten die allgemeinen Verzugs- und Rücktrittsregeln.'),
+    ],
+  },
+  {
+    slug: 'kaufmaengel', parent: 'kaufvertrag', number: '3.2.4', title: 'Sachmangel, Rechtsmangel und Falschlieferung',
+    intro: 'Ob eine Kaufsache mangelhaft ist, beurteilt sich bei Gefahrübergang anhand der vertraglich erwarteten, objektiv üblichen und gegebenenfalls geschuldeten Montageanforderungen.',
+    sections: [
+      section('drei-anforderungen', '§ 434 BGB in drei Schritten anwenden',
+        [text('Ein '), term('sachmangel', 'Sachmangel'), text(' liegt vor, wenn die Sache bei Gefahrübergang den Anforderungen nach § 434 BGB nicht entspricht. Subjektiv prüfst du vereinbarte Art, Menge, Qualität, Funktionalität, Kompatibilität, vertraglich vorausgesetzte Verwendung, vereinbartes Zubehör und Anleitungen.')],
+        'Objektiv prüfst du gewöhnliche Verwendung, übliche und erwartbare Merkmale einschließlich Haltbarkeit und Sicherheit, gegebenenfalls Probe oder Muster sowie erwartbares Zubehör und Verpackung oder Anleitungen. Bei öffentlichen Äußerungen etwa in der Werbung gelten gesetzliche Ausnahmen, unter anderem bei rechtzeitiger gleichwertiger Berichtigung. Identifiziere regelmäßig alle einschlägigen Anforderungen statt nur einer Schiene.',
+        'Bei erforderlicher Montage liegt ein Mangel vor, wenn die unsachgemäße Montage auf der Ausführung durch den Verkäufer oder einem Fehler in seiner Anleitung beruht. Hat die Käuferin trotz korrekter Anleitung und ohne Beteiligung des Verkäufers selbst falsch montiert, folgt daraus allein kein Sachmangel.'),
+      section('abweichung', 'Andere Ware, Fehlmenge und Drittansprüche unterscheiden',
+        [text('Eine '), term('aliud', 'Aliudlieferung'), text(' ist die Lieferung einer anderen als der geschuldeten Sache. § 434 Abs. 5 stellt sie einem Sachmangel gleich. Eine Mengenabweichung kann unter anderem die subjektiven Anforderungen des Abs. 2 verletzen. Bei einem '), term('rechtsmangel', 'Rechtsmangel'), text(' geht es nach § 435 grundsätzlich um Rechte Dritter, die der Käufer vertraglich nicht übernommen hat.')],
+        'Ein Unternehmen bestellt korrosionsbeständige Edelstahlschrauben und erhält gewöhnliche Stahlschrauben. Je nach Abrede liegt eine Falschlieferung oder Beschaffenheitsabweichung vor. Kommt zur Sache ein nicht vereinbartes wirksames Recht Dritter hinzu, kann zusätzlich ein Rechtsmangel bestehen.',
+        [text('Bei einer Ware mit Software prüfe außerdem '), link('recht-kauf-digitale-produkte', 'Waren mit digitalen Elementen und digitale Produkte'), text('. Bei einem beiderseitigen Handelsgeschäft prüfe '), link('recht-kauf-handelsruege', 'Untersuchung und Rüge'), text('.')]),
+      law('BGB §§ 434, 435, 446, 447, 475b und 476', bgb('434'), bgb('435'), bgb('446'), bgb('475b'), bgb('476')),
+      transfer('Ein Werbeprospekt verspricht eine vollständig in Nordamerika nutzbare Kartenfunktion. Im betrieblich gekauften Gerät steht nur ein einzelnes Land zur Auswahl. Wie prüfst du?', 'Prüfe zunächst vereinbarte Beschaffenheit und vorausgesetzte Verwendung. Berücksichtige bei den objektiven Anforderungen das öffentliche Leistungsversprechen nach § 434 Abs. 3, gegebenenfalls mit dessen Ausnahmen. War die Einschränkung schon bei Gefahrübergang vorhanden, kommt ein Sachmangel mit vorrangiger Nacherfüllung in Betracht.'),
+    ],
+  },
+  {
+    slug: 'kauf-nacherfuellung', parent: 'kaufvertrag', number: '3.2.5', title: 'Nacherfüllung: Mangel beseitigen oder Ersatz liefern',
+    intro: 'Bei einem Sach- oder Rechtsmangel ist Nacherfüllung der typische erste Anspruch des Käufers. Sie soll die vereinbarte Leistung herstellen und setzt voraus, dass der Verkäufer tatsächlich Gelegenheit dazu erhält.',
+    sections: [
+      section('anspruch', 'Wahlrecht und Grenzen nach § 439 BGB',
+        [text('Bei der '), existingTerm('marketing-recht-begriff-nacherfuellung', 'Nacherfüllung'), text(' kann der Käufer im Grundsatz Beseitigung des Mangels oder Lieferung einer mangelfreien Sache verlangen. Prüfe wirksamen Kauf, Mangel bei Gefahrübergang, wirksame Begrenzung von Mängelrechten, gegebenenfalls § 377 HGB und die Einrede der Verjährung.')],
+        'Der Käufer hat die Sache zur Nacherfüllung zur Verfügung zu stellen. Der Verkäufer kann die gewählte Art unter den Voraussetzungen des § 439 Abs. 4 insbesondere bei unverhältnismäßigen Kosten verweigern. Entscheidend sind etwa der Wert der mangelfreien Sache, die Bedeutung des Mangels und die Zumutbarkeit der anderen Art. Die Möglichkeit der anderen Art bleibt gesondert zu prüfen.',
+        'Bei einer Falschlieferung lässt sich das falsche Material oft nicht durch Reparatur in das geschuldete umwandeln. Dann kommt praktisch die Lieferung der richtigen Ware in Betracht. Bei einem serienmäßig funktionsfähigen Gerät kann eine Softwarekorrektur dagegen tatsächlich den Mangel beseitigen.'),
+      section('kosten', 'Aufwendungen, Ausbau und Rücknahme zuordnen',
+        'Notwendige Transport-, Wege-, Arbeits- und Materialkosten trägt nach § 439 Abs. 2 der Verkäufer. Waren bestimmungsgemäß eingebaut oder angebracht, bevor der Mangel offenbar wurde, prüfen die Parteien zusätzlich § 439 Abs. 3 für erforderliche Ausbau- und Einbauaufwendungen. Bei Ersatzlieferung nimmt der Verkäufer die mangelhafte Ware auf eigene Kosten zurück. Im Verbrauchsgüterkauf gelten ergänzend insbesondere Vorschuss und Durchführung ohne erhebliche Unannehmlichkeiten.',
+        [text('Dokumentiere die konkrete Abweichung und ermögliche die Untersuchung. Eine gesetzte angemessene Frist dient im allgemeinen Kaufrecht vor allem den weiteren Rechten. Beim B2C-Kauf gilt '), link('recht-verbrauchsgueterkauf', 'der besondere Fristmechanismus'), text('. Die Annahme, Verkäufer hätten immer exakt zwei Reparaturversuche, greift zu kurz.')]),
+      law('BGB §§ 437, 439, 440, 475 Abs. 3–5 und 475d; HGB § 377', bgb('437'), bgb('439'), bgb('440'), bgb('475'), bgb('475d'), hgb('377')),
+      transfer('Ein Betrieb erhält statt bestellter Edelstahlplatten Platten aus gewöhnlichem Stahl und fordert am selben Tag sein Geld zurück. Der Verkäufer bietet richtige Platten in kurzer Zeit an. Was ist vorrangig?', 'Die Falschlieferung ist einem Sachmangel gleichgestellt. Bei einem beiderseitigen Handelsgeschäft muss der Käufer rechtzeitig rügen. Die angebotene Lieferung mangelfreier Platten ist in der Regel vorrangig, sofern die Voraussetzungen für einen ausnahmsweise sofortigen Rücktritt nicht vorliegen.'),
+    ],
+  },
+  {
+    slug: 'kauf-sekundaerrechte', parent: 'kaufvertrag', number: '3.2.6', title: 'Rücktritt, Minderung und Schadensersatz bei Kaufmängeln',
+    intro: 'Wenn Nacherfüllung ausbleibt oder nach den einschlägigen Regeln entbehrlich ist, kann der Käufer weitere Rechte haben. Welche Folge sinnvoll ist, hängt unter anderem davon ab, ob er die Sache behalten oder das Geschäft rückabwickeln will.',
+    sections: [
+      section('rechte', 'Fünf Rechte und ihre unterschiedlichen Voraussetzungen',
+        '§ 437 BGB verweist auf fünf Rechtsfolgen: Nacherfüllung, Rücktritt, Minderung, Schadensersatz und Ersatz vergeblicher Aufwendungen. Prüfe für jedes Recht die jeweils zusätzlich genannten Normen. Rücktritt und Minderung erfolgen durch Erklärung gegenüber dem Verkäufer.',
+        [text('Der '), term('kauf-ruecktritt', 'Rücktritt'), text(' führt zur Rückabwicklung. Im allgemeinen Kaufrecht ist meist eine angemessene, erfolglos abgelaufene Frist erforderlich. Die §§ 323 Abs. 2, 326 Abs. 5 und 440 können die Frist entbehrlich machen. Nach § 440 wird eine zweite erfolglose Nachbesserung im Regelfall als Fehlschlagen gewertet. Besondere Umstände, Sache und Mangel können ein anderes Ergebnis begründen. Bei Verbrauchsgüterkäufen gelten die Sonderregeln des § 475d.')],
+        'Ein unerheblicher Mangel schließt den Rücktritt nach § 323 Abs. 5 Satz 2 aus. Minderung kann auch bei unerheblichen Mängeln in Betracht kommen. Rücktritt setzt kein Vertretenmüssen voraus. Bei Schadensersatz ist das Vertretenmüssen gesondert zu prüfen. Bei einer Schadensfolge neben der Leistung, etwa beschädigtem Eigentum, kann § 280 Abs. 1 einschlägig sein. Für Schadensersatz statt Leistung gelten je nach Lage insbesondere §§ 281, 283 oder 311a Abs. 2. § 284 kann anstelle von Schadensersatz statt Leistung Ersatz vergeblicher Aufwendungen ermöglichen.'),
+      section('minderung-rechnung', 'Minderung mit dem Wertverhältnis berechnen',
+        [text('Bei der '), term('kauf-minderung', 'Minderung'), text(' bleibt der Vertrag bestehen und der Preis sinkt im Verhältnis der Werte bei Vertragsschluss. Formel: geminderter Preis = vereinbarter Preis × tatsächlicher Wert ÷ Wert in mangelfreiem Zustand. Die Werte können erforderlichenfalls geschätzt werden.')],
+        'Beispiel: Für eine Werkbank wurden 1.200 € vereinbart. Ihr mangelfreier Wert beträgt 1.500 €, tatsächlich ist sie 900 € wert. Geminderter Preis = 1.200 € × 900 ÷ 1.500 = 720 €. Bei bereits vollständiger Zahlung schuldet der Verkäufer unter den Voraussetzungen des § 441 Abs. 4 die Erstattung von 480 €. Maßgeblich ist das Wertverhältnis statt eines pauschalen Abzugs von Reparaturkosten.'),
+      law('BGB §§ 280–284, 311a, 323, 326, 346, 349, 437, 440, 441 und 475d', bgb('280'), bgb('323'), bgb('437'), bgb('440'), bgb('441'), bgb('475d')),
+      transfer('Ein Kaufpreis beträgt 800 €. Die Sache wäre mangelfrei 1.000 € und ist tatsächlich 750 € wert. Welcher Preis bleibt bei wirksamer Minderung?', '800 € × 750 ÷ 1.000 = 600 €. Bei bereits gezahlten 800 € beträgt die Differenz 200 €. Vor der Rechnung prüfst du die Voraussetzungen der Minderung, insbesondere den Stand der Nacherfüllung.'),
+    ],
+  },
+  {
+    slug: 'kauf-handelsruege', parent: 'kaufvertrag', number: '3.2.7', title: 'Handelskauf: Untersuchung und Mängelrüge',
+    intro: 'Bei einem für beide Seiten bestehenden Handelsgeschäft verlangt § 377 HGB die zeitnahe Untersuchung der Ware und die zeitnahe Mitteilung festgestellter Mängel. Die Obliegenheit sichert Mängelrechte und schafft früh Klarheit über die Lieferung.',
+    sections: [
+      section('ablauf', 'Offene und verdeckte Mängel getrennt prüfen',
+        [text('Die '), term('untersuchungs-ruegeobliegenheit', 'Untersuchungs- und Rügeobliegenheit'), text(' setzt einen beiderseitigen Handelskauf voraus. Nach Ablieferung ist unverzüglich zu untersuchen, soweit das im ordnungsgemäßen Geschäftsgang tunlich ist. Prüfumfang und Zeit hängen von Art, Menge, Verderblichkeit und zumutbarer Prüfmöglichkeit ab. Eine starre allgemeine Tagesfrist gibt es nicht.')],
+        'Mängel, die bei einer gebotenen Untersuchung erkennbar sind, müssen unverzüglich angezeigt werden. Wird ein zunächst nicht erkennbarer Mangel erst später entdeckt, zählt die unverzügliche Anzeige ab Entdeckung. Für die Fristwahrung genügt die rechtzeitige Absendung. Eine hinreichend konkrete Beschreibung und ein dokumentierter Versand sind für den Nachweis sinnvoll.'),
+      section('folgen', 'Genehmigungswirkung und Ausnahmen',
+        'Bei verspäteter oder unterlassener Anzeige gilt die Ware bezüglich des betreffenden Mangels grundsätzlich als genehmigt. Hat der Verkäufer den Mangel arglistig verschwiegen, kann er sich darauf nicht berufen. § 381 HGB erstreckt Regeln zum Handelskauf unter anderem auf die Lieferung herzustellender beweglicher Sachen. Beurteile Sondervereinbarungen nur im konkreten Vertrag.',
+        'Bei hundert neuen Filtereinsätzen fällt eine falsche Baugröße bereits bei der Wareneingangskontrolle auf. Ein bei zumutbarer Prüfung unerkennbares Materialproblem wird erst im Betrieb entdeckt. Der Käufer sollte für beide Abweichungen den jeweiligen Feststellungszeitpunkt, die Prüfung, die Verkäuferanzeige und die betroffene Charge festhalten.',
+        [text('Der '), link('recht-maengelruege-kurzfall', 'Kurzfall zur Mängelrüge'), text(' und die '), link('logistik-kaufvertraege', 'Kaufverträge in der Logistik'), text(' zeigen die praktische Zuordnung.')]),
+      law('HGB §§ 343, 344, 377 und 381; BGB §§ 121, 437 und 439', hgb('343'), hgb('344'), hgb('377'), hgb('381')),
+      transfer('Zwei Kaufleute handeln beiderseits betrieblich. Ein verdeckter Riss wird erst beim bestimmungsgemäßen Einbau erkennbar. Der Käufer wartet zehn Tage mit der Meldung, obwohl er sofort hätte melden können. Was droht?', 'Der zunächst nicht erkennbare Mangel ist unverzüglich ab Entdeckung anzuzeigen. Das grundlose Warten spricht für eine verspätete Rüge und Genehmigung in Bezug auf diesen Mangel. Feste Zehn-Tages-Regeln bestehen nicht. Prüfe abweichende Umstände und insbesondere arglistiges Verschweigen.'),
+    ],
+  },
+  {
+    slug: 'kauf-verjaehrung', parent: 'kaufvertrag', number: '3.2.8', title: 'Verjährung von Kaufmängeln und Kaufpreis',
+    intro: 'Die Verjährungsfrist hängt davon ab, welcher Anspruch geprüft wird. Beim Kauf sind Mängelansprüche, die Fälligkeit des Kaufpreises und die Folgen einer Verjährung getrennt zu behandeln.',
+    sections: [
+      section('maengelfristen', 'Mängelansprüche ab Ablieferung rechnen',
+        [text('Die kaufrechtliche '), term('maengelverjaehrung', 'Mängelverjährung'), text(' beträgt für die in § 437 Nr. 1 und 3 bezeichneten Ansprüche gewöhnlich zwei Jahre. Bei Bauwerken und bestimmten bauwerkstypisch verwendeten Sachen, die dessen Mangel verursacht haben, gelten fünf Jahre. Für bestimmte Rechtsmängel gelten 30 Jahre. Die Verjährung beginnt bei Grundstücken mit Übergabe, sonst mit Ablieferung. Arglistig verschwiegene Mängel unterliegen der Sonderregelung des § 438 Abs. 3.')],
+        'Ein betrieblich gekauftes, gewöhnliches Möbel wird am 10. April 2026 abgeliefert. Ohne Sonderregelung, Hemmung, Neubeginn oder einschlägige Feiertagsregel endet die Zweijahresfrist mit Ablauf des 10. April 2028. Auch bei einem später bemerkten Mangel bleibt die Ablieferung im Grundfall maßgeblich. Rücktritt und Minderung werden über § 438 Abs. 4 und 5 mit § 218 gesondert eingeordnet.'),
+      section('verbraucher-plus', 'Verbraucherschutz und konkreten Mangel beachten',
+        '§ 475e enthält besondere Ablaufhemmungen, etwa mindestens vier Monate ab erstmaligem Auftreten eines innerhalb der Verjährungsfrist hervorgetretenen Mangels. Nach einer Übergabe zur Nacherfüllung oder Garantieerfüllung kann die Verjährung wegen dieses Mangels nicht vor zwei Monaten ab Übergabe der nachgebesserten oder ersetzten Ware eintreten. Für digitale Elemente und Aktualisierungspflichten bestehen weitere Regeln.',
+        'BGH, Urteil vom 20.01.2016 – VIII ZR 77/15: Bei einer Sache mit unterschiedlichen Mängeln betrifft die prozessuale Hemmung nicht pauschal jede weitere Abweichung. Im Fall waren ursprünglich geltend gemachte Symptome und ein später in das Verfahren eingeführter anderer Mangel getrennt zu behandeln. Prüfe deshalb, welcher Mangel Anspruch und Prozessgegenstand tatsächlich trägt.'),
+      section('kaufpreis', 'Kaufpreisanspruch und Verjährungseinrede',
+        'Für den Kaufpreisanspruch gilt im Regelfall die dreijährige Verjährung nach § 195. Der Jahresendbeginn des § 199 Abs. 1 setzt Anspruchsentstehung und Kenntnis oder grob fahrlässige Unkenntnis der maßgeblichen Umstände und der Schuldnerperson voraus. Beispiel: Fälligkeit im April 2026 und Kenntnis im selben Jahr. Ohne Sonderumstände endet die Frist mit Ablauf des 31. Dezember 2029.',
+        'Nach § 214 Abs. 1 kann der Schuldner nach Eintritt der Verjährung die Leistung verweigern. Die Forderung erlischt dadurch nicht. Eine zur Befriedigung der verjährten Forderung bereits erbrachte Leistung kann nach § 214 Abs. 2 allein wegen der Verjährung nicht zurückverlangt werden.'),
+      law('BGB §§ 187, 188, 193, 195, 199, 204, 213, 214, 218, 438 und 475e', bgb('199'), bgb('214'), bgb('438'), bgb('475e'), 'https://juris.bundesgerichtshof.de/cgi-bin/rechtsprechung/document.py?Gericht=bgh&Art=en&nr=73728'),
+      transfer('Ein betrieblicher Gegenstand wird am 20. Juli 2026 abgeliefert. Der Kaufpreis wird im August fällig und der Verkäufer kennt alle Umstände. Wann enden regulär Mängel- und Kaufpreisverjährung?', 'Für einen gewöhnlichen Kaufmangel endet die Zweijahresfrist grundsätzlich mit Ablauf des 20. Juli 2028. Die regelmäßige Kaufpreisverjährung endet nach § 199 Abs. 1 mit Ablauf des 31. Dezember 2029. Sonderfälle, Hemmung, Neubeginn und Feiertage sind gesondert zu prüfen.'),
+    ],
+  },
+  {
+    slug: 'verbrauchsgueterkauf', parent: 'kaufvertrag', number: '3.2.9', title: 'Verbrauchsgüterkauf: Schutz, Nacherfüllung und Beweislast',
+    intro: 'Beim Kauf einer Ware durch einen Verbraucher von einem Unternehmer greifen besondere Schutzregeln. Sie betreffen unter anderem Lieferzeit, Transportrisiko, Nacherfüllung, Abweichungen vom gesetzlichen Standard und Beweislast.',
+    sections: [
+      section('anwendungsbereich', 'Beteiligte und Vertragsgegenstand bestimmen',
+        [text('Der '), term('verbrauchsgueterkauf', 'Verbrauchsgüterkauf'), text(' nach § 474 BGB setzt einen Verbraucher nach § 13 als Käufer, einen Unternehmer nach § 14 als Verkäufer und eine Ware nach § 241a Abs. 1 voraus. Maßgeblich ist die tatsächliche Rolle im Geschäft. Auch ein Vertrag, der neben der Ware eine Dienstleistung umfasst, kann darunter fallen.')],
+        'Ist keine Zeit bestimmt oder erkennbar, kann unter § 475 Abs. 1 unverzügliche Leistung verlangt werden. Der Unternehmer muss in diesem Fall spätestens nach 30 Tagen die Ware übergeben. Beim regulären Versand durch den Händler trägt er bis zum Erhalt grundsätzlich das Zufallsrisiko. Anders kann es liegen, wenn der Verbraucher selbst eine vom Unternehmer nicht zuvor benannte Transportperson beauftragt.',
+        [text('Für Vorkenntnisse aus Vertriebsperspektive siehe '), link('marketing-recht-verbrauchsgueterkauf', 'Verbrauchsgüterkauf im Marketing'), text('.')]),
+      section('schutz', 'Abweichende Vereinbarungen und Vermutungsfrist prüfen',
+        [text('Nach § 476 weicht eine Ware vorab nur wirksam vom objektiv geschuldeten Standard ab, wenn die Verbraucherin vor ihrer Vertragserklärung eigens über das konkrete Merkmal informiert wurde und es ausdrücklich und gesondert vereinbart ist. Die Verjährung kann bei gebrauchten Waren unter entsprechenden Informations- und Vereinbarungsvoraussetzungen in der Regel auf mindestens ein Jahr verkürzt werden. Gebrauchtware hat daher nicht automatisch eine einjährige Verjährungsfrist.')],
+        [text('Die '), existingTerm('marketing-recht-begriff-beweislastumkehr', 'Beweislastumkehr'), text(' nach § 477 betrifft den Zeitpunkt des Mangels. Zeigt sich der abweichende Zustand binnen eines Jahres ab Gefahrübergang, wird grundsätzlich vermutet, dass die Ware bereits bei Gefahrübergang mangelhaft war. Vorbehalten sind gesetzliche Ausnahmen und Widerlegung. Für lebende Tiere gelten sechs Monate. Die Jahresvermutung ist keine Verjährungsfrist. Für dauerhaft bereitgestellte digitale Elemente gelten besondere Vermutungsregeln.')]),
+      section('nacherfuellung', 'Angemessene Zeit nach Mangelmitteilung zugrunde legen',
+        'Die Nacherfüllung soll nach Unterrichtung über den Mangel in angemessener Frist und ohne erhebliche Unannehmlichkeiten erfolgen. Für vom Verkäufer zu tragende Aufwendungen kann der Verbraucher Vorschuss verlangen. Im gesetzlichen Ersatzlieferungsfall sind bisherige Nutzungen unter § 475 Abs. 3 nicht zu ersetzen.',
+        '§ 475d verlangt keine zusätzliche ausdrückliche Fristsetzung, wenn seit der Mangelmitteilung eine angemessene Zeit ohne Nacherfüllung abgelaufen ist. Gleiches kann bei einem trotz versuchter Nacherfüllung erscheinenden Mangel, einem besonders schwerwiegenden Mangel, Verweigerung oder offensichtlich ausbleibender ordnungsgemäßer Nacherfüllung gelten. Weitere Anspruchsvoraussetzungen bleiben bestehen. Bei Rücktritt oder Schadensersatz statt der ganzen Leistung wegen eines Mangels trägt der Unternehmer in den Fällen des § 475 Abs. 6 die Rückgabekosten.',
+        'In der Lieferkette sind Unternehmerregress und Verbraucherschutz auseinanderzuhalten. Für den Unternehmer können nach §§ 445a, 445b und 478 Ansprüche gegenüber seinem Lieferanten bestehen. § 377 HGB bleibt für den doppelten Handelskauf gesondert zu prüfen.'),
+      law('BGB §§ 13, 14, 241a, 445a, 445b, 474, 475, 475d, 475e, 476–478', bgb('474'), bgb('475'), bgb('475d'), bgb('475e'), bgb('476'), bgb('477'), bgb('478')),
+      transfer('Eine Kundin meldet nach acht Monaten einen Defekt und verlangt sofort die Rückzahlung. Welche Fragen prüfst du?', 'Ordne B2C-Kauf und Mangel ein. § 477 kann die Vermutung eines anfänglichen Mangels auslösen. Vorrangig ist grundsätzlich Nacherfüllung. Prüfe für unmittelbaren Rücktritt insbesondere § 475d sowie Schwere oder Verweigerung. Die acht Monate allein entscheiden weder über den Anspruch noch über einen sofortigen Rücktritt.'),
+    ],
+  },
+  {
+    slug: 'kauf-digitale-produkte', parent: 'kaufvertrag', number: '3.2.10', title: 'Waren mit digitalen Elementen und digitale Produkte',
+    intro: 'Die Einordnung folgt dem Vertragsgegenstand. Maßgeblich ist, ob eine Ware ihre Funktionen ohne den digitalen Bestandteil erfüllen kann und ob die Bereitstellung Teil der geschuldeten Leistung ist.',
+    sections: [
+      section('drei-modelle', 'Ware, integriertes Element und digitales Produkt zuordnen',
+        'Die herkömmliche B2C-Ware fällt grundsätzlich unter Kaufrecht. Kann eine Ware ihre Funktionen ohne den vertraglich vorgesehenen digitalen Inhalt oder Dienst nicht erfüllen, liegt regelmäßig eine Ware mit digitalen Elementen vor. §§ 475b und 475c ergänzen das Kaufrecht. Ein vernetzter Türsensor, der ohne die geschuldete Software keine Messdaten ausgibt, ist ein Beispiel.',
+        [text('Ein '), term('digitales-produkt', 'digitales Produkt'), text(' ist digitaler Inhalt oder digitaler Dienst im gesetzlichen Sinn. Ein separat bezogenes Lernprogramm oder ein Speicherabo fällt bei Vorliegen der Voraussetzungen unter §§ 327 ff. Hat eine Ware einen digitalen Zusatz, den sie für ihre Funktionen nicht benötigt, kann nach § 475a das digitale Vertragssegment separat nach §§ 327 ff. behandelt werden. Ein reiner Datenträger, der ausschließlich Träger digitaler Inhalte ist, hat eine besondere Zuordnungsregel. Es kommt damit nicht allein darauf an, ob ein Fehler „in der Software“ liegt.')]),
+      section('updates-und-nacherfuellung', 'Aktualisierung und Nacherfüllung unterscheiden',
+        'Bei Waren mit digitalen Elementen sind unter § 475b vereinbarte und objektiv notwendige Aktualisierungen, Information darüber und gegebenenfalls Installationsanforderungen zu prüfen. Bei vertraglicher dauerhafter Bereitstellung haftet der Unternehmer für die digitalen Elemente nach § 475c während des Bereitstellungszeitraums, mindestens zwei Jahre ab Ablieferung. § 475b Abs. 5 behandelt den Fall einer unterlassenen Installation nach ordnungsgemäßer Information und Anleitung.',
+        'Für digitale Produkte gelten Produkt- und Rechtsmangelregeln der §§ 327e–327g. Erforderliche Sicherheitsupdates sind im maßgeblichen Zeitraum nach § 327f bereitzustellen. Nacherfüllung nach § 327l stellt auf Kosten des Unternehmers einen vertragsgemäßen Zustand her, etwa durch Update, funktionierende neue Kopie oder geeignete technische Hilfe. Die Leistung soll nach Unterrichtung in angemessener Zeit und ohne erhebliche Unannehmlichkeiten erfolgen. Vertragsbeendigung, Minderung und Schadensersatz richten sich nach den besonderen Vorschriften.',
+        'Für die Verjährung und Beweislast gelten bei selbstständigen digitalen Produkten §§ 327j und 327k. Die Grundfrist der dort bezeichneten Ansprüche beträgt zwei Jahre ab Bereitstellung. Bei dauerhafter Bereitstellung und Aktualisierungspflichten gibt es Mindestzeiträume. Die Vermutungsregel hängt unter anderem von einmaliger oder dauerhafter Bereitstellung ab. Für Waren mit digitalen Elementen beachte die §§ 475e und 477 Abs. 2.'),
+      law('BGB §§ 327, 327a, 327d–327n, 475a–475c, 475e und 477', bgb('327a'), bgb('327f'), bgb('327j'), bgb('327k'), bgb('327l'), bgb('475a'), bgb('475b'), bgb('475c')),
+      transfer('Ein Fahrrad funktioniert mechanisch ohne eine zusätzlich verkaufte Trainings-App. Eine separat angebotene digitale Waage zeigt ohne ihre mitverkaufte Software dagegen kein Ergebnis. Welcher Ansatz passt?', 'Bei selbstständiger App oder einem von der Warenfunktion trennbaren digitalen Vertragsbestandteil prüfst du §§ 327 ff. sowie gegebenenfalls § 475a. Bei der Waage sind die digitalen Elemente für ihre geschuldeten Funktionen erforderlich. Im Verbrauchsgüterkauf kommen dann ergänzend §§ 475b, 475c in Betracht.'),
+    ],
+  },
+  {
+    slug: 'kauf-garantie', parent: 'kaufvertrag', number: '3.2.11', title: 'Garantie und gesetzliche Sachmängelhaftung',
+    intro: 'Gesetzliche Mängelrechte richten sich grundsätzlich gegen den Verkäufer. Eine Garantie begründet zusätzliche Rechte gegen die Person oder Firma, die sie zugesagt hat.',
+    sections: [
+      section('vergleich', 'Anspruchsgegner und Voraussetzungen feststellen',
+        [text('Die '), existingTerm('marketing-t-garantie', 'Garantie'), text(' ist eine zusätzliche Zusage nach ihren Bedingungen. Verkäufer, Hersteller oder Dritte können sie geben, auch durch einschlägige vorvertragliche Werbung. Bestimme Garantiegeber, Deckungsumfang, Laufzeit, geltend gemachten Fehler und vorgesehenen Abwicklungsweg. Für Garantieerklärungen im Verbrauchsgüterkauf gelten nach § 479 besondere Anforderungen.')],
+        'Gesetzliche Sachmängelhaftung setzt grundsätzlich einen Mangel zum maßgeblichen Zeitpunkt voraus und richtet sich gegen den Verkäufer. Beim gewöhnlichen Warenkauf beträgt die gesetzliche Frist für die betroffenen Ansprüche meist zwei Jahre ab Ablieferung. Sonderregelungen und eine wirksame Verkürzung sind gesondert zu prüfen. Eine Herstellergarantie ersetzt diese Rechte nicht.',
+        'Bei einer Haltbarkeitsgarantie vermutet § 443 Abs. 2 im Garantiefall, dass ein während der Geltungsdauer auftretender Sachmangel die Garantierechte begründet. Prüfe dennoch das konkret zugesagte Merkmal und die Garantiebedingungen.'),
+      section('wahl', 'Beide Wege mit dem konkreten Sachverhalt vergleichen',
+        'Ein Akku verliert nach 18 Monaten deutlich an Kapazität. Die Herstellergarantie kann einen bestimmten Kapazitätswert innerhalb einer festgelegten Dauer absichern. Für gesetzliche Ansprüche gegen den Händler prüfst du unabhängig davon den Mangel bei Gefahrübergang, die Verjährung und Beweisfragen.',
+        [text('Der Ablauf einer kurzen Garantie beendet gesetzliche Rechte nicht automatisch. Siehe auch '), link('recht-kauf-verjaehrung', 'Kaufrechtliche Verjährung'), text(' und '), link('marketing-servicepolitik', 'Garantie als Teil der Servicepolitik'), text('.')]),
+      law('BGB §§ 437, 438, 443, 475e, 477 und 479', bgb('437'), bgb('438'), bgb('443'), bgb('479')),
+      transfer('Ein Händler verweist nach 13 Monaten auf die abgelaufene zwölfmonatige Herstellergarantie. Die Kundin kann einen anfänglichen Sachmangel belegen. Wie ordnest du das ein?', 'Die Herstellergarantie und die gesetzlichen Rechte laufen getrennt. Bei einem gewöhnlichen, nicht wirksam abweichend geregelten Warenkauf kommt trotz Garantieablaufs gesetzliche Nacherfüllung gegen den Händler in Betracht. Die Vermutung nach § 477 und die Verjährung sind eigene Fragen.'),
+    ],
+  },
+  {
+    slug: 'kauf-stoerungen', parent: 'kaufvertrag', number: '3.2.12', title: 'Störungen des Kaufvertrags: Lieferung, Annahme und Zahlung',
+    intro: 'Bei einer Kaufvertragsstörung prüfst du zuerst, welche Leistung ausbleibt oder abweicht. Mangel, verspätete Lieferung, fehlende Annahme und offene Zahlung lösen unterschiedliche Prüfungen aus.',
+    sections: [
+      section('annahme', 'Annahmeverzug: ordnungsgemäß angebotene Ware bleibt unabgenommen',
+        [text('Prüfe beim '), term('annahmeverzug', 'Annahmeverzug'), text(' angebotene, mögliche und nach den Vereinbarungen richtige Leistung sowie unterlassene Annahme. In der Regel ist ein tatsächliches Angebot nötig. §§ 295 und 296 sehen Ausnahmen vor. Mahnung und Verschulden des Käufers sind keine Voraussetzungen. § 300 beschränkt die Haftung während des Verzugs grundsätzlich auf Vorsatz und grobe Fahrlässigkeit. Er regelt auch die Gefahr bei einer Gattungsschuld. § 304 betrifft Mehraufwendungen, etwa für erfolgloses Angebot oder Aufbewahrung.')],
+        'Beim Handelskauf regelt § 373 HGB unter seinen Voraussetzungen Hinterlegung und Selbsthilfeverkauf. § 379 betrifft die vorläufige Aufbewahrung beanstandeter, von einem anderen Ort übersandter Ware durch den Käufer und ist kein allgemeines Recht zum freien Weiterverkauf. Prüfe Verfahren, Anzeige und Parteienstellung. Rücktritt oder Abnahmeklage prüfen eigene Anspruchsvoraussetzungen.'),
+      section('lieferung', 'Lieferungsverzug und nachträgliche Rechte',
+        [text('Bei ausbleibender, noch möglicher Lieferung prüfe fälligen und durchsetzbaren Anspruch, Nichtleistung, Mahnung oder gesetzlichen Entbehrlichkeitsgrund und Vertretenmüssen. Ein fest vereinbartes Kalenderdatum kann die Mahnung entbehrlich machen. '), link('recht-fixkauf', 'Fixgeschäft und Terminkauf'), text(' sind trotz möglicher Überschneidung rechtlich zu trennen.')],
+        'Die Leistung kann während des Verzugs regelmäßig weiter verlangt werden. Schadensersatz neben der Leistung richtet sich bei Verzögerung nach §§ 280 Abs. 1 und 2, 286. Für Rücktritt und Schadensersatz statt Leistung prüfe meist eine erfolglose angemessene Nachfrist und die jeweiligen Ausnahmen. Eine vorherige Androhung des Rücktritts oder Schadensersatzes ist nicht allgemein gesetzlich erforderlich. Bei einem anfänglichen Leistungshindernis bleibt der Vertrag nach § 311a Abs. 1 unter Umständen wirksam. Für Ersatzansprüche nach Abs. 2 ist zu prüfen, ob der Schuldner das Hindernis kannte oder seine Unkenntnis zu vertreten hat.'),
+      section('systematik', 'Zahlung und Mangel an die richtige Stelle verweisen',
+        [text('Bei mangelhafter statt nur verspäteter Leistung beginne bei '), link('recht-kaufmaengel', 'Kaufmängeln'), text('. Bleibt der fällige Kaufpreis offen, vertiefe '), link('recht-zahlungsverzug', 'Zahlungsverzug'), text(' und '), link('recht-verzugszinsen', 'Verzugszinsen und Folgekosten'), text('. Kosten, die erst den Verzug auslösen, sind regelmäßig kein durch einen bereits bestehenden Verzug verursachter Schaden.')]),
+      law('BGB §§ 271, 275, 280, 281, 286, 293–304, 311a, 323, 446; HGB §§ 373, 379', bgb('286'), bgb('293'), bgb('300'), bgb('311a'), bgb('323'), hgb('373'), hgb('379')),
+      transfer('Ein B2B-Lieferant versäumt einen verbindlich auf den 15. Mai datierten Termin fahrlässig. In einem zweiten Auftrag ohne Termin erhält er erstmals ein Anwaltsschreiben mit Aufforderung zur fälligen Lieferung. Was gilt für Verzug und Anwaltskosten?', 'Im ersten Fall kann Verzug mit Ablauf des Termins ohne Mahnung eintreten. Ohne Termin beginnt er im zweiten Fall grundsätzlich mit Zugang der Mahnung, wenn die übrigen Voraussetzungen vorliegen. Kosten der erstmalig verzugsbegründenden Mahnung sind regelmäßig nicht erst infolge eines schon bestehenden Verzugs entstanden.'),
+    ],
+  },
+  {
+    slug: 'werkvertrag', parent: 'vertragstypen', number: '3.3', title: 'Werkvertrag, Abnahme und Werklieferung',
+    intro: 'Beim Werkvertrag schuldet der Unternehmer einen vereinbarten Erfolg und der Besteller die Vergütung. Die Abnahme ist meist ein wichtiger Einschnitt für Fälligkeit, Gefahr und Verjährung.',
+    sections: [
+      section('erfolg', 'Den vereinbarten Erfolg konkret prüfen',
+        [text('Ein '), existingTerm('logistik-werkvertrag', 'Werkvertrag'), text(' kann die Herstellung, Änderung oder Reparatur einer Sache oder einen anderen durch Leistung herbeizuführenden Erfolg betreffen. Beispiele sind eine fachgerecht reparierte Maschine oder ein fertig erstelltes Prüfkonzept, sofern gerade dieses Ergebnis geschuldet ist.')],
+        'Bei einem Werklieferungsvertrag über herzustellende bewegliche Sachen gelten nach § 650 Abs. 1 grundsätzlich Kaufvorschriften, bei nicht vertretbaren Sachen ergänzt um einzelne Werkvertragsvorschriften. Bei Bauverträgen kommen besondere Vorschriften hinzu. Prüfe, ob Lieferung der Sache oder die Erstellung eines funktionsfähigen Gesamtwerks die konkrete Abrede prägt.',
+        [text('Weitere Abgrenzung: '), link('logistik-kauf-werk-werklieferung', 'Kauf, Werk und Werklieferung in der Logistik'), text('.')]),
+      section('abnahme', 'Abnahme und Folgen unterscheiden',
+        [text('Die '), term('werkabnahme', 'Werkabnahme'), text(' ist die körperliche Entgegennahme, soweit möglich, verbunden mit der Billigung als im Wesentlichen vertragsgemäß. Wegen unwesentlicher Mängel darf die Abnahme nicht verweigert werden. Bei bewusstem Abnehmen trotz bekannten Mangels sollte der Besteller den Rechtsvorbehalt für die in § 640 Abs. 3 bezeichneten Rechte ausdrücklich festhalten.')],
+        'Nach Fertigstellung kann eine angemessene Frist zur Abnahme gesetzt werden. Unter § 640 Abs. 2 kann das Werk als abgenommen gelten, wenn nicht fristgerecht unter Benennung mindestens eines Mangels verweigert wird. Bei Verbrauchern ist zusätzlich der gesetzlich vorgesehene Hinweis in Textform erforderlich. Die Vergütung ist regelmäßig bei Abnahme fällig. Der Gefahrenübergang folgt grundsätzlich § 644, mit gesonderten Fällen etwa für Annahmeverzug.'),
+      section('maengel-werk', 'Mängel und Verjährung des Werkes',
+        '§ 634 nennt Nacherfüllung, Selbstvornahme mit Aufwendungsersatz, Rücktritt oder Minderung sowie Schadensersatz oder Ersatz vergeblicher Aufwendungen nach den jeweiligen Voraussetzungen. Bei Werk-Nacherfüllung wählt im Grundsatz der Unternehmer zwischen Mangelbeseitigung und neuem Werk. Im Kaufrecht liegt die Wahl grundsätzlich beim Käufer.',
+        'Die Verjährung beträgt nach § 634a bei den dort genannten Sachleistungen regelmäßig zwei Jahre, bei einem Bauwerk und entsprechenden Planungs- oder Überwachungsleistungen fünf Jahre, jeweils grundsätzlich ab Abnahme. In weiteren Fällen gilt die regelmäßige Verjährung. Arglist und besondere Vorschriften sind gesondert zu prüfen.'),
+      law('BGB §§ 631, 633–637, 640, 641, 644, 650, 650a und 634a', bgb('631'), bgb('634a'), bgb('635'), bgb('640'), bgb('641'), bgb('650'), bgb('650a')),
+      transfer('Eine Innenausbaufirma verspricht die betriebsfertige Einrichtung eines eingebauten Schaltersystems. Die Kundin erkennt bei der Abnahme einen kleinen Fehler. Welche zwei Fragen sind zentral?', 'Prüfe den geschuldeten Erfolg und damit den Werk- oder gegebenenfalls Bauvertrag. Ein unwesentlicher Fehler rechtfertigt grundsätzlich keine Verweigerung. Nimmt die Kundin trotz Kenntnis ab, sollte sie sich die Rechte nach § 640 Abs. 3 vorbehalten. Vergütung und Verjährung knüpfen typischerweise an die Abnahme an.'),
+    ],
+  },
+  {
+    slug: 'dienstvertrag', parent: 'vertragstypen', number: '3.4', title: 'Dienstvertrag und Arbeitsvertrag unterscheiden',
+    intro: 'Beim Dienstvertrag werden Dienste gegen die vereinbarte Vergütung versprochen. Ein Arbeitsvertrag ist eine besondere Form und knüpft an weisungsgebundene, fremdbestimmte Arbeit in persönlicher Abhängigkeit an.',
+    sections: [
+      section('dienstleistung', 'Tätigkeit statt vereinbarten Werkerfolgs prüfen',
+        [text('Ein '), term('dienstvertrag', 'Dienstvertrag'), text(' verpflichtet nach § 611 BGB zur Leistung der vereinbarten Dienste und zur vereinbarten Vergütung. Die vereinbarungsgemäße, fachgerechte Tätigkeit ist geschuldet. Ein bestimmtes gewünschtes Ergebnis ist nur dann als Werk zu prüfen, wenn es tatsächlich als geschuldeter Erfolg vereinbart ist.')],
+        'Ein Berater kann fachgerechte Begleitung eines Verfahrens schulden, ohne dessen Ausgang zu garantieren. Ein Anbieter, der ein abnahmefähiges, funktionsfähiges Softwaresystem nach Spezifikation liefern soll, verspricht dagegen einen konkreten Erfolg. Bei zeitabschnittsweise bemessener Dienstvergütung regelt § 614 die Fälligkeit grundsätzlich nach Ablauf des jeweiligen Abschnitts.'),
+      section('arbeit', 'Persönliche Abhängigkeit im Gesamtbild beurteilen',
+        '§ 611a bewertet unter anderem Vorgaben zu Inhalt, Durchführung, Zeit und Ort, wie frei die Tätigkeit gestaltet werden kann und wie sie tatsächlich ausgeübt wird. Die Bezeichnung des Vertrags entscheidet nicht allein. Arbeitnehmer schulden die vereinbarte Arbeit, Arbeitgeber die vereinbarte Vergütung. Arbeitsrechtliche Sonderregeln können hinzukommen.',
+        'Eine fachliche Vorgabe zur Arbeitssicherheit kann auch Selbstständige treffen. Für die Einordnung zählen mehrere Indizien zusammen, etwa feste Schichten, Einbindung in betriebliche Abläufe und enge Weisungen.'),
+      law('BGB §§ 611, 611a, 614 und 631', bgb('611'), bgb('611a'), bgb('614'), bgb('631')),
+      transfer('Ein Betrieb nennt eine regelmäßig im Schichtplan geführte Kraft im Vertrag „freie Mitarbeiterin“. Die Leitung bestimmt Zeit, Ort und Ablauf. Was prüfst du?', 'Maßgeblich ist die tatsächliche Durchführung im Gesamtbild. Feste Schichten, Eingliederung und Weisungen sprechen für persönliche Abhängigkeit und einen Arbeitsvertrag nach § 611a. Die Vertragsbezeichnung allein ändert die rechtliche Einordnung nicht.'),
+    ],
+  },
+  {
+    slug: 'miete-pacht-leihe', parent: 'vertragstypen', number: '3.5', title: 'Miete, Pacht und Leihe',
+    intro: 'Alle drei Vertragstypen dienen der Nutzung. Miete überlässt Gebrauch gegen Entgelt, Pacht zusätzlich Fruchtziehung und Leihe Gebrauch ohne Entgelt.',
+    sections: [
+      section('pflichten', 'Gebrauch, Erträge und Gegenleistung vergleichen',
+        [text('Der '), term('mietvertrag', 'Mietvertrag'), text(' verpflichtet zur Gebrauchsüberlassung in einem geeigneten und während der Mietzeit zu erhaltenden Zustand. Der Mieter schuldet die vereinbarte Miete. Beim '), term('pachtvertrag', 'Pachtvertrag'), text(' kommen bestimmungsgemäß Fruchtgenuss oder Erträge des Pachtgegenstands hinzu. Die Pacht kann auch ein Recht betreffen.')],
+        [text('Die '), term('leihe', 'Leihe'), text(' ist die unentgeltliche Gestattung des Gebrauchs einer Sache. Nach dem Ende ist dieselbe Sache zurückzugeben. Gewöhnliche Erhaltungskosten der Sache trägt nach § 601 regelmäßig der Entleiher. Entgelt und die Identität des Rückgabegegenstands grenzen Miete, Leihe und Sachdarlehen ab.')]),
+      section('praxis-nutzung', 'Konkrete Vertragsabrede und Sondernormen beachten',
+        'Beispiel: Ein Betrieb überlässt gegen Geld leere Räumlichkeiten. Die Nutzung der Räume spricht für Miete. Kommt eine eingerichtete, zur Erzielung von Erträgen überlassene betriebliche Einheit hinzu, kann Pacht vorliegen. Die bloße Erzielung eigener Umsätze in gemieteten Räumen genügt für sich allein nicht.',
+        'Für Pacht sind Mietvorschriften teilweise entsprechend anwendbar. Kündigungsfristen richten sich nach Vertrag und einschlägigen Vorschriften. § 584 enthält eine gesetzliche Auffangregel für bestimmte Pachtrechte ohne festgelegte Dauer. Für Wohnraum und Landpacht gelten besondere Regelungen. Bei einem Mietmangel prüfe insbesondere §§ 536 und 536c.',
+        [text('Eine Finanzierung durch zeitlich begrenzte Gebrauchsüberlassung behandelt '), link('recht-leasing', 'Leasing'), text('.')]),
+      law('BGB §§ 535, 536, 536c, 546, 581, 584, 598, 601, 604 und 607', bgb('535'), bgb('581'), bgb('584'), bgb('598'), bgb('604'), bgb('607')),
+      transfer('Ein Verein darf zwei Lastenräder kostenfrei nutzen und muss genau diese Räder am Abend zurückgeben. Was ist das?', 'Die unentgeltliche Gebrauchsüberlassung mit Rückgabe derselben Sachen ist Leihe nach § 598 BGB. Bei entgeltlicher Gebrauchsüberlassung wäre Miete zu prüfen. Beim Sachdarlehen wären Sachen gleicher Art, Güte und Menge zurückzuerstatten.'),
+    ],
+  },
+  {
+    slug: 'leasing', parent: 'miete-pacht-leihe', number: '3.5.1', title: 'Leasing und Miete im Vertragsvergleich',
+    intro: 'Leasing überlässt einen Gegenstand gegen Raten auf bestimmte Zeit. Besonders beim Finanzierungsleasing können Kosten und Risiken anders verteilt sein als bei einer Standardmiete.',
+    sections: [
+      section('modell', 'Nutzungsüberlassung, Eigentum und Beteiligte',
+        [text('Beim '), term('leasing', 'Leasing'), text(' bleibt der Leasinggeber regelmäßig Eigentümer. Der Leasingnehmer nutzt den Gegenstand und zahlt Raten. Beim mittelbaren Finanzierungsleasing kann ein dritter Lieferant beteiligt sein. Häufig wird der Gegenstand vom Leasinggeber auf Wunsch des Leasingnehmers beschafft. Mietrechtliche Wertungen können bei der Einordnung herangezogen werden, die konkrete Konstruktion und Sondervorschriften bleiben maßgeblich.')],
+        'Vertragsdauer, Kündigung, Wartung, Versicherung, Verschlechterungs- und Verlustgefahr, Rückgabezustand und Restwert sind getrennt zu lesen. Beim Finanzierungsleasing trägt der Leasingnehmer häufig mehr Risiken und Kosten als bei einer Standardmiete. Eine Kauf- oder Verlängerungsoption ist eine Vertragsfrage.'),
+      section('verbraucher', 'Kosten und gesetzliche Schutzvorschriften prüfen',
+        'Unter § 506 Abs. 2 können bestimmte Nutzungsverträge eine entgeltliche Finanzierungshilfe sein. Gesetzliche Anknüpfungen sind insbesondere der verpflichtende Erwerb, ein Erwerbsverlangen des Unternehmers oder das Einstehen für einen bestimmten Wert bei Vertragsende. Prüfe den Verbraucherkontext und die konkrete Vertragsabrede.',
+        'Beispiel: Ein Prüfgerät kostet 190 € monatlich für 24 Monate. Ohne Sonderkosten ergeben sich 190 € × 24 = 4.560 €. Bei 300 € Sonderzahlung und 400 € nicht eingeschlossenen Wartungskosten entstehen 5.260 €. Vergleiche erst auf dieser Basis mit Alternativen und prüfe Rückgabekosten oder variable Restwertpflichten.'),
+      law('BGB §§ 535 ff. und 506 Abs. 2', bgb('535'), bgb('506')),
+      transfer('Ein Leasingangebot wirkt günstiger als die Miete. Es enthält einen garantierten Restwert und schreibt Wartung auf eigene Rechnung vor. Was vergleichst du?', 'Rechne Raten, Einmalzahlungen und Wartung zusammen. Prüfe die Restwertklausel und die mögliche Nachzahlung, Rückgabezustand, Laufzeit und Kündigung. Bei einem Verbraucher ist relevant, ob der Vertrag als Finanzierungshilfe unter § 506 fällt.'),
+    ],
+  },
+  {
+    slug: 'darlehen', parent: 'vertragstypen', number: '3.6', title: 'Geld- und Sachdarlehen',
+    intro: 'Beim Gelddarlehen wird der vereinbarte Betrag zur Verfügung gestellt und bei Fälligkeit zurückgezahlt. Beim Sachdarlehen werden vertretbare Sachen überlassen und gleichartige Sachen zurückerstattet.',
+    sections: [
+      section('geld', 'Kapital, Zins und Tilgung zuordnen',
+        [text('Beim '), term('gelddarlehen', 'Gelddarlehen'), text(' stellt der Darlehensgeber den vereinbarten Geldbetrag bereit. Der Darlehensnehmer schuldet die Rückzahlung bei Fälligkeit und die geschuldeten Zinsen. Zins und Tilgung sind unterschiedliche Zahlungen. Fehlt ein bestimmter Rückzahlungstermin, prüfe § 488 Abs. 3. Verbraucherdarlehen können besonderen Form- und Informationsregeln unterliegen.')],
+        'Eine Firma erhält 20.000 € für sechs Monate bei 4 % einfachem Jahreszins und endfälliger Tilgung. Unter der Annahme eines halben Jahres ergeben sich 20.000 € × 0,04 × 0,5 = 400 € Zinsen. Bei vereinbarter Endzahlung fallen 20.400 € an. Raten, Gebühren und Zinstage können den tatsächlichen Zahlungsverlauf verändern.'),
+      section('sache', 'Vertretbare Sachen und identische Rückgabe unterscheiden',
+        [text('Beim '), term('sachdarlehen', 'Sachdarlehen'), text(' überlässt der Darlehensgeber vereinbarte vertretbare Sachen. Zurückzugeben sind Sachen gleicher Art, Güte und Menge sowie ein geschuldetes Darlehensentgelt, soweit vereinbart. § 607 gilt nicht für Geld. Das Sachdarlehen erlaubt regelmäßig Verbrauch oder Weiterverwendung der überlassenen Menge.')],
+        'Erhält eine Bäckerei 40 kg Mehl zur Verarbeitung und soll 40 kg Mehl gleicher Sorte und Güte zurückgeben, ist Sachdarlehen zu prüfen. Erhält sie dagegen eine bestimmte Maschine zur unentgeltlichen Nutzung mit Rückgabe desselben Geräts, spricht das für Leihe.'),
+      law('BGB §§ 91, 488, 491, 492, 506, 598 und 607', bgb('488'), bgb('491'), bgb('492'), bgb('607')),
+      transfer('Eine Firma nimmt 10.000 € für ein Quartal zu 6 % einfachem Jahreszins auf. Was sind Zinsen und Rückzahlungsbetrag bei endfälliger Zahlung unter vereinfachter Quartalsannahme?', '10.000 € × 0,06 × 0,25 = 150 € Zinsen. Vereinfachte Endzahlung sind 10.150 €. Die Rückzahlung des Kapitals in Höhe von 10.000 € ist die Tilgung.'),
+    ],
+  },
+  {
+    slug: 'umtausch-widerruf', parent: 'vertragstypen', number: '3.7', title: 'Umtausch, Widerruf und Rücktritt unterscheiden',
+    intro: 'Ob ein wirksamer Kauf rückgängig gemacht werden kann, hängt vom Grund und vom Vertragsweg ab. Gesetzliche Mängelrechte, Widerruf, vereinbarte Rückgabe und Kulanz folgen unterschiedlichen Regeln.',
+    sections: [
+      section('umtausch', 'Mangelfreie Ware und verbindliche Rückgabezusage',
+        [text('Beim gewöhnlichen Kauf im Laden besteht bei mangelfreier Ware kein allgemeines gesetzliches Umtauschrecht. '), term('kulanz', 'Kulanz'), text(' ist die freiwillige Lösung ohne bestehende Pflicht. Eine wirksame vertragliche Rückgabezusage ist dagegen nach ihren Bedingungen zu beachten. Ein Minderwert oder ein Defekt führt zurück zu den kaufrechtlichen Mängelrechten.')],
+        'Wer mit einem unpassenden, aber mangelfreien Kleidungsstück zurückkommt, prüft zunächst eine zugesagte Rückgabe, Umtauschbedingungen oder freiwillige Angebote. Bei einem Mangel prüft die Person zuerst Gewährleistung und Nacherfüllung.'),
+      section('widerruf', 'Vertragsweg, Fristbeginn und Erklärung prüfen',
+        'Verbraucher haben bei entsprechenden Fernabsatzverträgen und außerhalb von Geschäftsräumen geschlossenen Verträgen grundsätzlich ein Widerrufsrecht nach §§ 312g und 355. § 312g Abs. 2 enthält Ausnahmen, etwa für Waren nach Kundenspezifikation. Die Regelzeit beträgt 14 Tage. Bei Waren hängt der Fristbeginn regelmäßig vom Erhalt und der gesetzlich ordnungsgemäßen Unterrichtung ab. Bei fehlender Unterrichtung gilt im üblichen Anwendungsfall die Höchstfrist des § 356 Abs. 3 von zwölf Monaten und 14 Tagen, vorbehaltlich gesetzlicher Sonderfälle.',
+        'Der Widerruf muss die Entscheidung eindeutig gegenüber dem Unternehmer erklären. Ein Grund ist nicht erforderlich. Bei Online-Fernabsatzverträgen ist zusätzlich die elektronische Widerrufsfunktion nach § 356a einzuordnen. Rückabwicklung, Kosten und etwaiger Wertersatz folgen den jeweils einschlägigen Vorschriften, insbesondere § 357. Verbraucherdarlehen und entgeltliche Finanzierungshilfen können eigene Widerrufsregeln haben.',
+        [text('Vertiefung zu Vertriebswegen und Widerruf: '), link('marketing-recht-widerruf', 'Widerrufsrecht bei Verbraucherverträgen'), text('.')]),
+      law('BGB §§ 312b, 312c, 312g, 355, 356, 356a, 357, 495 und 506', bgb('312g'), bgb('355'), bgb('356'), bgb('356a'), bgb('357'), bgb('495')),
+      transfer('Eine Kundin kauft zwei gleiche mangelfreie Leuchten, eine im Laden und eine im Onlineshop. Sie ändert zwei Tage nach Erhalt ihre Meinung. Was prüfst du?', 'Im Laden kommt eine vertraglich zugesagte Rückgabe oder Kulanz infrage. Beim Onlineshop prüfe B2C-Fernabsatz, gesetzliche Ausnahmen, Belehrung, Warenerhalt und rechtzeitige Widerrufserklärung. Ein Mangel ist für diesen Prüfweg nicht erforderlich.'),
+    ],
+  },
+  {
+    slug: 'vertragstypen-faelle', parent: 'vertragstypen', number: '3.8', title: 'Übungsfälle: Vertragstypen, Mängel und Verjährung',
+    intro: 'Die Fälle verbinden mehrere Verträge, unterschiedliche Fristbeginne und typische Fehler bei Mängeln. Formuliere stets zuerst Anspruchsteller, Anspruchsgegner und verlangte Rechtsfolge.',
+    sections: [
+      check('mietwagen', 'Fall 1 · Firmenwagen und Lieferantentermin',
+        'Ein Betrieb mietet für fünf Tage einen Lieferwagen. Die angestellte Teamleitung fährt damit weisungsgemäß zu einem Betrieb, mit dem erst ein Einkauf verhandelt wird. Welche drei Rechtsverhältnisse und welche Besitzlagen bestehen?',
+        'Zwischen Vermieter und Firma besteht Miete nach § 535 mit Gebrauchsgewährung und Mietzahlung. Zwischen Firma und Teamleitung besteht ein Arbeitsvertrag nach § 611a mit Arbeits- und Vergütungspflicht. Verhandlungen können nach §§ 311 Abs. 2 Nr. 1, 241 Abs. 2 Rücksichtnahmepflichten auslösen. Der Vermieter bleibt Eigentümer und ist im üblichen Besitzmittlungsverhältnis mittelbarer Besitzer. Die Firma ist unmittelbare Besitzerin, die weisungsgebundene Teamleitung im Beispielsfall Besitzdienerin nach § 855.'),
+      check('fristen', 'Fall 2 · Werk, Kaufmangel und Kaufpreis',
+        'Ein Unternehmen nimmt einen neu gebauten Archivabschnitt am 16. Juni 2026 ab. Ein gekaufter Büroschrank wird am 4. August 2026 abgeliefert. Sein Kaufpreis ist am 18. August 2026 fällig. Alle maßgeblichen Umstände sind bekannt. Wann enden im Grundfall die drei Fristen, und kann Zahlung nach Verjährung allein deswegen zurückgefordert werden?',
+        'Beim Bauwerk gilt für die bezeichneten Mängelansprüche grundsätzlich die Fünfjahresfrist ab Abnahme nach § 634a. Sie endet mit Ablauf des 16. Juni 2031. Beim gewöhnlichen Kaufmangel des Schranks gilt im Grundfall § 438 mit zwei Jahren ab Ablieferung, bis zum Ablauf des 4. August 2028. Der Kaufpreis verjährt im Regelfall mit Ablauf des 31. Dezember 2029 nach §§ 195, 199. Es sind keine Hemmungen, Neubeginne oder Sonderumstände unterstellt. Eine Zahlung zur Befriedigung der verjährten Forderung kann nach § 214 Abs. 2 nicht allein wegen Verjährung zurückgefordert werden.'),
+      check('falschlieferung', 'Fall 3 · Falschlieferung und Schadensfolge',
+        'Ein Händler erhält von einem anderen Kaufmann 80 Druckluftschläuche einer falschen Materialklasse. Er zeigt den Fehler sofort an und erklärt zugleich Rücktritt. Der Verkäufer kann die richtigen Schläuche am nächsten Tag liefern. Ein anderer Schlauch aus derselben Lieferung entspricht der bestellten Materialklasse. Bei normalem Betrieb verursacht ein zuvor bei zumutbarer Untersuchung nicht erkennbarer Innendefekt einen Schaden an einem fremden Gerät. Was ist zu prüfen?',
+        'Der falsche Schlauch steht einem Sachmangel nach § 434 Abs. 5 gleich. Der Käufer wahrt bei beiderseitigem Handelsgeschäft grundsätzlich die Obliegenheit, wenn er ordnungsgemäß geprüft und den Mangel unverzüglich konkret gerügt hat. Mangelfreie Nachlieferung ist vorrangig, soweit keine Ausnahme den sofortigen Rücktritt ermöglicht. Ein zunächst nicht erkennbarer Innendefekt ist unverzüglich nach Entdeckung anzuzeigen. Der Geräteschaden kann bei Vorliegen von Pflichtverletzung, Kausalität, Schaden und Vertretenmüssen gesondert nach § 280 Abs. 1 zu prüfen sein.'),
+      check('software', 'Fall 4 · Kaufmangel trotz brauchbarer Software',
+        'Ein Fuhrpark kauft B2B ein Toureninstrument. Öffentliche Produktunterlagen versprechen flächendeckende Karten für die Alpenregion. Geliefert wird eine Version mit deutlich kleinerer Abdeckung. Ein zeitnahes Update stellt die zugesagte Abdeckung her. Der Käufer fordert vor jeder Klärung den sofortigen Rücktritt. Wie prüfst du?',
+        'Prüfe vertragliche Angaben und öffentliche Aussagen nach § 434 Abs. 2 und 3 und den Zustand bei Gefahrübergang. Wenn ein beiderseitiges Handelsgeschäft vorliegt, prüfe § 377 HGB. Ein geeignetes Update kann eine Mangelbeseitigung nach § 439 sein. Sofortiger Rücktritt erfordert eine gesetzliche oder vertragliche Ausnahme von der üblichen Frist und Vorrangprüfung. Ohne besonderen Umstand ist dem Verkäufer regelmäßig Gelegenheit zur Nacherfüllung zu geben.'),
+      section('weiterlernen', 'Rechtsfragen einzeln vertiefen',
+        [link('recht-uebereignung-herausgabe', 'Eigentum und Besitz'), text(' · '), link('recht-kauf-verjaehrung', 'Verjährung'), text(' · '), link('recht-kauf-nacherfuellung', 'Nacherfüllung'), text(' · '), link('recht-kauf-handelsruege', 'Handelsrüge'), text(' · '), link('recht-kauf-stoerungen', 'Kaufvertragsstörungen')]),
+      law('BGB §§ 195, 199, 214, 241, 280, 311, 433, 434, 438, 439, 535, 611a, 634a und 855; HGB § 377', bgb('214'), bgb('311'), bgb('434'), bgb('634a'), bgb('855'), hgb('377')),
+    ],
+  },
+];
+
+export const chapters: Chapter[] = units.map(unit => ({
+  id: id(unit.slug), subjectId, parentId: unit.parent ? id(unit.parent) : undefined,
+  number: unit.number, title: unit.title, articleId: id(unit.slug),
+}));
+
+export const articles: Article[] = units.map(unit => ({
+  id: id(unit.slug), chapterId: id(unit.slug), subjectId, number: unit.number, title: unit.title,
+  intro: unit.intro, updatedAt, version: 1, sections: unit.sections,
+}));
+
+type GlossaryEntry = [slug: string, label: string, definition: string, articleSlug: string];
+const terms: GlossaryEntry[] = [
+  ['verpflichtungsgeschaeft', 'Verpflichtungsgeschäft', 'Rechtsgeschäft, das eine Pflicht zu einer Leistung begründet, etwa zur Übereignung einer Kaufsache.', 'trennung-abstraktion'],
+  ['verfuegungsgeschaeft', 'Verfügungsgeschäft', 'Rechtsgeschäft, das ein bestehendes Recht unmittelbar überträgt, belastet, ändert oder aufhebt.', 'trennung-abstraktion'],
+  ['trennungsprinzip', 'Trennungsprinzip', 'Schuldrechtliche Verpflichtung und dingliche oder sonstige Verfügung sind getrennte Rechtsgeschäfte.', 'trennung-abstraktion'],
+  ['abstraktionsprinzip', 'Abstraktionsprinzip', 'Die Wirksamkeit des Verpflichtungsgeschäfts und die der Verfügung werden getrennt beurteilt.', 'trennung-abstraktion'],
+  ['uebereignung', 'Übereignung', 'Übertragung des Eigentums. Bei beweglichen Sachen erfolgt sie im Grundfall durch dingliche Einigung und Übergabe.', 'uebereignung-herausgabe'],
+  ['besitzdiener', 'Besitzdiener', 'Person, die die tatsächliche Gewalt weisungsgebunden für eine andere ausübt und rechtlich nicht selbst Besitzer ist.', 'uebereignung-herausgabe'],
+  ['kaufvertrag', 'Kaufvertrag', 'Vertrag über Übergabe und Eigentumsverschaffung an einer mangelfreien Sache gegen Kaufpreiszahlung und Entgegennahme.', 'kaufvertrag'],
+  ['vorratsschuld', 'Vorratsschuld', 'Gattungsschuld, die vertraglich auf einen bestimmten Vorrat begrenzt ist.', 'gattung-stueck-vorrat'],
+  ['abrufkauf', 'Abrufkauf', 'Kauf einer verbindlichen Menge, deren Teilmengen oder Lieferzeiten nach der Abrede abgerufen werden.', 'kaufsonderformen'],
+  ['fixgeschaeft', 'Fixgeschäft', 'Geschäft mit besonders bindendem Leistungstermin, dessen Bedeutung für Fortbestand des Leistungsinteresses oder Möglichkeit der Leistung zu prüfen ist.', 'fixkauf'],
+  ['fixhandelskauf', 'Fixhandelskauf', 'Handelskauf mit der Abrede, genau zu einer festbestimmten Zeit oder innerhalb einer festbestimmten Frist zu leisten.', 'fixkauf'],
+  ['sachmangel', 'Sachmangel', 'Abweichung einer Kaufsache von den maßgeblichen subjektiven oder objektiven Anforderungen oder den Montageanforderungen bei Gefahrübergang.', 'kaufmaengel'],
+  ['aliud', 'Aliudlieferung', 'Lieferung einer anderen als der geschuldeten Sache. Sie steht im Kaufrecht einem Sachmangel gleich.', 'kaufmaengel'],
+  ['rechtsmangel', 'Rechtsmangel', 'Abweichung wegen durchsetzbarer Rechte Dritter, die der Käufer vertraglich nicht übernommen hat.', 'kaufmaengel'],
+  ['kauf-ruecktritt', 'Rücktritt beim Kauf', 'Gestaltungserklärung bei Vorliegen eines Rücktrittsrechts, die die Rückabwicklung des Kaufvertrags auslöst.', 'kauf-sekundaerrechte'],
+  ['kauf-minderung', 'Kaufpreisminderung', 'Herabsetzung des Kaufpreises im Verhältnis des mangelbedingten Werts zum mangelfreien Wert bei Vertragsschluss.', 'kauf-sekundaerrechte'],
+  ['untersuchungs-ruegeobliegenheit', 'Untersuchungs- und Rügeobliegenheit', 'Obliegenheit des Käufers beim beiderseitigen Handelskauf, zumutbar zeitnah zu untersuchen und Mängel unverzüglich anzuzeigen.', 'kauf-handelsruege'],
+  ['maengelverjaehrung', 'Mängelverjährung', 'Frist, nach deren Ablauf der Schuldner die Leistung auf bestimmte Mängelansprüche grundsätzlich verweigern kann.', 'kauf-verjaehrung'],
+  ['verbrauchsgueterkauf', 'Verbrauchsgüterkauf', 'Vertrag, bei dem ein Verbraucher von einem Unternehmer eine Ware kauft, mit gesetzlichen Sonderregeln zum Schutz des Verbrauchers.', 'verbrauchsgueterkauf'],
+  ['digitales-produkt', 'Digitales Produkt', 'Digitaler Inhalt oder digitaler Dienst im Sinne der §§ 327 ff. BGB, etwa eine Anwendungsdatei oder ein digitaler Speicherzugang.', 'kauf-digitale-produkte'],
+  ['annahmeverzug', 'Annahmeverzug', 'Ausbleiben der Annahme bei ordnungsgemäß angebotener Leistung oder einem gesetzlich gleichgestellten Fall.', 'kauf-stoerungen'],
+  ['werkabnahme', 'Werkabnahme', 'Entgegennahme, soweit möglich, und Billigung des Werkes als im Wesentlichen vertragsgemäß.', 'werkvertrag'],
+  ['dienstvertrag', 'Dienstvertrag', 'Vertrag über die Leistung zugesagter Dienste und die vereinbarte Vergütung.', 'dienstvertrag'],
+  ['mietvertrag', 'Mietvertrag', 'Entgeltliche zeitliche Überlassung des Gebrauchs einer Sache mit vereinbarten Erhaltungspflichten.', 'miete-pacht-leihe'],
+  ['pachtvertrag', 'Pachtvertrag', 'Entgeltliche Überlassung zum Gebrauch und zum Genuss der bei ordnungsgemäßer Wirtschaft zu erzielenden Früchte.', 'miete-pacht-leihe'],
+  ['leihe', 'Leihe', 'Unentgeltliche Überlassung einer Sache zum Gebrauch mit Rückgabe derselben Sache.', 'miete-pacht-leihe'],
+  ['leasing', 'Leasing', 'Vertragliche Gebrauchsüberlassung auf Zeit gegen Raten, oft verbunden mit Finanzierung und spezifischer Risiko- und Kostenverteilung.', 'leasing'],
+  ['gelddarlehen', 'Gelddarlehen', 'Vertrag über die Zurverfügungstellung eines Geldbetrags mit Pflicht zur Rückzahlung und Zahlung geschuldeter Zinsen.', 'darlehen'],
+  ['sachdarlehen', 'Sachdarlehen', 'Überlassung vertretbarer Sachen mit Pflicht zur Rückerstattung von Sachen gleicher Art, Güte und Menge.', 'darlehen'],
+  ['kulanz', 'Kulanz', 'Freiwilliges Entgegenkommen, ohne dass für die betreffende Leistung ein Anspruch besteht.', 'umtausch-widerruf'],
+];
+
+export const glossary: GlossaryTerm[] = terms.map(([slug, label, definition, articleSlug]) => ({
+  id: id(`vt-begriff-${slug}`), subjectId, term: label, definition, articleId: id(articleSlug),
+}));

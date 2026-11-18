@@ -5,9 +5,13 @@ import { articleSummary } from '../src/services/contentIndex';
 export const currentCatalogue = { version: contentVersion, articles, chapters, glossary, subjects };
 export const catalogueIndex = ({ articles, ...meta }: Catalogue) => ({ ...meta, articles: articles.map(articleSummary) });
 
-export function tenfoldCatalogue(): Catalogue {
+// Keep the stress fixture within the catalogue limits as new subjects are added.
+export const catalogueCopies = Math.min(10, Math.floor(5000 / articles.length),
+  Math.floor(10000 / chapters.length), Math.floor(10000 / glossary.length));
+
+export function scaledCatalogue(): Catalogue {
   const result: Catalogue = { ...currentCatalogue, version: contentVersion + 1, articles: [...articles], chapters: [...chapters], glossary: [...glossary] };
-  for (let n = 1; n < 10; n++) {
+  for (let n = 1; n < catalogueCopies; n++) {
     const id = (value: string) => `${value}-sim-${n}`;
     const optional = (value?: string) => value ? id(value) : undefined;
     result.chapters.push(...chapters.map(c => ({ ...c, id: id(c.id), parentId: optional(c.parentId), articleId: optional(c.articleId), number: `${n + 10}.${c.number}` })));

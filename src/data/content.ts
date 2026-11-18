@@ -3,6 +3,7 @@ import { logisticsArticles, logisticsChapters, logisticsGlossary } from './logis
 import { transferSection } from './logistik-standard';
 import { marketingArticles, marketingChapters, marketingGlossary } from './marketing';
 import { leadershipArticles, leadershipChapters, leadershipGlossary } from './fuehrung';
+import { lawArticles, lawChapters, lawGlossary } from './recht';
 
 export const subjects: Subject[] = [
   { id: 'bwl', title: 'BWL', subtitle: 'Betriebliche Entscheidungen verstehen', icon: 'building' },
@@ -49,7 +50,7 @@ export const chapters: Chapter[] = [
   { id: 'bwl-rechtsformen', subjectId: 'bwl', number: '2', title: 'Rechtsformen und Unternehmensverbindungen' },
   { id: 'vwl-maerkte', subjectId: 'vwl', number: '1', title: 'Märkte und Preisbildung' },
   { id: 'vwl-politik', subjectId: 'vwl', number: '2', title: 'Wirtschaftspolitik und Konjunktur' },
-  { id: 'recht-vertraege', subjectId: 'recht', number: '1', title: 'Rechtsgeschäfte und Verträge' },
+  ...lawChapters,
   { id: 'steuern-arten', subjectId: 'steuern', number: '1', title: 'Steuerarten und Besteuerungsverfahren' },
   { id: 'uf-strategie', subjectId: 'unternehmensfuehrung', number: '1', title: 'Strategische Unternehmensführung' },
   { id: 'uf-organisation', subjectId: 'unternehmensfuehrung', number: '2', title: 'Organisation und Veränderung' },
@@ -196,6 +197,7 @@ export const articles: Article[] = [
   ...logisticsArticles,
   ...marketingArticles,
   ...leadershipArticles,
+  ...lawArticles,
 ];
 
 export const glossary: GlossaryTerm[] = [
@@ -210,6 +212,7 @@ export const glossary: GlossaryTerm[] = [
   ...logisticsGlossary,
   ...marketingGlossary,
   ...leadershipGlossary,
+  ...lawGlossary,
 ];
 
-export const contentVersion = 9;
+export const contentVersion = 10;

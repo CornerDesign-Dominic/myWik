@@ -6,7 +6,7 @@ import { prepareFachpaket } from '../scripts/pack-publication';
 import { isCatalogue } from '../src/services/catalogueModel';
 import { contentManifestDocument, packDocument } from '../src/services/contentPacks';
 import { contentIndexKey, createOfflineCatalogue, legacyContentKey } from '../src/services/offlineCatalogue';
-import { catalogueIndex, currentCatalogue, tenfoldCatalogue } from './catalogueFixture';
+import { catalogueCopies, catalogueIndex, currentCatalogue, scaledCatalogue } from './catalogueFixture';
 
 function device() {
   const data = new Map<string, string>();
@@ -19,10 +19,11 @@ function device() {
   } };
 }
 
-test('1,370 articles remain offline with indexed single-article retrieval and no bodies read at boot', async () => {
-  const fixture = tenfoldCatalogue();
+test('a large catalogue remains offline with indexed single-article retrieval and no bodies read at boot', async () => {
+  const fixture = scaledCatalogue();
   assert.ok(isCatalogue(fixture));
-  assert.equal(fixture.articles.length, currentCatalogue.articles.length * 10);
+  assert.equal(fixture.articles.length, currentCatalogue.articles.length * catalogueCopies);
+  assert.ok(fixture.articles.length >= 1000);
   const db = new DatabaseSync(':memory:');
   try {
     writeArticleDatabase(db, fixture.articles);
@@ -46,7 +47,7 @@ test('1,370 articles remain offline with indexed single-article retrieval and no
 });
 
 test('only changed subjects download, partial updates never replace the offline version, and account data stays untouched', async () => {
-  const fixture = tenfoldCatalogue();
+  const fixture = scaledCatalogue();
   const logistik = prepareFachpaket(fixture, 'logistik', fixture.version);
   const personal = prepareFachpaket(fixture, 'personal', fixture.version);
   assert.ok(logistik.pointer.parts > 1);
@@ -64,7 +65,7 @@ test('only changed subjects download, partial updates never replace the offline 
     return id === contentManifestDocument ? { schema: 1, packs: pointers } : documents[id];
   };
   assert.equal(await repo.refresh(read), true);
-  const target = fixture.articles.find(a => a.id === 'logistik-abc-analyse-sim-9')!;
+  const target = fixture.articles.find(a => a.id === `logistik-abc-analyse-sim-${catalogueCopies - 1}`)!;
   assert.deepEqual(await repo.loadArticle(target.id), target);
   const saved = data.get(contentIndexKey);
   const broken = { ...logistik.pointer, version: fixture.version + 1 };

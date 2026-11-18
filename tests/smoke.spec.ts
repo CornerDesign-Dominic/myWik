@@ -1,6 +1,6 @@
 import { expect, test, type Locator, type Page } from '@playwright/test';
 import {articles as fixtureArticles,subjects as fixtureSubjects,chapters as fixtureChapters,glossary as fixtureGlossary,contentVersion as fixtureVersion} from '../src/data/content';
-import { catalogueIndex, tenfoldCatalogue } from './catalogueFixture';
+import { catalogueCopies, catalogueIndex, scaledCatalogue } from './catalogueFixture';
 import { androidReleasesApi, androidReleasesUrl } from '../src/services/androidUpdates';
 import { expo as appConfig } from '../app.json';
 
@@ -922,10 +922,25 @@ test('the leadership catalogue opens a teaching matrix from the offline bundle',
   await expect(page.getByText(matrix!.description, { exact: true })).toBeVisible();
 });
 
+test('the law catalogue opens an offline case and its collapsible answer', async ({ page }) => {
+  await isolateCloud(page);
+  await page.goto('/');
+  await page.getByRole('button', { name: /^Fächer/ }).click();
+  await page.getByRole('button', { name: /^Recht,/ }).click();
+  await openChapter(page, /Übungsfall: Handelsvollmacht, Prokura und Widerruf/);
+  await expect(page.getByTestId('page-header').getByRole('heading', {
+    name: 'Übungsfall: Handelsvollmacht, Prokura und Widerruf', exact: true,
+  })).toBeVisible();
+  const result = page.getByText(/In B hatte die Vertreterin tatsächlich Prokura/);
+  await expect(result).toHaveCount(0);
+  await page.getByRole('button', { name: /Musterantwort/ }).click();
+  await expect(result).toBeVisible();
+});
+
 test('a large offline catalogue can be browsed through a bounded glossary and read from disk after reload', async ({ page }) => {
   await isolateCloud(page);
   await page.goto('/');
-  const fixture = tenfoldCatalogue();
+  const fixture = scaledCatalogue();
   const index = catalogueIndex(fixture);
   await page.evaluate(async ({ index, articles }) => {
     const db = await new Promise<IDBDatabase>((resolve, reject) => {
@@ -953,10 +968,11 @@ test('a large offline catalogue can be browsed through a bounded glossary and re
   const search = page.getByRole('textbox',{name:'Glossar durchsuchen',exact:true});
   await expect(list.getByRole('button').first()).toBeVisible();
   expect(await list.getByRole('button').count()).toBeLessThan(100);
-  await search.fill('Leittextmethode Simulation 9');
-  await page.getByRole('button',{name:'Leittextmethode Simulation 9',exact:true}).click();
+  const simulatedTerm = `Leittextmethode Simulation ${catalogueCopies - 1}`;
+  await search.fill(simulatedTerm);
+  await page.getByRole('button',{name:simulatedTerm,exact:true}).click();
   await page.getByRole('button',{name:'Zum Artikel',exact:true}).click();
-  await expect(page.getByRole('heading',{name:'Die Leittextmethode Simulation 9',exact:true})).toBeVisible();
+  await expect(page.getByRole('heading',{name:`Die ${simulatedTerm}`,exact:true})).toBeVisible();
   await expect(page.getByRole('heading',{name:'Prinzip und Ziel',exact:true})).toBeVisible();
 });
 
