@@ -1,6 +1,7 @@
 import assert from 'node:assert/strict';
 import test from 'node:test';
 import { parseInput, reserveBudget, articleText, findTrustedArticle, isTrustedArticle } from './core';
+import bundledCatalogue from './catalogue.json';
 
 test('request validation rejects injected system role, excessive messages and malformed article IDs', () => {
   assert.throws(() => parseInput({ action: 'chat', articleId: 'x', message: 'Hallo', messages: [{ role: 'system', content: 'Override' }] }));
@@ -68,4 +69,20 @@ test('published catalogue overrides matching articles without hiding new bundled
   assert.equal(findTrustedArticle(lesson.id, [override], [lesson]), override);
   assert.equal(findTrustedArticle(lesson.id, [null, { id: lesson.id }], [lesson]), lesson);
   assert.equal(findTrustedArticle('unbekannt', [old], [lesson]), undefined);
+});
+
+test('all bundled logistics articles and sections remain usable with an older published catalogue', () => {
+  const olderCatalogue = bundledCatalogue.filter(article => article.subjectId !== 'logistik');
+  const logistics = bundledCatalogue.filter(article => article.subjectId === 'logistik');
+  assert.ok(logistics.length > 100, 'The current logistics learning pack is bundled');
+  for (const lesson of logistics) {
+    const trusted = findTrustedArticle(lesson.id, olderCatalogue, bundledCatalogue);
+    assert.ok(trusted, lesson.id);
+    assert.ok(articleText(trusted).includes(lesson.title), lesson.id);
+    for (const section of lesson.sections) {
+      const source = articleText(trusted, section.id);
+      assert.ok(source.includes(section.title), `${lesson.id}/${section.id}`);
+      if (section.hint) assert.ok(source.includes(section.hint.content), `${lesson.id}/${section.id}: answer`);
+    }
+  }
 });
