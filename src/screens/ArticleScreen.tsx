@@ -12,6 +12,7 @@ import { sectionSource } from '../services/flashcards';
 import { MeiWikAvatar } from '../components/MeiWikAvatar';
 import { ModalLayout } from '../components/ModalLayout';
 import { InventoryDiagram } from '../components/InventoryDiagram';
+import { AbcDiagram } from '../components/AbcDiagram';
 
 const statusLabels: Record<ArticleStatus, string> = { open: 'Offen', unclear: 'Noch unklar', working: 'Weiterarbeiten', done: 'Abgeschlossen' };
 
@@ -22,6 +23,7 @@ function SectionExtras({ section, onCard, onNote, onChat }: { section: ArticleSe
   const selectedTab=Math.min(tab,Math.max(0,(section.tabs?.length??1)-1));
   return <>
     {section.inventoryChart && <InventoryDiagram chart={section.inventoryChart} />}
+    {section.abcChart && <AbcDiagram chart={section.abcChart} />}
     {section.tabs?.length ? <View style={[styles.example, { backgroundColor: colors.highlight, borderColor: colors.border }]}>
       <Row style={{ gap: 6 }}>{section.tabs.map((item, index) => <Pressable key={`${index}:${item.title}`} accessibilityRole="tab" aria-selected={selectedTab===index} accessibilityState={{ selected: selectedTab === index }} onPress={() => setTab(index)} style={[styles.tab, { backgroundColor: selectedTab === index ? colors.accentSoft : 'transparent' }]}><Text style={{ color: selectedTab === index ? colors.accent : colors.muted, fontWeight: '600', fontSize: 13 }}>{item.title}</Text></Pressable>)}</Row>
       <Body>{section.tabs[selectedTab]?.content}</Body>
@@ -41,7 +43,7 @@ function SectionExtras({ section, onCard, onNote, onChat }: { section: ArticleSe
   </>;
 }
 
-export function ArticleScreen({ article, onGlossary, onChat, onActivity }: ArticleScreenProps) {
+export function ArticleScreen({ article, onGlossary, onArticle, onChat, onActivity }: ArticleScreenProps) {
   const { colors } = useTheme();
   const { data, user, setProgress, saveNote, deleteNote } = useStore();
   const progress = data.progress[article.id];
@@ -71,6 +73,11 @@ export function ArticleScreen({ article, onGlossary, onChat, onActivity }: Artic
   };
   const startCard = (section?: ArticleSection) => {
     const selectedText = section ? sectionSource(section) : [article.intro,...article.sections.map(sectionSource)].join('\n\n');
+    if (section?.hint?.label === 'SELBSTKONTROLLE' && section.hint.title === 'Musterantwort') {
+      const question = section.paragraphs.map(paragraph => paragraph.map(part => part.text).join('')).join('\n\n');
+      setCardEditor({ front: question, back: section.hint.content, selectedText, sectionId: section.id });
+      return;
+    }
     setCardEditor({ front: section ? `${section.title}: Was ist der Kerngedanke?` : `Was bedeutet „${article.title.replace(/^Der |^Die |^Das /, '')}“?`, back: (section ?? article.sections[0]).paragraphs.map(paragraph => paragraph.map(part => part.text).join('')).join('\n\n'), selectedText, ...(section ? {sectionId:section.id} : {}) });
   };
   const closeCard = () => setCardEditor(null);
@@ -97,7 +104,13 @@ export function ArticleScreen({ article, onGlossary, onChat, onActivity }: Artic
         <Text accessibilityRole="header" style={[styles.sectionTitle, { color: colors.text }]}>{section.title}</Text>
         {section.paragraphs.map((paragraph, index) => <View key={index} style={{ gap: 8 }}>
           <Text selectable accessibilityActions={[{ name: 'longpress', label: 'Notiz zu diesem Absatz hinzufügen' }]} onAccessibilityAction={event => { if (event.nativeEvent.actionName === 'longpress') startNote(`${section.id}:p${index}`, `${section.title} · Absatz ${index + 1}`); }} onLongPress={() => startNote(`${section.id}:p${index}`, `${section.title} · Absatz ${index + 1}`)} style={[styles.paragraph, { color: colors.text }]}>
-            {paragraph.map((part, partIndex) => part.termId ? <Text key={partIndex} accessibilityRole="button" onPress={() => onGlossary(part.termId!)} style={{ color: colors.accent, textDecorationLine: 'underline', textDecorationStyle: 'dotted' }}>{part.text}</Text> : <Text key={partIndex}>{part.text}</Text>)}
+            {paragraph.map((part, partIndex) => {
+              const { termId, articleId } = part;
+              const open = termId ? () => onGlossary(termId) : articleId && onArticle ? () => onArticle(articleId) : undefined;
+              return open
+                ? <Text key={partIndex} accessibilityRole="button" onPress={open} style={{ color: colors.accent, textDecorationLine: 'underline', textDecorationStyle: 'dotted' }}>{part.text}</Text>
+                : <Text key={partIndex}>{part.text}</Text>;
+            })}
           </Text>
           {renderNotes(`${section.id}:p${index}`)}
         </View>)}

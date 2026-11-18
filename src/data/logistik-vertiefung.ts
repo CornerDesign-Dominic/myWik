@@ -5,7 +5,7 @@ export const logisticsDeepening: Lesson[] = [
     id: 'informationslogistik', parent: 'grundlagen', number: '1.1.4', title: 'Informationslogistik und Schnittstellen',
     intro: 'Ein Status hilft erst dann weiter, wenn die nächste Stelle weiß, zu welchem Auftrag er gehört und was sie damit tun soll.',
     sections: [
-      ['Vorauslaufend, begleitend und nachlaufend', 'Eine Bestellung kündigt den Bedarf an. Ein Versandavis begleitet den Materialfluss, indem es die Ankunft vorbereitet. Ein Ablieferbeleg oder eine Abweichungsmeldung schließt den Vorgang ab. Je nach Prozess laufen Informationen auch entgegen der Warenrichtung.'],
+      ['Vorauslaufend, begleitend und nachlaufend', 'Eine Bestellung kündigt den Bedarf an. Ein Versandavis, das vor der Ware beim Lager eintrifft, bereitet die Ankunft vor und ist aus Sicht des Wareneingangs vorauslaufend. Statusmeldungen während des Transports begleiten den Materialfluss. Ein Ablieferbeleg oder eine Abweichungsmeldung schließt den Vorgang ab. Je nach Prozess laufen Informationen auch entgegen der Warenrichtung.'],
       ['Übergaben gestalten', 'Lege fest, wer welche Daten wann übermittelt. Auftragsnummer, Artikelkennung und Zeitstempel verbinden Informationen aus verschiedenen Systemen. Für fehlende oder widersprüchliche Meldungen braucht es eine zuständige Stelle.'],
     ],
     example: 'Das Lager bekommt vor Ankunft ein Avis mit Menge und Zeitfenster. Fehlende Packstücke meldet es danach mit derselben Auftragsnummer an Einkauf und Disposition.',

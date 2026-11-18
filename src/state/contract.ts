@@ -14,4 +14,4 @@ export interface StoreContract {
  updateRecommendation(id: string, state: Recommendation['state']): void;
  updateSettings(patch: Partial<UserSettings>): void; syncNow(): Promise<void>;
 }
-export type ArticleScreenProps = { article: Article; onGlossary: (termId: string) => void; onChat: (sectionId?: string) => void; onActivity?: () => void };
+export type ArticleScreenProps = { article: Article; onGlossary: (termId: string) => void; onArticle?: (articleId: string) => void; onChat: (sectionId?: string) => void; onActivity?: () => void };

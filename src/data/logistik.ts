@@ -1,7 +1,14 @@
-import type { Article, Chapter, GlossaryTerm, InventoryChart } from '../types';
+import type { AbcChart, Article, ArticleSection, Chapter, GlossaryTerm, InventoryChart } from '../types';
 import { logisticsDeepening } from './logistik-vertiefung';
 import { logisticsBook } from './logistik-buch';
 import { logisticsPractice } from './logistik-praxis';
+import { linkGlossary, normalizeTerm, transferSection, type GlossaryAlias, type LogisticsSupplement } from './logistik-standard';
+import * as einkauf from './logistik-plus-einkauf';
+import * as beschaffung from './logistik-plus-beschaffung';
+import * as lager from './logistik-plus-lager';
+import * as wertschoepfung from './logistik-plus-wertschoepfung';
+import * as rationalisierung from './logistik-plus-rationalisierung';
+import * as recht from './logistik-plus-recht';
 
 export interface Lesson {
   id: string;
@@ -74,7 +81,7 @@ const introductoryLessons: Lesson[] = [
     intro: 'Der niedrigste Angebotspreis führt bei kritischen Teilen nur dann zur besten Wahl, wenn auch Lieferfähigkeit, Qualität und weitere Anforderungen passen.',
     sections: [
       ['Lieferanten auswählen und entwickeln', 'Prüfe zuerst Mindestanforderungen wie technische Freigaben oder Kapazität. Bewerte danach die geeigneten Anbieter anhand gewichteter Kriterien. Nach der Auswahl verfolgt der Einkauf die tatsächliche Leistung und vereinbart bei Bedarf Verbesserungen.'],
-      ['Nutzwerte vergleichbar machen', 'Die Gewichte ergeben zusammen 100 %. Vergib auf derselben Skala Punkte und multipliziere die Punkte je Kriterium mit seinem Gewicht. Die Summe ergibt den Nutzwert. Lege Gewichte vor der Bewertung fest und prüfe bei knappem Ergebnis, wie empfindlich die Rangfolge auf Änderungen reagiert.'],
+      ['Nutzwerte vergleichbar machen', 'Wenn du die Gewichte als Prozentanteile angibst, ergeben sie zusammen 100 %. Als Dezimalgewichte entspricht das einer Summe von 1. Vergib auf derselben Skala Punkte und multipliziere die Punkte je Kriterium mit seinem Gewicht. Die Summe ergibt den Nutzwert. Lege Gewichte vor der Bewertung fest und prüfe bei knappem Ergebnis, wie empfindlich die Rangfolge auf Änderungen reagiert.'],
     ],
     example: 'Ein Betrieb gewichtet Liefertreue mit 60 % und Preis mit 40 %. Auf einer Skala von 1 bis 5 erhält A bei diesen Kriterien 5 und 3 Punkte, B erhält 3 und 5 Punkte.',
     calculation: 'A: 5 × 0,60 + 3 × 0,40 = 4,2 Punkte. B: 3 × 0,60 + 5 × 0,40 = 3,8 Punkte. Unter diesen Annahmen liegt A vorn.',
@@ -549,10 +556,55 @@ const introductoryLessons: Lesson[] = [
 ];
 
 const subjectId = 'logistik';
-const updatedAt = Date.UTC(2026, 10, 17);
-const deepeningUpdatedAt = Date.UTC(2026, 10, 18);
+const updatedAt = Date.UTC(2026, 10, 18);
 const chapterId = (id: string) => `${subjectId}-${id}`;
-const lessons = [...introductoryLessons, ...logisticsDeepening, ...logisticsBook, ...logisticsPractice];
+const packs: { supplements: Record<string, LogisticsSupplement>; newLessons?: Lesson[] }[] =
+  [einkauf, beschaffung, lager, wertschoepfung, rationalisierung, recht];
+const supplements = new Map<string, LogisticsSupplement>();
+for (const pack of packs) {
+  for (const [id, supplement] of Object.entries(pack.supplements)) {
+    if (supplements.has(id)) throw new Error(`Mehrere Logistik-Ergänzungen für ${id}`);
+    supplements.set(id, supplement);
+  }
+}
+const lessons = [
+  ...introductoryLessons, ...logisticsDeepening, ...logisticsBook, ...logisticsPractice,
+  ...packs.flatMap(pack => pack.newLessons ?? []),
+];
+
+const abcChart: AbcChart = {
+  positions: [
+    { label: 'Ventile', share: 80, category: 'A' },
+    { label: 'Gehäuse', share: 15, category: 'B' },
+    { label: 'Dichtungen', share: 5, category: 'C' },
+  ],
+  thresholds: [80, 95],
+  description: 'Ventile machen allein 80 % des Werts aus. Zusammen mit den Gehäusen sind es 95 %. Mit den Dichtungen sind 100 % erreicht. Die gestrichelten Linien markieren die Grenzen von 80 % und 95 % aus dieser Aufgabe.',
+};
+const safetyTimeChart: InventoryChart = {
+  points: [[0, 180], [4, 60]],
+  days: [0, 2, 4], levels: [0, 60, 120, 180],
+  description: 'Am Tag 0 wird bei 180 Stück bestellt. Bis zum geplanten Wareneingang am Tag 4 werden 120 Stück verbraucht. Vor der Lieferung sind 60 Stück übrig. Das entspricht dem Puffer für zwei Verbrauchstage.',
+};
+const relatedLessons: Record<string, string[]> = {
+  'abc-analyse': ['xyz-analyse', 'beschaffungsportfolio', 'lagerkennzahlen'],
+  'xyz-analyse': ['abc-analyse', 'verbrauchsprognose', 'beschaffungsstrategien'],
+  'nettobedarf': ['bedarfsarten', 'stuecklistenarten', 'dispositionsstufen'],
+  'optimale-bestellmenge': ['bestellhaeufigkeit', 'lagerzinsen', 'fall-nachbestellrechnung'],
+  'bestellzeitpunkt': ['sicherheitszeit', 'bestellrhythmus-rechnen', 'lieferbereitschaft'],
+  'sicherheitszeit': ['bestellzeitpunkt', 'lieferbereitschaft'],
+  'lagerreichweite': ['lagerkennzahlen', 'bestellzeitpunkt', 'sicherheitszeit'],
+  'fall-beschaffung': ['nettobedarf', 'angebotsvergleich', 'fall-nachbestellrechnung'],
+  'fall-nachbestellrechnung': ['optimale-bestellmenge', 'bestellzeitpunkt', 'lagerkennzahlen'],
+  'externe-transportsysteme': ['kombinierter-verkehr', 'transportkosten-co2'],
+  'frachtfuehrerhaftung': ['transportvertraege', 'sonderziehungsrechte', 'cmr-vorbehalte'],
+  'ladungssicherung': ['sicherungsprinzipien', 'ladungssicherung-rollen', 'fall-verladung'],
+  'wertstromanalyse': ['muda', 'kanban', 'fall-rationalisierung'],
+  'einfuhr': ['warenursprung', 'zollwert-versand', 'taric-atlas'],
+  'warenursprung': ['ursprungsnachweise', 'taric-atlas'],
+  'veredelung': ['einfuhr', 'ausfuhr', 'fall-zoll-veredelung'],
+};
+const lessonsById = new Map(lessons.map(lesson => [lesson.id, lesson]));
 
 const groups = [
   ['analysetechniken', 'beschaffung', '1.2.5', 'Analysetechniken'],
@@ -583,29 +635,84 @@ export const logisticsChapters: Chapter[] = [
   })),
 ].sort((a, b) => a.number.localeCompare(b.number, 'de', { numeric: true }));
 
-export const logisticsArticles: Article[] = lessons.map(lesson => ({
-  id: chapterId(lesson.id), chapterId: chapterId(lesson.id), subjectId,
-  title: lesson.title, number: lesson.number, intro: lesson.intro,
-  updatedAt: introductoryLessons.includes(lesson) ? updatedAt : deepeningUpdatedAt, version: 1,
-  sections: [
-    ...lesson.sections.map(([title, ...paragraphs], index) => ({
-      id: `abschnitt-${index + 1}`, title, paragraphs: paragraphs.map(text => [{ text }]),
-    })),
-    {
-      id: 'praxisbeispiel', title: lesson.practiceCase ? 'Bearbeitungshinweis' : 'Praxisbeispiel', paragraphs: [[{ text: lesson.example }]],
-      tabs: lesson.calculation ? [{ title: 'Rechenweg', content: lesson.calculation }] : undefined,
-      inventoryChart: lesson.inventoryChart,
-    },
-    {
-      id: 'kurzfrage', title: lesson.practiceCase ? 'Aufgaben' : 'Kurzfrage zum Schluss',
-      paragraphs: lesson.question.split('\n').map(text => [{ text }]),
-      hint: { label: 'SELBSTKONTROLLE', title: lesson.practiceCase ? 'Musterlösung' : 'Musterantwort', content: lesson.answer },
-    },
-  ],
-}));
-
-export const logisticsGlossary: GlossaryTerm[] = lessons.flatMap(lesson => {
+const existingTerms: GlossaryTerm[] = lessons.flatMap(lesson => {
   if (!lesson.glossary) return [];
   const [term, definition] = lesson.glossary;
   return [{ id: `${chapterId(lesson.id)}-begriff`, subjectId, term, definition, articleId: chapterId(lesson.id) }];
+});
+const termsByName = new Map(existingTerms.map(term => [normalizeTerm(term.term), term]));
+const aliasesByArticle = new Map<string, GlossaryAlias[]>();
+const addedTerms: GlossaryTerm[] = [];
+for (const lesson of lessons) {
+  const aliases: GlossaryAlias[] = [];
+  if (lesson.glossary) aliases.push({ text: lesson.glossary[0], termId: `${chapterId(lesson.id)}-begriff` });
+  for (const [id, term, definition, synonyms = []] of supplements.get(lesson.id)?.glossary ?? []) {
+    let entry = termsByName.get(normalizeTerm(term));
+    if (!entry) {
+      entry = { id: chapterId(id), subjectId, term, definition, articleId: chapterId(lesson.id) };
+      addedTerms.push(entry);
+      termsByName.set(normalizeTerm(term), entry);
+    }
+    aliases.push(...[term, ...synonyms].map(text => ({ text, termId: entry.id })));
+  }
+  aliasesByArticle.set(lesson.id, aliases);
+}
+export const logisticsGlossary = [...existingTerms, ...addedTerms];
+const sharedAliases = [
+  ...logisticsGlossary.map(term => ({ text: term.term, termId: term.id })),
+  ...[...aliasesByArticle.values()].flat(),
+];
+const glossaryById = new Map(logisticsGlossary.map(term => [term.id, term]));
+
+export const logisticsArticles: Article[] = lessons.map(lesson => {
+  const supplement = supplements.get(lesson.id);
+  const sections: ArticleSection[] = lesson.sections.map(([title, ...paragraphs], index) => ({
+    id: `abschnitt-${index + 1}`, title, paragraphs: paragraphs.map(text => [{ text }]),
+  }));
+  for (const [id, title, ...paragraphs] of supplement?.sections ?? []) {
+    sections.push({ id: `vertiefung-${id}`, title, paragraphs: paragraphs.map(text => [{ text }]) });
+  }
+  sections.push({
+    id: 'praxisbeispiel', title: lesson.practiceCase ? 'Bearbeitungshinweis' : 'Praxisbeispiel',
+    paragraphs: [[{ text: lesson.example }]],
+    tabs: lesson.calculation ? [{ title: 'Rechenweg', content: lesson.calculation }] : undefined,
+    inventoryChart: lesson.inventoryChart ?? (lesson.id === 'sicherheitszeit' ? safetyTimeChart : undefined),
+    abcChart: lesson.id === 'abc-analyse' ? abcChart : undefined,
+  });
+  if (supplement?.sources?.length) {
+    sections.push({ id: 'quellen-und-stand', title: 'Quellen und Stand', paragraphs: supplement.sources.map(text => [{ text }]) });
+  }
+  const related = (relatedLessons[lesson.id] ?? []).map(id => {
+    const target = lessonsById.get(id);
+    if (!target) throw new Error(`Unbekannter Logistik-Querverweis: ${id}`);
+    return [{ text: target.title, articleId: chapterId(id) }];
+  });
+  if (related.length) sections.push({ id: 'weiterlernen', title: 'Weiterlernen', paragraphs: related });
+  if (supplement?.transfer) sections.push(transferSection(...supplement.transfer));
+  sections.push({
+    id: 'kurzfrage', title: lesson.practiceCase ? 'Aufgaben' : 'Kurzfrage zum Schluss',
+    paragraphs: lesson.question.split('\n').map(text => [{ text }]),
+    hint: { label: 'SELBSTKONTROLLE', title: lesson.practiceCase ? 'Musterlösung' : 'Musterantwort', content: lesson.answer },
+  });
+  const ownAliases = aliasesByArticle.get(lesson.id) ?? [];
+  const linkedSections = linkGlossary(sections, [...ownAliases, ...sharedAliases]);
+  const linkedTerms = new Set(linkedSections.flatMap(section => section.paragraphs.flatMap(
+    paragraph => paragraph.map(span => span.termId),
+  )));
+  const remainingTerms = [...new Set(ownAliases.map(alias => alias.termId))]
+    .filter(termId => !linkedTerms.has(termId)).map(termId => glossaryById.get(termId)!);
+  if (remainingTerms.length) {
+    const reviewStart = linkedSections.findIndex(section => section.id === 'transferfrage' || section.id === 'kurzfrage');
+    linkedSections.splice(reviewStart, 0, {
+      id: 'begriffe-zum-artikel', title: 'Begriffe zum Artikel',
+      paragraphs: remainingTerms.map(term => [{ text: term.term, termId: term.id }]),
+    });
+  }
+  return {
+    id: chapterId(lesson.id), chapterId: chapterId(lesson.id), subjectId,
+    title: lesson.title, number: lesson.number,
+    intro: [supplement?.intro, lesson.intro].filter(Boolean).join('\n\n'),
+    updatedAt, version: supplement || lesson.id === 'abc-analyse' ? 2 : 1,
+    sections: linkedSections,
+  };
 });

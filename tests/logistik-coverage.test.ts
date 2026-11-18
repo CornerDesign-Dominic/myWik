@@ -74,3 +74,17 @@ test('embedded inventory diagrams match the offline and server catalogue schema'
   Reflect.set(points, 0, [0, 'unbekannt']);
   assert.equal(isCatalogue(wire), false);
 });
+
+test('ABC analysis has a readable calculation diagram, transfer question and working glossary links', () => {
+  const article = articleFor('abc-analyse');
+  assert.ok(article);
+  const chart = article.sections.find(section => section.abcChart)?.abcChart;
+  assert.deepEqual(chart?.positions.map(({ share, category }) => [share, category]), [[80, 'A'], [15, 'B'], [5, 'C']]);
+  assert.deepEqual(chart?.thresholds, [80, 95]);
+  assert.ok(article.sections.find(section => section.id === 'transferfrage')?.hint?.content);
+  const spans = article.sections.flatMap(section => section.paragraphs.flat());
+  const terms = spans.filter(part => part.termId).map(part => glossary.find(term => term.id === part.termId)?.term);
+  assert.ok(terms.includes('Jahresverbrauchswert'));
+  assert.ok(terms.includes('Kumulierter Wertanteil'));
+  assert.ok(spans.some(part => part.articleId === 'logistik-xyz-analyse'));
+});

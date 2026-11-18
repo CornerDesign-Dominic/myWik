@@ -1,0 +1,52 @@
+# Logistik: Abgleich Materialwirtschaft, Lagerhaltung und Kommissionierung
+
+Stand: 18.11.2026. Grundlage: bereitgestellter vollständiger Textband **Logistik – Sicherung.pdf**, PDF-Seiten 51–68, entsprechend Druckseiten 57–74. Die Seitenangaben unten meinen die PDF-Seiten. Der Abgleich beruht auf den tatsächlichen Kapitelseiten, nicht allein auf dem Inhaltsverzeichnis. Textinhalte wurden anhand der Seitentexte gelesen; die besonders informationsreichen Abbildungen auf PDF 54, 57 und 58 zusätzlich visuell geprüft.
+
+## Umfang und additive Umsetzung
+
+`src/data/logistik-plus-lager.ts` ergänzt sämtliche 19 vorhandenen Artikel und Fälle des Kapitelblocks. Bestehende IDs, Abschnitte und Aufgaben bleiben erhalten. Ein zusätzlicher Artikel `bestandsmanagement` erhält die freie Nummer **2.1.6** unter `materialwirtschaft`; der umfangreiche Ursachen- und Maßnahmenkomplex auf PDF 57–58 war in den bisherigen Einzelartikeln nicht als zusammenhängendes Thema erschlossen. Der Export enthält 20 Supplements, den neuen Lesson-Datensatz und Quellenangaben pro Thema.
+
+Die Ergänzungen formulieren den Stoff eigenständig. Beispiele und Transferfragen verwenden zusätzliche Zusammenhänge und überwiegend eigene Zahlen. Sie sind keine Abschrift des Textbands. Jeder ergänzte Artikel erhält eine beantwortete Transferfrage. Fachbegriffe bleiben erhalten und werden durch Glossareinträge und erklärende Absätze zugänglich gemacht.
+
+## Seiten- und Artikelabgleich
+
+| Vorhandener Artikel | Tatsächliche Buchgrundlage | Ergänzung und Einordnung |
+|---|---|---|
+| `wareneingang` 2.1.1 | 51–53 | Vollständiger Prozess von Avis/Annahme über Mengen- und Qualitätsprüfung, Aufbereitung und Buchung bis Einlagerung bzw. Direktbereitstellung; Unterschied zwischen physisch angekommen und frei verfügbar. Kapazitätsbeispiel, erwartete Lieferungen, Zeitfenster und Engpasswirkung. Verkäufer- und Frachtführeranzeigen getrennt. |
+| `beschaffungscontrolling` 2.1.2 | 54–55 | Mengen-, Qualitäts-, Termin-, Preis- und Zahlungsziele; zu frühe und zu späte Lieferung; abgestimmte Gegenmaßnahmen statt isolierter Preisoptimierung; Bestellkosten und Rahmenverträge in ihren Grenzen. |
+| `beschaffungskennzahlen` 2.1.3 | 54–56 | Materialintensität, Bestellkosten, Rahmenvertragsquote, Service- und Termingrad, Sicherheitskoeffizient; nachvollziehbare Bezugsgrößen, Gewichtung, Stück- gegenüber Auftragsbezug, Prozentpunkte und Periodenabgrenzung. |
+| `pruefplan-stichprobe` 2.1.4 | 52–53 | Attributive/variable Merkmale, Prüfmittel, Umfang, Häufigkeit, Dokumentation und Freigabe; repräsentative Stichprobe, zerstörende Prüfung und Grenzen von Stich- und Vollprüfung. Verzicht auf unnötige Prüfung wird von unbegründeter Freigabe unter Zeitdruck getrennt. |
+| `otif` 2.1.5 | 54–55, eigene Vertiefung | Termingrad und vollständige Lieferung werden als Schnittmenge erklärt; kombinierte Fallmatrix verhindert Multiplikation nicht unabhängiger Quoten. OTIF ist eine zusätzliche Synthese der Buchziele, keine dort behauptete eigenständige Buchformel. |
+| **Neu:** `bestandsmanagement` 2.1.6 | 56–58 | Zusammenhängender Ursachen-/Maßnahmenkomplex: Prognosen, Losgrößen, frühe/offene Bestellungen, Stammdaten, Buchung, Entwicklung/Produktauslauf, Produktion, Lieferanten, Organisation, Verantwortungen, Zielkonflikte, Lagerhüter und SCM. Bestandsabbau wird von Verlagerung auf Lieferanten getrennt; Service bleibt Nebenbedingung. |
+| `lagerarten` 2.2.1.1 | 58–60 | Lagerfunktionen, Stufen im Materialfluss sowie zentrale/dezentrale Lagerung mit abgewogenen Vor- und Nachteilen. Keine pauschale Aussage, dass ein zentrales Lager immer günstiger ist. |
+| `lagerplatzvergabe` 2.2.1.2 | 51, 61–62 | Festplatz, Freiplatz, Zonung und Querverteilung mit Voraussetzungen; Kapazitätspooling und Ausfallgassen; FIFO/LIFO, Mengenanpassung, Wegeoptimierung und Restmengenbevorzugung als getrennte Entnahmekriterien. |
+| `lagerkennzahlen` 2.2.1.3 | 55–56 | Durchschnitt mit zwei bzw. 13 Bestandswerten und Losbestand plus Reserve; Mengen-/Wertbezug, Umschlag, Lagerdauer und zusammenpassende Perioden. Ergebnisinterpretation statt bloßer Formelsammlung. |
+| `lagerzinsen` 2.2.1.4 | 55–56 | Durchschnittlich gebundenes Kapital und kalkulatorische Verzinsung; Jahres- und Lagerzeitbezug; Abgrenzung von tatsächlich gezahlten Zinsen und gesamten Lagerhaltungskosten. |
+| `lagerreichweite` 2.2.1.5 | 55–56 | Aktuelle verfügbare Reichweite gegenüber durchschnittlicher Kennzahl; Reservierungen/Sperren, Arbeits-/Kalendertage und konstante Verbrauchsannahme. Keine Vermischung mit Wiederbeschaffungszeit oder Meldebestand. |
+| `lagerplanung` 2.2.1.6 | 56, 59–64 | Standort, Tragfähigkeit, Ware, Mengen, Bedingungen, Sicherheit, Erweiterung und Ablauf; Fläche/Volumen mit Einheiten; Block-/Zeilen-, Fachboden- und Palettenlager mit Zugriff und Einsatzgrenzen. |
+| `eigen-fremd-konsignationslager` 2.2.1.7 | 60, 65 | Leistung und Kosten der Betreiberentscheidung, kritische Auslastung mit eigenen Zahlen, Mischmodell und nichtmonetäre Faktoren; Konsignation, Eigentum, Risiko, Abruflager und Abrechnung getrennt. |
+| `lagerverwaltung` 2.2.1.8 | 52, 57, 65 | Verwaltung gegenüber Steuerung, Staplerleitsystem, Identifikation/Rückmeldung, Einheiten- und Statusfehler, Bestandspflege, ungebuchte Entnahme, Wartung und Störungsabgleich. |
+| `lagerfunktionen-vertieft` 2.2.1.9 | 59, 61–65 | Gewollte Funktion versus Überbestand; Durchlauf-, Verschiebe- und Umlaufregal; Funktionsablauf eines automatischen Hochregallagers, Identifikationspunkt, Profilkontrolle, Ausschleusung, Übergaben und Steuerungshierarchie. Physische Entnahmefolge getrennt von Bewertungsfiktion. |
+| `kommissionierung` 2.2.2.1 | 66–67 | Auftragsbezogene Zusammenstellung, statische/dynamische Bereitstellung, Restmengenrückführung und vollständiger Auftrag; Kanban als Nachschubregel statt bloßes Kommissioniergerät. |
+| `kommissionierzeit` 2.2.2.2 | 67 | Basis-, Weg-, Greif-, Tot- und Verteilzeit; eigene vollständige Zeitrechnung mit Einheiten; Doppelzählung vermeiden und Verbesserungswirkung auf Aufwand/Durchlaufzeit trennen. |
+| `kommissionierorganisation` 2.2.2.3 | 66–67 | Einstufig/mehrstufig und seriell/parallel als unabhängige Achsen, Batch-Sortierung/Konsolidierung; Papier, Scan, Voice, Light, Vision und Roboter mit Grenzen. Eigener Parallelfall zeigt keine automatische Personaleinsparung. |
+| `fall-lager` 2.3 | 54–58, eigenständiger App-Fall | Bestehender Fall mit eigener Zahlenbasis erhalten; Kennzahlen interpretiert, Daten- und Serviceprobleme ursächlich geprüft. Zusatzvariante 750 Stück zeigt Kapital- und Zinseffekt nur unter ausdrücklich konstantem Service. |
+| `fall-nachbestellrechnung` 2.4 | 68, Aufgaben a–e | Alle drei bestehenden App-Aufgaben bleiben unverändert. Erweiterungen erschließen zusätzlich Zins-/Kostenänderung sowie kombinierten Los- und Sicherheitsbestandsabbau aus den Buchteilaufgaben d/e. Eigene App-Zahlen werden beibehalten. |
+
+## Rechenabgleich und notwendige Präzisierungen
+
+- **Buchfall PDF 68:** 9.000 kg/Jahr bei 50 Wochen, Preis 22,50 €/kg, Bestellkosten 90 €, Lagerkostensatz 20 %, Sicherheitsbestand 360 kg, Lieferzeit eine Woche, Istbestand 900 kg, bisheriges Los 1.000 kg. Daraus: 180 kg/Woche; Durchschnitt 860 kg; Meldebestand 540 kg; Auslösung nach zwei Wochen; optimale Losgröße 600 kg. Bei zusätzlicher Reserveabsenkung auf 180 kg: Durchschnitt 480 kg, relevante Jahreskosten 3.510 € statt 4.680 €, Ersparnis 1.170 € bzw. 25 %. Diese Kontrolle dient dem Abgleich, nicht einer neuen Abschrift der Buchaufgabe in der App.
+- **Vorhandener App-Fall:** 12.000 Stück/250 Arbeitstage, 60 € Bestellkosten, 4 € Lagerhaltung je Stück/Jahr, vier Tage Lieferzeit und 120 Stück Reserve. Die drei bisherigen Aufgaben bleiben rechnerisch konsistent: Meldebestand 312 Stück, Auslösung nach fünf Arbeitstagen, Los 600 Stück/20 Bestellungen, 2.880 € statt 3.480 € relevante Jahreskosten (17,24 % weniger).
+- **Neue App-Varianten:** Bei 5 € statt 4 € Lagerhaltung ergibt sich ein Los von rund 536,66 Stück. Los 600 und Reserve 60 bei weiterhin 4 € führen zu 2.640 € relevanten Kosten und rund 24,14 % Ersparnis gegenüber 3.480 €. Der Reserveeffekt allein beträgt 240 €; der Meldebestand sinkt auf 252 Stück. Die Versorgungsvoraussetzung wird ausdrücklich diskutiert.
+- Die Buchdarstellung physischer FIFO-/LIFO-Reihenfolgen und wertmäßiger Scheingewinne wird fachlich getrennt. Eine tatsächliche Entnahmefolge ist nicht automatisch die rechtliche oder rechnerische Bestandsbewertung.
+- 360 Tage bei buchhalterischer Durchschnittsdauer und tatsächliche Arbeitstage bei operativer Reichweite sind verschiedene konsistente Konventionen. Bezugsgrößen werden nicht gemischt.
+- Ein Flächen- oder Volumennutzungsgrad über 100 % kann aus abweichenden Bezugsgrößen oder unzulässiger Überbelegung entstehen; er ist kein allgemeines Leistungsziel. Stapelbarkeit und zulässige Lasten bleiben Voraussetzung.
+- Weder Zeitdruck/JIT noch fehlende eigene Prüfmittel rechtfertigen ungeprüfte Qualitätsfreigabe. Eine Vollprüfung garantiert ebenfalls keine absolute Fehlerfreiheit.
+
+## Grenzen und abschließende Integration
+
+Der Block erschließt den fachlichen Inhalt der tatsächlichen Kapitel-2-Seiten einschließlich des Ursachenbilds und der Rechenfalltypen. Technische Abbildungen werden funktional erläutert, nicht als maßstabsgetreue Layout- oder Konstruktionszeichnung reproduziert. Betriebsspezifische Sicherheitsauslegung, detaillierte Prüfstatistik/AQL, Rechtsberatung und Auslegung konkreter Verträge sind nicht Gegenstand dieser Grundlagenartikel. Die vorhandenen Rechtsartikel bleiben für Anzeige- und Haftungsfragen zuständig; § 377 HGB und § 143 AO wurden anhand der amtlichen Fassungen abgeglichen.
+
+Die Quellen im Modul bezeichnen PDF- und Druckseiten. Die Transferfälle sowie insbesondere OTIF-Matrix, kritische Auslastung, Konsolidierungszeit und Zinssensitivität sind kenntlich eigenständige didaktische Erweiterungen. Aussagen über Prüfungswahrscheinlichkeiten werden nicht ergänzt.
+
+Geprüft wurden der eigenständige Modulimport, 20 nichtleere Supplement-Datensätze, eindeutige Abschnittskennungen innerhalb der Artikel, Quellen/Transferpaare und die genannten Rechenergebnisse. Nach Zusammenführung bleiben die projektweiten Prüfungen (vollständiger Typecheck, Glossar-Kanonisierung/Querverlinkungen, Inhaltsbaum und Darstellung im Artikelrenderer) Aufgabe der Integration. Es wurden keine bestehenden Artikel gelöscht, keine Originalaufgaben ersetzt und keine Veröffentlichung oder App-Builds durchgeführt.

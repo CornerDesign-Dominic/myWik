@@ -2,7 +2,7 @@ export type ThemeMode = 'system' | 'light' | 'dark';
 export type ArticleStatus = 'open' | 'unclear' | 'working' | 'done';
 export interface Subject { id: string; title: string; subtitle: string; icon: string }
 export interface Chapter { id: string; subjectId: string; parentId?: string; number: string; title: string; articleId?: string }
-export interface RichText { text: string; termId?: string }
+export interface RichText { text: string; termId?: string; articleId?: string }
 export interface ExampleTab { title: string; content: string }
 export interface InventoryChart {
   description: string;
@@ -10,7 +10,12 @@ export interface InventoryChart {
   days: number[];
   levels: number[];
 }
-export interface ArticleSection { id: string; title: string; paragraphs: RichText[][]; tabs?: ExampleTab[]; hint?: { title: string; content: string; label?: string }; inventoryChart?: InventoryChart }
+export interface AbcChart {
+  positions: { label: string; share: number; category: 'A' | 'B' | 'C' }[];
+  thresholds: [number, number];
+  description: string;
+}
+export interface ArticleSection { id: string; title: string; paragraphs: RichText[][]; tabs?: ExampleTab[]; hint?: { title: string; content: string; label?: string }; inventoryChart?: InventoryChart; abcChart?: AbcChart }
 export interface Article { id: string; subjectId: string; chapterId: string; title: string; number: string; intro: string; sections: ArticleSection[]; updatedAt: number; version: number }
 export interface GlossaryTerm { id: string; subjectId: string; term: string; definition: string; example?: string; articleId?: string }
 export interface ArticleProgress { articleId: string; status: ArticleStatus; starred: boolean; updatedAt: number; history: { status: ArticleStatus; at: number }[] }

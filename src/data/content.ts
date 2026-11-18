@@ -1,5 +1,6 @@
 import type { Article, Chapter, GlossaryTerm, Subject } from '../types';
 import { logisticsArticles, logisticsChapters, logisticsGlossary } from './logistik';
+import { transferSection } from './logistik-standard';
 
 export const subjects: Subject[] = [
   { id: 'bwl', title: 'BWL', subtitle: 'Betriebliche Entscheidungen verstehen', icon: 'building' },
@@ -73,8 +74,8 @@ const updatedAt = Date.UTC(2026, 10, 16);
 export const articles: Article[] = [
   {
     id: 'aufgaben-der-logistik-und-die-6-r', subjectId: 'logistik', chapterId: 'logistik-6-r',
-    title: 'Aufgaben der Logistik und die 6 R', number: '1.1.1', updatedAt: Date.UTC(2026, 10, 17), version: 1,
-    intro: 'Bei einem Kunden fällt eine Maschine aus. Damit sie wieder läuft, braucht das Werk bis 10 Uhr ein passendes Ersatzteil. Das Lager muss wissen, welches Teil gebraucht wird, der Versand muss den richtigen Standort kennen und die Disposition muss einen Transport organisieren, der den Termin hält.',
+    title: 'Aufgaben der Logistik und die 6 R', number: '1.1.1', updatedAt: Date.UTC(2026, 10, 18), version: 2,
+    intro: 'Logistik sorgt dafür, dass Güter bereitstehen und die Beteiligten alle nötigen Informationen haben. Sie verbindet Vorgänge vom Einkauf über Fertigung und Lager bis zur Zustellung und Rücknahme. Die 6 R helfen, eine Versorgung zu planen und anschließend zu beurteilen.\n\nBei einem Kunden fällt eine Maschine aus. Damit sie wieder läuft, braucht das Werk bis 10 Uhr ein passendes Ersatzteil. Das Lager muss wissen, welches Teil gebraucht wird, der Versand muss den richtigen Standort kennen und die Disposition muss einen Transport organisieren, der den Termin hält.',
     sections: [
       {
         id: 'aufgaben', title: 'Was macht die Logistik?',
@@ -95,6 +96,18 @@ export const articles: Article[] = [
           [{ text: 'Richtiger Preis. Die Disposition wählt eine wirtschaftliche Transportlösung, die den Termin einhält. Bei einem drohenden Produktionsstillstand kann eine teurere Direktfahrt sinnvoll sein.' }],
         ],
       },
+      {
+        id: 'logistik-ziele', title: 'Versorgung und Wirtschaftlichkeit gemeinsam beurteilen',
+        paragraphs: [
+          [{ text: 'Logistik plant Abläufe und Bestände, koordiniert die Beteiligten, führt Aufträge aus und prüft das Ergebnis. Im Materialfluss bewegt sich die Ware. Im Informationsfluss laufen beispielsweise die Bestellung zur Lieferantin, die Versandmeldung zum Lager und der Empfangsnachweis zurück. Beide Flüsse müssen zusammenpassen.' }],
+          [{ text: 'Ein guter Lieferservice umfasst verlässliche Termine, Flexibilität und rechtzeitige Informationen. Dafür setzt der Betrieb Lagerfläche, Personal und Transportkapazität ein. Niedrige Einzelkosten helfen wenig, wenn dabei andere Kosten steigen. Bei der Auswahl zwischen Standardtransport und Expressfahrt zählen unter anderem Transportkosten, Ausfallrisiko und Folgen für den Kunden.' }],
+          [{ text: 'Dieselben 6 R gelten bei der Materialversorgung einer Fertigungslinie oder bei der Zustellung mehrerer Kundenaufträge. Maßstäbe wie Mengen, Zeitfenster und Qualitätsanforderungen ergeben sich aus dem konkreten Auftrag. Lieferkettenstörungen, Ressourcenknappheit, Retouren und digitale Schnittstellen beeinflussen, wie verlässlich und wirtschaftlich der Betrieb diese Ziele erreicht.' }],
+        ],
+      },
+      transferSection(
+        'In der Fertigung fehlt regelmäßig Material am richtigen Arbeitsplatz. Die Gesamtmenge im Werk stimmt. Welche der 6 R sind betroffen und welche Daten würdest du zuerst prüfen?',
+        'Je nach Ursache sind der richtige Ort und der richtige Zeitpunkt betroffen. Prüfe Arbeitsplatz, Abrufzeitpunkt, bereitgestellte Menge und den tatsächlichen Übergabezeitpunkt. So lässt sich erkennen, ob Material falsch zugeordnet oder zu spät bereitgestellt wurde.',
+      ),
       {
         id: 'kurzfrage', title: 'Kurzfrage zum Schluss',
         paragraphs: [[{ text: 'Wie prüfst du anhand der 6 R, ob der Ersatzteilauftrag logistisch richtig abgewickelt wurde?' }]],
@@ -199,4 +212,4 @@ export const glossary: GlossaryTerm[] = [
   ...logisticsGlossary,
 ];
 
-export const contentVersion = 6;
+export const contentVersion = 7;

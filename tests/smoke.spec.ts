@@ -797,3 +797,20 @@ test('the logistics catalogue opens an inventory diagram and keeps the case solu
   await solution.click();
   await expect(page.getByText(/Ersparnis = 600.*17,24/)).toBeVisible();
 });
+
+test('ABC analysis shows the value chart, linked glossary and a path to XYZ', async ({ page }) => {
+  await isolateCloud(page);
+  await page.goto('/');
+  await page.getByRole('button', { name: /^Fächer/ }).click();
+  await page.getByRole('button', { name: /^Logistik,/ }).click();
+  await page.getByRole('button', { name: /1\.2\.5\.1 ABC-Analyse/ }).click();
+  await expect(page.getByRole('heading', { name: 'ABC-Analyse', exact: true })).toBeVisible();
+  const diagram = page.locator('svg[viewBox="0 0 320 211"]');
+  await expect(diagram.locator('rect')).toHaveCount(3);
+  await expect(diagram.locator('polyline')).toBeVisible();
+  await page.getByRole('button', { name: 'Jahresverbrauchswert', exact: true }).click();
+  await expect(page.getByRole('dialog').getByText('Jahresverbrauchswert', { exact: true })).toBeVisible();
+  await page.getByRole('button', { name: 'Begriff schließen', exact: true }).click();
+  await page.getByRole('button', { name: 'XYZ-Analyse und ABC-XYZ-Matrix', exact: true }).click();
+  await expect(page.getByRole('heading', { name: 'XYZ-Analyse und ABC-XYZ-Matrix', exact: true })).toBeVisible();
+});
