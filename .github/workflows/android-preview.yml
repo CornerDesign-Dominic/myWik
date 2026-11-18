@@ -82,6 +82,13 @@ jobs:
           "$tools/apksigner" verify --print-certs "$apk"
           unzip -Z1 "$apk" > apk-entries.txt
           grep -Fx 'assets/index.android.bundle' apk-entries.txt
+          expected=$(sha256sum assets/generated/catalogue.db | cut -d ' ' -f1)
+          found=false
+          while IFS= read -r entry; do
+            actual=$(unzip -p "$apk" "$entry" | sha256sum | cut -d ' ' -f1)
+            if [ "$actual" = "$expected" ]; then found=true; break; fi
+          done < <(grep -E '\.db$' apk-entries.txt)
+          test "$found" = true
       - uses: actions/upload-artifact@v4
         with:
           name: mywik-android-test-apk
