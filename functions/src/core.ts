@@ -50,6 +50,13 @@ export function isTrustedArticle(value: unknown): value is TrustedArticle {
   const a = value as TrustedArticle;
   return typeof a.id === 'string' && typeof a.title === 'string' && typeof a.subjectId === 'string' && typeof a.intro === 'string' && typeof a.number === 'string' && Array.isArray(a.sections) && a.sections.every(s => typeof s.id === 'string' && typeof s.title === 'string' && Array.isArray(s.paragraphs) && s.paragraphs.every(p => Array.isArray(p) && p.every(t => typeof t.text === 'string')) && (!s.tabs || (Array.isArray(s.tabs) && s.tabs.every(t => typeof t.title === 'string' && typeof t.content === 'string'))) && (!s.hint || (typeof s.hint.title === 'string' && typeof s.hint.content === 'string')));
 }
+export function findTrustedArticle(id: string, published: unknown, bundled: readonly unknown[]): TrustedArticle | undefined {
+  const find = (catalogue: readonly unknown[]) => catalogue.find(
+    (entry): entry is TrustedArticle => entry != null && (entry as { id?: unknown }).id === id && isTrustedArticle(entry),
+  );
+  return (Array.isArray(published) ? find(published) : undefined) ?? find(bundled);
+}
+
 export function articleText(article: TrustedArticle, sectionId?: string): string {
   const sections = sectionId ? article.sections.filter(s => s.id === sectionId) : article.sections;
   if (sectionId && !sections.length) throw new Error('Dieser Abschnitt ist nicht vorhanden.');

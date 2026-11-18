@@ -7,7 +7,7 @@ import { cardTask, cardsSchema, duplicatesSchema, practiceSchema, validateCards,
 import subjects from './subjects.json';
 import { LEARNING_POLICY, SCOPE_REFUSAL, scopePayload, readScopeDecision } from './scope';
 import bundledCatalogue from './catalogue.json';
-import { articleText, isTrustedArticle, MAX_OUTPUT_TOKENS, parseInput, reserveBudget, type TrustedArticle } from './core';
+import { articleText, findTrustedArticle, MAX_OUTPUT_TOKENS, parseInput, reserveBudget, type TrustedArticle } from './core';
 
 initializeApp();
 const db = getFirestore();
@@ -32,9 +32,8 @@ const cardSchema = { type: 'object', additionalProperties: false, properties: { 
 async function loadArticle(id: string): Promise<TrustedArticle> {
   const snapshot = await db.doc('catalog/current').get();
   const remote = snapshot.exists ? snapshot.data()?.articles : undefined;
-  const catalogue = Array.isArray(remote) ? remote : bundledCatalogue;
-  const value = catalogue.find((a: { id?: string }) => a?.id === id);
-  if (!isTrustedArticle(value)) throw new HttpsError('not-found', 'Dieser Artikel ist für MeiWik noch nicht freigegeben.');
+  const value = findTrustedArticle(id, remote, bundledCatalogue);
+  if (!value) throw new HttpsError('not-found', 'Dieser Artikel ist für MeiWik noch nicht freigegeben.');
   return value;
 }
 

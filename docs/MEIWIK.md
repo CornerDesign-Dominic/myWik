@@ -47,6 +47,17 @@ Erst wenn Zusammenfassung **und neue Antwort** erfolgreich zurückkommen, speich
 
 Die App enthält keine simulierten KI-Antworten, wenn der Server nicht verfügbar ist. Sie erklärt stattdessen, dass MeiWik noch eingerichtet oder freigeschaltet werden muss.
 
+## Neue Lernartikel für MeiWik bereitstellen
+
+Die APK und die Cloud Function werden getrennt ausgeliefert. Für neue Artikel im mitgelieferten Katalog die Function vom selben Quellstand wie die APK bereitstellen. Der Build erzeugt ihren Artikelkatalog neu. Ein Cloud-Eintrag hat für denselben Artikel Vorrang. Fehlt der Artikel dort, verwendet MeiWik den mitgelieferten Eintrag.
+
+```sh
+npm --prefix functions ci
+firebase deploy --only functions:meiwik --project meiwik
+```
+
+Anschließend in der bereits installierten App bei einem neuen Logistikartikel „Neue Kartenvorschläge aus Quelle“ prüfen.
+
 ## Verbrauchsschutz
 
 Vor jedem OpenAI-Aufruf reserviert eine Firestore-Transaktion ein konservatives Tokenbudget (UTF-8-Payloadbytes plus maximale Ausgabetokens). Diese bewusst großzügige Reservierung bleibt auch bei Timeout oder Anbieterfehler bestehen. Es gibt keine Annahme, dass ein API-Schlüssel allein ein hartes Geldlimit garantiert.

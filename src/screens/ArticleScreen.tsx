@@ -71,6 +71,11 @@ export function ArticleScreen({ article, onGlossary, onChat, onActivity }: Artic
   };
   const startCard = (section?: ArticleSection) => {
     const selectedText = section ? sectionSource(section) : [article.intro,...article.sections.map(sectionSource)].join('\n\n');
+    if (section?.id === 'kurzfrage' && section.hint?.title === 'Musterantwort') {
+      const question = section.paragraphs.map(paragraph => paragraph.map(part => part.text).join('')).join('\n\n');
+      setCardEditor({ front: question, back: section.hint.content, selectedText, sectionId: section.id });
+      return;
+    }
     setCardEditor({ front: section ? `${section.title}: Was ist der Kerngedanke?` : `Was bedeutet „${article.title.replace(/^Der |^Die |^Das /, '')}“?`, back: (section ?? article.sections[0]).paragraphs.map(paragraph => paragraph.map(part => part.text).join('')).join('\n\n'), selectedText, ...(section ? {sectionId:section.id} : {}) });
   };
   const closeCard = () => setCardEditor(null);
