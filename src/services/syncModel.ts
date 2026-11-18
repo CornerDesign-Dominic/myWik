@@ -115,12 +115,18 @@ export function winner(left: SyncEntity | undefined, right: SyncEntity): SyncEnt
   return left.revision >= right.revision ? left : right;
 }
 export function applyEntity(snapshot: LocalSnapshot, entity: SyncEntity, pending: boolean, detectConflict = true): LocalSnapshot {
+  const next = { ...snapshot, entries: { ...snapshot.entries }, outbox: { ...snapshot.outbox }, bases: { ...snapshot.bases }, conflicts: { ...snapshot.conflicts } };
+  applyToCopy(next, entity, pending, detectConflict);
+  return next;
+}
+
+function applyToCopy(snapshot: LocalSnapshot, entity: SyncEntity, pending: boolean, detectConflict = true) {
   const key = entityKey(entity.kind, entity.entityId);
   const previous = snapshot.entries[key];
   const chosen = winner(previous, entity);
-  const outbox = {...snapshot.outbox};
-  const bases = {...snapshot.bases};
-  const conflicts = {...snapshot.conflicts};
+  const { outbox } = snapshot;
+  const conflicts = snapshot.conflicts ??= {};
+  const bases = snapshot.bases ??= {};
   if (!pending && detectConflict && snapshot.outbox[key] && previous && previous.revision !== entity.revision
     && bases[key] !== entity.revision && JSON.stringify(previous.value) !== JSON.stringify(entity.value)) {
     const loser = chosen.revision === previous.revision ? entity : previous;
@@ -132,7 +138,7 @@ export function applyEntity(snapshot: LocalSnapshot, entity: SyncEntity, pending
   } else if (!pending && chosen.revision === entity.revision) {
     delete outbox[key]; delete bases[key];
   }
-  return {...snapshot,entries:{...snapshot.entries,[key]:chosen},outbox,bases,conflicts};
+  snapshot.entries[key] = chosen;
 }
 /** Does not clear a newer local revision created while a remote write was in flight. */
 export function acknowledge(snapshot: LocalSnapshot, sent: SyncEntity, remote: SyncEntity): LocalSnapshot {
@@ -144,7 +150,16 @@ export function acknowledge(snapshot: LocalSnapshot, sent: SyncEntity, remote: S
   return { ...next, outbox, bases };
 }
 export function mergeRemote(snapshot: LocalSnapshot, remote: SyncEntity[]): LocalSnapshot {
-  return remote.filter(isSyncEntity).reduce((s, e) => applyEntity(s, e, false), snapshot);
+  let next: LocalSnapshot | undefined;
+  for (const entity of remote) {
+    if (!isSyncEntity(entity)) continue;
+    const key = entityKey(entity.kind, entity.entityId);
+    const current = next ?? snapshot;
+    if (!current.outbox[key] && current.entries[key]?.revision === entity.revision) continue;
+    next ??= { ...snapshot, entries: { ...snapshot.entries }, outbox: { ...snapshot.outbox }, bases: { ...snapshot.bases }, conflicts: { ...snapshot.conflicts } };
+    applyToCopy(next, entity, false);
+  }
+  return next ?? snapshot;
 }
 export function materialize(snapshot: LocalSnapshot): UserData {
   const data: UserData = { progress: {}, notes: [], cards: [], sessions: [], visits: [], later: [], recommendations: [], settings: JSON.parse(JSON.stringify(DEFAULT_SETTINGS)) };
@@ -173,15 +188,16 @@ export function materialize(snapshot: LocalSnapshot): UserData {
 }
 /** One recommendation for an unclear -> done transition, due after seven days. */
 export function createRecommendations(snapshot: LocalSnapshot, articleSubjects: Record<string,string>, now = Date.now()): SyncEntity[] {
-  const data = materialize(snapshot);
   const result: SyncEntity[] = [];
-  for (const p of Object.values(data.progress)) {
+  for (const entity of Object.values(snapshot.entries)) {
+    if (entity.kind !== 'progress' || entity.deleted || !isSyncEntity(entity)) continue;
+    const p = entity.value as ArticleProgress;
     if (p.status !== 'done' || !articleSubjects[p.articleId]) continue;
     const doneAt=unclearCompletion(p);
     if(doneAt===undefined)continue;
     const dueAt=calendarDaysAfter(doneAt,7);
     const id = `repeat_${p.articleId}_${doneAt}`;
-    if (dueAt > now || data.recommendations.some(r => r.id === id) || snapshot.entries[entityKey('recommendation',id)]) continue;
+    if (dueAt > now || snapshot.entries[entityKey('recommendation',id)]) continue;
     result.push(makeEntity('recommendation',id,{
       id, articleId:p.articleId, subjectId:articleSubjects[p.articleId] ?? '',
       title:'Noch einmal gemeinsam wiederholen?',

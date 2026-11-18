@@ -19,6 +19,8 @@ npm start
 
 Eine Browser-Vorschau startet mit `npm run web`. Für eine native Entwicklungsumgebung kann Expo Go verwendet werden, sofern dessen SDK-Version zur installierten Expo-Version passt. Native Berechtigungen und Benachrichtigungen müssen zusätzlich auf einem echten Gerät und in einem eigenen Build geprüft werden. Remote-Push funktioniert nicht in Expo Go auf Android.
 
+Die npm-Start- und Exportbefehle erzeugen den lokalen Katalog vor dem Start. Für einen direkten Expo- oder Gradle-Aufruf zuerst `npm run build:catalogue` ausführen. Die Artikelquellen bleiben in `src/data`. Der Build schreibt die verlinkten Inhalte in eine mitgelieferte SQLite-Datei und erzeugt daraus das Inhaltsverzeichnis.
+
 ## Prüfungen
 
 ```bash
@@ -95,7 +97,13 @@ iOS-Gerätebuilds benötigen passende Apple-Signierung und in der Regel eine App
 - Lokale Erinnerungen benötigen eine Geräteberechtigung und können ohne Server ausgelöst werden.
 - Echte serverseitige Push-Mitteilungen benötigen zusätzlich eine EAS-Projektverknüpfung und Android-FCM-/Apple-APNs-Zugangsdaten. Ein Client-Firebase-Web-Konfigurationsobjekt ersetzt diese Push-Zugangsdaten nicht.
 - Einen echten Offline-Test im Flugmodus durchführen: Artikel öffnen, Notiz und Status ändern, App schließen und erneut öffnen. Nach Wiederherstellung der Verbindung Synchronisierung und Gerätewechsel prüfen.
-- Das Bereitstellen eines neuen Programmbuilds lädt nicht automatisch zukünftige Artikel herunter; Inhaltsaktualisierung und lokale Verfügbarkeit werden separat verwaltet.
+- Neue Lerninhalte können fachweise veröffentlicht werden. Die App lädt ein Fachpaket nur bei höherem Stand und macht es erst nach vollständiger lokaler Speicherung sichtbar. Notizen, Karteikarten und offene Synchronisierungsänderungen verwenden weiterhin dieselben Kontospeicher.
+
+## Fachpakete vorbereiten
+
+`npm run prepare:content -- --subject logistik --version 8` erzeugt die Firestore-Dokumente lokal unter `dist-content-packs`. Für eine spätere Aktualisierung `--previous <bisheriges-manifest-v1.json>` angeben, damit andere Fächer im Manifest erhalten bleiben. Die Versionsnummer muss pro Fach steigen. Bei Änderungen an einem Artikel auch dessen `version` erhöhen und vorhandene Artikel- und Abschnitts-IDs für Verweise erhalten.
+
+Die erzeugten Paketdokumente gehören unter `catalog/{Dateiname-ohne-.json}`. Erst alle Teile veröffentlichen und danach `catalog/manifest-v1` bereitstellen. App und aktualisierte `meiwik`-Funktion lesen dasselbe Manifest. Pro Fach lädt der Client nur den neueren Stand. Bereits heruntergeladene Artikel bleiben beim Wechsel offline verfügbar.
 
 ## Noch extern auszuführen
 

@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { Alert, Modal, Platform, Pressable, ScrollView, StyleSheet, Text, TextInput, View } from 'react-native';
 import {useReadingPosition} from '../services/useReadingPosition';
 import { Bookmark, Check, ChevronDown, ChevronUp, CircleHelp, Layers, Pencil, Star, StickyNote, X } from 'lucide-react-native';
@@ -6,7 +6,7 @@ import { Body, Button, Heading, Muted, Panel, Row, useTheme } from '../component
 import { useStore } from '../state/Store';
 import type { ArticleScreenProps } from '../state/contract';
 import type { ArticleSection, ArticleStatus, Note } from '../types';
-import { subjects } from '../data/content';
+import { useContentIndex } from '../services/contentSync';
 import { CardEditor } from '../components/CardEditor';
 import { sectionSource } from '../services/flashcards';
 import { MeiWikAvatar } from '../components/MeiWikAvatar';
@@ -44,6 +44,7 @@ function SectionExtras({ section, onCard, onNote, onChat }: { section: ArticleSe
 }
 
 export function ArticleScreen({ article, onGlossary, onArticle, onChat, onActivity }: ArticleScreenProps) {
+  const { subjects } = useContentIndex();
   const { colors } = useTheme();
   const { data, user, setProgress, saveNote, deleteNote } = useStore();
   const progress = data.progress[article.id];
@@ -54,7 +55,15 @@ export function ArticleScreen({ article, onGlossary, onArticle, onChat, onActivi
   const [notice, setNotice] = useState('');
   const scroll = useRef<React.ElementRef<typeof ScrollView>>(null);
   const positions = useRef<Record<string, number>>({});
-  const reading=useReadingPosition({owner:user?.uid??'guest',articleId:article.id,version:article.version,sectionIds:article.sections.map(s=>s.id),scroll,positions,onActivity,onError:setNotice});
+  const sectionIds = useMemo(() => article.sections.map(section => section.id), [article.sections]);
+  const [rendered, setRendered] = useState(() => Math.min(sectionIds.length, sectionIds.length > 8 ? 4 : 8));
+  const renderThrough = useCallback((count: number) => setRendered(current => Math.min(sectionIds.length, Math.max(current, count))), [sectionIds.length]);
+  const reading=useReadingPosition({owner:user?.uid??'guest',articleId:article.id,version:article.version,sectionIds,scroll,positions,renderThrough,onActivity,onError:setNotice});
+  useEffect(() => {
+    if (!reading.visible || rendered >= sectionIds.length) return;
+    const timer = setTimeout(() => renderThrough(rendered + 4), 32);
+    return () => clearTimeout(timer);
+  }, [rendered, reading.visible, renderThrough, sectionIds.length]);
   useEffect(()=>{setCardEditor(null);setNoteEditor(null);setNotice('')},[article.id,user?.uid]);
   const articleNotes = data.notes.filter(note => note.articleId === article.id);
   const startNote = (sectionId?: string, label = 'Zum Artikel', existing?: Note) => setNoteEditor({ sectionId, label, text: existing?.text ?? '', kind: existing?.kind ?? 'personal', id: existing?.id });
@@ -84,7 +93,7 @@ export function ArticleScreen({ article, onGlossary, onArticle, onChat, onActivi
   const renderNotes = (scope?: string) => articleNotes.filter(note => note.sectionId === scope).map(note => <Pressable key={note.id} accessibilityRole="button" accessibilityLabel="Notiz bearbeiten" onPress={() => startNote(scope, scope ? 'Zum Abschnitt' : 'Zum Artikel', note)} style={[styles.savedNote, { backgroundColor: colors.noteSurface, borderLeftColor: colors.accent }]}><Row style={{ gap: 6 }}><StickyNote size={13} color={colors.muted} /><Muted style={{ fontSize: 12 }}>{note.kind === 'personal' ? 'Deine Notiz' : 'Inhalt verbessern'}</Muted><Pencil size={12} color={colors.muted} /></Row><Body style={{ color: colors.muted, fontStyle: 'italic', fontSize: 15, lineHeight: 24 }}>{note.text}</Body></Pressable>);
 
   return <>
-    <ScrollView ref={scroll} style={{ flex: 1, backgroundColor: colors.background }} contentContainerStyle={styles.page} keyboardShouldPersistTaps="handled" scrollEventThrottle={250} onLayout={e=>reading.onLayout(e.nativeEvent.layout.height)} onContentSizeChange={(_,h)=>reading.onContentSizeChange(h)} onScroll={e=>reading.onScroll(e.nativeEvent.contentOffset.y)} onTouchStart={reading.onTouchStart} onScrollBeginDrag={reading.onScrollBeginDrag} onScrollEndDrag={reading.onScrollEndDrag}>
+    <ScrollView ref={scroll} style={{ flex: 1, backgroundColor: colors.background, opacity: reading.visible ? 1 : 0 }} scrollEnabled={reading.visible} pointerEvents={reading.visible ? 'auto' : 'none'} accessibilityElementsHidden={!reading.visible} importantForAccessibility={reading.visible?'auto':'no-hide-descendants'} contentContainerStyle={styles.page} keyboardShouldPersistTaps="handled" scrollEventThrottle={250} onLayout={e=>reading.onLayout(e.nativeEvent.layout.height)} onContentSizeChange={(_,h)=>reading.onContentSizeChange(h)} onScroll={e=>reading.onScroll(e.nativeEvent.contentOffset.y)} onTouchStart={reading.onTouchStart} onScrollBeginDrag={reading.onScrollBeginDrag} onScrollEndDrag={reading.onScrollEndDrag}>
       <Muted>{subjects.find(subject => subject.id === article.subjectId)?.title.toLocaleUpperCase('de-DE')} · {article.number}</Muted>
       <Heading>{article.title}</Heading>
       <Body style={{ color: colors.muted }}>{article.intro}</Body>
@@ -100,7 +109,7 @@ export function ArticleScreen({ article, onGlossary, onArticle, onChat, onActivi
         <Pressable accessibilityRole="button" aria-expanded={tocOpen} accessibilityState={{ expanded: tocOpen }} onPress={() => setTocOpen(!tocOpen)} style={styles.hintTitle}><Text style={[styles.hintText, { color: colors.text }]}>In diesem Artikel</Text>{tocOpen ? <ChevronUp size={18} color={colors.muted} /> : <ChevronDown size={18} color={colors.muted} />}</Pressable>
         {tocOpen && article.sections.map(section => <Pressable key={section.id} accessibilityRole="button" onPress={() => reading.jumpTo(section.id)} style={{ paddingVertical: 9 }}><Text style={{ color: colors.accent, fontSize: 15 }}>{section.title}</Text></Pressable>)}
       </View>
-      {article.sections.map(section => <View key={section.id} onLayout={event => reading.onSectionLayout(section.id,event.nativeEvent.layout.y)} style={{ gap: 10, paddingTop: 7 }}>
+      {article.sections.slice(0, rendered).map(section => <View key={section.id} onLayout={event => reading.onSectionLayout(section.id,event.nativeEvent.layout.y)} style={{ gap: 10, paddingTop: 7 }}>
         <Text accessibilityRole="header" style={[styles.sectionTitle, { color: colors.text }]}>{section.title}</Text>
         {section.paragraphs.map((paragraph, index) => <View key={index} style={{ gap: 8 }}>
           <Text selectable accessibilityActions={[{ name: 'longpress', label: 'Notiz zu diesem Absatz hinzufügen' }]} onAccessibilityAction={event => { if (event.nativeEvent.actionName === 'longpress') startNote(`${section.id}:p${index}`, `${section.title} · Absatz ${index + 1}`); }} onLongPress={() => startNote(`${section.id}:p${index}`, `${section.title} · Absatz ${index + 1}`)} style={[styles.paragraph, { color: colors.text }]}>
@@ -117,9 +126,9 @@ export function ArticleScreen({ article, onGlossary, onArticle, onChat, onActivi
         <SectionExtras section={section} onCard={() => startCard(section)} onNote={() => startNote(section.id, section.title)} onChat={() => onChat(section.id)} />
         {renderNotes(section.id)}
       </View>)}
-      <View style={[styles.toc, { borderColor: colors.border }]}><Row><StickyNote size={16} color={colors.muted} /><Text style={[styles.hintText, { color: colors.text }]}>Deine Notizen zum Artikel</Text></Row>{renderNotes()}{articleNotes.filter(note=>note.sectionId&&!article.sections.some(section=>note.sectionId===section.id||section.paragraphs.some((_,i)=>note.sectionId===`${section.id}:p${i}`))).map(note=><Pressable key={note.id} accessibilityRole="button" accessibilityLabel="Notiz zu früherem Abschnitt bearbeiten" onPress={()=>startNote(note.sectionId,'Früherer Abschnitt',note)} style={styles.savedNote}><Muted>Früherer Abschnitt</Muted><Body>{note.text}</Body></Pressable>)}<Button title="Notiz zum Artikel hinzufügen" onPress={() => startNote()} /></View>
+      {rendered>=sectionIds.length&&<View style={[styles.toc, { borderColor: colors.border }]}><Row><StickyNote size={16} color={colors.muted} /><Text style={[styles.hintText, { color: colors.text }]}>Deine Notizen zum Artikel</Text></Row>{renderNotes()}{articleNotes.filter(note=>note.sectionId&&!article.sections.some(section=>note.sectionId===section.id||section.paragraphs.some((_,i)=>note.sectionId===`${section.id}:p${i}`))).map(note=><Pressable key={note.id} accessibilityRole="button" accessibilityLabel="Notiz zu früherem Abschnitt bearbeiten" onPress={()=>startNote(note.sectionId,'Früherer Abschnitt',note)} style={styles.savedNote}><Muted>Früherer Abschnitt</Muted><Body>{note.text}</Body></Pressable>)}<Button title="Notiz zum Artikel hinzufügen" onPress={() => startNote()} /></View>}
       {!!notice && <Text accessibilityLiveRegion="polite" style={{ color: colors.accent }}>{notice}</Text>}
-      <Button title="Karte zum Thema erstellen" onPress={() => startCard()} />
+      {rendered>=sectionIds.length&&<Button title="Karte zum Thema erstellen" onPress={() => startCard()} />}
       <View style={{ height: 64 }} />
     </ScrollView>
     <Modal visible={!!noteEditor} transparent statusBarTranslucent={Platform.OS === 'android'} navigationBarTranslucent={Platform.OS === 'android'} animationType={Platform.OS === 'web' ? 'none' : 'slide'} onRequestClose={() => setNoteEditor(null)}>

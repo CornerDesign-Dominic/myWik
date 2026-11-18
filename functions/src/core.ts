@@ -48,13 +48,26 @@ export function parseInput(raw: unknown): Input {
 export function isTrustedArticle(value: unknown): value is TrustedArticle {
   if (!value || typeof value !== 'object') return false;
   const a = value as TrustedArticle;
-  return typeof a.id === 'string' && typeof a.title === 'string' && typeof a.subjectId === 'string' && typeof a.intro === 'string' && typeof a.number === 'string' && Array.isArray(a.sections) && a.sections.every(s => typeof s.id === 'string' && typeof s.title === 'string' && Array.isArray(s.paragraphs) && s.paragraphs.every(p => Array.isArray(p) && p.every(t => typeof t.text === 'string')) && (!s.tabs || (Array.isArray(s.tabs) && s.tabs.every(t => typeof t.title === 'string' && typeof t.content === 'string'))) && (!s.hint || (typeof s.hint.title === 'string' && typeof s.hint.content === 'string')));
+  return typeof a.id === 'string' && typeof a.title === 'string' && typeof a.subjectId === 'string' && typeof a.intro === 'string' && typeof a.number === 'string' && Array.isArray(a.sections) && a.sections.every(s => s && typeof s.id === 'string' && typeof s.title === 'string' && Array.isArray(s.paragraphs) && s.paragraphs.every(p => Array.isArray(p) && p.every(t => t && typeof t.text === 'string')) && (!s.tabs || (Array.isArray(s.tabs) && s.tabs.every(t => t && typeof t.title === 'string' && typeof t.content === 'string'))) && (!s.hint || (typeof s.hint.title === 'string' && typeof s.hint.content === 'string')));
 }
-export function findTrustedArticle(id: string, published: unknown, bundled: readonly unknown[]): TrustedArticle | undefined {
+export function findTrustedArticle(id: string, published: unknown, bundled: readonly unknown[], sectionId?: string): TrustedArticle | undefined {
   const find = (catalogue: readonly unknown[]) => catalogue.find(
-    (entry): entry is TrustedArticle => entry != null && (entry as { id?: unknown }).id === id && isTrustedArticle(entry),
+    (entry): entry is TrustedArticle => entry != null && (entry as { id?: unknown }).id === id && isTrustedArticle(entry)
+      && (!sectionId || entry.sections.some(section => section.id === sectionId)),
   );
   return (Array.isArray(published) ? find(published) : undefined) ?? find(bundled);
+}
+
+export function publishedArticlePart(manifest: unknown, id: string, minimumVersion: number): { document: string; subjectId: string } | undefined {
+  const { schema, packs } = (manifest ?? {}) as { schema?: unknown; packs?: unknown };
+  if (schema !== 1 || !Array.isArray(packs)) return undefined;
+  for (const pack of packs) {
+    if (!pack || typeof pack.subjectId !== 'string' || !/^[a-zA-Z0-9_-]{1,250}$/.test(pack.subjectId)
+      || !Number.isSafeInteger(pack.version) || pack.version < minimumVersion || !Number.isInteger(pack.parts) || pack.parts < 1 || pack.parts > 100
+      || !pack.articleParts || !Object.prototype.hasOwnProperty.call(pack.articleParts, id)) continue;
+    const index = pack.articleParts[id];
+    if (Number.isInteger(index) && index >= 0 && index < pack.parts) return { document: `pack-${pack.subjectId}-${pack.version}-${index}`, subjectId: pack.subjectId };
+  }
 }
 
 export function articleText(article: TrustedArticle, sectionId?: string): string {

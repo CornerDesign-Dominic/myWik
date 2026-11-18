@@ -1,5 +1,6 @@
 import { expect, test, type Locator, type Page } from '@playwright/test';
 import {articles as fixtureArticles,subjects as fixtureSubjects,chapters as fixtureChapters,glossary as fixtureGlossary,contentVersion as fixtureVersion} from '../src/data/content';
+import { catalogueIndex, tenfoldCatalogue } from './catalogueFixture';
 
 test.beforeEach(async ({ page }) => {
   await page.addInitScript(() => {
@@ -687,7 +688,7 @@ test('repeated navigation does not stack duplicate screens and chapter folds sur
  await page.getByRole('button',{name:'Zurück',exact:true}).click();await expect(page.getByRole('button',{name:/^Fächer/})).toBeVisible();
  await page.getByRole('button',{name:/^Fächer/}).click();await page.getByRole('button',{name:/^Rechnungswesen,/}).click();
  await page.getByRole('button',{name:/1\.2 Teilkostenrechnung/}).click();
- await page.getByRole('button',{name:'Glossar durchsuchen',exact:true}).click();await page.getByRole('button',{name:'Deckungsbeitrag',exact:true}).click();await page.getByRole('button',{name:'Zum Artikel',exact:true}).click();
+ await page.getByRole('button',{name:'Glossar durchsuchen',exact:true}).click();await page.getByRole('textbox',{name:'Glossar durchsuchen',exact:true}).fill('Deckungsbeitrag');await page.getByRole('button',{name:'Deckungsbeitrag',exact:true}).click();await page.getByRole('button',{name:'Zum Artikel',exact:true}).click();
  await page.getByRole('button',{name:'Zurück',exact:true}).click();await page.getByRole('button',{name:'Zurück',exact:true}).click();
  await expect(page.getByRole('button',{name:/1\.2 Teilkostenrechnung/})).toHaveAttribute('aria-expanded','false');
  await page.getByRole('button',{name:'Zur Startseite',exact:true}).click();await page.getByRole('button',{name:/^Fächer/}).click();await page.getByRole('button',{name:/^BWL,/}).click();
@@ -778,18 +779,29 @@ test('modal actions respect simulated three-button, gesture and landscape system
   }
 });
 
+async function openLogisticsChapter(page: Page, name: RegExp) {
+  const entry = page.getByRole('button', { name });
+  const list = page.getByTestId('chapter-list');
+  for (let step = 0; step < 24 && !await entry.count(); step++) {
+    await list.evaluate(element => element.scrollBy(0, element.clientHeight || 540));
+    // The virtual list creates the next group of rows on subsequent frames.
+    await list.evaluate(() => new Promise<void>(resolve => requestAnimationFrame(() => requestAnimationFrame(() => resolve()))));
+  }
+  await entry.click({ timeout: 5000 });
+}
+
 test('the logistics catalogue opens an inventory diagram and keeps the case solution collapsed', async ({ page }) => {
   await isolateCloud(page);
   await page.goto('/');
   await page.getByRole('button', { name: /^Fächer/ }).click();
   await page.getByRole('button', { name: /^Logistik,/ }).click();
-  await page.getByRole('button', { name: /1\.3\.4 Bestellpunkt/ }).click();
+  await openLogisticsChapter(page, /1\.3\.4 Bestellpunkt/);
   await expect(page.getByRole('heading', { name: 'Bestellpunkt, Meldebestand und Bestellrhythmus', exact: true })).toBeVisible();
   await expect(page.locator('svg[viewBox="0 0 320 177"] polyline')).toBeVisible();
   await expect(page.getByText(/Am Tag 0 wird beim Meldebestand/)).toBeVisible();
 
   await page.getByRole('button', { name: 'Zurück', exact: true }).click();
-  await page.getByRole('button', { name: /2\.4 Übungsfall: Bestellzeitpunkt/ }).click();
+  await openLogisticsChapter(page, /2\.4 Übungsfall: Bestellzeitpunkt/);
   await expect(page.getByText(/Ermittle den Meldebestand und den Arbeitstag/)).toBeVisible();
   const solution = page.getByRole('button', { name: /Musterlösung/ });
   await expect(solution).toHaveAttribute('aria-expanded', 'false');
@@ -803,7 +815,7 @@ test('ABC analysis shows the value chart, linked glossary and a path to XYZ', as
   await page.goto('/');
   await page.getByRole('button', { name: /^Fächer/ }).click();
   await page.getByRole('button', { name: /^Logistik,/ }).click();
-  await page.getByRole('button', { name: /1\.2\.5\.1 ABC-Analyse/ }).click();
+  await openLogisticsChapter(page, /1\.2\.5\.1 ABC-Analyse/);
   await expect(page.getByRole('heading', { name: 'ABC-Analyse', exact: true })).toBeVisible();
   const diagram = page.locator('svg[viewBox="0 0 320 211"]');
   await expect(diagram.locator('rect')).toHaveCount(3);
@@ -813,4 +825,55 @@ test('ABC analysis shows the value chart, linked glossary and a path to XYZ', as
   await page.getByRole('button', { name: 'Begriff schließen', exact: true }).click();
   await page.getByRole('button', { name: 'XYZ-Analyse und ABC-XYZ-Matrix', exact: true }).click();
   await expect(page.getByRole('heading', { name: 'XYZ-Analyse und ABC-XYZ-Matrix', exact: true })).toBeVisible();
+});
+
+test('1,370 offline articles can be browsed through a bounded glossary and open from disk after reload', async ({ page }) => {
+  await isolateCloud(page);
+  await page.goto('/');
+  const fixture = tenfoldCatalogue();
+  const index = catalogueIndex(fixture);
+  await page.evaluate(async ({ index, articles }) => {
+    const db = await new Promise<IDBDatabase>((resolve, reject) => {
+      const request = indexedDB.open('mywik-downloaded-content-v2', 1);
+      request.onupgradeneeded = () => request.result.createObjectStore('catalogue');
+      request.onsuccess = () => resolve(request.result);
+      request.onerror = () => reject(request.error);
+    });
+    await new Promise<void>((resolve, reject) => {
+      const tx = db.transaction('catalogue', 'readwrite');
+      tx.oncomplete = () => resolve();
+      tx.onabort = () => reject(tx.error);
+      const store = tx.objectStore('catalogue');
+      const source = `sim/${index.version}`;
+      for (const article of articles) store.put(JSON.stringify(article), `@mywik/catalogue/article/v2/${source}/${article.id}`);
+      const sources = Object.fromEntries(articles.map(article => [article.id, source]));
+      store.put(JSON.stringify({ schema: 2, legacyVersion: 0, packVersions: {}, index, sources }), '@mywik/catalogue/index/v2');
+    });
+    db.close();
+  }, { index, articles: fixture.articles });
+  await page.reload();
+  await expect(page.getByRole('button',{name:new RegExp('Begriffsglossar.*'+index.glossary.length)})).toBeVisible();
+  await page.getByRole('button',{name:'Glossar durchsuchen',exact:true}).click();
+  const list = page.getByTestId('glossary-list');
+  const search = page.getByRole('textbox',{name:'Glossar durchsuchen',exact:true});
+  await expect(list.getByRole('button').first()).toBeVisible();
+  expect(await list.getByRole('button').count()).toBeLessThan(100);
+  await search.fill('Leittextmethode Simulation 9');
+  await page.getByRole('button',{name:'Leittextmethode Simulation 9',exact:true}).click();
+  await page.getByRole('button',{name:'Zum Artikel',exact:true}).click();
+  await expect(page.getByRole('heading',{name:'Die Leittextmethode Simulation 9',exact:true})).toBeVisible();
+  await expect(page.getByRole('heading',{name:'Prinzip und Ziel',exact:true})).toBeVisible();
+});
+
+test('a long article opens at its saved section before presenting the reading view', async ({ page }) => {
+  await isolateCloud(page);
+  await page.addInitScript(() => {
+    localStorage.setItem('mywik:reading:guest:logistik-abc-analyse', JSON.stringify({ version: 2, y: 0, anchorId: 'transferfrage', anchorOffset: 0 }));
+  });
+  await page.goto('/');
+  await page.getByRole('button',{name:/^Fächer/}).click();
+  await page.getByRole('button',{name:/^Logistik,/}).click();
+  await openLogisticsChapter(page,/1\.2\.5\.1 ABC-Analyse/);
+  await expect(page.getByRole('heading',{name:'Transferfrage',exact:true})).toBeInViewport();
+  await expect(page.getByRole('heading',{name:'ABC-Analyse',exact:true})).not.toBeInViewport();
 });

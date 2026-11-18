@@ -1,7 +1,10 @@
 node_modules/
+src/data/generated/
+assets/generated/
 .expo/
 dist/
 dist-native/
+dist-content-packs/
 web-build/
 android/
 ios/

@@ -1,7 +1,7 @@
 import React, {useEffect,useRef,useState} from 'react';
 import {Alert,Keyboard,KeyboardAvoidingView,Platform,ScrollView,View} from 'react-native';
 import {useStore} from '../state/Store';
-import {subjects} from '../data/content';
+import {useContentIndex} from '../services/contentSync';
 import {Body,Button,Heading,Muted,Panel,Row} from '../components/ui';
 import {ChatMessageBody} from '../components/ChatMessageBody';
 import {CardEditor} from '../components/CardEditor';
@@ -16,6 +16,7 @@ function Counts({card}:{card:Flashcard}) {
 }
 export function CardsScreen({subjectId,onActiveSubject}:{subjectId?:string;onActiveSubject?:(id:string|null)=>void}) {
   const store=useStore();
+  const {subjects} = useContentIndex();
   const [subject,setSubject]=useState(subjectId??subjects[0]?.id??'');
   const [filter,setFilter]=useState<'all'|'due'>('all');
   const [activeId,setActiveId]=useState<string|null>(null);

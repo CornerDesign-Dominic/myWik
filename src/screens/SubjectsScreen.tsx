@@ -1,14 +1,15 @@
-import React, { useState } from 'react';
-import { Pressable, StyleSheet, Text, View } from 'react-native';
+import React, { useMemo, useState } from 'react';
+import { FlatList, Pressable, StyleSheet, Text, View } from 'react-native';
 import { BookOpen, Building2, Calculator, Check, ChevronDown, ChevronRight, CircleHelp, Compass, Flag, Globe2, Receipt, Scale, Star, Target, Truck, Users, Workflow } from 'lucide-react-native';
 import { Heading, Muted, Page, useTheme } from '../components/ui';
-import { chapters, subjects } from '../data/content';
+import { useContentIndex } from '../services/contentSync';
 import { useStore } from '../state/Store';
 import type { Chapter } from '../types';
 
 const subjectIcons: Record<string, typeof BookOpen> = { target: Target, truck: Truck, building: Building2, globe: Globe2, scale: Scale, receipt: Receipt, calculator: Calculator, compass: Compass, workflow: Workflow, users: Users };
 
 export function SubjectsScreen({ onSubject }: { onSubject: (subjectId: string) => void }) {
+  const { chapters, subjects } = useContentIndex();
   const { colors } = useTheme();
   const { data } = useStore();
   return <Page><Heading>Themen</Heading>
@@ -27,29 +28,49 @@ export function SubjectsScreen({ onSubject }: { onSubject: (subjectId: string) =
 }
 
 export function ChaptersScreen({ subjectId, onArticle, initialCollapsed, onCollapsedChange }: { subjectId: string; onArticle: (articleId: string) => void; initialCollapsed?:Record<string,boolean>; onCollapsedChange?:(value:Record<string,boolean>)=>void }) {
+  const { chapters, subjects } = useContentIndex();
   const { colors } = useTheme();
   const { data } = useStore();
   const subject = subjects.find(item => item.id === subjectId);
-  const nodes = chapters.filter(chapter => chapter.subjectId === subjectId);
   const [collapsed, setCollapsed] = useState<Record<string, boolean>>(initialCollapsed??{});
   const toggle = (id:string)=>{const value={...collapsed,[id]:!collapsed[id]};setCollapsed(value);onCollapsedChange?.(value)};
-  const renderChapter = (chapter: Chapter, depth = 0): React.ReactNode => {
-    const children = nodes.filter(node => node.parentId === chapter.id);
+  const childrenByParent = useMemo(() => {
+    const tree = new Map<string | undefined, Chapter[]>();
+    for (const chapter of chapters) {
+      if (chapter.subjectId !== subjectId) continue;
+      const siblings = tree.get(chapter.parentId) ?? [];
+      siblings.push(chapter);
+      tree.set(chapter.parentId, siblings);
+    }
+    return tree;
+  }, [chapters, subjectId]);
+  const visible = useMemo(() => {
+    const rows: { chapter: Chapter; depth: number; hasChildren: boolean }[] = [];
+    const append = (parent?: string, depth = 0) => {
+      for (const chapter of childrenByParent.get(parent) ?? []) {
+        const hasChildren = childrenByParent.has(chapter.id);
+        rows.push({ chapter, depth, hasChildren });
+        if (hasChildren && !collapsed[chapter.id]) append(chapter.id, depth + 1);
+      }
+    };
+    append();
+    return rows;
+  }, [childrenByParent, collapsed]);
+  const renderChapter = ({ item: { chapter, depth, hasChildren } }: { item: typeof visible[number] }) => {
     const progress = chapter.articleId ? data.progress[chapter.articleId] : undefined;
     const StatusIcon = progress?.status === 'done' ? Check : progress?.status === 'unclear' ? CircleHelp : progress?.status === 'working' ? Flag : null;
-    return <View key={chapter.id}>
-      <Pressable accessibilityRole={chapter.articleId || children.length ? 'button' : 'text'} disabled={!chapter.articleId && !children.length} aria-expanded={children.length ? !collapsed[chapter.id] : undefined} accessibilityState={children.length ? { expanded: !collapsed[chapter.id] } : { disabled: !chapter.articleId }} onPress={() => chapter.articleId ? onArticle(chapter.articleId) : children.length ? toggle(chapter.id) : undefined} style={({ pressed }) => [styles.chapter, { paddingLeft: Math.min(depth, 4) * 15, borderColor: colors.border, opacity: pressed ? .65 : 1 }]}>
+    return <Pressable accessibilityRole={chapter.articleId || hasChildren ? 'button' : 'text'} disabled={!chapter.articleId && !hasChildren} aria-expanded={hasChildren ? !collapsed[chapter.id] : undefined} accessibilityState={hasChildren ? { expanded: !collapsed[chapter.id] } : { disabled: !chapter.articleId }} onPress={() => chapter.articleId ? onArticle(chapter.articleId) : hasChildren ? toggle(chapter.id) : undefined} style={({ pressed }) => [styles.chapter, { paddingLeft: Math.min(depth, 4) * 15, borderColor: colors.border, opacity: pressed ? .65 : 1 }]}>
         <View style={{ width: 20, alignItems: 'center' }}>{StatusIcon ? <StatusIcon size={17} color={colors.accent} /> : progress?.starred ? <Star size={16} color={colors.gold} fill={colors.gold} /> : null}</View>
-        <View style={{ flex: 1 }}><Text style={{ color: chapter.articleId || children.length ? colors.text : colors.muted, fontSize: depth ? 15 : 17, fontWeight: depth ? '500' : '600', lineHeight: 23 }}><Text style={{ color: colors.muted }}>{chapter.number} </Text>{chapter.title}</Text>{!chapter.articleId&&!children.length&&<Muted>Inhalt folgt</Muted>}</View>
+        <View style={{ flex: 1 }}><Text style={{ color: chapter.articleId || hasChildren ? colors.text : colors.muted, fontSize: depth ? 15 : 17, fontWeight: depth ? '500' : '600', lineHeight: 23 }}><Text style={{ color: colors.muted }}>{chapter.number} </Text>{chapter.title}</Text>{!chapter.articleId&&!hasChildren&&<Muted>Inhalt folgt</Muted>}</View>
         {progress?.starred && StatusIcon && <Star size={14} color={colors.gold} fill={colors.gold} />}
-        {children.length ? collapsed[chapter.id] ? <ChevronRight size={17} color={colors.muted} /> : <ChevronDown size={17} color={colors.muted} /> : chapter.articleId ? <ChevronRight size={17} color={colors.muted} /> : null}
-      </Pressable>
-      {!collapsed[chapter.id] && children.map(child => renderChapter(child, depth + 1))}
-    </View>;
+        {hasChildren ? collapsed[chapter.id] ? <ChevronRight size={17} color={colors.muted} /> : <ChevronDown size={17} color={colors.muted} /> : chapter.articleId ? <ChevronRight size={17} color={colors.muted} /> : null}
+      </Pressable>;
   };
-  return <Page><Heading>{subject?.title ?? 'Fach'}</Heading>
-    <View>{nodes.filter(node => !node.parentId).map(chapter => renderChapter(chapter))}</View>
-  </Page>;
+  return <FlatList data={visible} keyExtractor={row => row.chapter.id} renderItem={renderChapter}
+    testID="chapter-list"
+    ListHeaderComponent={<Heading>{subject?.title ?? 'Fach'}</Heading>}
+    contentContainerStyle={{ paddingHorizontal: 11, paddingTop: 14, paddingBottom: 24 }}
+    initialNumToRender={18} windowSize={7} />;
 }
 
 const styles = StyleSheet.create({ subject: { flexDirection: 'row', alignItems: 'center', gap: 11, padding: 13, borderWidth: 1, borderRadius: 16, minHeight: 88 }, icon: { width: 40, height: 40, borderRadius: 12, alignItems: 'center', justifyContent: 'center' }, subjectName: { fontSize: 18, fontWeight: '600', lineHeight: 24 }, chapter: { flexDirection: 'row', alignItems: 'center', gap: 7, minHeight: 52, paddingVertical: 10, borderBottomWidth: 1 } });

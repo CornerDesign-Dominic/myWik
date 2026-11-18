@@ -7,7 +7,8 @@ import { cardTask, cardsSchema, duplicatesSchema, practiceSchema, validateCards,
 import subjects from './subjects.json';
 import { LEARNING_POLICY, SCOPE_REFUSAL, scopePayload, readScopeDecision } from './scope';
 import bundledCatalogue from './catalogue.json';
-import { articleText, findTrustedArticle, MAX_OUTPUT_TOKENS, parseInput, reserveBudget, type TrustedArticle } from './core';
+import catalogueVersion from './catalogue-version.json';
+import { articleText, findTrustedArticle, publishedArticlePart, MAX_OUTPUT_TOKENS, parseInput, reserveBudget, type TrustedArticle } from './core';
 
 initializeApp();
 const db = getFirestore();
@@ -29,10 +30,25 @@ const chatSchema = { type: 'object', additionalProperties: false, properties: { 
 const summarySchema = { type: 'object', additionalProperties: false, properties: { summary: { type: 'string' } }, required: ['summary'] };
 const cardSchema = { type: 'object', additionalProperties: false, properties: { front: { type: 'string' }, back: { type: 'string' } }, required: ['front', 'back'] };
 
-async function loadArticle(id: string): Promise<TrustedArticle> {
+async function loadArticle(id: string, sectionId?: string): Promise<TrustedArticle> {
+  const manifest = await db.doc('catalog/manifest-v1').get();
+  const part = publishedArticlePart(manifest.data(), id, catalogueVersion.version);
+  if (part) {
+    const snapshot = await db.collection('catalog').doc(part.document).get();
+    const payload = snapshot.get('payload');
+    if (typeof payload === 'string' && payload.length <= 450_000) {
+      try {
+        const value = findTrustedArticle(id, JSON.parse(payload)?.articles, [], sectionId);
+        if (value && value.subjectId === part.subjectId) return value;
+      } catch { /* Fall back to the bundled or previously published source. */ }
+    }
+  }
   const snapshot = await db.doc('catalog/current').get();
-  const remote = snapshot.exists ? snapshot.data()?.articles : undefined;
-  const value = findTrustedArticle(id, remote, bundledCatalogue);
+  const legacy = snapshot.data();
+  const bundled = findTrustedArticle(id, [], bundledCatalogue, sectionId);
+  const value = bundled && typeof legacy?.version === 'number' && legacy.version < catalogueVersion.version
+    ? bundled : findTrustedArticle(id, legacy?.articles, bundledCatalogue, sectionId);
+  if (!value && sectionId && findTrustedArticle(id, legacy?.articles, bundledCatalogue)) throw new HttpsError('invalid-argument', 'Dieser Abschnitt ist nicht vorhanden.');
   if (!value) throw new HttpsError('not-found', 'Dieser Artikel ist für MeiWik noch nicht freigegeben.');
   return value;
 }
@@ -48,7 +64,7 @@ export const meiwik = onCall({
   let input;
   try { input = parseInput(request.data); } catch (error) { throw new HttpsError('invalid-argument', error instanceof Error ? error.message : 'Ungültige Anfrage.'); }
   const cardAction = ['flashcards','check_card','practice'].includes(input.action);
-  const article = input.articleId === 'card' && cardAction ? undefined : await loadArticle(input.articleId);
+  const article = input.articleId === 'card' && cardAction ? undefined : await loadArticle(input.articleId, input.sectionId);
   const subject = subjects.find(s => s.id === (article?.subjectId ?? input.subjectId));
   if (!subject) throw new HttpsError('invalid-argument', 'Unbekanntes Lernfach.');
   let source: string;

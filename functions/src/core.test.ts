@@ -1,6 +1,6 @@
 import assert from 'node:assert/strict';
 import test from 'node:test';
-import { parseInput, reserveBudget, articleText, findTrustedArticle, isTrustedArticle } from './core';
+import { parseInput, reserveBudget, articleText, findTrustedArticle, isTrustedArticle, publishedArticlePart } from './core';
 import bundledCatalogue from './catalogue.json';
 
 test('request validation rejects injected system role, excessive messages and malformed article IDs', () => {
@@ -85,4 +85,14 @@ test('all bundled logistics articles and sections remain usable with an older pu
       if (section.hint) assert.ok(source.includes(section.hint.content), `${lesson.id}/${section.id}: answer`);
     }
   }
+});
+
+test('MeiWik resolves an article only from its published subject and a supported package version', () => {
+  const manifest = { schema: 1, packs: [{ subjectId: 'logistik', version: 8, parts: 3, articleParts: { abc: 2, invalid: 3 } }] };
+  assert.deepEqual(publishedArticlePart(manifest, 'abc', 8), { document: 'pack-logistik-8-2', subjectId: 'logistik' });
+  for (const id of ['unknown', 'constructor', 'invalid']) assert.equal(publishedArticlePart(manifest, id, 8), undefined);
+  assert.equal(publishedArticlePart(manifest, 'abc', 9), undefined);
+  const article = bundledCatalogue.find(lesson => lesson.id === 'logistik-abc-analyse')!;
+  const previous = { ...article, sections: article.sections.filter(s => s.id !== 'transferfrage') };
+  assert.equal(findTrustedArticle(article.id, [previous], [article], 'transferfrage'), article);
 });

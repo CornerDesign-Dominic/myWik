@@ -2,7 +2,7 @@ import React, { useEffect, useMemo, useState } from 'react';
 import { Alert, Modal, Platform, Pressable, ScrollView, StyleSheet, Switch, Text, TextInput, View } from 'react-native';
 import { useStore } from '../state/Store';
 import { useTheme } from '../components/ui';
-import { articles, subjects } from '../data/content';
+import { content, useContentIndex } from '../services/contentSync';
 import { syncReminders } from '../services/reminders';
 import { learningSummary } from '../services/learningProgress';
 import { useCurrentTime } from '../services/useCurrentTime';
@@ -38,14 +38,15 @@ function Input({ value, onChangeText, placeholder, multiline = false, secureText
   const c = usePalette();
   return <View style={{ gap: 6 }}><Text style={[styles.label, { color: c.muted }]}>{label}</Text><TextInput accessibilityLabel={label} value={value} onChangeText={onChangeText} placeholder={placeholder} placeholderTextColor={c.muted} multiline={multiline} secureTextEntry={secureTextEntry} keyboardType={keyboardType} autoCapitalize={keyboardType === 'email-address' ? 'none' : 'sentences'} style={[styles.input, { color: c.text, borderColor: c.border, backgroundColor: c.background }, multiline && styles.multiline]} /></View>;
 }
-const subjectName = (id: string) => subjects.find(subject => subject.id === id)?.title ?? id;
-const articleName = (id?: string) => articles.find(article => article.id === id)?.title ?? 'Artikel';
+const subjectName = (id: string) => content.getIndex().subjects.find(subject => subject.id === id)?.title ?? id;
+const articleName = (id?: string) => content.article(id)?.title ?? 'Artikel';
 const formatTime = (seconds: number) => seconds >= 3600 ? `${(seconds / 3600).toLocaleString('de-DE', { maximumFractionDigits: 1 })} h` : `${Math.floor(seconds / 60)} Min.`;
 const dayKey = (date: Date) => `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}-${String(date.getDate()).padStart(2, '0')}`;
 
 export { CardsScreen } from './CardsScreen';
 
 export function SuccessScreen() {
+  const { subjects } = useContentIndex();
   const { data } = useStore();
   const c = usePalette();
   const now=useCurrentTime();const [followCurrent,setFollowCurrent]=useState(true);
@@ -90,6 +91,7 @@ export function RecommendationsScreen({ onArticle }: { onArticle: (id: string) =
 }
 
 export function SettingsScreen() {
+  const { articles, version } = useContentIndex();
   const store = useStore();
   const c = usePalette();
   const [email, setEmail] = useState('');
@@ -97,6 +99,7 @@ export function SettingsScreen() {
   const [busy, setBusy] = useState(false);
   const [notice, setNotice] = useState<string | null>(null);
   const [informationOpen, setInformationOpen] = useState(false);
+  const [articleHistoryLimit, setArticleHistoryLimit] = useState(0);
   const [reminderDraft, setReminderDraft] = useState(store.data.settings.reminders);
   const [timeDraft, setTimeDraft] = useState<Record<ReminderCategory, string>>(() => Object.fromEntries(Object.entries(store.data.settings.reminders).map(([key, value]) => [key, `${String(value.hour).padStart(2, '0')}:${String(value.minute).padStart(2, '0')}`])) as Record<ReminderCategory, string>);
   useEffect(() => { setReminderDraft(store.data.settings.reminders); setTimeDraft(Object.fromEntries(Object.entries(store.data.settings.reminders).map(([key, value]) => [key, `${String(value.hour).padStart(2, '0')}:${String(value.minute).padStart(2, '0')}`])) as Record<ReminderCategory, string>); }, [store.user?.uid]);
@@ -138,7 +141,9 @@ export function SettingsScreen() {
       <Copy>Artikelzeit enthält das Lesen und MeiWik-Gespräche zum Artikel. Karteikartenzeit wird getrennt erfasst; beide zählen für dein Tagesziel. Die Erfassung pausiert bei Appwechsel, gesperrtem Bildschirm und längerer Inaktivität.</Copy>
       <Copy>Die Tagesstufen liegen bei 5, 15, 30 und 60 Minuten. Wenn du die App besucht und mindestens 60 Minuten gelernt hast, erhältst du einen Tagesstern. Lernzeit zeigt deine Beschäftigung mit einem Thema und ist keine Wissensbewertung.</Copy>
       <Text style={[styles.sectionTitle, { color: c.text }]}>Artikelstände</Text>
-      {articles.map(article => <Copy key={article.id}>{article.title} · Version {article.version} · {new Date(article.updatedAt).toLocaleDateString('de-DE')}</Copy>)}
+      <Copy>{articles.length} Artikel · Katalogstand {version}</Copy>
+      {articles.slice(0, articleHistoryLimit).map(article => <Copy key={article.id}>{article.title} · Version {article.version} · {new Date(article.updatedAt).toLocaleDateString('de-DE')}</Copy>)}
+      {articleHistoryLimit < articles.length && <Action title={articleHistoryLimit ? 'Weitere Artikelstände' : 'Artikelstände anzeigen'} onPress={() => setArticleHistoryLimit(limit => limit + 30)} />}
       <Text style={[styles.sectionTitle, { color: c.text }]}>Verbindung & Speicherung</Text>
       <Copy>{store.online ? 'Online' : 'Offline'} · {syncLabels[store.syncState]}</Copy>
       <Copy>{store.user ? 'Kontodaten werden lokal gespeichert und mit Firebase abgeglichen.' : 'Aktuell lokale Gastdaten auf diesem Gerät.'}</Copy>
