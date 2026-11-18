@@ -38,8 +38,13 @@ async function isolateCloud(page: Page) {
   });
 }
 
+async function openSettings(page: Page) {
+  await page.getByRole('tab', { name: 'Start', exact: true }).click();
+  await page.getByRole('button', { name: 'Einstellungen', exact: true }).click();
+}
+
 async function openDeckungsbeitrag(page: Page) {
-  await page.getByRole('button', { name: 'Zur Startseite', exact: true }).click();
+  await page.getByRole('tab', { name: 'Start', exact: true }).click();
   await page.getByRole('button', { name: /^Fächer/ }).click();
   await page.getByRole('button', { name: /^Rechnungswesen,/ }).click();
   await page.getByRole('button', { name: /1\.2\.1 Deckungsbeitrag/ }).click();
@@ -123,7 +128,7 @@ test('mobile guest can read offline, retain notes/status/cards, and read both th
   await expect(page.getByRole('dialog')).toBeHidden();
   await expect(page.getByText('Karteikarte im Lernfach gespeichert.', { exact: true })).toBeVisible();
   await page.screenshot({ path: testInfo.outputPath('mobile-offline-article.png'), fullPage: true, animations: 'disabled' });
-  await page.getByRole('button', { name: 'Zur Startseite', exact: true }).click();
+  await page.getByRole('tab', { name: 'Start', exact: true }).click();
   await page.getByRole('button', { name: /^Karteikarten/ }).click();
   await page.getByRole('button', { name: 'Rechnungswesen', exact: true }).click();
   await expect(page.getByText('Was deckt der Deckungsbeitrag?', { exact: true })).toBeVisible();
@@ -154,15 +159,15 @@ test('mobile guest can read offline, retain notes/status/cards, and read both th
   await expect(noteEditor).toBeHidden();
   await expect(page.getByText('Meine Testnotiz: Fixkosten erst vom Gesamtdeckungsbeitrag abziehen.', { exact: true })).toHaveCount(0);
   await expect.poll(() => page.evaluate(() => localStorage.getItem('mywik.user.v1.guest') ?? '')).not.toContain('Meine Testnotiz: Fixkosten erst vom Gesamtdeckungsbeitrag abziehen.');
-  await page.getByRole('button', { name: 'Zur Startseite', exact: true }).click();
+  await page.getByRole('tab', { name: 'Start', exact: true }).click();
   await page.getByRole('button', { name: /^Karteikarten/ }).click();
   await page.getByRole('button', { name: 'Rechnungswesen', exact: true }).click();
   await expect(page.getByText('Wozu dient der Deckungsbeitrag?', { exact: true })).toBeVisible();
 
   for (const [label, theme] of [['Hell', 'light'], ['Dunkel', 'dark']] as const) {
-    await page.getByRole('button', { name: 'Einstellungen', exact: true }).click();
+    await openSettings(page);
     await page.getByRole('button', { name: label, exact: true }).click();
-    await page.getByRole('button', { name: 'Zur Startseite', exact: true }).click();
+    await page.getByRole('tab', { name: 'Start', exact: true }).click();
     const heading = page.getByRole('button', { name: /^Fächer/ }).getByText('Fächer', { exact: true });
     const contrast = await textContrast(heading);
     expect(contrast.ratio).toBeGreaterThanOrEqual(7);
@@ -205,10 +210,10 @@ test('compact article actions stay on one row at 320px and preserve half-width g
   await page.goto('/');
   await expect(page.getByRole('button', { name: /^Fächer/ })).toBeVisible();
   await openDeckungsbeitrag(page);
-  const heading = await page.getByText('Der Deckungsbeitrag', { exact: true }).boundingBox();
-  expect(heading).not.toBeNull();
-  expect(heading!.x).toBeGreaterThanOrEqual(10);
-  expect(heading!.x).toBeLessThanOrEqual(12);
+  const articleIntro = await page.getByText(/Was bleibt von einem Verkauf übrig/).boundingBox();
+  expect(articleIntro).not.toBeNull();
+  expect(articleIntro!.x).toBeGreaterThanOrEqual(10);
+  expect(articleIntro!.x).toBeLessThanOrEqual(12);
   const note = page.getByRole('button', { name: 'Notiz', exact: true }).first();
   await note.scrollIntoViewIfNeeded();
   const boxes = await Promise.all([
@@ -216,7 +221,7 @@ test('compact article actions stay on one row at 320px and preserve half-width g
     page.getByRole('button', { name: 'Karte erstellen', exact: true }).first().boundingBox(),
     page.getByRole('button', { name: 'MeiWik fragen', exact: true }).first().boundingBox(),
   ]);
-  const chatButton = await page.getByRole('button', { name: 'MeiWik Chat öffnen', exact: true }).boundingBox();
+  const chatButton = await page.getByRole('tab', { name: 'MeiWik', exact: true }).boundingBox();
   expect(chatButton).not.toBeNull();
   boxes.forEach(box => {
     expect(box).not.toBeNull();
@@ -236,7 +241,7 @@ test('chat keeps its composer in a short viewport and dismisses input focus on s
   await page.goto('/');
   await expect(page.getByRole('button', { name: /^Fächer/ })).toBeVisible();
   await openDeckungsbeitrag(page);
-  await page.getByRole('button', { name: 'MeiWik Chat öffnen', exact: true }).click();
+  await page.getByRole('tab', { name: 'MeiWik', exact: true }).click();
   const input = page.getByRole('textbox', { name: 'Frage an MeiWik', exact: true });
   await expect(page.getByRole('dialog').filter({ has: input })).toBeVisible();
   await input.fill('Wie berechne ich den Deckungsbeitrag?');
@@ -260,7 +265,7 @@ test('chat keeps its composer in a short viewport and dismisses input focus on s
   await page.getByRole('button', { name: 'Chat verkleinern', exact: true }).click();
   await expect(input).toBeHidden();
   await page.setViewportSize({ width: 393, height: 851 });
-  await page.getByRole('button', { name: 'MeiWik Chat öffnen', exact: true }).click();
+  await page.getByRole('tab', { name: 'MeiWik', exact: true }).click();
   await expect(page.getByRole('dialog').filter({ has: input })).toBeVisible();
   await expect(input).not.toBeFocused();
   await expect(input).toHaveValue('Wie berechne ich den Deckungsbeitrag?');
@@ -280,7 +285,7 @@ test('chat formats saved answers safely in light/dark and narrow screens', async
   await openDeckungsbeitrag(page);
   for (const width of [320, 393]) {
     await page.setViewportSize({ width, height: 650 });
-    await page.getByRole('button', { name: 'MeiWik Chat öffnen', exact: true }).click();
+    await page.getByRole('tab', { name: 'MeiWik', exact: true }).click();
     const dialog = page.getByRole('dialog').filter({ has: page.getByRole('textbox', { name: 'Frage an MeiWik' }) });
     await expect(dialog).toBeVisible();
     await expect(dialog.getByRole('heading', { name: 'Merksatz' })).toHaveCount(1);
@@ -292,7 +297,7 @@ test('chat formats saved answers safely in light/dark and narrow screens', async
     expect(await dialog.evaluate(el => el.scrollWidth <= el.clientWidth)).toBe(true);
     await page.getByRole('button', { name: 'Chat verkleinern', exact: true }).click();
     if (width === 320) {
-      await page.getByRole('button', { name: 'Einstellungen', exact: true }).click();
+      await openSettings(page);
       await page.getByRole('button', { name: 'Hell', exact: true }).click();
       await openDeckungsbeitrag(page);
     }
@@ -312,7 +317,7 @@ async function seedPracticeCards(page: Page, uid = 'guest') {
   },{uid});
 }
 async function openPracticeCards(page: Page) {
-  await page.getByRole('button',{name:'Zur Startseite',exact:true}).click();
+  await page.getByRole('tab', { name: 'Start', exact: true }).click();
   await page.getByRole('button',{name:/^Karteikarten/}).click();
   await page.getByRole('button',{name:'Rechnungswesen',exact:true}).click();
   await expect(page.getByRole('button',{name:'Antwort zeigen',exact:true})).toBeVisible();
@@ -320,7 +325,7 @@ async function openPracticeCards(page: Page) {
 async function mockLearnerLogin(page: Page, uid='local-practice-test') {
   const token=[{alg:'none'},{sub:uid,user_id:uid,aud:'meiwik',iss:'https://securetoken.google.com/meiwik',iat:Math.floor(Date.now()/1000),exp:Math.floor(Date.now()/1000)+3600,email:'learner@example.invalid',firebase:{sign_in_provider:'password'}}].map(x=>Buffer.from(JSON.stringify(x)).toString('base64url')).join('.')+'.test';
   await page.route('https://identitytoolkit.googleapis.com/**',route=>route.fulfill({json:route.request().url().includes('accounts:lookup')?{users:[{localId:uid,email:'learner@example.invalid',emailVerified:false,providerUserInfo:[]}]}:{localId:uid,email:'learner@example.invalid',idToken:token,refreshToken:'test-refresh-token',expiresIn:'3600',registered:true},headers:{'access-control-allow-origin':'*'}}));
-  await page.getByRole('button',{name:'Einstellungen',exact:true}).click();
+  await openSettings(page);
   await page.getByRole('textbox',{name:'E-Mail',exact:true}).fill('learner@example.invalid');
   await page.getByRole('textbox',{name:'Passwort',exact:true}).fill('test-password-only');
   await page.getByRole('button',{name:'Anmelden',exact:true}).click();
@@ -487,7 +492,7 @@ test('guest and two accounts remain isolated across sign out, storage failure an
  await editor.getByRole('button',{name:'Schließen',exact:true}).click();
  await expect(page.getByRole('dialog')).toBeHidden();
  await expect(page.getByRole('button',{name:'Speichern erneut versuchen',exact:true})).toBeVisible();
- await page.getByRole('button',{name:'Einstellungen',exact:true}).click();
+ await openSettings(page);
  await page.getByRole('button',{name:'Abmelden',exact:true}).click();
  await expect(page.getByRole('button',{name:'Abmelden',exact:true})).toBeVisible();
  await page.evaluate(()=>{(window as unknown as {failOwner?:string}).failOwner=undefined});
@@ -500,7 +505,7 @@ test('guest and two accounts remain isolated across sign out, storage failure an
  await mockLearnerLogin(page,'bob');await openPracticeCards(page);
  await expect(page.getByText('Private Frage bob?',{exact:true}).first()).toBeVisible();
  await expect(page.getByText('Alice noch nicht gespeichert?',{exact:true})).toHaveCount(0);
- await page.getByRole('button',{name:'Einstellungen',exact:true}).click();await page.getByRole('button',{name:'Abmelden',exact:true}).click();
+ await openSettings(page);await page.getByRole('button',{name:'Abmelden',exact:true}).click();
  await expect(page.getByRole('button',{name:/^Fächer/})).toBeVisible();
  await mockLearnerLogin(page,'alice');await openPracticeCards(page);
  await expect(page.getByText('Alice noch nicht gespeichert?',{exact:true}).first()).toBeVisible();
@@ -526,7 +531,7 @@ test('private conflict copies can be restored under a new ID and never appear in
   localStorage.setItem(key,JSON.stringify(s));
  });
  await page.goto('/');await mockLearnerLogin(page,'alice');
- await page.getByRole('button',{name:'Einstellungen',exact:true}).click();
+ await openSettings(page);
  await expect(page.getByText('ALICE KONFLIKTKOPIE',{exact:true})).toBeVisible();
  await page.getByRole('button',{name:'Als neue Kopie wiederherstellen',exact:true}).click();
  await expect(page.getByText('ALICE KONFLIKTKOPIE',{exact:true})).toHaveCount(0);
@@ -536,7 +541,7 @@ test('private conflict copies can be restored under a new ID and never appear in
  expect(restored.entityId).not.toBe('deleted-note');expect(restored.value.text).toBe('ALICE KONFLIKTKOPIE');
  await page.getByRole('button',{name:'Abmelden',exact:true}).click();
  await expect(page.getByRole('button',{name:/^Fächer/})).toBeVisible();
- await page.getByRole('button',{name:'Einstellungen',exact:true}).click();
+ await openSettings(page);
  await expect(page.getByText('ALICE KONFLIKTKOPIE',{exact:true})).toHaveCount(0);
  await expect(page.getByText('Gesicherte Konfliktversionen',{exact:true})).toHaveCount(0);
 });
@@ -552,7 +557,7 @@ test('an answer started in account A cannot appear in account B after sign out',
  await page.getByRole('button',{name:'Mit MeiWik üben',exact:true}).click();
  await page.getByRole('textbox',{name:'Meine Antwort auf die Karte',exact:true}).fill('Private Eingabe von Alice');
  await page.getByRole('button',{name:'Antwort mit MeiWik besprechen',exact:true}).click();await expect.poll(()=>!!release).toBe(true);
- await page.getByRole('button',{name:'Einstellungen',exact:true}).click();await page.getByRole('button',{name:'Abmelden',exact:true}).click();
+ await openSettings(page);await page.getByRole('button',{name:'Abmelden',exact:true}).click();
  await expect(page.getByRole('button',{name:/^Fächer/})).toBeVisible();
  await mockLearnerLogin(page,'bob');release!();await openPracticeCards(page);
  await page.getByRole('button',{name:'Mit MeiWik üben',exact:true}).click();
@@ -572,11 +577,11 @@ test('learning time stops at inactivity and does not backfill the idle gap on a 
  await page.goto('/');await openDeckungsbeitrag(page);
  await page.clock.runFor(190000);
  await expect.poll(()=>recordedSeconds(page)).toBe(120);
- await page.getByRole('button',{name:'MeiWik Chat öffnen',exact:true}).tap();
+ await page.getByRole('tab', { name: 'MeiWik', exact: true }).tap();
  await page.clock.runFor(15000);
  await expect.poll(()=>recordedSeconds(page)).toBe(125);
  await page.getByRole('button',{name:'Chat verkleinern',exact:true}).click();
- await page.getByRole('button',{name:'Zur Startseite',exact:true}).click();
+ await page.getByRole('tab', { name: 'Start', exact: true }).click();
  await expect.poll(()=>recordedSeconds(page)).toBe(135);
  const before=await recordedSeconds(page);await page.clock.runFor(60000);expect(await recordedSeconds(page)).toBe(before);
 });
@@ -612,7 +617,7 @@ test('hidden views pause learning and card study cannot count article time twice
  await page.goto('/');await openDeckungsbeitrag(page);await page.clock.runFor(30000);await expect.poll(()=>recordedSeconds(page)).toBe(30);
  await page.evaluate(()=>{(window as unknown as {testHidden?:boolean}).testHidden=true;document.dispatchEvent(new Event('visibilitychange'))});await page.clock.runFor(180000);expect(await recordedSeconds(page)).toBe(30);
  await page.evaluate(()=>{(window as unknown as {testHidden?:boolean}).testHidden=false;document.dispatchEvent(new Event('visibilitychange'))});await page.clock.runFor(15000);await expect.poll(()=>recordedSeconds(page)).toBe(45);
- await openPracticeCards(page);await page.clock.runFor(30000);await page.getByRole('button',{name:'Zur Startseite',exact:true}).click();
+ await openPracticeCards(page);await page.clock.runFor(30000);await page.getByRole('tab', { name: 'Start', exact: true }).click();
  await expect.poll(()=>recordedSeconds(page)).toBe(75);
  const categories=await page.evaluate(()=>Object.values(JSON.parse(localStorage.getItem('mywik.user.v1.guest')!).entries).reduce((out:Record<string,number>,e:any)=>{if(e.kind==='session')out[e.value.kind]=(out[e.value.kind]??0)+e.value.seconds;return out},{}));
  expect(categories.article).toBe(45);expect(categories.cards).toBe(30);
@@ -636,7 +641,7 @@ test('bookmark changes preserve progress history and reopening an article dismis
 
 
 test('glossary searches examples and umlaut spellings and retains context after visiting an article',async({page})=>{
- await isolateCloud(page);await page.goto('/');await page.getByRole('button',{name:'Glossar durchsuchen',exact:true}).click();
+ await isolateCloud(page);await page.goto('/');await page.getByRole('tab', { name: 'Suche', exact: true }).click();
  const search=page.getByRole('textbox',{name:'Glossar durchsuchen',exact:true});
  await search.fill('  vollstaendige  beruflichen  ');await page.getByRole('button',{name:'Vollständige Handlung',exact:true}).click();
  await expect(page.getByText(/Modell einer selbstständig bewältigten beruflichen Handlung/)).toBeVisible();
@@ -648,13 +653,15 @@ test('glossary searches examples and umlaut spellings and retains context after 
  await search.fill('KeinTreffer123');await expect(page.getByText('Kein passender Begriff gefunden.',{exact:true})).toBeVisible();
 });
 
-async function articleScrollTop(page:Page){return page.getByRole('heading',{name:'Der Deckungsbeitrag',exact:true}).evaluate(el=>{let node=el.parentElement;while(node){if(['auto','scroll'].includes(getComputedStyle(node).overflowY)&&node.scrollHeight>node.clientHeight)return node.scrollTop;node=node.parentElement}return -1})}
+async function articleScrollTop(page: Page) {
+  return page.getByTestId('article-content').evaluate(element => element.scrollTop);
+}
 
 test('article reading position survives glossary navigation and legacy pixel positions still restore',async({page})=>{
  await isolateCloud(page);await page.addInitScript(()=>{if(!localStorage.getItem('mywik:reading:guest:deckungsbeitrag'))localStorage.setItem('mywik:reading:guest:deckungsbeitrag','900')});
  await page.goto('/');await openDeckungsbeitrag(page);
  await expect.poll(()=>articleScrollTop(page)).toBeGreaterThan(850);
- await page.getByRole('button',{name:'Glossar durchsuchen',exact:true}).click();await expect(page.getByRole('heading',{name:'Begriffsglossar',exact:true})).toBeVisible();
+ await page.getByRole('tab', { name: 'Suche', exact: true }).click();await expect(page.getByRole('heading',{name:'Begriffsglossar',exact:true})).toBeVisible();
  await page.getByRole('button',{name:'Zurück',exact:true}).click();await expect.poll(()=>articleScrollTop(page)).toBeGreaterThan(850);
  expect(await articleScrollTop(page)).toBeLessThan(1000);
 });
@@ -686,14 +693,14 @@ test('notes from removed sections remain visible and editable',async({page})=>{
 });
 
 test('repeated navigation does not stack duplicate screens and chapter folds survive returning from an article',async({page})=>{
- await isolateCloud(page);await page.goto('/');await page.getByRole('button',{name:'Einstellungen',exact:true}).click();await page.getByRole('button',{name:'Einstellungen',exact:true}).click();
+ await isolateCloud(page);await page.goto('/');await page.getByRole('tab', { name: 'Suche', exact: true }).click();await page.getByRole('tab', { name: 'Suche', exact: true }).click();
  await page.getByRole('button',{name:'Zurück',exact:true}).click();await expect(page.getByRole('button',{name:/^Fächer/})).toBeVisible();
  await page.getByRole('button',{name:/^Fächer/}).click();await page.getByRole('button',{name:/^Rechnungswesen,/}).click();
  await page.getByRole('button',{name:/1\.2 Teilkostenrechnung/}).click();
- await page.getByRole('button',{name:'Glossar durchsuchen',exact:true}).click();await page.getByRole('textbox',{name:'Glossar durchsuchen',exact:true}).fill('Deckungsbeitrag');await page.getByRole('button',{name:'Deckungsbeitrag',exact:true}).click();await page.getByRole('button',{name:'Zum Artikel',exact:true}).click();
+ await page.getByRole('tab', { name: 'Suche', exact: true }).click();await page.getByRole('textbox',{name:'Glossar durchsuchen',exact:true}).fill('Deckungsbeitrag');await page.getByRole('button',{name:'Deckungsbeitrag',exact:true}).click();await page.getByRole('button',{name:'Zum Artikel',exact:true}).click();
  await page.getByRole('button',{name:'Zurück',exact:true}).click();await page.getByRole('button',{name:'Zurück',exact:true}).click();
  await expect(page.getByRole('button',{name:/1\.2 Teilkostenrechnung/})).toHaveAttribute('aria-expanded','false');
- await page.getByRole('button',{name:'Zur Startseite',exact:true}).click();await page.getByRole('button',{name:/^Fächer/}).click();await page.getByRole('button',{name:/^BWL,/}).click();
+ await page.getByRole('tab', { name: 'Start', exact: true }).click();await page.getByRole('button',{name:/^Fächer/}).click();await page.getByRole('button',{name:/^BWL,/}).click();
  await expect(page.getByText('Inhalt folgt',{exact:true}).first()).toBeVisible();
 });
 
@@ -710,8 +717,7 @@ test('long glossary definitions scroll inside the popup without losing its actio
  await expect(page.getByRole('button',{name:'Variable Kosten',exact:true})).toHaveAttribute('aria-expanded','true');
 });
 
-test('modal actions respect simulated three-button, gesture and landscape system insets', async ({ page }) => {
-  await isolateCloud(page);
+async function simulateSystemInsets(page: Page) {
   // Chromium cannot display Android's OS bars. Feed realistic CSS-env measurements
   // through the actual safe-area provider to exercise each modal's layout instead.
   await page.addInitScript(() => {
@@ -730,6 +736,67 @@ test('modal actions respect simulated three-button, gesture and landscape system
       } });
     };
   });
+}
+
+test('the five shortcuts, page titles and home settings respect mobile safe areas', async ({ page }) => {
+  await isolateCloud(page);
+  await simulateSystemInsets(page);
+  await page.goto('/');
+  const header = page.getByTestId('page-header');
+  const safeArea = page.getByTestId('bottom-safe-area');
+  const menu = safeArea.getByRole('tablist', { name: 'Schnellmenü' });
+  const tabs = menu.getByRole('tab');
+  const tab = (name: string) => menu.getByRole('tab', { name, exact: true });
+  await expect(tabs).toHaveText(['Start', 'Fächer', 'Suche', 'Karteikarten', 'MeiWik']);
+  await expect(header.getByRole('heading', { name: 'Start', exact: true })).toBeVisible();
+  await expect(tab('Start')).toHaveAttribute('aria-selected', 'true');
+  await expect(tab('MeiWik').getByTestId('meiwik-app-icon')).toBeVisible();
+  const settings = page.getByRole('button', { name: 'Einstellungen', exact: true });
+
+  for (const scenario of [
+    { width: 320, height: 650, insets: { top: 24, right: 0, bottom: 48, left: 0 } },
+    { width: 393, height: 720, insets: { top: 47, right: 0, bottom: 34, left: 0 } },
+    { width: 720, height: 393, insets: { top: 0, right: 48, bottom: 24, left: 24 } },
+  ]) {
+    await page.setViewportSize({ width: scenario.width, height: scenario.height });
+    await page.evaluate(insets => {
+      (window as typeof window & { mywikTestInsets?: typeof insets }).mywikTestInsets = insets;
+      window.dispatchEvent(new Event('resize'));
+    }, scenario.insets);
+    await expect(safeArea).toHaveCSS('padding-bottom', `${scenario.insets.bottom}px`);
+    const boxes = await Promise.all((await tabs.all()).map(item => item.boundingBox()));
+    for (const [index, box] of boxes.entries()) {
+      expect(box).not.toBeNull();
+      expect(box!.height).toBeGreaterThanOrEqual(44);
+      expect(box!.x).toBeGreaterThanOrEqual(scenario.insets.left);
+      expect(box!.x + box!.width).toBeLessThanOrEqual(scenario.width - scenario.insets.right + 1);
+      expect(box!.y + box!.height).toBeLessThanOrEqual(scenario.height - scenario.insets.bottom + 1);
+      if (index) expect(box!.x).toBeGreaterThan(boxes[index - 1]!.x);
+    }
+    const menuBox = await menu.boundingBox();
+    const settingsBox = await settings.boundingBox();
+    expect(settingsBox!.y + settingsBox!.height).toBeLessThanOrEqual(menuBox!.y + 1);
+  }
+
+  await settings.click();
+  await expect(header.getByRole('heading', { name: 'Einstellungen', exact: true })).toBeVisible();
+  await expect(settings).toHaveCount(0);
+  await expect(page.getByRole('button', { name: 'Nach Updates schauen', exact: true })).toBeVisible();
+  await tab('Suche').click();
+  await expect(header.getByRole('heading', { name: 'Begriffsglossar', exact: true })).toBeVisible();
+  await expect(page.getByRole('textbox', { name: 'Glossar durchsuchen', exact: true })).toBeVisible();
+  await tab('Karteikarten').click();
+  await expect(header.getByRole('heading', { name: 'Karteikarten', exact: true })).toBeVisible();
+  await tab('MeiWik').click();
+  await expect(header.getByRole('heading', { name: 'MeiWik', exact: true })).toBeVisible();
+  await page.getByRole('button', { name: 'Artikel auswählen', exact: true }).click();
+  await expect(header.getByRole('heading', { name: 'Fächer', exact: true })).toBeVisible();
+  await expect(tab('Fächer')).toHaveAttribute('aria-selected', 'true');
+});
+
+test('modal actions respect simulated three-button, gesture and landscape system insets', async ({ page }) => {
+  await isolateCloud(page);
+  await simulateSystemInsets(page);
   await page.goto('/');
   await expect(page.getByRole('button', { name: /^Fächer/ })).toBeVisible();
   await openDeckungsbeitrag(page);
@@ -773,7 +840,7 @@ test('modal actions respect simulated three-button, gesture and landscape system
     await assertSafeAction(page.getByRole('button', { name: 'Im Lernfach speichern', exact: true }));
     await page.getByRole('button', { name: 'Schließen', exact: true }).click();
     await expect(page.getByRole('dialog')).toBeHidden();
-    await page.getByRole('button', { name: 'MeiWik Chat öffnen', exact: true }).click();
+    await page.getByRole('tab', { name: 'MeiWik', exact: true }).click();
     await expect(page.getByRole('dialog')).toBeVisible();
     await assertSafeAction(page.getByRole('button', { name: 'An MeiWik senden', exact: true }));
     await page.getByRole('button', { name: 'Chat verkleinern', exact: true }).click();
@@ -855,7 +922,7 @@ test('1,370 offline articles can be browsed through a bounded glossary and open 
   }, { index, articles: fixture.articles });
   await page.reload();
   await expect(page.getByRole('button',{name:new RegExp('Begriffsglossar.*'+index.glossary.length)})).toBeVisible();
-  await page.getByRole('button',{name:'Glossar durchsuchen',exact:true}).click();
+  await page.getByRole('tab', { name: 'Suche', exact: true }).click();
   const list = page.getByTestId('glossary-list');
   const search = page.getByRole('textbox',{name:'Glossar durchsuchen',exact:true});
   await expect(list.getByRole('button').first()).toBeVisible();
@@ -877,7 +944,7 @@ test('a long article opens at its saved section before presenting the reading vi
   await page.getByRole('button',{name:/^Logistik,/}).click();
   await openLogisticsChapter(page,/1\.2\.5\.1 ABC-Analyse/);
   await expect(page.getByRole('heading',{name:'Transferfrage',exact:true})).toBeInViewport();
-  await expect(page.getByRole('heading',{name:'ABC-Analyse',exact:true})).not.toBeInViewport();
+  await expect(page.getByTestId('page-header').getByRole('heading',{name:'ABC-Analyse',exact:true})).toBeInViewport();
 });
 
 test('settings check for updates and open the published APK download', async ({ page }) => {
@@ -896,7 +963,7 @@ test('settings check for updates and open the published APK download', async ({ 
     }] });
   });
   await page.goto('/');
-  await page.getByRole('button', { name: 'Einstellungen', exact: true }).click();
+  await openSettings(page);
   const check = page.getByRole('button', { name: 'Nach Updates schauen', exact: true });
   await expect(page.getByText(`Installierte Version ${appConfig.version}`, { exact: true })).toBeVisible();
   await check.click();

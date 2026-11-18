@@ -1,7 +1,7 @@
 import React, {useDeferredValue,useEffect,useMemo,useRef,useState} from 'react';
 import {FlatList,Keyboard,Pressable,StyleSheet,Text,TextInput,View} from 'react-native';
 import {ChevronDown,ChevronUp,Search} from 'lucide-react-native';
-import {Body,Button,Heading,Muted,Panel,Row,useTheme} from '../components/ui';
+import {Body,Button,Muted,Panel,Row,useTheme} from '../components/ui';
 import {content,useContentIndex} from '../services/contentSync';
 import {useStore} from '../state/Store';
 import {CardEditor} from '../components/CardEditor';
@@ -86,7 +86,6 @@ export function GlossaryScreen({initialTermId,initialContext,onContextChange,onA
    scrollEventThrottle={250} contentContainerStyle={{paddingHorizontal:11,paddingTop:14,paddingBottom:24}}
    ItemSeparatorComponent={()=> <View style={{height:10}}/>}
    ListHeaderComponent={<View style={{gap:10,marginBottom:10}}>
-    <Heading>Begriffsglossar</Heading>
     <View style={[styles.search,{backgroundColor:colors.surface,borderColor:colors.border}]}>
      <Search size={19} color={colors.muted}/><TextInput accessibilityLabel="Glossar durchsuchen" value={search} onChangeText={searchFor} placeholder="Begriff suchen …" placeholderTextColor={colors.muted} style={{flex:1,color:colors.text,fontSize:16,minHeight:44}}/>
      {!!search&&<Button title="Suche leeren" onPress={()=>searchFor('')}/>}

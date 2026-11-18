@@ -20,10 +20,6 @@ function usePalette() {
   return colors;
 }
 
-function Title({ children }: { eyebrow?: string; children: React.ReactNode }) {
-  const c = usePalette();
-  return <View style={styles.title}><Text accessibilityRole="header" style={[styles.heading, { color: c.text }]}>{children}</Text></View>;
-}
 function Copy({ children, muted = false }: { children: React.ReactNode; muted?: boolean }) {
   const c = usePalette();
   return <Text style={[styles.copy, { color: muted ? c.muted : c.text }]}>{children}</Text>;
@@ -59,7 +55,6 @@ export function SuccessScreen() {
   const days = Array.from({ length: new Date(month.getFullYear(), month.getMonth() + 1, 0).getDate() }, (_, index) => new Date(month.getFullYear(), month.getMonth(), index + 1));
   const rows = [{ label: 'App besucht', threshold: 0 }, { label: '5 Minuten', threshold: 300 }, { label: '15 Minuten', threshold: 900 }, { label: '30 Minuten', threshold: 1800 }, { label: '60 Minuten', threshold: 3600 }, { label: 'Tagesstern', threshold: -1 }];
   return <ScrollView contentContainerStyle={styles.page}>
-    <Title>Deine Erfolge</Title>
     <View style={[styles.row, { justifyContent: 'space-between' }]}><Action title="‹" onPress={() => {setFollowCurrent(false);setMonth(value => new Date(value.getFullYear(), value.getMonth() - 1, 1))}} /><Text style={[styles.sectionTitle, { color: c.text }]}>{month.toLocaleDateString('de-DE', { month: 'long', year: 'numeric' })}</Text><Action title="›" onPress={() => {setFollowCurrent(false);setMonth(value => new Date(value.getFullYear(), value.getMonth() + 1, 1))}} /></View>
     <Action title="Aktueller Monat" onPress={()=>{setFollowCurrent(true);setMonth(new Date(new Date(now).getFullYear(),new Date(now).getMonth(),1))}}/><Copy muted>Alle folgenden Summen beziehen sich auf den ausgewählten Monat.</Copy>
     <Box><View style={{ flexDirection: 'row' }}><View style={{ width: 96 }}><View style={styles.dayCell} />{rows.map(row => <View key={row.label} style={styles.dayCell}><Text style={{ color: c.muted, fontSize: 12 }}>{row.label}</Text></View>)}</View><ScrollView horizontal showsHorizontalScrollIndicator contentContainerStyle={{ paddingBottom: 8 }}>{days.map(date => { const key = dayKey(date); const today = key === dayKey(new Date(now)); return <View key={key} style={{ width: 32 }}><View style={styles.dayCell}><Text style={{ color: today ? c.accent : c.muted, fontWeight: today ? '700' : '400' }}>{date.getDate()}</Text></View>{rows.map(row => <View key={row.label} style={styles.dayCell}><Text accessibilityLabel={`${date.getDate()}. ${row.label}: ${reached(key, row.threshold) ? 'erreicht' : 'nicht erreicht'}`} style={{ color: reached(key, row.threshold) ? row.threshold === -1 ? c.gold : c.accent : c.border, fontSize: 18 }}>{reached(key, row.threshold) ? row.threshold === -1 ? '★' : '☑' : '□'}</Text></View>)}</View>; })}</ScrollView></View></Box>
@@ -78,18 +73,26 @@ export function LaterScreen({ onArticle }: { onArticle: (id: string) => void }) 
   const items = store.data.later.filter(item => includeDone || item.status === 'open').sort((a, b) => b.updatedAt - a.updatedAt);
   const kindLabels = { missing: 'Wissen ergänzen', wording: 'Formulierung verbessern', example: 'Beispiel ergänzen', structure: 'Aufbau verbessern', depth: 'Vertiefen' };
   return <ScrollView contentContainerStyle={styles.page}>
-    <Title>Für später</Title><View style={styles.row}><Switch accessibilityLabel="Erledigte Einträge anzeigen" value={includeDone} onValueChange={setIncludeDone} /><Copy>Erledigte anzeigen</Copy></View>
+    <View style={styles.row}><Switch accessibilityLabel="Erledigte Einträge anzeigen" value={includeDone} onValueChange={setIncludeDone} /><Copy>Erledigte anzeigen</Copy></View>
     {!items.length && <Box><Copy>Keine offenen Einträge.</Copy></Box>}
     {items.map(item => <Box key={item.id}><Text style={[styles.eyebrow, { color: c.accent }]}>{subjectName(item.subjectId)} · {kindLabels[item.kind]}</Text><Text style={[styles.sectionTitle, { color: c.text }]}>{item.question}</Text><Copy muted>{articleName(item.articleId)}{item.sectionId ? ` · Abschnitt ${item.sectionId}` : ''}</Copy><Action title={expanded === item.id ? 'Details schließen' : 'Kontext & Verbesserungsidee'} onPress={() => setExpanded(expanded === item.id ? null : item.id)} />{expanded === item.id && <><Copy>Textstelle: {item.sourceText || 'Gesamter Artikel'}</Copy><Copy>MeiWiks Antwort: {item.answer}</Copy><Copy>Vermutete Wissenslücke: {item.suspectedGap}</Copy><Copy>Vorschlag: {item.suggestion}</Copy></>}<View style={styles.row}>{item.articleId && <Action title="Zum Artikel" onPress={() => onArticle(item.articleId!)} />}<Action title={item.status === 'done' ? 'Wieder öffnen' : 'Als erledigt markieren'} onPress={() => store.updateLater(item.id, item.status === 'done' ? 'open' : 'done')} /></View></Box>)}
   </ScrollView>;
 }
 
-export function RecommendationsScreen({ onArticle }: { onArticle: (id: string) => void }) {
+export function RecommendationsScreen({ onArticle, onSubjects }: { onArticle: (id: string) => void; onSubjects: () => void }) {
   const now=useCurrentTime();
   const store = useStore();
   const c = usePalette();
   const items = store.data.recommendations.filter(item => item.state === 'open' || item.state === 'snoozed' && item.dueAt <= now);
-  return <ScrollView contentContainerStyle={styles.page}><Title>MeiWik Empfehlungen</Title>{!items.length && <Box><Copy>Keine Empfehlungen fällig.</Copy></Box>}{items.map(item => <Box key={item.id}><Text style={[styles.eyebrow, { color: c.accent }]}>{subjectName(item.subjectId)}</Text><Text style={[styles.sectionTitle, { color: c.text }]}>{item.title}</Text><Copy>{item.reason}</Copy><View style={styles.row}><Action title="Artikel wiederholen" primary onPress={() => onArticle(item.articleId)} /><Action title="Geschafft" onPress={() => store.updateRecommendation(item.id, 'done')} /><Action title="Morgen" onPress={() => store.updateRecommendation(item.id, 'snoozed')} /><Action title="Verwerfen" onPress={() => store.updateRecommendation(item.id, 'dismissed')} /></View></Box>)}</ScrollView>;
+  return <ScrollView contentContainerStyle={styles.page}>
+    <Box>
+      <Copy>Öffne einen Artikel und tippe unten auf MeiWik, um eine Frage zum Artikel zu stellen.</Copy>
+      <Action title="Artikel auswählen" primary onPress={onSubjects} />
+    </Box>
+    <Text accessibilityRole="header" style={[styles.sectionTitle, { color: c.text }]}>Empfehlungen</Text>
+    {!items.length && <Box><Copy>Keine Empfehlungen fällig.</Copy></Box>}
+    {items.map(item => <Box key={item.id}><Text style={[styles.eyebrow, { color: c.accent }]}>{subjectName(item.subjectId)}</Text><Text style={[styles.sectionTitle, { color: c.text }]}>{item.title}</Text><Copy>{item.reason}</Copy><View style={styles.row}><Action title="Artikel wiederholen" primary onPress={() => onArticle(item.articleId)} /><Action title="Geschafft" onPress={() => store.updateRecommendation(item.id, 'done')} /><Action title="Morgen" onPress={() => store.updateRecommendation(item.id, 'snoozed')} /><Action title="Verwerfen" onPress={() => store.updateRecommendation(item.id, 'dismissed')} /></View></Box>)}
+  </ScrollView>;
 }
 
 function AndroidUpdateSettings({ installedVersion }: { installedVersion: string }) {
@@ -187,7 +190,7 @@ export function SettingsScreen() {
   };
   const labels: Record<ReminderCategory, string> = { learning: 'Lernerinnerung', recommendations: 'MeiWik Empfehlungen', news: 'Neues in der App' };
   const syncLabels = { local: 'Nur auf diesem Gerät', syncing: 'Wird synchronisiert …', synced: 'Mit der Cloud synchronisiert', error: 'Synchronisierung benötigt Aufmerksamkeit' };
-  return <ScrollView contentContainerStyle={styles.page} keyboardShouldPersistTaps="handled"><Title>Einstellungen</Title>
+  return <ScrollView contentContainerStyle={styles.page} keyboardShouldPersistTaps="handled">
     {canCheckAndroidUpdates && <AndroidUpdateSettings installedVersion={appConfig.version} />}
     <Box><Text style={[styles.sectionTitle, { color: c.text }]}>Darstellung</Text><View style={styles.row}>{([['system', 'Wie Gerät'], ['light', 'Hell'], ['dark', 'Dunkel']] as [ThemeMode, string][]).map(([mode, label]) => <Action key={mode} title={label} primary={store.data.settings.theme === mode} onPress={() => store.updateSettings({ theme: mode })} />)}</View></Box>
     <Box><Text style={[styles.sectionTitle, { color: c.text }]}>Dein Konto</Text>{store.user ? <><Copy>{store.user.email ?? 'Angemeldet'}</Copy><Copy muted>{syncLabels[store.syncState]}</Copy><View style={styles.row}><Action title="Jetzt synchronisieren" disabled={busy || !store.online} onPress={() => run(store.syncNow)} /><Action title="Abmelden" disabled={busy} onPress={() => run(store.signOut)} /></View></> : <><Input label="E-Mail" keyboardType="email-address" value={email} onChangeText={setEmail} /><Input label="Passwort" value={password} onChangeText={setPassword} secureTextEntry /><View style={styles.row}><Action title="Anmelden" primary disabled={busy || !email.trim() || !password || !store.online} onPress={() => run(() => store.signIn(email.trim(), password))} /><Action title="Konto erstellen" disabled={busy || !email.trim() || password.length < 6 || !store.online} onPress={() => run(() => store.register(email.trim(), password))} /></View><Copy muted>Für ein neues Konto mindestens 6 Zeichen verwenden.</Copy></>}</Box>

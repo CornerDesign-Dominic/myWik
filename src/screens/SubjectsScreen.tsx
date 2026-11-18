@@ -1,7 +1,7 @@
 import React, { useMemo, useState } from 'react';
 import { FlatList, Pressable, StyleSheet, Text, View } from 'react-native';
 import { BookOpen, Building2, Calculator, Check, ChevronDown, ChevronRight, CircleHelp, Compass, Flag, Globe2, Receipt, Scale, Star, Target, Truck, Users, Workflow } from 'lucide-react-native';
-import { Heading, Muted, Page, useTheme } from '../components/ui';
+import { Muted, Page, useTheme } from '../components/ui';
 import { useContentIndex } from '../services/contentSync';
 import { useStore } from '../state/Store';
 import type { Chapter } from '../types';
@@ -12,7 +12,7 @@ export function SubjectsScreen({ onSubject }: { onSubject: (subjectId: string) =
   const { chapters, subjects } = useContentIndex();
   const { colors } = useTheme();
   const { data } = useStore();
-  return <Page><Heading>Themen</Heading>
+  return <Page>
     {subjects.map(subject => {
       const Icon = subjectIcons[subject.icon] ?? BookOpen;
       const subjectChapters = chapters.filter(chapter => chapter.subjectId === subject.id);
@@ -28,10 +28,9 @@ export function SubjectsScreen({ onSubject }: { onSubject: (subjectId: string) =
 }
 
 export function ChaptersScreen({ subjectId, onArticle, initialCollapsed, onCollapsedChange }: { subjectId: string; onArticle: (articleId: string) => void; initialCollapsed?:Record<string,boolean>; onCollapsedChange?:(value:Record<string,boolean>)=>void }) {
-  const { chapters, subjects } = useContentIndex();
+  const { chapters } = useContentIndex();
   const { colors } = useTheme();
   const { data } = useStore();
-  const subject = subjects.find(item => item.id === subjectId);
   const [collapsed, setCollapsed] = useState<Record<string, boolean>>(initialCollapsed??{});
   const toggle = (id:string)=>{const value={...collapsed,[id]:!collapsed[id]};setCollapsed(value);onCollapsedChange?.(value)};
   const childrenByParent = useMemo(() => {
@@ -68,7 +67,6 @@ export function ChaptersScreen({ subjectId, onArticle, initialCollapsed, onColla
   };
   return <FlatList data={visible} keyExtractor={row => row.chapter.id} renderItem={renderChapter}
     testID="chapter-list"
-    ListHeaderComponent={<Heading>{subject?.title ?? 'Fach'}</Heading>}
     contentContainerStyle={{ paddingHorizontal: 11, paddingTop: 14, paddingBottom: 24 }}
     initialNumToRender={18} windowSize={7} />;
 }
