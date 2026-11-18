@@ -1,0 +1,34 @@
+# Stoffabgleich Marketing und Vertrieb, Kapitel 3
+
+Grundlage ist der DIHK-Textband „Marketing und Vertrieb“ für Wirtschaftsfachwirte. Geprüft wurden PDF-Seiten 97–109 (Buchseiten 103–115) sowie PDF-Seiten 136–137 (Buchseiten 146–147) für Lösungshinweis 9. Die Kapitelabbildungen, die unnummerierte Kundenumsatzkurve und das Rechenschema wurden zusätzlich am Scan geprüft.
+
+| Buchseite / PDF-Seite | Stoff und überprüfbares Lernziel | Zielartikel | Stand |
+| --- | --- | --- | --- |
+| 103–104 / 97–98 | Vertriebsmanagement einordnen. Strategische Entscheidungen und operative Aufgaben unterscheiden und in einem Angebot alle sechs Vertriebsfunktionen erkennen. Schnittstellen zu Marketing und Leistungserstellung erklären. | `marketing-vertrieb` | Vollständig erklärt |
+| 104 / 98 | Qualifikationsziele und Trainingsinhalte unterscheiden. Kontakt, Bedarf, Argumentation und Abschluss führen. Materielle und immaterielle Anreize nach ihrer möglichen Wirkung beurteilen. | `marketing-verkaufsgespraech` | Vollständig erklärt |
+| 105–106 / 99–100 | Kundenzentrierung, Bindung, Datenbank, ganzheitliche Kontaktschnittstellen und Nutzen erläutern. Cross- und Up-Selling sowie analytisches, kommunikatives und operatives CRM unterscheiden und verknüpfen. | `marketing-kundenbeziehungsmanagement` | Vollständig erklärt |
+| 106–108 / 100–102 | Eindimensionale Gliederung nach Funktion und nach Objekt (Produkt, Kunde, Gebiet) unterscheiden. Für den Fall begründet wählen, Vorteile und Nachteile benennen und ein Organigramm ableiten. Stab-Linie erklären. Projekte, Warengruppen und Teams als weitere Formen erkennen. | `marketing-vertriebsorganisation` | Vollständig erklärt |
+| 107 / 101 | Schlüsselaccounts identifizieren, für Vertragsverhandlung, Beratung und Koordination betreuen und Nutzen sowie Abhängigkeiten beurteilen. | `marketing-key-account-management` | Vollständig erklärt |
+| 108 / 102 | Zwei- und dreidimensionale Organisation vergleichen. Produkt–Funktion, Kunde–Funktion, Kunde–Produkt, Kunde–Produkt–Funktion und Produkt–Region–Funktion bilden. Entscheidungen und Eskalation bei überlappenden Befugnissen klären. | `marketing-vertrieb-matrix` | Vollständig erklärt |
+| 108–109 / 102–103 | Planung, Information, Koordination und Kontrolle mit Entscheidungsverantwortung einordnen. Langfristige Erfolgspotenziale für Kunden, Produkte und Systeme und operative Soll-Ist-Überwachung unterscheiden. Werkzeuge sowie Anwendungsfelder auswählen. | `marketing-vertriebscontrolling` | Vollständig erklärt |
+| 109–110 / 103–104 | Internes, wettbewerbsbezogenes und funktionsbezogenes Benchmarking abgrenzen. Vergleich planen, definierte Daten erheben, Lücke und Ursachen analysieren, Maßnahme umsetzen und erneut messen. | `marketing-vertriebsbenchmarking` | Vollständig erklärt |
+| 110–111 / 104–105 | Kunden absteigend sortieren, Anteile und Klassen bilden, beide kumulierten Achsen der Konzentrationskurve lesen, Abhängigkeit bewerten und Ressourcen sinnvoll differenzieren. | `marketing-kunden-abc` | Vollständig erklärt |
+| 111–112 / 105–106 | Segmentebene passend zur Frage auswählen. Erlösschmälerungen, variable Produktkosten und zurechenbare Stufen von Auftrags-, Besuchs- und sonstigen Kundenkosten getrennt behandeln. Kundendeckungsbeitrag I–III berechnen und Grenzen der Schlussfolgerung erklären. | `marketing-kundendeckungsbeitrag` | Vollständig erklärt |
+| 112–113 / 106–107, Aufgabenergänzung 147 / 137 | Absolute und relative, zeitraum- und zeitpunktbezogene Kennzahlen einordnen. Zusammenhang, Entwicklung und Zerlegung erkennen. Umsatz je Sorte, Deckungsbeitrag, Auftragseingangs-, Storno-, Reklamationsquote, Schlagzahl, Pareto-Anteile und neue Standorte sinnvoll interpretieren. | `marketing-vertriebskennzahlen` | Vollständig erklärt |
+| 113–114 / 107–108 | Strategie, vier Perspektiven, Ziele, Kennzahlen, Vorgaben, Maßnahmen und Verantwortung verbinden. Wirkungsannahmen frühzeitig prüfen und die Strategie bei Bedarf anpassen. | `marketing-vertriebs-scorecard` | Vollständig erklärt |
+| 114–115 und 146–147 / 108–109 und 136–137 | Je zwei fallbezogene Vorteile direkter und indirekter Distribution formulieren. Gebietsorganisation erklären und mit drei Merkmalen begründen. Drei aussagekräftige Kennzahlen wählen, berechnen und ihren Nutzen erläutern. | `marketing-vertrieb-transferfall` | Eigenständiger Transferfall vollständig ausgearbeitet |
+
+## Visueller Abgleich und eigene Darstellungen
+
+- Abb. 3.1 (Buch 106) trennt eindimensionale Linie mit Funktions-/Objektgliederung von mehrdimensionaler Matrix und staffelt Objekte nach Produkten, Kunden und Regionen. Die Artikel erklären ergänzende Stäbe und die Unterschiede zwischen reiner Matrix und Tensor. Ein eigenes Beispiel leitet Teams und Verantwortlichkeiten ab.
+- Abb. 3.2 (Buch 110) zeigt vier aufeinanderfolgende Benchmarkingphasen. Das neue Beispiel quantifiziert die Angebotslücke in Stunden und ergänzt eine erneute Messung nach Änderung des Ablaufs.
+- Die Kundenkonzentrationskurve (Buch 111) startet bei null und zeigt auf der x-Achse Kundenanteile sowie auf der y-Achse Umsatzanteile. Der Scan bestätigt für Gruppe C 3 % Umsatz und 54 % der Kunden. Die OCR hat an dieser Stelle das Prozentzeichen bzw. die Ziffer fehlerhaft erkannt. Das eigene Beispiel bleibt bei 100 Kunden und 1 Mio. € Umsatz, mit kumulierten Punkten (0, 0), (20, 60), (40, 75) und (100, 100) in Prozent.
+- Das Kundendeckungsbeitrags-Schema (Buch 112) zieht erst Nachlässe und variable Kosten ab, dann Auftragskosten sowie Besuchskosten und sonstige kundenspezifische Einzelkosten. Die neue Rechnung zeigt alle Zwischenstufen und nennt die jeweilige Bezugsperiode.
+- Abb. 3.3 (Buch 113) zeigt die Strategie im Zentrum sowie Finanzen, Beschäftigte, Prozesse und Kunden. Das eigene Beispiel zeigt je Perspektive Ziel, Kennzahl, Sollwert, Maßnahme und verantwortliche Rolle sowie eine überprüfbare Wirkungsannahme.
+- Die Transferaufgabe orientiert sich an den gefragten Fähigkeiten und verwendet eine neue Situation, zusätzliche Risiken, eigene Daten und ausformulierte Lösungen. Sie gibt die Nenner der Quoten ausdrücklich an.
+
+## Fachliche Ergänzungen
+
+Ergänzt wurden eine Diagnose von Preiseinwänden, ein Beispiel für Fehlanreize, eine Eskalationsregel für Matrixkonflikte, der Umgang mit fehlender Vergleichbarkeit im Benchmarking, Konzentrationsrisiken trotz hoher Umsätze, Vermeidbarkeit von Kosten bei Segmententscheidungen und die einheitliche Definition von Bezugsgrößen für Vertriebskennzahlen. Vergleichs- und Zielwerte sind beispielbezogen. Die Buchlösung nennt die Pareto-Faustregel 80/20, die in myWik ausdrücklich als zu überprüfende Verteilung behandelt wird.
+
+Die gescannten QR-Verweise auf ergänzende Videos oder Materialien waren kein Teil des seitenbezogenen Abgleichs. Inhalt und Beispielrechnungen beruhen auf den angegebenen Buchseiten beziehungsweise auf den ausdrücklich als eigene Anwendungen gekennzeichneten Ergänzungen.

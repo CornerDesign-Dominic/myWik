@@ -13,6 +13,7 @@ import { MeiWikAvatar } from '../components/MeiWikAvatar';
 import { ModalLayout } from '../components/ModalLayout';
 import { InventoryDiagram } from '../components/InventoryDiagram';
 import { AbcDiagram } from '../components/AbcDiagram';
+import { ArticleLineDiagram, ArticleMatrixDiagram } from '../components/ArticleDiagrams';
 
 const statusLabels: Record<ArticleStatus, string> = { open: 'Offen', unclear: 'Noch unklar', working: 'Weiterarbeiten', done: 'Abgeschlossen' };
 
@@ -24,6 +25,8 @@ function SectionExtras({ section, onCard, onNote, onChat }: { section: ArticleSe
   return <>
     {section.inventoryChart && <InventoryDiagram chart={section.inventoryChart} />}
     {section.abcChart && <AbcDiagram chart={section.abcChart} />}
+    {section.matrix && <ArticleMatrixDiagram matrix={section.matrix} />}
+    {section.lineChart && <ArticleLineDiagram chart={section.lineChart} />}
     {section.tabs?.length ? <View style={[styles.example, { backgroundColor: colors.highlight, borderColor: colors.border }]}>
       <Row style={{ gap: 6 }}>{section.tabs.map((item, index) => <Pressable key={`${index}:${item.title}`} accessibilityRole="tab" aria-selected={selectedTab===index} accessibilityState={{ selected: selectedTab === index }} onPress={() => setTab(index)} style={[styles.tab, { backgroundColor: selectedTab === index ? colors.accentSoft : 'transparent' }]}><Text style={{ color: selectedTab === index ? colors.accent : colors.muted, fontWeight: '600', fontSize: 13 }}>{item.title}</Text></Pressable>)}</Row>
       <Body>{section.tabs[selectedTab]?.content}</Body>

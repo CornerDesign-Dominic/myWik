@@ -1,6 +1,7 @@
 import type { Article, Chapter, GlossaryTerm, Subject } from '../types';
 import { logisticsArticles, logisticsChapters, logisticsGlossary } from './logistik';
 import { transferSection } from './logistik-standard';
+import { marketingArticles, marketingChapters, marketingGlossary } from './marketing';
 
 export const subjects: Subject[] = [
   { id: 'bwl', title: 'BWL', subtitle: 'Betriebliche Entscheidungen verstehen', icon: 'building' },
@@ -32,11 +33,7 @@ export const chapters: Chapter[] = [
   { id: 'personal-leittext', subjectId: 'personal', parentId: 'personal-methoden', number: '1.1.1', title: 'Leittextmethode', articleId: 'leittextmethode' },
   { id: 'personal-planung', subjectId: 'personal', number: '2', title: 'Personalplanung und Personalbeschaffung' },
   { id: 'personal-entwicklung', subjectId: 'personal', number: '3', title: 'Personalbetreuung und Personalentwicklung' },
-  { id: 'marketing-planung', subjectId: 'marketing', number: '1', title: 'Marketingplanung' },
-  { id: 'marketing-analyse', subjectId: 'marketing', parentId: 'marketing-planung', number: '1.1', title: 'Analyse der Ausgangssituation' },
-  { id: 'marketing-ziele', subjectId: 'marketing', parentId: 'marketing-planung', number: '1.2', title: 'Marketingziele und Strategien' },
-  { id: 'marketing-mix', subjectId: 'marketing', number: '2', title: 'Marketinginstrumente' },
-  { id: 'marketing-vertrieb', subjectId: 'marketing', number: '3', title: 'Vertrieb und Kundenmanagement' },
+  ...marketingChapters,
   { id: 'logistik-einkauf', subjectId: 'logistik', number: '1', title: 'Einkauf und Beschaffung' },
   { id: 'logistik-grundlagen', subjectId: 'logistik', parentId: 'logistik-einkauf', number: '1.1', title: 'Grundlagen der Logistik' },
   { id: 'logistik-6-r', subjectId: 'logistik', parentId: 'logistik-grundlagen', number: '1.1.1', title: 'Aufgaben der Logistik und die 6 R', articleId: 'aufgaben-der-logistik-und-die-6-r' },
@@ -198,6 +195,7 @@ export const articles: Article[] = [
     ],
   },
   ...logisticsArticles,
+  ...marketingArticles,
 ];
 
 export const glossary: GlossaryTerm[] = [
@@ -210,6 +208,7 @@ export const glossary: GlossaryTerm[] = [
   { id: 'leittextmethode', subjectId: 'personal', term: 'Leittextmethode', definition: 'Handlungsorientierte Ausbildungsmethode, bei der Lernende einen Arbeitsauftrag mithilfe von Leitfragen, Informationen und Kontrollhilfen weitgehend selbstständig planen, ausführen und reflektieren.', articleId: 'leittextmethode' },
   { id: 'vollstaendige-handlung', subjectId: 'personal', term: 'Vollständige Handlung', definition: 'Modell einer selbstständig bewältigten beruflichen Handlung mit den Phasen Informieren, Planen, Entscheiden, Ausführen, Kontrollieren und Bewerten.', example: 'Eine Arbeitsaufgabe wird nicht nur ausgeführt: Lernende planen zuvor ihr Vorgehen und prüfen sowie reflektieren danach das Ergebnis.', articleId: 'leittextmethode' },
   ...logisticsGlossary,
+  ...marketingGlossary,
 ];
 
-export const contentVersion = 7;
+export const contentVersion = 8;

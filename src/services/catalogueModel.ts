@@ -6,6 +6,10 @@ const str=(v:unknown)=>typeof v==='string'&&v.trim().length>0;
 const id=(v:unknown)=>typeof v==='string'&&/^[a-zA-Z0-9_-]+$/.test(v)&&!['__proto__','prototype','constructor'].includes(v);
 const optionalId=(v:unknown)=>v===undefined||id(v);
 const number=(v:unknown)=>typeof v==='number'&&Number.isFinite(v)&&v>=0;
+const pairOfStrings = (v: unknown) => Array.isArray(v) && v.length === 2 && v.every(str);
+const point = (v: unknown) => Array.isArray(v) && v.length === 2 && v.every(number);
+const orderedTicks = (v: unknown) => Array.isArray(v) && v.length >= 2 && v.length <= 8 &&
+  v.every((tick, index) => number(tick) && (index === 0 || v[index - 1] < tick));
 export function isCatalogueIndex(value: unknown): value is ContentIndex {
  if(!object(value)||!number(value.version))return false;
  const{subjects,chapters,articles,glossary}=value;
@@ -47,6 +51,24 @@ const validSection=(s:unknown):boolean=>{
    const total = positions.reduce((sum, p) => sum + p.share, 0);
    if (Math.abs(total - 100) > 0.001 ||
     positions.some((p, i) => i > 0 && positions[i - 1].share < p.share)) return false;
+  }
+  if (s.matrix !== undefined) {
+   const matrix = s.matrix;
+   if (!object(matrix) || !str(matrix.description) || !pairOfStrings(matrix.columns) ||
+    !pairOfStrings(matrix.rows) || !Array.isArray(matrix.cells) || matrix.cells.length !== 2 ||
+    !matrix.cells.every(pairOfStrings)) return false;
+  }
+  if (s.lineChart !== undefined) {
+   const chart = s.lineChart;
+   if (!object(chart) || !str(chart.description) || !str(chart.xLabel) || !str(chart.yLabel)) return false;
+   const { points, xTicks, yTicks, reference } = chart;
+   if (!Array.isArray(points) || points.length < 2 || points.length > 40 ||
+    !points.every(point) || points.some((p, i) => i > 0 && points[i - 1][0] >= p[0]) ||
+    !Array.isArray(xTicks) || !Array.isArray(yTicks) || !orderedTicks(xTicks) || !orderedTicks(yTicks)) return false;
+   if (reference !== undefined && (!Array.isArray(reference) || reference.length !== 2 || !reference.every(point))) return false;
+   const inBounds = ([x, y]: number[]) => x >= xTicks[0] && x <= xTicks[xTicks.length - 1] &&
+    y >= yTicks[0] && y <= yTicks[yTicks.length - 1];
+   if (!points.every(inBounds) || (Array.isArray(reference) && !reference.every(inBounds))) return false;
   }
   return true;
 };

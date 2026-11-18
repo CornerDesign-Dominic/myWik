@@ -1,0 +1,36 @@
+# Buchabgleich Kapitel 4 – Internationale Geschäftsbeziehungen
+
+Grundlage für die Stoffabdeckung ist der bereitgestellte DIHK-Textband Marketing und Vertrieb. „PDF“ bezeichnet die Position im Scan und „Druck“ die gedruckte Buchseite. Die Artikel erläutern den Stoff eigenständig und verwenden eigene Anwendungsfälle.
+
+| PDF | Druck | Stoff und Lernziel | Artikel und Stand |
+|---:|---:|---|---|
+| 110 | 117 | Zweck der Auslandsexpansion, Auswahl des Engagements und Bedeutung interkultureller Kompetenz | `marketing-international`, vollständig erklärt |
+| 111 | 118 | Arbeitsfelder, Informationsbedarf, Freihandel und Protektionismus, nationale und internationale Instrumente, IWF, Weltbank und WTO | `marketing-international`, `marketing-aussenhandel`, vollständig erklärt |
+| 112 | 119 | GATT, GATS, TRIPS und TRIMs unterscheiden. EU-Zollunion, Binnenmarkt und Währungsunion unterscheiden. AWG als Grundsatz mit Ausnahmen einordnen. Grund- und Sonderformen sowie Auslandsagenten zuordnen. | `marketing-aussenhandel`, `marketing-export-import`, `marketing-transithandel`, vollständig erklärt |
+| 113 | 120 | Auslandsagent, CIF-Agent, Handelsmakler und Kommissionär nach Rolle unterscheiden. Waren- und Dienstleistungsexport sowie direkten und indirekten Export abgrenzen und den Absatzweg auswählen. | `marketing-export-import`, vollständig erklärt |
+| 114 | 121 | Waren- und Dienstleistungsimport sowie direkten und indirekten Import unterscheiden. Aktiven und passiven Transithandel nach Sitz und Bezugsgebiet einordnen. | `marketing-export-import`, `marketing-transithandel`, vollständig erklärt |
+| 115 | 122 | Vertragsbeziehungen und Warenweg eines Handelsdreiecks nachvollziehen (Abb. 4.1). Transitgüter und Handelsstandorte einordnen. Lizenzarten, Nutzungsrechte und Vergütung unterscheiden. | `marketing-transithandel`, `marketing-lizenz-franchise`, vollständig erklärt |
+| 116 | 123 | Schutzgegenstand und zuständiges Amt unterscheiden. Internationales Franchising gegenüber Lizenzierung abgrenzen. Chancen und Risiken für beide Vertragsparteien beurteilen. Kooperation definieren. | `marketing-lizenz-franchise`, `marketing-aussenkooperation`, vollständig erklärt |
+| 117 | 124 | Horizontale, vertikale, komplementäre und heterogene Kooperation (Tab. 4.1), Außenhandelsgemeinschaft und Allianz erkennen. Kapitalbasiertes Joint Venture, Nutzen und Konfliktpotenzial einordnen. | `marketing-aussenkooperation`, `marketing-joint-venture`, vollständig erklärt |
+| 118 | 125 | Joint Ventures nach Herkunft, Partnerzahl, Kapitalanteil, Richtung, Schwerpunkt, Dauer, Management und Motiv unterscheiden (Tab. 4.2). Formen der Direktinvestition und organisches oder externes Wachstum unterscheiden. Eintrittskriterien bestimmen. | `marketing-joint-venture`, `marketing-aussenkooperation`, vollständig erklärt |
+| 119 | 126 | Export, Lizenz, Franchise, Joint Venture und eigene Niederlassung anhand von Kapital, Kontrolle, Risiko und Ressourcenort abwägen (Tab. 4.3). Interne und externe Faktoren für die Situationsanalyse bestimmen. Interkulturelle Kommunikation und Kompetenz unterscheiden. | `marketing-aussenkooperation`, `marketing-interkultur`, vollständig erklärt |
+| 120 | 127 | Im Buch genannte Achsen nach Hofstede und Trompenaars/Hampden-Turner erläutern und Machtdistanz, Individualismus, Kollektivismus sowie die historischen Begriffe Maskulinität und Feminität interpretieren. | `marketing-kulturdimensionen`, vollständig erklärt |
+| 121 | 128 | Unsicherheitsvermeidung und Zeitorientierung unterscheiden. Kulturelle Hypothesen prüfen. Sach-, Handlungs-, Selbst- und Sozialkompetenz auf den Marketingmix übertragen. Fallrahmen beurteilen. | `marketing-interkultur`, `marketing-kulturdimensionen`, `marketing-fall-markteintritt`, vollständig erklärt |
+| 122 | 129 | Berufstypischer Fall. Zusammenhang von Kommunikation und Kompetenz erläutern und drei Kulturdimensionen mit Beispielen anwenden. | `marketing-fall-markteintritt`, gleichartige Anforderung mit eigenem Fall und ergänzender Eintrittsentscheidung |
+| 137–138 | 147–148 | Lösung zu Aufgabe 10. Bearbeitungsschritte und Auswahl geeigneter Dimensionen mit dem Übungsfall abgleichen. | `marketing-fall-markteintritt`, Musterlösung vorhanden und am neuen Fall formuliert |
+
+## Abbildungen und Tabellen
+
+Die Seitenbilder 115 und 117–119 wurden visuell geprüft. In Abb. 4.1 werden zwei Verkäufe über den Transithändler und der Warenweg auseinandergehalten. Der zugehörige Artikel unterscheidet Lagergeschäft und Direktlieferung anhand eines unabhängigen Falles. Die Merkmale aus Tab. 4.1 und 4.2 sind einzeln erklärt. Tab. 4.3 dient als Vergleichsrahmen. Kapitalbindung, Risiko und Kontrolle werden differenziert beurteilt, weil sie je nach Geschäft unterschiedlich ausfallen.
+
+Die Zahlenbeispiele sind Ergänzungen. Das Zollbeispiel verwendet hypothetische Sätze. Weitere Beispiele üben Lizenzvergütung mit Mindestbetrag und den Unterschied zwischen Kapitalanteil und Entscheidungsrechten. Der Übungsfall ergänzt eine begründete Markteintrittsentscheidung. Die kulturellen Modelle bleiben auf den im Buch aufgeführten Dimensionen aufgebaut. Ihre Anwendung unterscheidet eine beobachtete Handlung, alternative Erklärungen und die überprüfende Rückfrage.
+
+## Fachliche Präzisierungen
+
+Für die Ausarbeitung wurden folgende Grundlagen am 18. November 2026 überprüft. Zollverfahren, Incoterms, Warenursprung und Ausfuhrbeschränkungen sind mit den vorhandenen Logistikartikeln verknüpft.
+
+- TRIMs betrifft bestimmte Investitionsmaßnahmen mit Bezug zum Warenhandel. GATT, GATS und TRIPS haben eigene Regelungsgegenstände. [WTO-Rechtstexte](https://www.wto.org/english/docs_e/legal_e/legal_e.htm) · [WTO zum Anwendungsbereich von TRIMs](https://www.wto.org/english/tratop_e/invest_e/invest_info_e.htm)
+- Der Vertrag von Lissabon hat die frühere Säulenstruktur beendet. Binnenmarkt, Zollunion und Währungsunion sind unterschiedliche Integrationsschritte. [EU-Vertrag bei EUR-Lex](https://eur-lex.europa.eu/EN/legal-content/summary/treaty-on-european-union.html) · [EU-Binnenmarkt](https://european-union.europa.eu/priorities-and-actions/actions-topic/single-market_en)
+- § 1 AWG geht von der Freiheit des Außenwirtschaftsverkehrs unter Beachtung anwendbarer Einschränkungen aus. Die Einordnung eines konkreten Geschäfts richtet sich nach den einschlägigen Regeln. [§ 1 AWG](https://www.gesetze-im-internet.de/awg_2013/__1.html)
+- Bei CIF fallen Gefahrübergang und Kostenübernahme räumlich auseinander. Selbstständige Vertreter, Makler und Kommissionäre haben unterschiedliche Vertragsrollen. [ICC zu Incoterms 2020](https://library.iccwbo.org/clp/clp-incoterms-qa-2020.htm?AGENT=ICC_UK) · [§ 84 HGB](https://www.gesetze-im-internet.de/hgb/__84.html) · [§ 93 HGB](https://www.gesetze-im-internet.de/hgb/__93.html) · [§ 383 HGB](https://www.gesetze-im-internet.de/hgb/__383.html)
+- Patente, Marken und Designs werden entsprechend Schutzgebiet und Gegenstand unterschiedlichen Behörden zugeordnet. Das Madrider System erstreckt eine Anmeldung auf benannte Vertragsgebiete mit den jeweils anwendbaren Voraussetzungen. [DPMA](https://www.dpma.de/english/index.html) · [EUIPO](https://www.euipo.europa.eu/en/trade-marks) · [EPO](https://www.epo.org/en) · [WIPO](https://www.wipo.int/en/web/madrid-system)

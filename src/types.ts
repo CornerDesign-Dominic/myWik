@@ -15,7 +15,22 @@ export interface AbcChart {
   thresholds: [number, number];
   description: string;
 }
-export interface ArticleSection { id: string; title: string; paragraphs: RichText[][]; tabs?: ExampleTab[]; hint?: { title: string; content: string; label?: string }; inventoryChart?: InventoryChart; abcChart?: AbcChart }
+export interface ArticleMatrix {
+  columns: [string, string];
+  rows: [string, string];
+  cells: [[string, string], [string, string]];
+  description: string;
+}
+export interface ArticleLineChart {
+  xLabel: string;
+  yLabel: string;
+  points: [x: number, y: number][];
+  xTicks: number[];
+  yTicks: number[];
+  reference?: [[number, number], [number, number]];
+  description: string;
+}
+export interface ArticleSection { id: string; title: string; paragraphs: RichText[][]; tabs?: ExampleTab[]; hint?: { title: string; content: string; label?: string }; inventoryChart?: InventoryChart; abcChart?: AbcChart; matrix?: ArticleMatrix; lineChart?: ArticleLineChart }
 export interface Article { id: string; subjectId: string; chapterId: string; title: string; number: string; intro: string; sections: ArticleSection[]; updatedAt: number; version: number }
 export interface GlossaryTerm { id: string; subjectId: string; term: string; definition: string; example?: string; articleId?: string }
 export interface ArticleProgress { articleId: string; status: ArticleStatus; starred: boolean; updatedAt: number; history: { status: ArticleStatus; at: number }[] }

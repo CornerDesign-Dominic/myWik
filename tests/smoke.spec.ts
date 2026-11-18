@@ -848,7 +848,7 @@ test('modal actions respect simulated three-button, gesture and landscape system
   }
 });
 
-async function openLogisticsChapter(page: Page, name: RegExp) {
+async function openChapter(page: Page, name: RegExp) {
   const entry = page.getByRole('button', { name });
   const list = page.getByTestId('chapter-list');
   for (let step = 0; step < 24 && !await entry.count(); step++) {
@@ -864,13 +864,13 @@ test('the logistics catalogue opens an inventory diagram and keeps the case solu
   await page.goto('/');
   await page.getByRole('button', { name: /^Fächer/ }).click();
   await page.getByRole('button', { name: /^Logistik,/ }).click();
-  await openLogisticsChapter(page, /1\.3\.4 Bestellpunkt/);
+  await openChapter(page, /1\.3\.4 Bestellpunkt/);
   await expect(page.getByRole('heading', { name: 'Bestellpunkt, Meldebestand und Bestellrhythmus', exact: true })).toBeVisible();
   await expect(page.locator('svg[viewBox="0 0 320 177"] polyline')).toBeVisible();
   await expect(page.getByText(/Am Tag 0 wird beim Meldebestand/)).toBeVisible();
 
   await page.getByRole('button', { name: 'Zurück', exact: true }).click();
-  await openLogisticsChapter(page, /2\.4 Übungsfall: Bestellzeitpunkt/);
+  await openChapter(page, /2\.4 Übungsfall: Bestellzeitpunkt/);
   await expect(page.getByText(/Ermittle den Meldebestand und den Arbeitstag/)).toBeVisible();
   const solution = page.getByRole('button', { name: /Musterlösung/ });
   await expect(solution).toHaveAttribute('aria-expanded', 'false');
@@ -884,7 +884,7 @@ test('ABC analysis shows the value chart, linked glossary and a path to XYZ', as
   await page.goto('/');
   await page.getByRole('button', { name: /^Fächer/ }).click();
   await page.getByRole('button', { name: /^Logistik,/ }).click();
-  await openLogisticsChapter(page, /1\.2\.5\.1 ABC-Analyse/);
+  await openChapter(page, /1\.2\.5\.1 ABC-Analyse/);
   await expect(page.getByRole('heading', { name: 'ABC-Analyse', exact: true })).toBeVisible();
   const diagram = page.locator('svg[viewBox="0 0 320 211"]');
   await expect(diagram.locator('rect')).toHaveCount(3);
@@ -896,7 +896,20 @@ test('ABC analysis shows the value chart, linked glossary and a path to XYZ', as
   await expect(page.getByRole('heading', { name: 'XYZ-Analyse und ABC-XYZ-Matrix', exact: true })).toBeVisible();
 });
 
-test('1,370 offline articles can be browsed through a bounded glossary and open from disk after reload', async ({ page }) => {
+test('the marketing catalogue opens an offline article, its matrix and its glossary link', async ({ page }) => {
+  await isolateCloud(page);
+  await page.goto('/');
+  await page.getByRole('button', { name: /^Fächer/ }).click();
+  await page.getByRole('button', { name: /^Marketing und Vertrieb,/ }).click();
+  await openChapter(page, /Ansoff-Matrix und Wachstumsstrategien/);
+  await expect(page.getByTestId('page-header').getByRole('heading', { name: 'Ansoff-Matrix und Wachstumsstrategien' })).toBeVisible();
+  await expect(page.getByText('Bestehender Markt', { exact: true })).toBeVisible();
+  await expect(page.getByText('Neuer Markt', { exact: true })).toBeVisible();
+  await page.getByRole('button', { name: 'Ansoff-Matrix', exact: true }).click();
+  await expect(page.getByRole('dialog').getByText('Ansoff-Matrix', { exact: true })).toBeVisible();
+});
+
+test('a large offline catalogue can be browsed through a bounded glossary and read from disk after reload', async ({ page }) => {
   await isolateCloud(page);
   await page.goto('/');
   const fixture = tenfoldCatalogue();
@@ -942,7 +955,7 @@ test('a long article opens at its saved section before presenting the reading vi
   await page.goto('/');
   await page.getByRole('button',{name:/^Fächer/}).click();
   await page.getByRole('button',{name:/^Logistik,/}).click();
-  await openLogisticsChapter(page,/1\.2\.5\.1 ABC-Analyse/);
+  await openChapter(page,/1\.2\.5\.1 ABC-Analyse/);
   await expect(page.getByRole('heading',{name:'Transferfrage',exact:true})).toBeInViewport();
   await expect(page.getByTestId('page-header').getByRole('heading',{name:'ABC-Analyse',exact:true})).toBeInViewport();
 });
