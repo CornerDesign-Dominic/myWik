@@ -2,6 +2,8 @@ name: Android test APK
 
 on:
   workflow_dispatch:
+  push:
+    branches: [release/preview-0.10.0]
 
 permissions:
   contents: read
@@ -79,7 +81,8 @@ jobs:
           version_code=$(node -p "require('./app.json').expo.android.versionCode")
           "$tools/aapt2" dump badging "$apk" > apk-badging.txt
           grep -F "package: name='de.mywik.app.preview' versionCode='$version_code' versionName='$version'" apk-badging.txt
-          "$tools/apksigner" verify --print-certs "$apk"
+          "$tools/apksigner" verify --print-certs "$apk" | tee apk-signature.txt
+          grep -Fx "Signer #1 certificate SHA-256 digest: fac61745dc0903786fb9ede62a962b399f7348f0bb6f899b8332667591033b9c" apk-signature.txt
           unzip -Z1 "$apk" > apk-entries.txt
           grep -Fx 'assets/index.android.bundle' apk-entries.txt
           expected=$(sha256sum assets/generated/catalogue.db | cut -d ' ' -f1)
