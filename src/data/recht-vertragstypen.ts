@@ -2,6 +2,9 @@ import type { Article, ArticleSection, Chapter, GlossaryTerm, RichText } from '.
 
 const subjectId = 'recht';
 const updatedAt = Date.UTC(2026, 10, 18);
+const revisionDate = Date.UTC(2026, 10, 19);
+const revised = new Set(['vertragstypen', 'miete-pacht-leihe', 'leasing', 'darlehen', 'umtausch-widerruf']);
+const creditReform = 'BGBl. 2026 I Nr. 139 · https://recht.bund.de/bgbl/1/2026/139/VO';
 const id = (slug: string) => `recht-${slug}`;
 const text = (value: string): RichText => ({ text: value });
 const term = (slug: string, label: string): RichText => ({ text: label, termId: id(`vt-begriff-${slug}`) });
@@ -18,12 +21,15 @@ const check = (id: string, title: string, question: string, answer: string): Art
 const transfer = (question: string, answer: string) => check('transferfrage', 'Transferfrage', question, answer);
 const law = (bgb: string, ...links: string[]) => section('quellen', 'Amtliche Rechtsgrundlagen',
   `Stand 18.11.2026 · ${bgb}`, ...links);
+const currentLaw = (references: string, ...links: string[]) => section('quellen', 'Amtliche Rechtsgrundlagen',
+  `Stand 19.11.2026 · ${references}`, ...links);
 const bgb = (number: string) => `https://www.gesetze-im-internet.de/bgb/__${number}.html`;
 const hgb = (number: string) => `https://www.gesetze-im-internet.de/hgb/__${number}.html`;
 
 interface Unit {
   slug: string;
   parent?: string;
+  added?: boolean;
   number: string;
   title: string;
   intro: string;
@@ -38,11 +44,12 @@ const units: Unit[] = [
       section('einordnung', 'Vom Sachverhalt zum Vertragstyp',
         'Ein Verkauf begründet die Pflicht zur Übergabe und Eigentumsverschaffung. Beim Dienst stehen vereinbarte Tätigkeiten im Mittelpunkt, beim Werk der vereinbarte Erfolg. Miet-, Pacht- oder Leihverträge überlassen einen Gegenstand zur Nutzung. Ein Darlehen sieht typischerweise die Rückzahlung von Geld oder die Rückgabe gleichartiger Sachen vor.',
         'Kläre bei mehreren Beteiligten jedes Verhältnis separat. Bei einem Lieferantentermin können zum Beispiel Pkw-Miete, Arbeitsvertrag und vorvertragliches Schuldverhältnis nebeneinander bestehen. Geschäftliche Gespräche erzeugen bereits Rücksichtnahmepflichten, wenn die gesetzlichen Voraussetzungen erfüllt sind. Sie erzeugen allein noch keinen Auftrag.',
-        [link('recht-trennung-abstraktion', 'Verpflichtung, Verfügung und Eigentum'), text(' · '), link('recht-kaufvertrag', 'Kauf und Mängel'), text(' · '), link('recht-werkvertrag', 'Werkvertrag'), text(' · '), link('recht-dienstvertrag', 'Dienst und Arbeit'), text(' · '), link('recht-miete-pacht-leihe', 'Gebrauchsüberlassung'), text(' · '), link('recht-darlehen', 'Darlehen')]),
+        [link('recht-trennung-abstraktion', 'Verpflichtung, Verfügung und Eigentum'), text(' · '), link('recht-kaufvertrag', 'Kauf und Mängel'), text(' · '), link('recht-werkvertrag', 'Werkvertrag'), text(' · '), link('recht-dienstvertrag', 'Dienst und Arbeit'), text(' · '), link('recht-miete-pacht-leihe', 'Gebrauchsüberlassung'), text(' · '), link('recht-darlehen', 'Darlehen')],
+        [link('recht-ratenkauf', 'Ratenkauf'), text(' · '), link('recht-fernabsatz', 'Fernabsatzgeschäfte'), text(' · '), link('recht-elektronischer-geschaeftsverkehr', 'Elektronischer Geschäftsverkehr')]),
       section('pruefschritte', 'Anspruch und Rechtsfolge prüfen',
         'Benenne zuerst, wer von wem was verlangt. Ordne die vereinbarten Leistungen zu. Prüfe Vertrag, Fälligkeit, gegebenenfalls Übergabe oder Abnahme und die konkrete Leistungsabweichung. Bestimme anschließend, ob Erfüllung, Nacherfüllung, Minderung, Rücktritt, Schadensersatz oder eine Einrede relevant ist. B2C, B2B und die Handelsgeschäftseigenschaft können das Ergebnis ändern.',
         [text('Übe die Kombination mehrerer Verträge in den '), link('recht-vertragstypen-faelle', 'Vertragstypen-Fällen'), text('.')]),
-      law('BGB §§ 241, 311, 433, 488, 535, 581, 598, 611, 611a und 631', bgb('311'), bgb('433'), bgb('631')),
+      currentLaw('BGB §§ 241, 311, 433, 488, 535, 581, 598, 611, 611a und 631', bgb('311'), bgb('433'), bgb('631')),
       transfer('Eine Firma bestellt eine unabhängige Bestandsaufnahme und separat einen fertig montierten, funktionsfähigen Regalsatz. Wie gehst du vor?', 'Prüfe beide Absprachen. Der Schwerpunkt der Bestandsaufnahme kann die Tätigkeit oder ein geschuldeter fertiger Bericht sein. Bei den Regalen klärst du, ob die Lieferung von beweglichen Teilen oder das erfolgreiche Herstellen der fertigen Anlage im Vordergrund steht. Vertragswortlaut, Leistungsbild und Abnahmeregeln helfen bei der Einordnung.'),
     ],
   },
@@ -338,7 +345,14 @@ const units: Unit[] = [
         'Beispiel: Ein Betrieb überlässt gegen Geld leere Räumlichkeiten. Die Nutzung der Räume spricht für Miete. Kommt eine eingerichtete, zur Erzielung von Erträgen überlassene betriebliche Einheit hinzu, kann Pacht vorliegen. Die bloße Erzielung eigener Umsätze in gemieteten Räumen genügt für sich allein nicht.',
         'Für Pacht sind Mietvorschriften teilweise entsprechend anwendbar. Kündigungsfristen richten sich nach Vertrag und einschlägigen Vorschriften. § 584 enthält eine gesetzliche Auffangregel für bestimmte Pachtrechte ohne festgelegte Dauer. Für Wohnraum und Landpacht gelten besondere Regelungen. Bei einem Mietmangel prüfe insbesondere §§ 536 und 536c.',
         [text('Eine Finanzierung durch zeitlich begrenzte Gebrauchsüberlassung behandelt '), link('recht-leasing', 'Leasing'), text('.')]),
-      law('BGB §§ 535, 536, 536c, 546, 581, 584, 598, 601, 604 und 607', bgb('535'), bgb('581'), bgb('584'), bgb('598'), bgb('604'), bgb('607')),
+      section('mietmangel', 'Gewerbliche Miete bei einem Mangel prüfen',
+        'Fällt bei einer gemieteten Lagerhalle das einzige Tor aus, prüfe zunächst die vereinbarte Nutzbarkeit und das Ausmaß der Beeinträchtigung. Bei einem erheblichen Mangel mindert § 536 BGB die Miete für die betroffene Zeit entsprechend der Gebrauchsminderung. Unter § 536c ist der Vermieter grundsätzlich unverzüglich zu informieren. Unterbleibt die Anzeige und kann der Vermieter deswegen keine Abhilfe schaffen, können unter den gesetzlichen Voraussetzungen Ansprüche und Rechte verloren gehen.',
+        'Abhilfe, Schadensersatz oder Selbstvornahme nach § 536a, Minderung und außerordentliche Kündigung nach § 543 haben unterschiedliche Voraussetzungen. Prüfe bei der Kündigung insbesondere, ob eine Abhilfefrist oder Abmahnung erforderlich ist. Bei Pacht gilt nach § 581 Abs. 2 Mietrecht entsprechend, soweit das Pachtrecht nichts anderes vorsieht. Landpacht hat eigene Vorschriften.'),
+      currentLaw('BGB §§ 535, 536–536c, 543, 546, 581, 584, 585, 598, 601, 604 und 607', bgb('535'), bgb('536'), bgb('536a'), bgb('536c'), bgb('543'), bgb('581'), bgb('584')),
+      check('lagerhalle', 'Anwendungsfall: Ausgefallenes Hallentor', 'Eine GmbH meldet den Ausfall des einzigen Lagertors sofort. Zehn Tage ist die Halle gar nicht nutzbar. Die Monatsmiete beträgt 3.000 € bei 30 Tagen. Berechne unter der Annahme vollständiger Gebrauchsunfähigkeit für diese Tage die Minderung und ordne die Kosten eines zusätzlich gemieteten Lagers ein.',
+        'Unter den genannten Annahmen beträgt die Minderung 3.000 € × 10 ÷ 30 = 1.000 €. Geschuldet bleiben für den Monat 2.000 €. Die Ersatzlagerkosten sind ein eigener Schadensposten. Dafür prüfst du § 536a Abs. 1 BGB, insbesondere den Haftungsgrund und die Kausalität. Ein beim Vertragsschluss vorhandener Mangel, ein vom Vermieter zu vertretender späterer Mangel und Verzug mit der Mangelbeseitigung sind unterschiedliche Tatbestände.'),
+      check('pachtbetrieb', 'Transferfall: Überlassung einer Betriebseinheit', 'Eine Unternehmerin überlässt einem Nachfolger gegen Entgelt eine eingerichtete Kantine samt Inventar und dem vertraglichen Recht, den Betrieb und seine Erträge zu nutzen. Wie grenzt du Miete und Pacht ab, und was prüfst du bei einem erheblichen Ausfall der mitüberlassenen Kühlung?',
+        'Die vereinbarte Nutzung der betriebsbereiten Einheit einschließlich Fruchtziehung spricht für Pacht. Die Überschrift allein entscheidet nicht. Prüfe Inhalt und Erhaltungspflichten, die Auswirkung des Defekts auf die vereinbarte Nutzung, unverzügliche Mängelanzeige und mögliche Rechte nach §§ 536 ff. über § 581 Abs. 2 BGB, soweit das Pachtrecht nichts Abweichendes bestimmt.'),
       transfer('Ein Verein darf zwei Lastenräder kostenfrei nutzen und muss genau diese Räder am Abend zurückgeben. Was ist das?', 'Die unentgeltliche Gebrauchsüberlassung mit Rückgabe derselben Sachen ist Leihe nach § 598 BGB. Bei entgeltlicher Gebrauchsüberlassung wäre Miete zu prüfen. Beim Sachdarlehen wären Sachen gleicher Art, Güte und Menge zurückzuerstatten.'),
     ],
   },
@@ -350,9 +364,9 @@ const units: Unit[] = [
         [text('Beim '), term('leasing', 'Leasing'), text(' bleibt der Leasinggeber regelmäßig Eigentümer. Der Leasingnehmer nutzt den Gegenstand und zahlt Raten. Beim mittelbaren Finanzierungsleasing kann ein dritter Lieferant beteiligt sein. Häufig wird der Gegenstand vom Leasinggeber auf Wunsch des Leasingnehmers beschafft. Mietrechtliche Wertungen können bei der Einordnung herangezogen werden, die konkrete Konstruktion und Sondervorschriften bleiben maßgeblich.')],
         'Vertragsdauer, Kündigung, Wartung, Versicherung, Verschlechterungs- und Verlustgefahr, Rückgabezustand und Restwert sind getrennt zu lesen. Beim Finanzierungsleasing trägt der Leasingnehmer häufig mehr Risiken und Kosten als bei einer Standardmiete. Eine Kauf- oder Verlängerungsoption ist eine Vertragsfrage.'),
       section('verbraucher', 'Kosten und gesetzliche Schutzvorschriften prüfen',
-        'Unter § 506 Abs. 2 können bestimmte Nutzungsverträge eine entgeltliche Finanzierungshilfe sein. Gesetzliche Anknüpfungen sind insbesondere der verpflichtende Erwerb, ein Erwerbsverlangen des Unternehmers oder das Einstehen für einen bestimmten Wert bei Vertragsende. Prüfe den Verbraucherkontext und die konkrete Vertragsabrede.',
+        'Je nach Abschlusszeitpunkt können bestimmte Nutzungsverträge eine entgeltliche Finanzierungshilfe sein. Gesetzliche Anknüpfungen sind insbesondere der verpflichtende Erwerb, ein Erwerbsverlangen des Unternehmers oder das Einstehen für einen bestimmten Wert bei Vertragsende. Für Neuverträge ab 20. November 2026 kommt nach § 506 Abs. 2 Satz 1 Nr. 1a BGB auch ein Erwerbsrecht des Verbrauchers hinzu. Prüfe den Verbraucherkontext und die konkrete Vertragsabrede.',
         'Beispiel: Ein Prüfgerät kostet 190 € monatlich für 24 Monate. Ohne Sonderkosten ergeben sich 190 € × 24 = 4.560 €. Bei 300 € Sonderzahlung und 400 € nicht eingeschlossenen Wartungskosten entstehen 5.260 €. Vergleiche erst auf dieser Basis mit Alternativen und prüfe Rückgabekosten oder variable Restwertpflichten.'),
-      law('BGB §§ 535 ff. und 506 Abs. 2', bgb('535'), bgb('506')),
+      currentLaw('BGB §§ 535 ff. und 506 Abs. 2, Neuregelung ab 20.11.2026', bgb('535'), bgb('506'), creditReform),
       transfer('Ein Leasingangebot wirkt günstiger als die Miete. Es enthält einen garantierten Restwert und schreibt Wartung auf eigene Rechnung vor. Was vergleichst du?', 'Rechne Raten, Einmalzahlungen und Wartung zusammen. Prüfe die Restwertklausel und die mögliche Nachzahlung, Rückgabezustand, Laufzeit und Kündigung. Bei einem Verbraucher ist relevant, ob der Vertrag als Finanzierungshilfe unter § 506 fällt.'),
     ],
   },
@@ -366,7 +380,12 @@ const units: Unit[] = [
       section('sache', 'Vertretbare Sachen und identische Rückgabe unterscheiden',
         [text('Beim '), term('sachdarlehen', 'Sachdarlehen'), text(' überlässt der Darlehensgeber vereinbarte vertretbare Sachen. Zurückzugeben sind Sachen gleicher Art, Güte und Menge sowie ein geschuldetes Darlehensentgelt, soweit vereinbart. § 607 gilt nicht für Geld. Das Sachdarlehen erlaubt regelmäßig Verbrauch oder Weiterverwendung der überlassenen Menge.')],
         'Erhält eine Bäckerei 40 kg Mehl zur Verarbeitung und soll 40 kg Mehl gleicher Sorte und Güte zurückgeben, ist Sachdarlehen zu prüfen. Erhält sie dagegen eine bestimmte Maschine zur unentgeltlichen Nutzung mit Rückgabe desselben Geräts, spricht das für Leihe.'),
-      law('BGB §§ 91, 488, 491, 492, 506, 598 und 607', bgb('488'), bgb('491'), bgb('492'), bgb('607')),
+      section('kuendigung-verzug', 'Rückzahlung, Kündigung und Ratenverzug',
+        'Ohne vereinbarten Rückzahlungstermin hängt die Fälligkeit nach § 488 Abs. 3 BGB grundsätzlich von einer Kündigung mit drei Monaten Frist ab. Bei festem Ende gilt die vereinbarte Fälligkeit. Prüfe für eine frühere Beendigung das Vertragsrecht sowie §§ 489 und 490. Bei Verbraucherdarlehen kommen Form, Pflichtangaben und grundsätzlich ein Widerrufsrecht hinzu. Prüfe dafür zuerst, ob der Anwendungsbereich der §§ 491 ff. eröffnet ist.',
+        'Offene Einzelraten und die Fälligkeit der gesamten Restschuld sind zu trennen. Bei einem Teilzahlungs-Verbraucherdarlehen sind für die Kündigung wegen Zahlungsverzugs insbesondere § 498 und dessen Voraussetzungen zu prüfen. Ein finanziertes Geschäft kann nach § 358 rechtlich mit dem Darlehen verbunden sein, etwa wenn der Händler den Kreditvertrag für die Bank vorbereitet. Bloße Finanzierung desselben Kaufpreises reicht ohne die gesetzlichen Voraussetzungen nicht.'),
+      currentLaw('BGB §§ 358, 488–492, 495, 498, 506 und 607', bgb('358'), bgb('488'), bgb('489'), bgb('491'), bgb('495'), bgb('498'), bgb('607')),
+      check('restschuld', 'Anwendungsfall: Einzelrate und Restschuld', 'Bei einem Teilzahlungs-Verbraucherdarlehen bleibt genau eine Monatsrate aus. Die Bank verlangt sofort unter Verweis auf den Zahlungsverzug sämtliche künftigen Raten. Ist die Kündigung nach § 498 gerechtfertigt?',
+        'Eine einzelne ausgebliebene Rate genügt für die Gesamtfälligstellung nach § 498 BGB nicht. Unter anderem müssen mindestens zwei aufeinanderfolgende Teilzahlungen ganz oder teilweise im Rückstand sein. Zusätzlich sind die gesetzliche Rückstandshöhe und eine erfolglose qualifizierte Zweiwochenfrist zu prüfen. Die Zahlung der bereits fälligen Rate kann unabhängig davon geschuldet sein.'),
       transfer('Eine Firma nimmt 10.000 € für ein Quartal zu 6 % einfachem Jahreszins auf. Was sind Zinsen und Rückzahlungsbetrag bei endfälliger Zahlung unter vereinfachter Quartalsannahme?', '10.000 € × 0,06 × 0,25 = 150 € Zinsen. Vereinfachte Endzahlung sind 10.150 €. Die Rückzahlung des Kapitals in Höhe von 10.000 € ist die Tilgung.'),
     ],
   },
@@ -378,11 +397,59 @@ const units: Unit[] = [
         [text('Beim gewöhnlichen Kauf im Laden besteht bei mangelfreier Ware kein allgemeines gesetzliches Umtauschrecht. '), term('kulanz', 'Kulanz'), text(' ist die freiwillige Lösung ohne bestehende Pflicht. Eine wirksame vertragliche Rückgabezusage ist dagegen nach ihren Bedingungen zu beachten. Ein Minderwert oder ein Defekt führt zurück zu den kaufrechtlichen Mängelrechten.')],
         'Wer mit einem unpassenden, aber mangelfreien Kleidungsstück zurückkommt, prüft zunächst eine zugesagte Rückgabe, Umtauschbedingungen oder freiwillige Angebote. Bei einem Mangel prüft die Person zuerst Gewährleistung und Nacherfüllung.'),
       section('widerruf', 'Vertragsweg, Fristbeginn und Erklärung prüfen',
-        'Verbraucher haben bei entsprechenden Fernabsatzverträgen und außerhalb von Geschäftsräumen geschlossenen Verträgen grundsätzlich ein Widerrufsrecht nach §§ 312g und 355. § 312g Abs. 2 enthält Ausnahmen, etwa für Waren nach Kundenspezifikation. Die Regelzeit beträgt 14 Tage. Bei Waren hängt der Fristbeginn regelmäßig vom Erhalt und der gesetzlich ordnungsgemäßen Unterrichtung ab. Bei fehlender Unterrichtung gilt im üblichen Anwendungsfall die Höchstfrist des § 356 Abs. 3 von zwölf Monaten und 14 Tagen, vorbehaltlich gesetzlicher Sonderfälle.',
+        'Verbraucher haben bei entsprechenden Fernabsatzverträgen und außerhalb von Geschäftsräumen geschlossenen Verträgen grundsätzlich ein Widerrufsrecht nach §§ 312g und 355. § 312g Abs. 2 enthält Ausnahmen, etwa für Waren nach Kundenspezifikation. Die Regelzeit beträgt 14 Tage. Bei Waren hängt der Fristbeginn regelmäßig vom Erhalt und der gesetzlich ordnungsgemäßen Unterrichtung ab. Bei fehlender Unterrichtung gilt im üblichen Anwendungsfall die Höchstfrist des § 356 Abs. 4 von zwölf Monaten und 14 Tagen, vorbehaltlich gesetzlicher Sonderfälle.',
         'Der Widerruf muss die Entscheidung eindeutig gegenüber dem Unternehmer erklären. Ein Grund ist nicht erforderlich. Bei Online-Fernabsatzverträgen ist zusätzlich die elektronische Widerrufsfunktion nach § 356a einzuordnen. Rückabwicklung, Kosten und etwaiger Wertersatz folgen den jeweils einschlägigen Vorschriften, insbesondere § 357. Verbraucherdarlehen und entgeltliche Finanzierungshilfen können eigene Widerrufsregeln haben.',
-        [text('Vertiefung zu Vertriebswegen und Widerruf: '), link('marketing-recht-widerruf', 'Widerrufsrecht bei Verbraucherverträgen'), text('.')]),
-      law('BGB §§ 312b, 312c, 312g, 355, 356, 356a, 357, 495 und 506', bgb('312g'), bgb('355'), bgb('356'), bgb('356a'), bgb('357'), bgb('495')),
+        [text('Vertiefung zu Vertriebswegen und Widerruf: '), link('recht-fernabsatz', 'Fernabsatzgeschäfte'), text(' · '), link('marketing-recht-widerruf', 'Widerrufsrecht bei Verbraucherverträgen'), text('.')]),
+      currentLaw('BGB §§ 312b, 312c, 312g, 355, 356, 356a, 357, 495 und 506', bgb('312g'), bgb('355'), bgb('356'), bgb('356a'), bgb('357'), bgb('495')),
       transfer('Eine Kundin kauft zwei gleiche mangelfreie Leuchten, eine im Laden und eine im Onlineshop. Sie ändert zwei Tage nach Erhalt ihre Meinung. Was prüfst du?', 'Im Laden kommt eine vertraglich zugesagte Rückgabe oder Kulanz infrage. Beim Onlineshop prüfe B2C-Fernabsatz, gesetzliche Ausnahmen, Belehrung, Warenerhalt und rechtzeitige Widerrufserklärung. Ein Mangel ist für diesen Prüfweg nicht erforderlich.'),
+    ],
+  },
+  {
+    slug: 'ratenkauf', parent: 'leasing', number: '3.5.1.1', title: 'Ratenkauf und Teilzahlungsgeschäfte', added: true,
+    intro: 'Beim Ratenkauf schuldet der Käufer den Kaufpreis in Teilbeträgen. Wer die Finanzierung gewährt und welcher Rechtsstand gilt, entscheidet über Form, Widerruf und die Folgen eines Rückstands.',
+    sections: [
+      section('rollen', 'Zahlungsmodell und Beteiligte zuordnen',
+        [text('Liefert der Händler eine bestimmte Sache gegen Teilzahlungen, prüfst du ein '), term('teilzahlungsgeschaeft', 'Teilzahlungsgeschäft'), text(' nach § 506 Abs. 3 BGB. Prüfe zuerst, ob ein Unternehmer einem Verbraucher eine Finanzierungshilfe im Anwendungsbereich des § 506 gewährt. Bei einem Firmenkauf auf Raten greifen die verbraucherspezifischen Regeln regelmäßig nicht. Der Kaufpreis bleibt in den vereinbarten Raten geschuldet.')],
+        [text('Zahlt eine Bank den Händler aus und schuldet der Käufer die Raten der Bank, liegen Kauf und Darlehen vor. Ein verbundenes Geschäft nach § 358 BGB kann zum Beispiel vorliegen, wenn die Bank sich bei Vorbereitung oder Abschluss des Kredits der Mitwirkung des Händlers bedient. Beim '), link('recht-leasing', 'Leasing'), text(' steht die Nutzung auf Zeit im Vordergrund. Eigentum und Zahlungsplan sind außerdem vom '), link('recht-eigentumsvorbehalt', 'Eigentumsvorbehalt'), text(' zu trennen.')]),
+      section('stichtag', 'Vertrag vor oder ab dem 20. November 2026',
+        'Bis einschließlich 19. November 2026 ist für den hier behandelten Regelfall ein entgeltlicher Zahlungsaufschub oder eine sonstige entgeltliche Finanzierungshilfe nach § 506 Abs. 1 alter Fassung maßgeblich. Bei unentgeltlichen Finanzierungshilfen können daneben die eigenen Regeln der §§ 514 und 515 alter Fassung greifen.',
+        'Für Neuverträge ab dem 20. November 2026 kann auch ein unentgeltlicher Zahlungsaufschub unter § 506 fallen. Eine Ausnahme gilt unter bestimmten Bedingungen bei eigener Händlerfinanzierung ohne Dritten und unentgeltlicher Zahlung innerhalb von höchstens 50 Tagen nach Lieferung oder Leistung. Begrenzte Verzugskosten sind zulässig. Bei den vom Gesetz erfassten Fernabsatzangeboten größerer Anbieter gilt dafür eine Grenze von 14 Tagen und zusätzlich ein Ausschluss des Erwerbs der Finanzierung durch Dritte. Prüfe den konkreten Vertrag und gesetzliche Ausnahmen, etwa eine unentgeltliche Stundung einer bestehenden Forderung.'),
+      section('folgen', 'Formfehler, Widerruf und Rückstand prüfen',
+        'Im Anwendungsbereich gelten besondere Form- und Pflichtangaben. Stelle nach § 507 fest, welche Form im Abschlusszeitpunkt galt und ob die Angaben nach Art. 247 EGBGB vorliegen. Fehlende Form oder Pflichtangaben können das Teilzahlungsgeschäft zunächst nichtig machen. Übergabe oder Leistung können diesen Mangel heilen. Fehlen Gesamtbetrag oder effektiver Jahreszins, begrenzt § 507 die Verzinsung. Die besondere Fernabsatz-Formausnahme des § 507 Abs. 1 alter Fassung entfällt ab dem 20. November 2026. Dann ist die neue allgemeine Formregel des § 492 zu prüfen.',
+        'Ein Widerrufsrecht kann aus § 495 in Verbindung mit § 506 folgen. Bei Zahlungsverzug prüfst du für einen Rücktritt des Unternehmers § 508 und die Voraussetzungen des § 498 Abs. 1, darunter mehrere rückständige Raten, Mindesthöhe des Rückstands und erfolglose qualifizierte Nachfrist. Trenne den Rücktritt von der Geltendmachung einer einzelnen fälligen Rate.'),
+      currentLaw('BGB §§ 358, 433, 491–492, 495, 498, 506–508. Übergangsvorschriften und Fassungen zum Abschlussdatum', bgb('506'), bgb('507'), bgb('508'), creditReform),
+      transfer('Eine Kundin kauft privat ein Gerät. Der Händler verlangt statt 1.200 € bar zwölf Monatsraten à 110 €. Eine andere Kundin finanziert dasselbe Gerät über eine Bank, deren Kredit der Händler vermittelt. Erkläre den Unterschied und ermittle beim Händlerkauf den Mehrbetrag.',
+        'Beim Händlerkauf ergeben zwölf Raten 1.320 €, also 120 € mehr als der Barpreis. Das ist der absolute Mehrbetrag. Der effektive Jahreszins hängt unter anderem vom Zahlungsplan ab. Prüfe beim Händler die §§ 506–508 nach Abschlussdatum. Beim Bankmodell sind Kauf und Darlehen getrennte Verträge. Prüfe die wirtschaftliche Einheit nach § 358 und die Folgen eines Widerrufs.'),
+    ],
+  },
+  {
+    slug: 'fernabsatz', parent: 'umtausch-widerruf', number: '3.7.1', title: 'Fernabsatzgeschäfte prüfen', added: true,
+    intro: 'Für einen Fernabsatzvertrag kommt es auf die Parteien, den Ablauf von Verhandlung und Abschluss und das Vertriebssystem an. Die Prüfung entscheidet unter anderem darüber, welche Informations- und Widerrufsregeln greifen.',
+    sections: [
+      section('tatbestand', 'Drei Fragen zum Vertragsschluss',
+        [text('Prüfe den '), existingTerm('marketing-recht-begriff-fernabsatz', 'Fernabsatzvertrag'), text(' nach § 312c BGB. Erstens müssen sich Unternehmer und Verbraucher gegenüberstehen. Zweitens müssen Vertragsverhandlungen und Abschluss ausschließlich über Fernkommunikationsmittel wie Telefon, E-Mail oder Onlineshop laufen. Drittens muss der Abschluss im Rahmen eines für den Fernabsatz organisierten Vertriebs- oder Dienstleistungssystems erfolgen.')],
+        'Ein standardisierter Bestellablauf mit Katalog, zentraler Telefonannahme und Versand kann auch ohne Webshop ein solches System sein. Eine ausnahmsweise E-Mail-Bestellung bei einem rein stationär organisierten Betrieb genügt dafür regelmäßig nicht. Eine Abholung im Laden ändert einen bereits online geschlossenen Vertrag grundsätzlich nicht. Erfolgt online nur eine unverbindliche Reservierung und werden Preis und Vertrag erst im Laden verbindlich vereinbart, fehlt der Fernabsatzabschluss.'),
+      section('pflichten', 'Information, Bestätigung und Widerruf unterscheiden',
+        'Prüfe den Anwendungsbereich nach § 312 BGB und die Verbraucherinformationen nach § 312d und Art. 246a EGBGB, insbesondere wesentliche Eigenschaften, Identität, Gesamtpreis, zusätzliche Kosten und Widerrufsbedingungen. § 312f verlangt bei erfassten Fernabsatzverträgen grundsätzlich eine Vertragsbestätigung auf einem dauerhaften Datenträger innerhalb angemessener Frist, spätestens bei Lieferung oder vor Beginn der Dienstleistung. Eine E-Mail mit speicherbarem Inhalt kann dafür geeignet sein.',
+        [text('Prüfe daraufhin gesetzliche Ausnahmen, Fristbeginn, Erklärung und Rückgewähr im Artikel '), link('recht-umtausch-widerruf', 'Umtausch, Widerruf und Rücktritt'), text('. Bei digitalen Inhalten oder vollständig erbrachten Dienstleistungen können unter § 356 Abs. 5 und 6 Sonderregeln zum Erlöschen greifen. Bei einem Onlineabschluss kommen zusätzlich die Vorgaben zum '), link('recht-elektronischer-geschaeftsverkehr', 'elektronischen Geschäftsverkehr'), text(' hinzu.')]),
+      currentLaw('BGB §§ 312, 312c–312g und 355–356a, Art. 246a EGBGB', bgb('312c'), bgb('312d'), bgb('312f'), bgb('312g'), bgb('356')),
+      transfer('Eine Privatkundin kauft verbindlich im Webshop und holt im Lager ab. Ihr Kollege reserviert nur online und verhandelt und kauft erst im Laden. Der Betrieb hat einen standardisierten Webshop. Ordne beide Verträge ein.',
+        'Der verbindliche Onlineabschluss ist bei ausschließlich auf Distanz geführten Verhandlungen ein Fernabsatzvertrag. Die spätere Lagerabholung ist Erfüllung. Beim Kollegen kommt der Vertrag nach persönlicher Verhandlung erst im Laden zustande. Für diesen Abschluss greift § 312c nicht. Prüfe beim ersten Fall die jeweiligen Informations- und Widerrufsvorschriften.'),
+    ],
+  },
+  {
+    slug: 'elektronischer-geschaeftsverkehr', parent: 'umtausch-widerruf', number: '3.7.2', title: 'Elektronischer Geschäftsverkehr und Bestellbutton', added: true,
+    intro: 'Wer Waren oder Dienstleistungen über digitale Dienste anbietet, muss den Bestellvorgang rechtlich korrekt gestalten. Eine Eingangsbestätigung, eine Vertragsannahme und die Bestätigung der Zahlungspflicht erfüllen unterschiedliche Funktionen.',
+    sections: [
+      section('allgemein', 'Allgemeine Pflichten für Bestellungen',
+        '§ 312i BGB verlangt im Anwendungsbereich geeignete Mittel zur Erkennung und Korrektur von Eingabefehlern vor der Bestellung, Informationen zum Bestellablauf, eine unverzügliche elektronische Bestätigung des Bestelleingangs und abruf- und speicherbare Vertragsbedingungen einschließlich AGB. Prüfe dafür auch Art. 246c EGBGB. Die Regeln können auch B2B gelten. § 312i Abs. 2 enthält Ausnahmen für ausschließlich individuelle Kommunikation und bestimmte abweichende Vereinbarungen zwischen Parteien, die keine Verbraucher sind.',
+        [text('Lies die Eingangs-E-Mail anhand der '), link('recht-vertrag-angebot-annahme', 'Regeln zu Angebot und Annahme'), text('. Eine reine Empfangsquittung erfüllt einen Informationsschritt. Eine verbindliche Auftragsbestätigung kann zusätzlich die Annahme erklären. Prüfe Wortlaut und gesamten Bestellablauf.')]),
+      section('verbraucher', 'Zahlungspflicht sichtbar bestätigen lassen',
+        [text('Bei einem zahlungspflichtigen Verbrauchervertrag gilt im Anwendungsbereich des § 312j die '), term('buttonloesung', 'Buttonlösung'), text('. Lieferbeschränkungen und akzeptierte Zahlungsmittel sind grundsätzlich spätestens zu Beginn des Bestellvorgangs anzugeben. Unmittelbar vor der Bestellung müssen die wesentlichen gesetzlich bestimmten Informationen, etwa Merkmale, Gesamtpreis und gegebenenfalls Laufzeit, klar hervorgehoben sein.')],
+        'Die Schaltfläche muss die Zahlungspflicht eindeutig ausdrücken, etwa mit „zahlungspflichtig bestellen“. Eine Beschriftung wie „Weiter“ genügt dafür nicht. Verstößt der Unternehmer gegen § 312j Abs. 3, kommt der davon erfasste Vertrag nach Abs. 4 nicht zustande. Prüfe die Ausnahmen für individuelle Kommunikation und Finanzdienstleistungen nach Abs. 5. Kündigungsbutton (§ 312k) und elektronische Widerrufsfunktion (§ 356a) betreffen andere Phasen des Vertrags.'),
+      currentLaw('BGB §§ 145 ff., 312i–312k und 356a, Art. 246a und 246c EGBGB', bgb('312i'), bgb('312j'), bgb('312k'), bgb('356a')),
+      transfer('Ein Webshop zeigt Preis und Versandkosten. Die letzte Schaltfläche heißt „Weiter“. Eine automatische E-Mail meldet nur „Bestellung eingegangen“. Der Händler fordert Zahlung von der Privatkundin. Wie prüfst du das?',
+        'Beim hier angenommenen zahlungspflichtigen Standard-Verbrauchervertrag ist die Schaltfläche nach § 312j Abs. 3 unzureichend. Nach Abs. 4 kommt über diesen Ablauf kein Vertrag zustande. Die E-Mail erfüllt möglicherweise die Bestelleingangsbestätigung, erklärt nach ihrem Wortlaut keine Annahme und behebt den Buttonmangel nicht.'),
     ],
   },
   {
@@ -415,7 +482,10 @@ export const chapters: Chapter[] = units.map(unit => ({
 
 export const articles: Article[] = units.map(unit => ({
   id: id(unit.slug), chapterId: id(unit.slug), subjectId, number: unit.number, title: unit.title,
-  intro: unit.intro, updatedAt, version: 1, sections: unit.sections,
+  intro: unit.intro,
+  updatedAt: unit.added || revised.has(unit.slug) ? revisionDate : updatedAt,
+  version: revised.has(unit.slug) ? 2 : 1,
+  sections: unit.sections,
 }));
 
 type GlossaryEntry = [slug: string, label: string, definition: string, articleSlug: string];
@@ -449,6 +519,8 @@ const terms: GlossaryEntry[] = [
   ['leasing', 'Leasing', 'Vertragliche Gebrauchsüberlassung auf Zeit gegen Raten, oft verbunden mit Finanzierung und spezifischer Risiko- und Kostenverteilung.', 'leasing'],
   ['gelddarlehen', 'Gelddarlehen', 'Vertrag über die Zurverfügungstellung eines Geldbetrags mit Pflicht zur Rückzahlung und Zahlung geschuldeter Zinsen.', 'darlehen'],
   ['sachdarlehen', 'Sachdarlehen', 'Überlassung vertretbarer Sachen mit Pflicht zur Rückerstattung von Sachen gleicher Art, Güte und Menge.', 'darlehen'],
+  ['teilzahlungsgeschaeft', 'Teilzahlungsgeschäft', 'Vertrag über die Lieferung einer bestimmten Sache oder die Erbringung einer bestimmten Leistung gegen Teilzahlungen im Sinne von § 506 Abs. 3 BGB.', 'ratenkauf'],
+  ['buttonloesung', 'Buttonlösung', 'Verbraucherschutzregel, die bei einschlägigen elektronischen Verträgen eine eindeutige Bestätigung der Zahlungspflicht verlangt.', 'elektronischer-geschaeftsverkehr'],
   ['kulanz', 'Kulanz', 'Freiwilliges Entgegenkommen, ohne dass für die betreffende Leistung ein Anspruch besteht.', 'umtausch-widerruf'],
 ];
 

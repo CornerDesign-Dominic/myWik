@@ -227,6 +227,7 @@ const lessons: Lesson[] = [
     id: 'gerichtsstand', parent: 'vertrag-durchsetzung', number: '2.5', title: 'Gerichtsstand und sachliche Zuständigkeit',
     intro: 'Die sachliche Zuständigkeit bestimmt die Gerichtsart. Der Gerichtsstand bestimmt örtlich, in welchem Bezirk der Rechtsstreit erhoben werden kann oder muss.',
     parts: [
+      ['rechtsweg', 'Rechtsweg vor Gerichtsebene und Bezirk prüfen', 'Ordne zuerst den Streit ein. Gewöhnliche private Kauf- und Werklohnforderungen gehören grundsätzlich vor die ordentliche Zivilgerichtsbarkeit (§ 13 GVG). Ansprüche zwischen Arbeitnehmer und Arbeitgeber aus dem Arbeitsverhältnis gehören grundsätzlich vor die Arbeitsgerichte (§ 2 ArbGG). Bei einem Rechtsbehelf gegen eine behördliche Gewerbeuntersagung kommt regelmäßig der Verwaltungsrechtsweg nach § 40 VwGO in Betracht. Für sozialrechtliche Sozialversicherungssachen und viele Abgabenstreitigkeiten gelten die Sonderzuweisungen der §§ 51 SGG beziehungsweise 33 FGO.', 'Beispiel: Dieselbe GmbH verlangt Kaufpreis für ein Gerät, streitet mit einem eigenen Mitarbeiter über Lohn und wehrt sich gegen eine Gewerbeuntersagung. Der Kaufpreis führt zum Zivilgericht, der Lohnanspruch zum Arbeitsgericht und der öffentlich-rechtliche Streit grundsätzlich zum Verwaltungsgericht. Erst innerhalb des jeweiligen Rechtswegs prüfst du die sachliche und die örtliche Zuständigkeit. Für die folgenden Streitwertregeln wird ein ordentlicher Zivilprozess vorausgesetzt.'],
       ['sachlich', 'Amtsgericht oder Landgericht bestimmen', 'Seit dem 1. Januar 2026 sind in bürgerlichen Rechtsstreitigkeiten mit beziffertem Streitwert nach der Grundregel Forderungen bis einschließlich 10.000 € beim Amtsgericht und darüber beim Landgericht einzuordnen (§§ 23 Nr. 1, 71 GVG). Prüfe wertunabhängige Zuweisungen zuerst, etwa Wohnraummietstreitigkeiten an das Amtsgericht. Für vor dem Stichtag anhängig gewordene Verfahren sind die Übergangsregeln zu berücksichtigen. Die ältere Grenze von 5.000 € auf der Kursfolie gilt für neue Standardfälle nicht mehr.', 'Im Zivilverfahren können Amts- oder Landgericht erste Instanz sein. Je nach Erstinstanz und Rechtsmittel folgen Landgericht oder Oberlandesgericht. Unter den jeweiligen Zulässigkeitsvoraussetzungen kommt Revision zum Bundesgerichtshof in Betracht. Berufung und Revision erfüllen unterschiedliche Prüfaufgaben. Der dargestellte Streitwert ist keine Schwelle für Strafverfahren.'],
       ['oertlich', 'Allgemeiner, besonderer und ausschließlicher Gerichtsstand', 'Der [[vertrag-begriff-gerichtsstand|Gerichtsstand]] richtet sich im allgemeinen Fall nach dem Wohnsitz natürlicher Personen bzw. dem Sitz juristischer Personen (§§ 12, 13, 17 ZPO). Der Aufenthaltsort ist kein genereller Ersatz für den Wohnsitz, sondern kann etwa nach § 16 ZPO bei fehlendem Wohnsitz eine Rolle spielen. Besondere Gerichtsstände entstehen nur bei erfülltem Tatbestand, etwa am streitigen Leistungsort nach § 29 oder am Ort der unerlaubten Handlung nach § 32 ZPO.', 'Ein ausschließlicher Gerichtsstand geht anderen örtlichen Möglichkeiten vor. § 29a ZPO ordnet für bestimmte Raum-Miet- und Pachtstreitigkeiten grundsätzlich den Ort der Räume an und enthält Ausnahmen. § 24 ZPO betrifft unter anderem bestimmte dingliche Klagen. Bei mehreren zulässigen nicht ausschließlichen Gerichten kann § 35 ZPO ein Wahlrecht eröffnen.'],
       ['vereinbarung', 'Wirksamkeit einer Gerichtsstandsklausel prüfen', 'Eine [[vertrag-begriff-prorogation|Prorogation]] kann ein an sich unzuständiges Gericht zuständig machen. Derogation bezeichnet den vertraglichen Ausschluss einer sonst zulässigen Zuständigkeit, wenn eine ausschließliche Vereinbarung wirksam getroffen wird. § 38 Abs. 1 ZPO eröffnet Vereinbarungen für bestimmte Parteien, etwa Kaufleute. Abs. 2 und 3 regeln Sonderfälle, etwa fehlenden inländischen allgemeinen Gerichtsstand oder bestimmte Vereinbarungen nach Entstehung der Streitigkeit. Prüfe außerdem, ob sich die Vereinbarung auf ein bestimmtes Rechtsverhältnis bezieht und § 40 ZPO ihr entgegensteht. Ausschließliche Zuständigkeiten sind nicht abdingbar.', 'Eine §-29-Zuständigkeit aus einer bloßen Vereinbarung des Leistungsorts kommt bei der Parteikonstellation des § 29 Abs. 2 ZPO in Betracht. Bei einer unwirksamen Klausel oder falscher Auswahl prüfst du die verbleibenden Gerichtsstände und gegebenenfalls eine Verweisung nach § 281 ZPO.'],
@@ -237,7 +238,9 @@ const lessons: Lesson[] = [
     ],
     question: 'Ein Hersteller verlangt 8.800 € aus einem gewöhnlichen Kaufvertrag. Der Käufer ist eine GmbH am Ort B. Ein besonderer Sachverhalt ist nicht ersichtlich. Wie gehst du vor?',
     answer: 'Für einen neuen gewöhnlichen Zivilfall 2026 weist der Wert bis 10.000 € grundsätzlich zum Amtsgericht. Örtlich ist grundsätzlich der Sitz der beklagten GmbH in B maßgeblich. Prüfe besondere oder ausschließliche Gerichtsstände und eine etwaige wirksame Vereinbarung gesondert.',
-    sources: [zpo, '§§ 12–17, 24, 29, 29a, 32, 35, 38–40, 281 ZPO', 'GVG: https://www.gesetze-im-internet.de/gvg/', jurisdictionLaw],
+    sources: [zpo, '§§ 12–17, 24, 29, 29a, 32, 35, 38–40, 281 ZPO', 'GVG §§ 13, 23, 71: https://www.gesetze-im-internet.de/gvg/', jurisdictionLaw,
+      'ArbGG § 2: https://www.gesetze-im-internet.de/arbgg/__2.html', 'VwGO § 40: https://www.gesetze-im-internet.de/vwgo/__40.html',
+      'SGG § 51: https://www.gesetze-im-internet.de/sgg/__51.html', 'FGO § 33: https://www.gesetze-im-internet.de/fgo/__33.html'],
   },
   {
     id: 'erfuellungsort', parent: 'gerichtsstand', number: '2.5.1', title: 'Erfüllungsort und Gefahrübergang unterscheiden',
@@ -360,10 +363,11 @@ export const articles: Article[] = lessons.map(lesson => {
       },
     });
   }
+  const revised = lesson.id === 'gerichtsstand';
   sections.push({
     id: 'rechtsquellen',
     title: 'Rechtsquellen und Stand',
-    paragraphs: ['Geprüft am 18. November 2026.', ...lesson.sources].map(text => [{ text }]),
+    paragraphs: [revised ? 'Geprüft am 19. November 2026.' : 'Geprüft am 18. November 2026.', ...lesson.sources].map(text => [{ text }]),
   }, {
     id: 'transferfrage',
     title: 'Selbstkontrolle',
@@ -378,8 +382,8 @@ export const articles: Article[] = lessons.map(lesson => {
     title: lesson.title,
     intro: lesson.intro,
     sections,
-    updatedAt: Date.UTC(2026, 10, 18),
-    version: 1,
+    updatedAt: Date.UTC(2026, 10, revised ? 19 : 18),
+    version: revised ? 2 : 1,
   };
 });
 

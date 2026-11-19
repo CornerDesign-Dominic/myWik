@@ -27,3 +27,26 @@ test('the offline law pack contains every article including the registered-power
   const caseArticle = packed.find(article => article.id === 'recht-fall-handelsvollmachten');
   assert.ok(caseArticle.sections.some((section: { hint?: { content: string } }) => section.hint?.content.includes('§ 15 Abs. 1 HGB')));
 });
+
+test('the offline law lessons cover the IHK additions and preserve the existing article links', () => {
+  const outlineById = new Map(outline.map(chapter => [chapter.id, chapter]));
+  const expectedParents = {
+    'recht-ratenkauf': 'recht-leasing',
+    'recht-fernabsatz': 'recht-umtausch-widerruf',
+    'recht-elektronischer-geschaeftsverkehr': 'recht-umtausch-widerruf',
+    'recht-faustpfand': 'recht-kreditsicherheiten',
+    'recht-sicherungsuebereignung': 'recht-kreditsicherheiten',
+    'recht-sicherungsabtretung': 'recht-kreditsicherheiten',
+    'recht-grundpfandrechte': 'recht-kreditsicherheiten',
+    'recht-scheinkaufmann': 'recht-kaufmannseigenschaft',
+    'recht-vermittlergewerbe': 'recht-handelsrecht',
+    'recht-arbeitsvertragsarten': 'recht-arbeitsvertrag',
+    'recht-arbeitsvertrag-pflichten': 'recht-arbeitsvertrag',
+    'recht-schwerbehindertenschutz': 'recht-besonderer-kuendigungsschutz',
+  };
+  for (const [id, parentId] of Object.entries(expectedParents)) {
+    assert.equal(outlineById.get(id)?.parentId, parentId, id);
+    assert.equal(outlineById.get(id)?.articleId, id, id);
+    assert.ok(lessons.find(article => article.id === id)?.sections.some(section => section.hint?.content), id);
+  }
+});

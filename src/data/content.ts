@@ -231,4 +231,4 @@ export const glossary: GlossaryTerm[] = [
   ...managementGlossary,
 ];
 
-export const contentVersion = 13;
+export const contentVersion = 14;

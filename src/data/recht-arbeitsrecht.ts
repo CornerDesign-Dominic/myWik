@@ -2,6 +2,8 @@ import type { Article, ArticleSection, Chapter, GlossaryTerm, RichText } from '.
 
 const subjectId = 'recht';
 const updatedAt = Date.UTC(2026, 10, 18);
+const revisionDate = Date.UTC(2026, 10, 19);
+const revised = new Set(['arbeitsvertrag', 'besonderer-kuendigungsschutz', 'betriebsrat']);
 const bgb = 'https://www.gesetze-im-internet.de/bgb/';
 const gewo = 'https://www.gesetze-im-internet.de/gewo/';
 const kschg = 'https://www.gesetze-im-internet.de/kschg/';
@@ -21,6 +23,7 @@ type Unit = {
   number: string;
   title: string;
   parent?: string;
+  added?: boolean;
   intro: string;
   sections: ArticleSection[];
   transfer: [question: string, answer: string];
@@ -41,6 +44,10 @@ function question(id: string, title: string, prompt: string, content: string): A
 function source(pages: string, ...references: string[]): ArticleSection {
   return section('quellen', 'Rechtsstand und Quellen',
     'Recht für WiFaWi 2025, PDF-Seiten ' + pages + '. Prüfung anhand amtlicher Quellen am 18. November 2026.', ...references);
+}
+
+function currentSource(...references: string[]): ArticleSection {
+  return section('quellen', 'Rechtsstand und Quellen', 'Rechtsabgleich am 19. November 2026.', ...references);
 }
 
 const units: Unit[] = [
@@ -75,7 +82,9 @@ const units: Unit[] = [
       section('weisung', 'Weisung und Folgen unwirksamer Klauseln',
         [text('Das '), term('Direktionsrecht', 'weisung'), text(' nach § 106 GewO konkretisiert Inhalt, Ort und Zeit der Arbeitsleistung sowie die Ordnung des Betriebs. Es endet an zwingendem Recht, Tarifvertrag, Betriebsvereinbarung und Arbeitsvertrag. Bei seiner Ausübung sind die Interessen beider Seiten, darunter gegebenenfalls Behinderungen, im billigen Ermessen abzuwägen.')],
         'Eine unzulässige Arbeitszeitklausel macht einen im Übrigen wirksamen Vertrag nicht ohne Weiteres insgesamt unwirksam. Prüfe bei Formularbedingungen § 306 BGB, bei Individualvereinbarungen Verbotszweck, § 134 BGB und die Grundsätze zur Teilnichtigkeit. Die Vereinbarung kann Schutzvorschriften nicht ausschalten. Ersetze eine unwirksame Berechnung nicht pauschal durch das höchste gesetzlich erlaubte Stundenmaß.'),
-      source('399, 403–409', 'BGB §§ 134, 139, 306 und 611a: ' + bgb, 'GewO §§ 105–106: ' + gewo,
+      section('vertiefung', 'Vertragsart und Pflichten im Betrieb',
+        [link('Arbeitsvertragsarten und Arbeit auf Abruf', 'recht-arbeitsvertragsarten'), text(' · '), link('Pflichten beider Vertragsparteien', 'recht-arbeitsvertrag-pflichten')]),
+      currentSource('Kursunterlage Recht für WiFaWi 2025, PDF-Seiten 399 und 403–409.', 'BGB §§ 134, 139, 306 und 611a: ' + bgb, 'GewO §§ 105–106: ' + gewo,
         'NachwG § 2: https://www.gesetze-im-internet.de/nachwg/__2.html', 'SchwarzArbG § 2a: https://www.gesetze-im-internet.de/schwarzarbg_2004/__2a.html'),
     ],
     transfer: ['Die Beschäftigte stimmt einer mündlichen Einstellung zu, erhält aber kein Dokument. Der Betrieb hält deshalb den Arbeitsvertrag für unwirksam. Wie prüfst du?',
@@ -188,7 +197,9 @@ const units: Unit[] = [
         'Der Arbeitgeber prüft Gefährdungen und setzt vorrangig Umgestaltung, dann gegebenenfalls einen geeigneten anderen Einsatz und als letztes Mittel ein betriebliches Beschäftigungsverbot um. Nachtarbeit von 20 bis 6 Uhr ist grundsätzlich untersagt. Für den Zeitraum bis 22 Uhr kommen unter engen Voraussetzungen Ausnahmen in Betracht. Der reguläre Dienstbeginn um 4 Uhr ist damit nicht gedeckt.',
         'Grundsätzlich gilt eine Schutzfrist von sechs Wochen vor und acht Wochen nach der Entbindung. Vor der Entbindung kann die Frau sich ausdrücklich zur Arbeit bereit erklären und diese Erklärung widerrufen. Nach der Entbindung bestehen grundsätzlich Beschäftigungsverbot und mögliche Verlängerung auf zwölf Wochen, etwa bei Früh- oder Mehrlingsgeburt und unter den gesetzlichen Bedingungen bei einer festgestellten Behinderung des Kindes. Für Fehlgeburten gelten seit 2025 gestaffelte Schutzfristen nach § 3 Abs. 5 MuSchG.',
         'Die Kündigung ist nach § 17 MuSchG bei bekannten Schutzumständen oder rechtzeitiger Mitteilung grundsätzlich unzulässig. Ist der Schutzumstand beim Ausspruch unbekannt, beträgt die Mitteilungsfrist regelmäßig zwei Wochen ab Zugang. Eine unverschuldete Fristüberschreitung ist bei unverzüglich nachgeholter Mitteilung unschädlich. Der Schutz gilt auch in der Probezeit. Er erfasst Schwangerschaft, bis zu vier Monate nach einer Fehlgeburt nach der zwölften Schwangerschaftswoche sowie bis zum Ende der Schutzfrist nach der Entbindung, mindestens bis vier Monate nach der Entbindung. Eine behördlich zugelassene Ausnahme verlangt einen besonderen, nicht im Zusammenhang mit dem geschützten Zustand stehenden Fall.'),
-      source('413–416', 'MuSchG §§ 3, 5, 10, 13, 17 und 28: ' + muschg, 'SGB IX §§ 168–175: https://www.gesetze-im-internet.de/sgb_9_2018/',
+      section('teilhabe', 'Weitere Schutzrechte im Arbeitsverhältnis',
+        [link('Schwerbehindertenschutz im Arbeitsverhältnis', 'recht-schwerbehindertenschutz'), text(' behandelt neben der Kündigung auch Einstellung, Beteiligung und Zusatzurlaub.')]),
+      currentSource('Kursunterlage Recht für WiFaWi 2025, PDF-Seiten 413–416.', 'MuSchG §§ 3, 5, 10, 13, 17 und 28: ' + muschg, 'SGB IX §§ 168–175: https://www.gesetze-im-internet.de/sgb_9_2018/',
         'BEEG § 18: https://www.gesetze-im-internet.de/beeg/__18.html', 'PflegeZG § 5: https://www.gesetze-im-internet.de/pflegezg/__5.html',
         'KSchG § 15: ' + kschg, 'BetrVG § 103: ' + betrvg, 'BDSG §§ 6, 38: https://www.gesetze-im-internet.de/bdsg_2018/', 'ASiG § 9: https://www.gesetze-im-internet.de/asig/__9.html'),
     ],
@@ -237,16 +248,19 @@ const units: Unit[] = [
       section('wahl', 'Wahl, Mitgliederzahl und Freistellung',
         [text('Ein '), term('Betriebsrat', 'betriebsrat'), text(' kann nach § 1 BetrVG in Betrieben mit regelmäßig mindestens fünf ständigen wahlberechtigten Arbeitnehmern gewählt werden, von denen mindestens drei wählbar sind. Wahlberechtigung und Wählbarkeit folgen §§ 7–8 BetrVG und unterscheiden sich, etwa hinsichtlich Alter und Betriebszugehörigkeit. Tarifbindung ist keine Voraussetzung.')],
         'Maßgeblich ist der Betrieb als Organisationseinheit, nicht stets das gesamte Unternehmen oder jede Filiale für sich. Ein Betrieb mit 150 in der Regel beschäftigten Arbeitnehmern hat unter den angenommenen Wahlvoraussetzungen einen siebenköpfigen Betriebsrat (§ 9). Die gesetzliche Mindestfreistellung nach § 38 beginnt grundsätzlich bei 200 Arbeitnehmern. Erforderliche Arbeitsbefreiung für konkrete Betriebsratsaufgaben nach § 37 bleibt auch darunter möglich.'),
+      section('aufgaben', 'Allgemeine Aufgaben des Betriebsrats nach § 80',
+        'Der Betriebsrat überwacht die Durchführung der zugunsten der Beschäftigten geltenden Regeln und kann Maßnahmen zugunsten von Betrieb und Belegschaft beantragen. Zu seinen Aufgaben gehören unter anderem Gleichstellung, Vereinbarkeit von Familie und Beruf, Beschäftigungssicherung, Eingliederung schwerbehinderter Menschen und Förderung des Arbeitsschutzes. Er nimmt Anregungen von Beschäftigten und der Jugend- und Auszubildendenvertretung auf und verfolgt berechtigte Anliegen gegenüber dem Arbeitgeber.',
+        'Für seine gesetzlichen Aufgaben muss er nach § 80 Abs. 2 rechtzeitig und umfassend unterrichtet werden. Allgemeine Aufgaben und die dafür nötigen Informationen sind vom Mitbestimmungsrecht bei einer konkreten Maßnahme zu unterscheiden. Welche Beteiligungswirkung eintritt, bestimmt die jeweilige Spezialregel.'),
       section('stufen', 'Beteiligung nach Wirkung unterscheiden',
         'Information und Beratung: Personalplanung (§ 92) und die Planung etwa von Arbeitsplätzen oder Arbeitsabläufen (§ 90) erfordern Unterrichtung und Beratung. Das ersetzt nicht eine gegebenenfalls zusätzlich nötige Zustimmung zu späteren Einzelmaßnahmen. Die Planung fünf neuer Stellen ist anders zu beurteilen als die Einstellung von fünf Personen.',
         [text('Anhörung und Widerspruch: Vor Kündigungen gilt § 102 BetrVG. Bei Einstellung, Eingruppierung, Umgruppierung und '), link('Versetzung', 'recht-versetzung'), text(' verlangt § 99 in seinem Geltungsbereich eine andere Form der Beteiligung mit Zustimmungsrecht. Bei § 102 ist ein ordnungsgemäßer Widerspruch im Regelfall kein Veto gegen die Kündigung.')],
         [text('Erzwingbare '), term('Mitbestimmung', 'mitbestimmung'), text(' nach § 87 betrifft soziale Angelegenheiten, etwa Beginn und Ende der Arbeitszeit, Urlaubsgrundsätze, technische Überwachung und Gestaltung von Sozialeinrichtungen, soweit keine gesetzliche oder tarifliche Regelung besteht. Scheitert eine Einigung, entscheidet die Einigungsstelle, deren Spruch die Einigung ersetzt.')]),
       section('beispiel', 'Praxis: Kinderbetreuung im Betrieb',
         'Der Betrieb will die Nutzungsgebühr einer auf den Betrieb beschränkten Betreuungseinrichtung ändern. Das betrifft unter den angenommenen Voraussetzungen die Ausgestaltung einer Sozialeinrichtung nach § 87 Abs. 1 Nr. 8 BetrVG. Kommt keine Einigung zustande, kommt die Einigungsstelle nach §§ 76, 87 Abs. 2 zum Zug. Die bloße Personalplanung verlangt dagegen grundsätzlich Information und Beratung statt einer solchen Entscheidung.'),
-      source('430–439', 'BetrVG §§ 1, 7–9, 37–38, 76, 80, 87, 90, 92 und 99–102: ' + betrvg),
+      currentSource('Kursunterlage Recht für WiFaWi 2025, PDF-Seiten 430–439.', 'BetrVG §§ 1, 7–9, 37–38, 76, 80, 87, 90, 92 und 99–102: ' + betrvg),
     ],
-    transfer: ['Der Arbeitgeber plant fünf neue Stellen, will eine Person einstellen und möchte allein die Gleitzeitordnung ändern. Welche Vorschriften helfen bei der Zuordnung?',
-      'Personalplanung: § 92, Information und Beratung. Einstellung in einem Unternehmen mit regelmäßig mehr als 20 wahlberechtigten Arbeitnehmern: § 99, Zustimmung einholen. Gleitzeit: regelmäßig § 87 Abs. 1 Nr. 2, erzwingbare Mitbestimmung im gesetzlichen Anwendungsbereich.'],
+    transfer: ['Der Arbeitgeber plant fünf neue Stellen, will eine Person einstellen und möchte allein die Gleitzeitordnung ändern. Beschäftigte melden zugleich Verstöße gegen die bisherige Gleitzeitordnung. Welche Vorschriften helfen bei der Zuordnung?',
+      'Personalplanung: § 92, Information und Beratung. Einstellung in einem Unternehmen mit regelmäßig mehr als 20 wahlberechtigten Arbeitnehmern: § 99, Zustimmung einholen. Gleitzeit: regelmäßig § 87 Abs. 1 Nr. 2, erzwingbare Mitbestimmung im gesetzlichen Anwendungsbereich. Allgemeine Aufgaben nach § 80 helfen beispielsweise, wenn Beschäftigte auf Verstöße gegen eine bestehende Arbeitszeitregelung hinweisen. Die Überwachung der geltenden Regel ist von der Zustimmung zur Änderung zu unterscheiden.'],
   },
   {
     id: 'betriebsrat-kuendigung', number: '6.8.1', title: 'Anhörung des Betriebsrats vor Kündigungen', parent: 'betriebsrat',
@@ -373,6 +387,56 @@ const units: Unit[] = [
     transfer: ['Was ändert sich, wenn die Handverletzung ausgeheilt ist, die Mitarbeiterin tatsächlich wieder arbeitet und erst später durch die Infektion arbeitsunfähig wird?',
       'Mit dem Ende der ursprünglichen Arbeitsunfähigkeit und einer danach unabhängig eintretenden anderen Erkrankung kann ein neuer Verhinderungsfall mit einem neuen Anspruch bis zu sechs Wochen vorliegen.'],
   },
+  {
+    id: 'arbeitsvertragsarten', parent: 'arbeitsvertrag', number: '6.1.1', title: 'Arbeitsvertragsarten und Arbeit auf Abruf',
+    added: true,
+    intro: 'Ein Arbeitsverhältnis lässt sich nach Dauer, Arbeitszeit und Einsatzmodell einordnen. Diese Merkmale können zusammenfallen. Eine befristete Teilzeitstelle kann beispielsweise zugleich als Arbeit auf Abruf gestaltet sein.',
+    sections: [
+      section('achsen', 'Dauer, Arbeitszeit und Einsatzmodell einordnen',
+        [text('Unbefristete Verträge haben keinen vereinbarten Endzeitpunkt. Bei befristeten Verträgen sind Zeit- und Zweckbefristung zu unterscheiden. Eine Probezeit kann auch in einem unbefristeten Vertrag vereinbart sein. Vertiefe Form, Sachgrund und Verlängerung in '), link('Befristete Arbeitsverträge', 'recht-befristung'), text('.')],
+        'Teilzeit betrifft die im Vergleich zu einem vergleichbaren Vollzeitbeschäftigten kürzere regelmäßige Arbeitszeit (§ 2 TzBfG). Prüfe das Benachteiligungsverbot des § 4 und gegebenenfalls die Voraussetzungen für eine Verringerung der Arbeitszeit nach § 8. Ein Minijob ist eine sozialversicherungsrechtliche Beschäftigungskategorie. Aus ihr folgt kein allgemeiner Wegfall von Urlaub, Mindestlohn oder Entgeltfortzahlung. Auch bei Arbeitnehmerüberlassung ist zu unterscheiden, mit wem der Arbeitsvertrag besteht und wer die tägliche Arbeit im Einsatzbetrieb organisiert.',
+        'Berufsausbildung hat den Erwerb beruflicher Handlungsfähigkeit als Kern und richtet sich im Ausgangspunkt nach dem BBiG. Bei vermeintlich freien Dienstverhältnissen prüfe die tatsächliche persönliche Abhängigkeit nach § 611a BGB.'),
+      section('abruf', 'Abrufarbeit und planbare Einsatzgrenzen',
+        [text('Bei '), term('Arbeit auf Abruf', 'abrufarbeit'), text(' richtet sich die Arbeitsleistung nach dem Arbeitsanfall (§ 12 TzBfG). Die Vereinbarung muss eine bestimmte Dauer der wöchentlichen und täglichen Arbeitszeit festlegen. Fehlt die Wochenarbeitszeit, gelten 20 Stunden als vereinbart. Ohne bestimmte tägliche Dauer sind pro Einsatz mindestens drei aufeinanderfolgende Stunden abzurufen.')],
+        'Ist eine wöchentliche Mindestarbeitszeit vereinbart, darf grundsätzlich höchstens ein Viertel zusätzlich abgerufen werden. Ist eine Höchstarbeitszeit vereinbart, darf grundsätzlich höchstens ein Fünftel weniger abgerufen werden. Zu prüfen sind zudem der gesetzliche Referenzrahmen, die im Regelfall viertägige Ankündigung und zulässige tarifliche Abweichungen.'),
+      currentSource('TzBfG §§ 2, 4, 8, 12 und 14: ' + tzbfg, 'BGB §§ 611a und 622: ' + bgb, 'SGB IV § 8: https://www.gesetze-im-internet.de/sgb_4/__8.html', 'BBiG §§ 1 und 10: https://www.gesetze-im-internet.de/bbig_2005/', 'AÜG § 1: https://www.gesetze-im-internet.de/a_g/__1.html'),
+    ],
+    transfer: ['Eine Aushilfe soll je nach Auftrag arbeiten. Die Vereinbarung legt weder Wochen- noch Tagesarbeitszeit fest. Der Betrieb verlangt per Nachricht am Vorabend einen zweistündigen Einsatz. Ordne die gesetzlichen Vorgaben ein.',
+      'Bei vereinbarter Abrufarbeit gelten ohne festgelegte Wochenarbeitszeit grundsätzlich 20 Wochenstunden. Ohne festgelegte Tagesdauer muss ein Abruf grundsätzlich drei zusammenhängende Stunden umfassen. Die Nachricht am Vorabend unterschreitet die gesetzliche Vorankündigung. Prüfe den Referenzrahmen und ob eine gesetzlich zulässige Tarifabweichung eingreift.'],
+  },
+  {
+    id: 'arbeitsvertrag-pflichten', parent: 'arbeitsvertrag', number: '6.1.2', title: 'Pflichten von Arbeitnehmer und Arbeitgeber',
+    added: true,
+    intro: 'Arbeitsleistung und Vergütung sind die Hauptpflichten. Daneben schützen Rücksichtnahme-, Fürsorge- und Schutzpflichten die Interessen beider Seiten. Das Ergebnis hängt davon ab, wer welche Pflicht verletzt hat und welche Rechtsfolge geprüft wird.',
+    sections: [
+      section('arbeitnehmer', 'Arbeitsleistung und Sorgfalt einordnen',
+        'Der Arbeitnehmer erbringt grundsätzlich persönlich die vereinbarte Arbeitsleistung (§§ 611a und 613 BGB). Wirksame Weisungen konkretisieren die Leistung innerhalb der gesetzlichen und vertraglichen Grenzen. Aus § 241 Abs. 2 folgen betriebliche Rücksichtnahmepflichten, etwa sorgfältiger Umgang mit Arbeitsmitteln und der Schutz rechtlich geschützter Geschäftsgeheimnisse.',
+        [text('Bei Krankheit ist die Arbeitsunfähigkeit mit ihrer voraussichtlichen Dauer unverzüglich mitzuteilen. Welche Nachweise erforderlich sind und wie das eAU-Verfahren funktioniert, behandelt '), link('Entgeltfortzahlung bei Krankheit', 'recht-entgeltfortzahlung'), text('. Beim Schaden eines betrieblich veranlassten Einsatzes hängt die Arbeitnehmerhaftung unter anderem vom Verschuldensgrad ab. Eine Pflichtverletzung führt deshalb nicht automatisch zum Ersatz des gesamten Schadens.')]),
+      section('arbeitgeber', 'Vergütung, Beschäftigung und Schutz prüfen',
+        'Der Arbeitgeber schuldet die vereinbarte oder sonst maßgebliche Vergütung unter Beachtung zwingender Mindeststandards und einschlägiger Tarifnormen. § 615 BGB kann den Vergütungsanspruch bei Annahmeverzug erhalten, wenn der Arbeitgeber angebotene, vertragsgemäße Arbeit nicht annimmt und die übrigen Voraussetzungen erfüllt sind. Prüfe Leistungsfähigkeit und Leistungswillen, notwendiges Angebot sowie mögliche Anrechnung.',
+        [text('Zur Fürsorge zählen insbesondere Schutz von Gesundheit und Persönlichkeit sowie sichere Arbeitsbedingungen (§§ 241 Abs. 2 und 618 BGB, ArbSchG). Daneben kommen Ansprüche auf vertragsgemäße Beschäftigung, '), link('Urlaub', 'recht-erholungsurlaub'), text(', '), link('Nachweis der Arbeitsbedingungen', 'recht-arbeitsvertrag'), text(' und bei Beendigung ein Zeugnis nach § 109 GewO in Betracht. Welche Pflicht und welche Rechtsfolge greifen, hängt vom Sachverhalt ab.')]),
+      currentSource('BGB §§ 241, 293–297, 611a, 613, 615 und 618: ' + bgb, 'GewO §§ 106 und 109: ' + gewo, 'EFZG § 5: ' + efzg, 'ArbSchG §§ 3–5: https://www.gesetze-im-internet.de/arbschg/', 'MiLoG § 1: https://www.gesetze-im-internet.de/milog/__1.html'),
+    ],
+    transfer: ['Ein disponierter Mitarbeiter erscheint pünktlich, ist arbeitsfähig und bietet seine Arbeit an. Die Leitung schickt ihn wegen eines kurzfristig verlorenen Kundenauftrags nach Hause. Im selben Lager ist eine bekannte Stolperstelle ungesichert. Welche Pflichten sind getrennt zu prüfen?',
+      'Das ordnungsgemäße Arbeitsangebot und die Ablehnung sprechen für Annahmeverzug. Prüfe Vergütung nach § 615, gegebenenfalls Anrechnung und die Verteilung des Betriebsrisikos. Davon unabhängig besteht die Pflicht, Gefährdungen zu beurteilen und geeignete Schutzmaßnahmen zu treffen. Ein Auftragsausfall erledigt die Arbeitsschutzpflicht nicht.'],
+  },
+  {
+    id: 'schwerbehindertenschutz', parent: 'besonderer-kuendigungsschutz', number: '6.5.3.1', title: 'Schwerbehindertenschutz im Arbeitsverhältnis',
+    added: true,
+    intro: 'Der arbeitsrechtliche Schwerbehindertenschutz betrifft Einstellung, Arbeitsplatzgestaltung, Beteiligung, Urlaub und Kündigung. Welche Regel greift, hängt unter anderem von Schwerbehinderung oder Gleichstellung und der betroffenen Maßnahme ab.',
+    sections: [
+      section('status-einstellung', 'Status, Einstellung und Gestaltung prüfen',
+        'Eine Schwerbehinderung setzt nach § 2 Abs. 2 SGB IX grundsätzlich einen Grad der Behinderung von wenigstens 50 und den gesetzlich geforderten Bezug zum Inland voraus. Bei einem Grad von 30 oder 40 kommt unter den Voraussetzungen des Abs. 3 eine Gleichstellung durch die Bundesagentur für Arbeit infrage, wenn ohne sie ein geeigneter Arbeitsplatz nicht erlangt oder behalten werden kann.',
+        [text('Bei einer freien Stelle prüfst du die Pflichten des Arbeitgebers nach § 164. Berücksichtige die Beteiligung der zuständigen Vertretungen und bei der Beschäftigung eine behinderungsgerechte Organisation. Beschäftigungsquote und praxisnahe Gestaltung erklärt '), link('Behinderung und Teilhabe im Betrieb', 'fz-behinderung-teilhabe'), text('. Bei öffentlichen Arbeitgebern können unter § 165 besondere Pflichten hinzukommen.')]),
+      section('beteiligung-urlaub', 'Vertretung, Zusatzurlaub und Kündigung unterscheiden',
+        'Die Schwerbehindertenvertretung hat Beteiligungsrechte nach § 178 SGB IX. Sie ist in Angelegenheiten, die schwerbehinderte Beschäftigte einzeln oder als Gruppe berühren, grundsätzlich unverzüglich und umfassend zu unterrichten und vor einer Entscheidung anzuhören. Bei einer Kündigung kann eine unterbliebene Beteiligung nach § 178 Abs. 2 zur Unwirksamkeit führen.',
+        'Schwerbehinderte Menschen erhalten nach § 208 grundsätzlich fünf bezahlte zusätzliche Arbeitstage bei einer Fünftagewoche. Bei einer anderen Wochenverteilung ist die Zahl anzupassen. Eine Gleichstellung vermittelt diesen Zusatzurlaub nicht (§ 151 Abs. 3).',
+        'Eine Arbeitgeberkündigung erfordert im gesetzlichen Anwendungsbereich grundsätzlich vorherige Zustimmung des Integrationsamts (§ 168). Prüfe die Ausnahmen, etwa das noch nicht länger als sechs Monate bestehende Arbeitsverhältnis nach § 173. Die Zustimmungsprüfung ersetzt weder die Beteiligung der Schwerbehindertenvertretung noch eine gegebenenfalls erforderliche Betriebsratsanhörung. Jeder Verfahrensschritt hat seine eigenen Voraussetzungen.'),
+      currentSource('SGB IX §§ 2, 151, 154, 164–165, 168, 173, 177–178 und 208: https://www.gesetze-im-internet.de/sgb_9_2018/', 'BetrVG § 102: ' + betrvg),
+    ],
+    transfer: ['Ein Betrieb will einen seit zwei Jahren beschäftigten und gleichgestellten Mitarbeiter kündigen. Ein Betriebsrat und eine Schwerbehindertenvertretung bestehen. Der Mitarbeiter arbeitet regelmäßig an fünf Tagen. Welche Schritte und welchen Zusatzurlaub prüfst du?',
+      'Sofern keine gesetzliche Ausnahme greift, muss der Betrieb vor einer Kündigung die Zustimmung des Integrationsamts einholen, die Schwerbehindertenvertretung beteiligen und den Betriebsrat anhören. Die Gleichstellung allein begründet keinen Zusatzurlaub nach § 208. Bei festgestellter Schwerbehinderung stünden im ganzjährigen Regelfall bei fünf Arbeitstagen pro Woche fünf zusätzliche Arbeitstage zu.'],
+  },
 ];
 
 const articleId = (id: string) => 'recht-' + id;
@@ -395,8 +459,8 @@ export const articles: Article[] = units.map(unit => ({
   number: unit.number,
   intro: unit.intro,
   sections: [...unit.sections, question('transfer', 'Transfer und Selbstkontrolle', ...unit.transfer)],
-  updatedAt,
-  version: 1,
+  updatedAt: unit.added || revised.has(unit.id) ? revisionDate : updatedAt,
+  version: revised.has(unit.id) ? 2 : 1,
 }));
 
 type Term = [id: string, label: string, definition: string, article: string];
@@ -405,6 +469,7 @@ const terms: Term[] = [
   ['abmahnung', 'Abmahnung', 'Beanstandung eines konkret bezeichneten Pflichtverstoßes mit Aufforderung zu vertragsgemäßem Verhalten und Warnung vor arbeitsrechtlichen Konsequenzen im Wiederholungsfall.', 'abmahnung'],
   ['allgemeiner-schutz', 'Allgemeiner Kündigungsschutz', 'Schutz nach dem Kündigungsschutzgesetz vor sozial ungerechtfertigten Kündigungen. Er greift für Beschäftigte im gesetzlichen Anwendungsbereich, insbesondere nach erfüllter Wartezeit und bei entsprechender Betriebsgröße.', 'kuendigungsschutz'],
   ['anhoerung', 'Betriebsratsanhörung', 'Gesetzlich geregelte Unterrichtung des Betriebsrats und Gelegenheit zur Stellungnahme. Bei Kündigungen ist sie vor deren Ausspruch erforderlich.', 'betriebsrat-kuendigung'],
+  ['abrufarbeit', 'Arbeit auf Abruf', 'Arbeitszeitmodell, bei dem die Arbeitsleistung entsprechend dem Arbeitsanfall innerhalb der vereinbarten und gesetzlichen Grenzen abgerufen wird.', 'arbeitsvertragsarten'],
   ['arbeitsvertrag', 'Arbeitsvertrag', 'Vertrag über weisungsgebundene und fremdbestimmte Arbeit in persönlicher Abhängigkeit gegen Vergütung.', 'arbeitsvertrag'],
   ['befristung', 'Befristung', 'Vereinbarung, dass das Arbeitsverhältnis bei Erreichen eines Termins oder Zwecks unter den gesetzlichen Voraussetzungen endet.', 'befristung'],
   ['besonderer-schutz', 'Besonderer Kündigungsschutz', 'Zusätzliche gesetzliche Beschränkung der Kündigung für bestimmte Gruppen oder Situationen. Sie kann etwa in einem Kündigungsverbot oder einer vorher erforderlichen behördlichen Zustimmung bestehen.', 'besonderer-kuendigungsschutz'],

@@ -2,6 +2,8 @@ import type { Article, ArticleSection, Chapter, GlossaryTerm, RichText } from '.
 
 const subjectId = 'recht';
 const stamp = Date.UTC(2026, 10, 18);
+const revised = new Set(['zahlungsverzug', 'kreditsicherheiten']);
+const added = new Set(['faustpfand', 'sicherungsuebereignung', 'sicherungsabtretung', 'grundpfandrechte']);
 const bgb = 'https://www.gesetze-im-internet.de/bgb/';
 const hgb = 'https://www.gesetze-im-internet.de/hgb/';
 const inso = 'https://www.gesetze-im-internet.de/inso/';
@@ -16,6 +18,10 @@ const statutes: Record<string, string[]> = {
   'gutglaeubiger-erwerb': [`BGB §§ 929–935, 985 und 986 · ${bgb}`],
   grundstueckskauf: [`BGB §§ 117, 125, 311b, 873 und 925 · ${bgb}`, 'BGH vom 15. März 2024, V ZR 115/22'],
   kreditsicherheiten: [`BGB §§ 398, 449, 868, 929–931, 1113, 1191, 1204 und 1205 · ${bgb}`],
+  faustpfand: [`BGB §§ 1204–1207, 1210, 1215, 1223, 1228–1229, 1234–1235 und 1247 · ${bgb}`, `InsO § 50 · ${inso}`],
+  sicherungsuebereignung: [`BGB §§ 868, 929–933 und 985–986 · ${bgb}`, `InsO §§ 51, 166 und 170–171 · ${inso}`],
+  sicherungsabtretung: [`BGB §§ 398–400, 404, 406–407 und 409 · ${bgb}`, `HGB § 354a · ${hgb}`, `InsO §§ 51, 166 und 170–171 · ${inso}`],
+  grundpfandrechte: [`BGB §§ 873, 879, 1113–1117, 1153, 1163, 1177, 1191–1193 und 1200 · ${bgb}`, `InsO § 49 · ${inso}`, 'ZVG: https://www.gesetze-im-internet.de/zvg/'],
   buergschaft: [`BGB §§ 765–773 · ${bgb}`, `HGB § 350 · ${hgb}`],
   'vorvertragliches-schuldverhaeltnis': [`BGB §§ 241, 280, 311 und 823 · ${bgb}`],
   insolvenzgruende: [`InsO §§ 1, 15a, 17, 18 und 19 · ${inso}`],
@@ -53,10 +59,11 @@ function article(
   const parent = chapters.find((chapter) => chapter.number === parentNumber);
   chapters.push({ id, subjectId, parentId: parent?.id, number, title, articleId: id });
   const sources = statutes[key];
+  const current = revised.has(key) || added.has(key);
   const articleSections = sources
-    ? [...sections, section('rechtsgrundlagen', 'Rechtsgrundlagen', 'Stand 18. November 2026', ...sources)]
+    ? [...sections, section('rechtsgrundlagen', 'Rechtsgrundlagen', current ? 'Stand 19. November 2026' : 'Stand 18. November 2026', ...sources)]
     : sections;
-  articles.push({ id, subjectId, chapterId: id, number, title, intro, sections: articleSections, updatedAt: stamp, version: 1 });
+  articles.push({ id, subjectId, chapterId: id, number, title, intro, sections: articleSections, updatedAt: current ? Date.UTC(2026, 10, 19) : stamp, version: revised.has(key) ? 2 : 1 });
   glossary.push(...terms.map(([termKey, termName, definition, example]) =>
     ({ id: `recht-${termKey}`, subjectId, term: termName, definition, example, articleId: id })));
 }
@@ -77,7 +84,11 @@ article('zahlungsverzug', '4.1', 'Fälligkeit und Zahlungsverzug',
   [
     section('faelligkeit', 'Fälligkeit und Zahlungsfrist',
       p('Ohne abweichende Vereinbarung oder Umstände ist die Leistung grundsätzlich sofort fällig (§ 271 Abs. 1 BGB). ', { text: 'Fälligkeit', termId: 'logistik-faelligkeit' }, ' kann sich auch aus Sonderregeln ergeben: Dienstvergütung typischerweise nach Leistung (§ 614), Werklohn regelmäßig mit Abnahme (§ 641). Beim gegenseitigen Vertrag kann dem Schuldner bis zur Gegenleistung ein Leistungsverweigerungsrecht zustehen (§ 320 BGB).'),
+      'Die Leistungszeit beantwortet sowohl, ab wann der Gläubiger die Leistung verlangen kann, als auch, ab wann der Schuldner erfüllen darf. Bei einem bestimmten Termin kann der Schuldner nach § 271 Abs. 2 BGB im Zweifel vorher leisten, der Gläubiger aber erst zum Termin verlangen. Die Vereinbarung oder die Art des Geschäfts kann eine frühere Leistung ausschließen. Ein vereinbartes Lieferfenster für Kühlware kann zum Beispiel auch der Planung des Wareneingangs dienen.',
       'Lies Zahlungsbedingungen im Vertrag. Ein einseitiger Rechnungstext setzt im Regelfall allein keinen vertraglichen Zahlungstermin und bringt den Empfänger nicht automatisch in Verzug. Bei ereignisabhängigen Tagesfristen zählt der Tag des auslösenden Ereignisses grundsätzlich nicht mit (§§ 187, 188 BGB). Fällt der letzte Tag auf einen Samstag, Sonntag oder gesetzlichen Feiertag am Leistungsort, prüfe § 193 BGB.'),
+    practice('lieferfenster', 'Anwendungsfall: Vor dem vereinbarten Termin leisten',
+      'Ein Werkstattbetrieb soll am 30. November liefern. Der Kunde verlangt am 24. November Übergabe. Der Betrieb bietet seinerseits eine frühe Lieferung an. Was folgt im Zweifel aus § 271 Abs. 2 BGB, und was ändert ein ausdrücklich exklusives Ladefenster?',
+      'Der Kunde kann die Lieferung im Zweifel erst am 30. November verlangen. Der Betrieb darf grundsätzlich vorher leisten. Ein vereinbartes ausschließliches Ladefenster kann die vorzeitige Erfüllbarkeit ausschließen. Für Schuldnerverzug sind Fälligkeit und die weiteren Voraussetzungen des § 286 gesondert zu prüfen.'),
     section('zahlungsziele', 'Grenzen langer Zahlungsziele',
       'Bei Entgeltforderungen sind Zahlungsziele von mehr als 60 Tagen nach Empfang der Gegenleistung beziehungsweise in den gesetzlichen Konstellationen nach Rechnungszugang nur wirksam, wenn die Parteien sie ausdrücklich vereinbart haben und sie für den Gläubiger nicht grob unbillig sind (§ 271a Abs. 1 BGB). Bei öffentlichen Auftraggebern als Schuldnern erfordern mehr als 30 Tage eine ausdrückliche und sachlich gerechtfertigte Vereinbarung. Mehr als 60 Tage sind dort unwirksam (§ 271a Abs. 2).',
       'Für vereinbarte Überprüfungs- oder Abnahmefristen von mehr als 30 Tagen gelten ebenfalls die Anforderungen ausdrücklicher Vereinbarung und fehlender grober Unbilligkeit (§ 271a Abs. 3). Der § 271a enthält unter anderem Ausnahmen für Abschlags- und sonstige Ratenzahlungen sowie für Verbraucher als Schuldner. In AGB können strengere Vorgaben gelten.'),
@@ -220,6 +231,8 @@ article('kreditsicherheiten', '4.4', 'Kreditsicherheiten auswählen',
       p('Beim ', term('Pfandrecht', 'begriff-pfandrecht'), ' an einer beweglichen Sache benötigt der Pfandgläubiger regelmäßig Einigung und Übergabe (§§ 1204, 1205 BGB). Eine fortgesetzte alleinige Sachherrschaft des Schuldners genügt dafür nicht. Die ', term('Sicherungsübereignung', 'begriff-sicherungsuebereignung'), ' überträgt das Eigentum regelmäßig über §§ 929, 930 und 868 BGB. Die Sicherungsvereinbarung legt unter anderem Nutzung, Freigabe und Verwertung fest.')),
     section('grundbesitz', 'Hypothek und Grundschuld',
       p('Die ', term('Hypothek', 'begriff-hypothek'), ' sichert eine konkrete Forderung und ist rechtlich an sie gebunden (§ 1113 BGB). Eine ', term('Grundschuld', 'begriff-grundschuld'), ' setzt für ihren Bestand keine Forderung voraus (§ 1191). Die Sicherungsabrede knüpft die Verwertungsbefugnis im Innenverhältnis an den Sicherungszweck. Eine Tilgung führt nicht von selbst zur Löschung im Grundbuch. Kläre Freigabe oder Rückgewähr und beachte den Rang.')),
+    section('vertiefungen', 'Sicherheit nach dem Vermögenswert auswählen',
+      p(link('Faustpfand', 'faustpfand'), ' · ', link('Sicherungsübereignung', 'sicherungsuebereignung'), ' · ', link('Sicherungsabtretung', 'sicherungsabtretung'), ' · ', link('Grundpfandrechte', 'grundpfandrechte'))),
     practice('flottenkredit', 'Was sichert die Bank, was kann der Betrieb nutzen?',
       'Ein Holzbaubetrieb finanziert neue Hubgeräte. Die Inhaberin braucht sie täglich. Vergleiche Pfand und Sicherungsübereignung. Nenne zwei weitere Auswahlkriterien für die Bank.',
       'Ein klassisches Pfand nach § 1205 verlangt grundsätzlich Übergabe und blockiert regelmäßig die Nutzung. Bei Sicherungsübereignung kann der Betrieb aufgrund des Besitzkonstituts unmittelbarer Besitzer bleiben. Die Bank prüft beispielsweise wirtschaftliche Restwerte, bereits bestehende Rechte, den Identitätsnachweis und die Verwertungskosten. Eine Sicherheit verliert an Wert, wenn ihre Verwertbarkeit gerade im wirtschaftlichen Ausfall des Schuldners sinkt.'),
@@ -245,6 +258,64 @@ article('buergschaft', '4.4.1', 'Bürgschaft und Ausfallrisiko',
   ], [
     ['begriff-buergschaft', 'Bürgschaft', 'Vertrag, durch den der Bürge dem Gläubiger für eine Verbindlichkeit eines Dritten einsteht.'],
     ['begriff-vorausklage', 'Einrede der Vorausklage', 'Einrede des Bürgen, die Leistung grundsätzlich bis zur erfolglosen Zwangsvollstreckung gegen den Hauptschuldner zu verweigern.'],
+  ]);
+
+article('faustpfand', '4.4.2', 'Pfandrecht an beweglichen Sachen',
+  'Mit einem Faustpfand erhält der Gläubiger ein Verwertungsrecht an einer beweglichen Sache. Die Sache kann im Eigentum des Verpfänders bleiben.',
+  [
+    section('bestellung', 'Forderung, Einigung und Besitz prüfen',
+      p('Für das ', term('Pfandrecht', 'begriff-pfandrecht'), ' prüfst du eine gesicherte Forderung, auch eine künftige oder bedingte, die dingliche Einigung und die für den konkreten Fall erforderliche Besitzverschaffung. Der Verpfänder muss Eigentümer oder verfügungsbefugt sein. Für einen gutgläubigen Erwerb enthält § 1207 BGB Sonderregeln. Besitzt der Gläubiger die Sache bereits, genügt nach § 1205 Abs. 1 grundsätzlich die Einigung.'),
+      'Lässt der Schuldner die Maschine unverändert ausschließlich in seiner Halle und behält den alleinigen direkten Zugriff, genügt eine bloße Pfandabrede im Grundfall nicht. Ein wirksam bestelltes Pfand gibt dem Gläubiger Besitz und Pflichten zur Verwahrung. Der Gläubiger wird dadurch nicht Eigentümer und darf die Sache nicht ohne Weiteres nutzen.'),
+    section('verwertung', 'Pfandreife und Verwertung auseinanderhalten',
+      'Persönliche Zahlungspflicht und Haftung mit dem Pfand sind verschiedene Dinge. Ist die gesicherte Forderung ganz oder teilweise fällig, prüfe die Verkaufsberechtigung nach § 1228 BGB. Für den Verkauf gelten grundsätzlich Androhung und Wartefrist nach § 1234 sowie Regeln zum öffentlichen Verkauf nach § 1235. Ein automatischer Eigentumsübergang bei Nichtzahlung ist unzulässig, wenn er vor Eintritt der Verkaufsberechtigung vereinbart wurde (§ 1229).',
+      'Aus dem Erlös wird die gesicherte Forderung im gesetzlichen Umfang befriedigt (§ 1247 BGB). Ein Überschuss verbleibt wirtschaftlich beim Verpfänder. Nach Erlöschen des Pfandrechts ist die Sache grundsätzlich zurückzugeben (§ 1223). In der Insolvenz ist das Absonderungsrecht nach § 50 InsO zu unterscheiden.'),
+    practice('messgeraet', 'Anwendungsfall: Pfand oder weiter nutzbares Gerät?',
+      'Ein Messgerät soll ein Darlehen absichern. Die Bank hat es noch nicht und der Betrieb braucht es täglich. Beide unterzeichnen nur die Erklärung, die Bank erhalte ein Pfandrecht. Was fehlt? Welche Alternative kommt infrage?',
+      'Für den Grundfall nach § 1205 fehlt die Übergabe. Soll der Betrieb unmittelbarer Besitzer bleiben, kommt eine Sicherungsübereignung mittels Besitzkonstitut in Betracht. Die Bank prüft Eigentum, Identität des Geräts und vorhandene Rechte, bevor sie die Sicherheit bewertet.'),
+  ]);
+
+article('sicherungsuebereignung', '4.4.3', 'Sicherungsübereignung bei Maschinen und Fahrzeugen',
+  'Bei der Sicherungsübereignung erhält der Kreditgeber Eigentum zu einem begrenzten Sicherungszweck. Der Betrieb kann die Sache aufgrund der vereinbarten Besitzvermittlung weiter nutzen.',
+  [
+    section('bestellung', 'Sicherungsabrede und dingliche Einigung trennen',
+      p('Bei der ', term('Sicherungsübereignung', 'begriff-sicherungsuebereignung'), ' legt die Sicherungsabrede fest, welche Forderungen gesichert werden, wann die Bank verwerten darf und wann sie die Sicherheit freigibt. Nach §§ 929 und 930 BGB kann ein Besitzmittlungsverhältnis nach § 868 die Übergabe ersetzen. Die Bank wird Eigentümerin und mittelbare Besitzerin, der Betrieb bleibt unmittelbarer Besitzer.'),
+      'Prüfe die eindeutige Bestimmbarkeit der Sache, etwa anhand von Seriennummer oder Fahrzeug-Identifizierungsnummer, und das Eigentum des Sicherungsgebers. Ein Eigentumsvorbehalt oder ein bereits übertragenes Sicherungseigentum kann die Verfügung beschränken. Beim Erwerb vom Nichtberechtigten fehlt bei bloßem Besitzkonstitut regelmäßig die für den Gutglaubenserwerb nach § 933 erforderliche Übergabe.'),
+    section('einziehung', 'Freigabe und Kreditausfall behandeln',
+      'Nach Tilgung bestimmt die Sicherungsabrede, ob eine Rückübertragung zu verlangen ist oder der vereinbarte Eigentumsrückfall eintritt. Im Sicherungsfall richten sich Herausgabe und Verwertung nach der Abrede und den gesetzlichen Grenzen. Ein Verwertungserlös ist abzurechnen und ein Überschuss nach der Sicherungsabrede herauszugeben.',
+      p('In der Insolvenz des Betriebs erhält der Sicherungseigentümer grundsätzlich ein Absonderungsrecht nach § 51 Nr. 1 InsO. Befindet sich die Maschine beim Insolvenzverwalter, kann dieser sie nach § 166 Abs. 1 verwerten. Die Verteilung des Erlöses richtet sich dann insbesondere nach §§ 170 und 171 InsO. Vergleiche ', link('Aussonderung und Absonderung', 'aus-absonderung'), '.')),
+    practice('fahrzeug', 'Anwendungsfall: Noch nicht bezahlter Transporter',
+      'Ein Betrieb möchte einen Transporter seiner Bank im Wege des Besitzkonstituts zur Sicherheit übereignen. Der Händler hat sich bis zur vollständigen Zahlung wirksam das Eigentum vorbehalten. Die Bank erlangt keinen unmittelbaren Besitz. Ist die Bank damit bereits Eigentümerin?',
+      'Nein. Der Betrieb hat noch kein Volleigentum und kann dieses ohne Verfügungsbefugnis nicht übertragen. Der bloße Abschluss der Vereinbarung ohne körperliche Übergabe genügt hier auch für einen Gutglaubenserwerb nach § 933 nicht. Prüfe getrennt, ob eine vorhandene Anwartschaft übertragen werden soll oder zunächst der Händler abgelöst wird.'),
+  ]);
+
+article('sicherungsabtretung', '4.4.4', 'Sicherungsabtretung von Kundenforderungen',
+  'Ein Unternehmen kann eine Kundenforderung an die Bank übertragen, um einen Kredit zu sichern. Die Sicherungsabrede bestimmt, wie die Bank ihre Gläubigerstellung einsetzen darf.',
+  [
+    section('forderung', 'Gläubigerwechsel und Sicherungszweck zuordnen',
+      p('Bei der ', term('Sicherungsabtretung', 'begriff-sicherungsabtretung'), ' schließen bisheriger und neuer Gläubiger einen Abtretungsvertrag nach § 398 BGB. Der Kunde muss regelmäßig nicht zustimmen. Prüfe, ob die Forderung bestimmbar und abtretbar ist und ob sie bereits anderweitig übertragen wurde. § 399 erfasst unter anderem vertragliche Abtretungsverbote. Bei bestimmten Geldforderungen aus Handelsgeschäften kann § 354a HGB die Abtretung trotzdem wirksam sein lassen. Das Gesetz schützt dort zugleich die Zahlung an den bisherigen Gläubiger.'),
+      'Auch mehrere oder künftige hinreichend bestimmbare Forderungen können erfasst sein. Bei einer Globalzession prüfst du Überschneidungen mit bereits abgetretenen Forderungen und mit einem verlängerten Eigentumsvorbehalt eines Lieferanten besonders sorgfältig. Die Sicherungsabrede ordnet gesicherte Kredite, Einziehung, Freigabe und mögliche Rückabtretung zu.'),
+    section('zahlung', 'Stille und offene Abtretung unterscheiden',
+      'Bei stiller Abtretung wird der Kunde zunächst nicht informiert. Die Bank ist bereits Gläubigerin, kann dem Unternehmen aber die Einziehung erlauben. Leistet der Kunde in Unkenntnis der Abtretung an den bisherigen Gläubiger, schützt ihn grundsätzlich § 407 BGB. Bei offengelegter Abtretung ist grundsätzlich an den neuen Gläubiger zu leisten. Prüfe bei Widersprüchen die Anzeige und gesetzliche Sonderfälle. Bestehende Einwendungen des Kunden bleiben nach § 404 grundsätzlich erhalten. Für die Aufrechnung gilt § 406.',
+      'Fällt der Kredit aus, legt die Bank die Abtretung gegebenenfalls offen und zieht die Forderungen nach der Sicherungsvereinbarung ein. In der Insolvenz des Sicherungsgebers kann der Insolvenzverwalter die zur Sicherheit abgetretene Forderung nach § 166 Abs. 2 InsO einziehen. Der Bank steht grundsätzlich Absonderung nach § 51 Nr. 1 zu.'),
+    practice('frachtrechnung', 'Anwendungsfall: Wer darf die Frachtrechnung einziehen?',
+      'Eine Spedition tritt eine offene Frachtrechnung über 8.000 € wirksam still an ihre Bank ab. Der Kunde zahlt ohne Kenntnis 3.000 € an die Spedition. Anschließend informiert ihn die Bank über die Abtretung und verlangt ohne weitere Besonderheiten den Rest. Wie viel kann sie vom Kunden beanspruchen?',
+      'Die Zahlung von 3.000 € ist nach § 407 BGB gegenüber der Bank grundsätzlich wirksam. Es bleiben 8.000 € − 3.000 € = 5.000 €. Nach Kenntnis wirkt eine weitere Zahlung an die Spedition grundsätzlich nicht befreiend, sofern etwa keine Einziehungsermächtigung oder Sonderregel greift. Wie die Spedition die bereits vereinnahmten 3.000 € gegenüber der Bank abrechnet, bestimmt ihr Sicherungsverhältnis.'),
+  ], [
+    ['begriff-sicherungsabtretung', 'Sicherungsabtretung', 'Übertragung einer Forderung nach § 398 BGB zur Sicherung eines anderen Anspruchs.'],
+  ]);
+
+article('grundpfandrechte', '4.4.5', 'Grundpfandrechte: Hypothek und Sicherungsgrundschuld',
+  'Grundpfandrechte sichern Ansprüche durch Zugriff auf ein Grundstück. Forderung, dingliches Recht, Grundbuchrang und Sicherungsabrede sind getrennt zu prüfen.',
+  [
+    section('bestellung', 'Eintragung, Rang und Forderungsbindung',
+      p('Grundpfandrechte werden im Grundfall durch dingliche Einigung und Eintragung im Grundbuch nach § 873 BGB bestellt. Der Rang bestimmt, wer sich bei einer Verwertung vorrangig befriedigen kann. Prüfe die Grundbucheinträge, besondere Rangabreden und bei einem Briefrecht die zusätzlichen Voraussetzungen. Die ', term('Hypothek', 'begriff-hypothek'), ' ist als akzessorisches Recht an ihre Forderung gebunden. Die ', term('Grundschuld', 'begriff-grundschuld'), ' kann auch ohne Forderung bestehen.'),
+      'Bei der Sicherungsgrundschuld vereinbaren Parteien zusätzlich, welche Forderung der Zugriff absichern soll. Nach Tilgung wird der Grundbucheintrag nicht automatisch gelöscht. Welche Rückgewähr geschuldet ist, ergibt sich aus der Sicherungsabrede. Bei der Hypothek sind nach Erlöschen der gesicherten Forderung die gesetzlichen Wirkungen nach §§ 1163 und 1177 zu prüfen.'),
+    section('vollstreckung', 'Verwertung und Rangfolge beurteilen',
+      'Bei einem Kreditausfall prüft die Bank den Sicherungsfall, die Fälligkeit des dinglichen Rechts und ihre Vollstreckungsgrundlage. Für das Kapital einer Sicherungsgrundschuld gilt die Kündigungsregel des § 1193 BGB. Sie ist von der Darlehenskündigung zu trennen. Für die Verwertung kommen insbesondere Zwangsversteigerung oder Zwangsverwaltung in Betracht. Die Verteilung folgt dem maßgeblichen Rang, nicht automatisch der zeitlichen Reihenfolge der Kreditaufnahme.',
+      'Beim Vergleich zweier Finanzierungen zählt daher nicht nur der geschätzte Grundstückswert. Berücksichtige vorrangige Rechte, mögliche Verwertungskosten und den voraussichtlichen Nettoerlös.'),
+    practice('lagergrundstueck', 'Anwendungsfall: Finanzierung im zweiten Rang',
+      'Beim Verkauf eines Lagergrundstücks stehen nach Kosten 260.000 € für zwei im Rang aufeinanderfolgende Gläubiger bereit. Für den ersten sind im Beispiel 200.000 € und für den zweiten 90.000 € zu berücksichtigen. Andere Ansprüche sind ausgeschlossen. Wie viel erhält jeder?',
+      'Der erste Gläubiger erhält 200.000 €. Für den zweiten bleiben 260.000 € − 200.000 € = 60.000 €. Von seinen 90.000 € bleiben 30.000 € ungedeckt. Einen persönlichen Restanspruch prüfst du separat anhand des Schuldverhältnisses.'),
   ]);
 
 article('vorvertragliches-schuldverhaeltnis', '4.5', 'Vorvertragliche Schuldverhältnisse',

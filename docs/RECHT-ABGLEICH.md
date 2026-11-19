@@ -1,6 +1,6 @@
 # Buchabgleich Recht
 
-Referenz ist die bereitgestellte Folienunterlage „Recht für WiFaWi 2025“ mit 506 PDF-Seiten. Die App ordnet Fälle und Fachstoff nach Rechtsgebieten und nutzt den [Artikelstandard](ARTIKELSTANDARD.md). Maßgeblich für die Seitenangaben ist die PDF-Reihenfolge.
+Referenz ist die bereitgestellte Folienunterlage „Recht für WiFaWi 2025“ mit 506 PDF-Seiten. Die App ordnet Fälle und Fachstoff nach Rechtsgebieten und nutzt den [Artikelstandard](ARTIKELSTANDARD.md). Maßgeblich für die Seitenangaben ist die PDF-Reihenfolge. Der ergänzende [IHK-Stoffabgleich](RECHT-ABGLEICH-IHK.md) ordnet die Gliederungspunkte der fotografierten Inhaltsseiten den App-Artikeln zu.
 
 | PDF-Seiten | Inhalte | Stoffabgleich |
 | --- | --- | --- |

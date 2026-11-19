@@ -49361,6 +49361,22 @@
     "intro": "Die sachliche Zuständigkeit bestimmt die Gerichtsart. Der Gerichtsstand bestimmt örtlich, in welchem Bezirk der Rechtsstreit erhoben werden kann oder muss.",
     "sections": [
       {
+        "id": "rechtsweg",
+        "title": "Rechtsweg vor Gerichtsebene und Bezirk prüfen",
+        "paragraphs": [
+          [
+            {
+              "text": "Ordne zuerst den Streit ein. Gewöhnliche private Kauf- und Werklohnforderungen gehören grundsätzlich vor die ordentliche Zivilgerichtsbarkeit (§ 13 GVG). Ansprüche zwischen Arbeitnehmer und Arbeitgeber aus dem Arbeitsverhältnis gehören grundsätzlich vor die Arbeitsgerichte (§ 2 ArbGG). Bei einem Rechtsbehelf gegen eine behördliche Gewerbeuntersagung kommt regelmäßig der Verwaltungsrechtsweg nach § 40 VwGO in Betracht. Für sozialrechtliche Sozialversicherungssachen und viele Abgabenstreitigkeiten gelten die Sonderzuweisungen der §§ 51 SGG beziehungsweise 33 FGO."
+            }
+          ],
+          [
+            {
+              "text": "Beispiel: Dieselbe GmbH verlangt Kaufpreis für ein Gerät, streitet mit einem eigenen Mitarbeiter über Lohn und wehrt sich gegen eine Gewerbeuntersagung. Der Kaufpreis führt zum Zivilgericht, der Lohnanspruch zum Arbeitsgericht und der öffentlich-rechtliche Streit grundsätzlich zum Verwaltungsgericht. Erst innerhalb des jeweiligen Rechtswegs prüfst du die sachliche und die örtliche Zuständigkeit. Für die folgenden Streitwertregeln wird ein ordentlicher Zivilprozess vorausgesetzt."
+            }
+          ]
+        ]
+      },
+      {
         "id": "sachlich",
         "title": "Amtsgericht oder Landgericht bestimmen",
         "paragraphs": [
@@ -49428,7 +49444,7 @@
         "paragraphs": [
           [
             {
-              "text": "Geprüft am 18. November 2026."
+              "text": "Geprüft am 19. November 2026."
             }
           ],
           [
@@ -49443,12 +49459,32 @@
           ],
           [
             {
-              "text": "GVG: https://www.gesetze-im-internet.de/gvg/"
+              "text": "GVG §§ 13, 23, 71: https://www.gesetze-im-internet.de/gvg/"
             }
           ],
           [
             {
               "text": "Gesetz zur Änderung des Zuständigkeitsstreitwerts vom 8. Dezember 2025, BGBl. 2025 I Nr. 318: https://recht.bund.de/bgbl/1/2025/318/VO"
+            }
+          ],
+          [
+            {
+              "text": "ArbGG § 2: https://www.gesetze-im-internet.de/arbgg/__2.html"
+            }
+          ],
+          [
+            {
+              "text": "VwGO § 40: https://www.gesetze-im-internet.de/vwgo/__40.html"
+            }
+          ],
+          [
+            {
+              "text": "SGG § 51: https://www.gesetze-im-internet.de/sgg/__51.html"
+            }
+          ],
+          [
+            {
+              "text": "FGO § 33: https://www.gesetze-im-internet.de/fgo/__33.html"
             }
           ]
         ]
@@ -49470,8 +49506,8 @@
         }
       }
     ],
-    "updatedAt": 1794960000000,
-    "version": 1
+    "updatedAt": 1795046400000,
+    "version": 2
   },
   {
     "id": "recht-erfuellungsort",
@@ -50078,8 +50114,8 @@
     "number": "3",
     "title": "Vertragstypen und Kaufrecht",
     "intro": "Ein Vertragstyp ergibt sich aus den vereinbarten Hauptleistungen. Die Einordnung bestimmt unter anderem, welche Leistung geschuldet ist, wann sie fällig wird und welche Rechte bei einer Abweichung bestehen.",
-    "updatedAt": 1794960000000,
-    "version": 1,
+    "updatedAt": 1795046400000,
+    "version": 2,
     "sections": [
       {
         "id": "einordnung",
@@ -50135,6 +50171,26 @@
               "text": "Darlehen",
               "articleId": "recht-darlehen"
             }
+          ],
+          [
+            {
+              "text": "Ratenkauf",
+              "articleId": "recht-ratenkauf"
+            },
+            {
+              "text": " · "
+            },
+            {
+              "text": "Fernabsatzgeschäfte",
+              "articleId": "recht-fernabsatz"
+            },
+            {
+              "text": " · "
+            },
+            {
+              "text": "Elektronischer Geschäftsverkehr",
+              "articleId": "recht-elektronischer-geschaeftsverkehr"
+            }
           ]
         ]
       },
@@ -50167,7 +50223,7 @@
         "paragraphs": [
           [
             {
-              "text": "Stand 18.11.2026 · BGB §§ 241, 311, 433, 488, 535, 581, 598, 611, 611a und 631"
+              "text": "Stand 19.11.2026 · BGB §§ 241, 311, 433, 488, 535, 581, 598, 611, 611a und 631"
             }
           ],
           [
@@ -52451,8 +52507,8 @@
     "number": "3.5",
     "title": "Miete, Pacht und Leihe",
     "intro": "Alle drei Vertragstypen dienen der Nutzung. Miete überlässt Gebrauch gegen Entgelt, Pacht zusätzlich Fruchtziehung und Leihe Gebrauch ohne Entgelt.",
-    "updatedAt": 1794960000000,
-    "version": 1,
+    "updatedAt": 1795046400000,
+    "version": 2,
     "sections": [
       {
         "id": "pflichten",
@@ -52520,17 +52576,53 @@
         ]
       },
       {
+        "id": "mietmangel",
+        "title": "Gewerbliche Miete bei einem Mangel prüfen",
+        "paragraphs": [
+          [
+            {
+              "text": "Fällt bei einer gemieteten Lagerhalle das einzige Tor aus, prüfe zunächst die vereinbarte Nutzbarkeit und das Ausmaß der Beeinträchtigung. Bei einem erheblichen Mangel mindert § 536 BGB die Miete für die betroffene Zeit entsprechend der Gebrauchsminderung. Unter § 536c ist der Vermieter grundsätzlich unverzüglich zu informieren. Unterbleibt die Anzeige und kann der Vermieter deswegen keine Abhilfe schaffen, können unter den gesetzlichen Voraussetzungen Ansprüche und Rechte verloren gehen."
+            }
+          ],
+          [
+            {
+              "text": "Abhilfe, Schadensersatz oder Selbstvornahme nach § 536a, Minderung und außerordentliche Kündigung nach § 543 haben unterschiedliche Voraussetzungen. Prüfe bei der Kündigung insbesondere, ob eine Abhilfefrist oder Abmahnung erforderlich ist. Bei Pacht gilt nach § 581 Abs. 2 Mietrecht entsprechend, soweit das Pachtrecht nichts anderes vorsieht. Landpacht hat eigene Vorschriften."
+            }
+          ]
+        ]
+      },
+      {
         "id": "quellen",
         "title": "Amtliche Rechtsgrundlagen",
         "paragraphs": [
           [
             {
-              "text": "Stand 18.11.2026 · BGB §§ 535, 536, 536c, 546, 581, 584, 598, 601, 604 und 607"
+              "text": "Stand 19.11.2026 · BGB §§ 535, 536–536c, 543, 546, 581, 584, 585, 598, 601, 604 und 607"
             }
           ],
           [
             {
               "text": "https://www.gesetze-im-internet.de/bgb/__535.html"
+            }
+          ],
+          [
+            {
+              "text": "https://www.gesetze-im-internet.de/bgb/__536.html"
+            }
+          ],
+          [
+            {
+              "text": "https://www.gesetze-im-internet.de/bgb/__536a.html"
+            }
+          ],
+          [
+            {
+              "text": "https://www.gesetze-im-internet.de/bgb/__536c.html"
+            }
+          ],
+          [
+            {
+              "text": "https://www.gesetze-im-internet.de/bgb/__543.html"
             }
           ],
           [
@@ -52542,23 +52634,40 @@
             {
               "text": "https://www.gesetze-im-internet.de/bgb/__584.html"
             }
-          ],
-          [
-            {
-              "text": "https://www.gesetze-im-internet.de/bgb/__598.html"
-            }
-          ],
-          [
-            {
-              "text": "https://www.gesetze-im-internet.de/bgb/__604.html"
-            }
-          ],
-          [
-            {
-              "text": "https://www.gesetze-im-internet.de/bgb/__607.html"
-            }
           ]
         ]
+      },
+      {
+        "id": "lagerhalle",
+        "title": "Anwendungsfall: Ausgefallenes Hallentor",
+        "paragraphs": [
+          [
+            {
+              "text": "Eine GmbH meldet den Ausfall des einzigen Lagertors sofort. Zehn Tage ist die Halle gar nicht nutzbar. Die Monatsmiete beträgt 3.000 € bei 30 Tagen. Berechne unter der Annahme vollständiger Gebrauchsunfähigkeit für diese Tage die Minderung und ordne die Kosten eines zusätzlich gemieteten Lagers ein."
+            }
+          ]
+        ],
+        "hint": {
+          "label": "Selbstkontrolle",
+          "title": "Musterantwort",
+          "content": "Unter den genannten Annahmen beträgt die Minderung 3.000 € × 10 ÷ 30 = 1.000 €. Geschuldet bleiben für den Monat 2.000 €. Die Ersatzlagerkosten sind ein eigener Schadensposten. Dafür prüfst du § 536a Abs. 1 BGB, insbesondere den Haftungsgrund und die Kausalität. Ein beim Vertragsschluss vorhandener Mangel, ein vom Vermieter zu vertretender späterer Mangel und Verzug mit der Mangelbeseitigung sind unterschiedliche Tatbestände."
+        }
+      },
+      {
+        "id": "pachtbetrieb",
+        "title": "Transferfall: Überlassung einer Betriebseinheit",
+        "paragraphs": [
+          [
+            {
+              "text": "Eine Unternehmerin überlässt einem Nachfolger gegen Entgelt eine eingerichtete Kantine samt Inventar und dem vertraglichen Recht, den Betrieb und seine Erträge zu nutzen. Wie grenzt du Miete und Pacht ab, und was prüfst du bei einem erheblichen Ausfall der mitüberlassenen Kühlung?"
+            }
+          ]
+        ],
+        "hint": {
+          "label": "Selbstkontrolle",
+          "title": "Musterantwort",
+          "content": "Die vereinbarte Nutzung der betriebsbereiten Einheit einschließlich Fruchtziehung spricht für Pacht. Die Überschrift allein entscheidet nicht. Prüfe Inhalt und Erhaltungspflichten, die Auswirkung des Defekts auf die vereinbarte Nutzung, unverzügliche Mängelanzeige und mögliche Rechte nach §§ 536 ff. über § 581 Abs. 2 BGB, soweit das Pachtrecht nichts Abweichendes bestimmt."
+        }
       },
       {
         "id": "transferfrage",
@@ -52585,8 +52694,8 @@
     "number": "3.5.1",
     "title": "Leasing und Miete im Vertragsvergleich",
     "intro": "Leasing überlässt einen Gegenstand gegen Raten auf bestimmte Zeit. Besonders beim Finanzierungsleasing können Kosten und Risiken anders verteilt sein als bei einer Standardmiete.",
-    "updatedAt": 1794960000000,
-    "version": 1,
+    "updatedAt": 1795046400000,
+    "version": 2,
     "sections": [
       {
         "id": "modell",
@@ -52617,7 +52726,7 @@
         "paragraphs": [
           [
             {
-              "text": "Unter § 506 Abs. 2 können bestimmte Nutzungsverträge eine entgeltliche Finanzierungshilfe sein. Gesetzliche Anknüpfungen sind insbesondere der verpflichtende Erwerb, ein Erwerbsverlangen des Unternehmers oder das Einstehen für einen bestimmten Wert bei Vertragsende. Prüfe den Verbraucherkontext und die konkrete Vertragsabrede."
+              "text": "Je nach Abschlusszeitpunkt können bestimmte Nutzungsverträge eine entgeltliche Finanzierungshilfe sein. Gesetzliche Anknüpfungen sind insbesondere der verpflichtende Erwerb, ein Erwerbsverlangen des Unternehmers oder das Einstehen für einen bestimmten Wert bei Vertragsende. Für Neuverträge ab 20. November 2026 kommt nach § 506 Abs. 2 Satz 1 Nr. 1a BGB auch ein Erwerbsrecht des Verbrauchers hinzu. Prüfe den Verbraucherkontext und die konkrete Vertragsabrede."
             }
           ],
           [
@@ -52633,7 +52742,7 @@
         "paragraphs": [
           [
             {
-              "text": "Stand 18.11.2026 · BGB §§ 535 ff. und 506 Abs. 2"
+              "text": "Stand 19.11.2026 · BGB §§ 535 ff. und 506 Abs. 2, Neuregelung ab 20.11.2026"
             }
           ],
           [
@@ -52644,6 +52753,11 @@
           [
             {
               "text": "https://www.gesetze-im-internet.de/bgb/__506.html"
+            }
+          ],
+          [
+            {
+              "text": "BGBl. 2026 I Nr. 139 · https://recht.bund.de/bgbl/1/2026/139/VO"
             }
           ]
         ]
@@ -52667,14 +52781,142 @@
     ]
   },
   {
+    "id": "recht-ratenkauf",
+    "chapterId": "recht-ratenkauf",
+    "subjectId": "recht",
+    "number": "3.5.1.1",
+    "title": "Ratenkauf und Teilzahlungsgeschäfte",
+    "intro": "Beim Ratenkauf schuldet der Käufer den Kaufpreis in Teilbeträgen. Wer die Finanzierung gewährt und welcher Rechtsstand gilt, entscheidet über Form, Widerruf und die Folgen eines Rückstands.",
+    "updatedAt": 1795046400000,
+    "version": 1,
+    "sections": [
+      {
+        "id": "rollen",
+        "title": "Zahlungsmodell und Beteiligte zuordnen",
+        "paragraphs": [
+          [
+            {
+              "text": "Liefert der Händler eine bestimmte Sache gegen Teilzahlungen, prüfst du ein "
+            },
+            {
+              "text": "Teilzahlungsgeschäft",
+              "termId": "recht-vt-begriff-teilzahlungsgeschaeft"
+            },
+            {
+              "text": " nach § 506 Abs. 3 BGB. Prüfe zuerst, ob ein Unternehmer einem Verbraucher eine Finanzierungshilfe im Anwendungsbereich des § 506 gewährt. Bei einem Firmenkauf auf Raten greifen die verbraucherspezifischen Regeln regelmäßig nicht. Der Kaufpreis bleibt in den vereinbarten Raten geschuldet."
+            }
+          ],
+          [
+            {
+              "text": "Zahlt eine Bank den Händler aus und schuldet der Käufer die Raten der Bank, liegen Kauf und Darlehen vor. Ein verbundenes Geschäft nach § 358 BGB kann zum Beispiel vorliegen, wenn die Bank sich bei Vorbereitung oder Abschluss des Kredits der Mitwirkung des Händlers bedient. Beim "
+            },
+            {
+              "text": "Leasing",
+              "articleId": "recht-leasing"
+            },
+            {
+              "text": " steht die Nutzung auf Zeit im Vordergrund. Eigentum und Zahlungsplan sind außerdem vom "
+            },
+            {
+              "text": "Eigentumsvorbehalt",
+              "articleId": "recht-eigentumsvorbehalt"
+            },
+            {
+              "text": " zu trennen."
+            }
+          ]
+        ]
+      },
+      {
+        "id": "stichtag",
+        "title": "Vertrag vor oder ab dem 20. November 2026",
+        "paragraphs": [
+          [
+            {
+              "text": "Bis einschließlich 19. November 2026 ist für den hier behandelten Regelfall ein entgeltlicher Zahlungsaufschub oder eine sonstige entgeltliche Finanzierungshilfe nach § 506 Abs. 1 alter Fassung maßgeblich. Bei unentgeltlichen Finanzierungshilfen können daneben die eigenen Regeln der §§ 514 und 515 alter Fassung greifen."
+            }
+          ],
+          [
+            {
+              "text": "Für Neuverträge ab dem 20. November 2026 kann auch ein unentgeltlicher Zahlungsaufschub unter § 506 fallen. Eine Ausnahme gilt unter bestimmten Bedingungen bei eigener Händlerfinanzierung ohne Dritten und unentgeltlicher Zahlung innerhalb von höchstens 50 Tagen nach Lieferung oder Leistung. Begrenzte Verzugskosten sind zulässig. Bei den vom Gesetz erfassten Fernabsatzangeboten größerer Anbieter gilt dafür eine Grenze von 14 Tagen und zusätzlich ein Ausschluss des Erwerbs der Finanzierung durch Dritte. Prüfe den konkreten Vertrag und gesetzliche Ausnahmen, etwa eine unentgeltliche Stundung einer bestehenden Forderung."
+            }
+          ]
+        ]
+      },
+      {
+        "id": "folgen",
+        "title": "Formfehler, Widerruf und Rückstand prüfen",
+        "paragraphs": [
+          [
+            {
+              "text": "Im Anwendungsbereich gelten besondere Form- und Pflichtangaben. Stelle nach § 507 fest, welche Form im Abschlusszeitpunkt galt und ob die Angaben nach Art. 247 EGBGB vorliegen. Fehlende Form oder Pflichtangaben können das Teilzahlungsgeschäft zunächst nichtig machen. Übergabe oder Leistung können diesen Mangel heilen. Fehlen Gesamtbetrag oder effektiver Jahreszins, begrenzt § 507 die Verzinsung. Die besondere Fernabsatz-Formausnahme des § 507 Abs. 1 alter Fassung entfällt ab dem 20. November 2026. Dann ist die neue allgemeine Formregel des § 492 zu prüfen."
+            }
+          ],
+          [
+            {
+              "text": "Ein Widerrufsrecht kann aus § 495 in Verbindung mit § 506 folgen. Bei Zahlungsverzug prüfst du für einen Rücktritt des Unternehmers § 508 und die Voraussetzungen des § 498 Abs. 1, darunter mehrere rückständige Raten, Mindesthöhe des Rückstands und erfolglose qualifizierte Nachfrist. Trenne den Rücktritt von der Geltendmachung einer einzelnen fälligen Rate."
+            }
+          ]
+        ]
+      },
+      {
+        "id": "quellen",
+        "title": "Amtliche Rechtsgrundlagen",
+        "paragraphs": [
+          [
+            {
+              "text": "Stand 19.11.2026 · BGB §§ 358, 433, 491–492, 495, 498, 506–508. Übergangsvorschriften und Fassungen zum Abschlussdatum"
+            }
+          ],
+          [
+            {
+              "text": "https://www.gesetze-im-internet.de/bgb/__506.html"
+            }
+          ],
+          [
+            {
+              "text": "https://www.gesetze-im-internet.de/bgb/__507.html"
+            }
+          ],
+          [
+            {
+              "text": "https://www.gesetze-im-internet.de/bgb/__508.html"
+            }
+          ],
+          [
+            {
+              "text": "BGBl. 2026 I Nr. 139 · https://recht.bund.de/bgbl/1/2026/139/VO"
+            }
+          ]
+        ]
+      },
+      {
+        "id": "transferfrage",
+        "title": "Transferfrage",
+        "paragraphs": [
+          [
+            {
+              "text": "Eine Kundin kauft privat ein Gerät. Der Händler verlangt statt 1.200 € bar zwölf Monatsraten à 110 €. Eine andere Kundin finanziert dasselbe Gerät über eine Bank, deren Kredit der Händler vermittelt. Erkläre den Unterschied und ermittle beim Händlerkauf den Mehrbetrag."
+            }
+          ]
+        ],
+        "hint": {
+          "label": "Selbstkontrolle",
+          "title": "Musterantwort",
+          "content": "Beim Händlerkauf ergeben zwölf Raten 1.320 €, also 120 € mehr als der Barpreis. Das ist der absolute Mehrbetrag. Der effektive Jahreszins hängt unter anderem vom Zahlungsplan ab. Prüfe beim Händler die §§ 506–508 nach Abschlussdatum. Beim Bankmodell sind Kauf und Darlehen getrennte Verträge. Prüfe die wirtschaftliche Einheit nach § 358 und die Folgen eines Widerrufs."
+        }
+      }
+    ]
+  },
+  {
     "id": "recht-darlehen",
     "chapterId": "recht-darlehen",
     "subjectId": "recht",
     "number": "3.6",
     "title": "Geld- und Sachdarlehen",
     "intro": "Beim Gelddarlehen wird der vereinbarte Betrag zur Verfügung gestellt und bei Fälligkeit zurückgezahlt. Beim Sachdarlehen werden vertretbare Sachen überlassen und gleichartige Sachen zurückerstattet.",
-    "updatedAt": 1794960000000,
-    "version": 1,
+    "updatedAt": 1795046400000,
+    "version": 2,
     "sections": [
       {
         "id": "geld",
@@ -52723,12 +52965,33 @@
         ]
       },
       {
+        "id": "kuendigung-verzug",
+        "title": "Rückzahlung, Kündigung und Ratenverzug",
+        "paragraphs": [
+          [
+            {
+              "text": "Ohne vereinbarten Rückzahlungstermin hängt die Fälligkeit nach § 488 Abs. 3 BGB grundsätzlich von einer Kündigung mit drei Monaten Frist ab. Bei festem Ende gilt die vereinbarte Fälligkeit. Prüfe für eine frühere Beendigung das Vertragsrecht sowie §§ 489 und 490. Bei Verbraucherdarlehen kommen Form, Pflichtangaben und grundsätzlich ein Widerrufsrecht hinzu. Prüfe dafür zuerst, ob der Anwendungsbereich der §§ 491 ff. eröffnet ist."
+            }
+          ],
+          [
+            {
+              "text": "Offene Einzelraten und die Fälligkeit der gesamten Restschuld sind zu trennen. Bei einem Teilzahlungs-Verbraucherdarlehen sind für die Kündigung wegen Zahlungsverzugs insbesondere § 498 und dessen Voraussetzungen zu prüfen. Ein finanziertes Geschäft kann nach § 358 rechtlich mit dem Darlehen verbunden sein, etwa wenn der Händler den Kreditvertrag für die Bank vorbereitet. Bloße Finanzierung desselben Kaufpreises reicht ohne die gesetzlichen Voraussetzungen nicht."
+            }
+          ]
+        ]
+      },
+      {
         "id": "quellen",
         "title": "Amtliche Rechtsgrundlagen",
         "paragraphs": [
           [
             {
-              "text": "Stand 18.11.2026 · BGB §§ 91, 488, 491, 492, 506, 598 und 607"
+              "text": "Stand 19.11.2026 · BGB §§ 358, 488–492, 495, 498, 506 und 607"
+            }
+          ],
+          [
+            {
+              "text": "https://www.gesetze-im-internet.de/bgb/__358.html"
             }
           ],
           [
@@ -52738,12 +53001,22 @@
           ],
           [
             {
+              "text": "https://www.gesetze-im-internet.de/bgb/__489.html"
+            }
+          ],
+          [
+            {
               "text": "https://www.gesetze-im-internet.de/bgb/__491.html"
             }
           ],
           [
             {
-              "text": "https://www.gesetze-im-internet.de/bgb/__492.html"
+              "text": "https://www.gesetze-im-internet.de/bgb/__495.html"
+            }
+          ],
+          [
+            {
+              "text": "https://www.gesetze-im-internet.de/bgb/__498.html"
             }
           ],
           [
@@ -52752,6 +53025,22 @@
             }
           ]
         ]
+      },
+      {
+        "id": "restschuld",
+        "title": "Anwendungsfall: Einzelrate und Restschuld",
+        "paragraphs": [
+          [
+            {
+              "text": "Bei einem Teilzahlungs-Verbraucherdarlehen bleibt genau eine Monatsrate aus. Die Bank verlangt sofort unter Verweis auf den Zahlungsverzug sämtliche künftigen Raten. Ist die Kündigung nach § 498 gerechtfertigt?"
+            }
+          ]
+        ],
+        "hint": {
+          "label": "Selbstkontrolle",
+          "title": "Musterantwort",
+          "content": "Eine einzelne ausgebliebene Rate genügt für die Gesamtfälligstellung nach § 498 BGB nicht. Unter anderem müssen mindestens zwei aufeinanderfolgende Teilzahlungen ganz oder teilweise im Rückstand sein. Zusätzlich sind die gesetzliche Rückstandshöhe und eine erfolglose qualifizierte Zweiwochenfrist zu prüfen. Die Zahlung der bereits fälligen Rate kann unabhängig davon geschuldet sein."
+        }
       },
       {
         "id": "transferfrage",
@@ -52778,8 +53067,8 @@
     "number": "3.7",
     "title": "Umtausch, Widerruf und Rücktritt unterscheiden",
     "intro": "Ob ein wirksamer Kauf rückgängig gemacht werden kann, hängt vom Grund und vom Vertragsweg ab. Gesetzliche Mängelrechte, Widerruf, vereinbarte Rückgabe und Kulanz folgen unterschiedlichen Regeln.",
-    "updatedAt": 1794960000000,
-    "version": 1,
+    "updatedAt": 1795046400000,
+    "version": 2,
     "sections": [
       {
         "id": "umtausch",
@@ -52810,7 +53099,7 @@
         "paragraphs": [
           [
             {
-              "text": "Verbraucher haben bei entsprechenden Fernabsatzverträgen und außerhalb von Geschäftsräumen geschlossenen Verträgen grundsätzlich ein Widerrufsrecht nach §§ 312g und 355. § 312g Abs. 2 enthält Ausnahmen, etwa für Waren nach Kundenspezifikation. Die Regelzeit beträgt 14 Tage. Bei Waren hängt der Fristbeginn regelmäßig vom Erhalt und der gesetzlich ordnungsgemäßen Unterrichtung ab. Bei fehlender Unterrichtung gilt im üblichen Anwendungsfall die Höchstfrist des § 356 Abs. 3 von zwölf Monaten und 14 Tagen, vorbehaltlich gesetzlicher Sonderfälle."
+              "text": "Verbraucher haben bei entsprechenden Fernabsatzverträgen und außerhalb von Geschäftsräumen geschlossenen Verträgen grundsätzlich ein Widerrufsrecht nach §§ 312g und 355. § 312g Abs. 2 enthält Ausnahmen, etwa für Waren nach Kundenspezifikation. Die Regelzeit beträgt 14 Tage. Bei Waren hängt der Fristbeginn regelmäßig vom Erhalt und der gesetzlich ordnungsgemäßen Unterrichtung ab. Bei fehlender Unterrichtung gilt im üblichen Anwendungsfall die Höchstfrist des § 356 Abs. 4 von zwölf Monaten und 14 Tagen, vorbehaltlich gesetzlicher Sonderfälle."
             }
           ],
           [
@@ -52821,6 +53110,13 @@
           [
             {
               "text": "Vertiefung zu Vertriebswegen und Widerruf: "
+            },
+            {
+              "text": "Fernabsatzgeschäfte",
+              "articleId": "recht-fernabsatz"
+            },
+            {
+              "text": " · "
             },
             {
               "text": "Widerrufsrecht bei Verbraucherverträgen",
@@ -52838,7 +53134,7 @@
         "paragraphs": [
           [
             {
-              "text": "Stand 18.11.2026 · BGB §§ 312b, 312c, 312g, 355, 356, 356a, 357, 495 und 506"
+              "text": "Stand 19.11.2026 · BGB §§ 312b, 312c, 312g, 355, 356, 356a, 357, 495 und 506"
             }
           ],
           [
@@ -52887,6 +53183,228 @@
           "label": "Selbstkontrolle",
           "title": "Musterantwort",
           "content": "Im Laden kommt eine vertraglich zugesagte Rückgabe oder Kulanz infrage. Beim Onlineshop prüfe B2C-Fernabsatz, gesetzliche Ausnahmen, Belehrung, Warenerhalt und rechtzeitige Widerrufserklärung. Ein Mangel ist für diesen Prüfweg nicht erforderlich."
+        }
+      }
+    ]
+  },
+  {
+    "id": "recht-fernabsatz",
+    "chapterId": "recht-fernabsatz",
+    "subjectId": "recht",
+    "number": "3.7.1",
+    "title": "Fernabsatzgeschäfte prüfen",
+    "intro": "Für einen Fernabsatzvertrag kommt es auf die Parteien, den Ablauf von Verhandlung und Abschluss und das Vertriebssystem an. Die Prüfung entscheidet unter anderem darüber, welche Informations- und Widerrufsregeln greifen.",
+    "updatedAt": 1795046400000,
+    "version": 1,
+    "sections": [
+      {
+        "id": "tatbestand",
+        "title": "Drei Fragen zum Vertragsschluss",
+        "paragraphs": [
+          [
+            {
+              "text": "Prüfe den "
+            },
+            {
+              "text": "Fernabsatzvertrag",
+              "termId": "marketing-recht-begriff-fernabsatz"
+            },
+            {
+              "text": " nach § 312c BGB. Erstens müssen sich Unternehmer und Verbraucher gegenüberstehen. Zweitens müssen Vertragsverhandlungen und Abschluss ausschließlich über Fernkommunikationsmittel wie Telefon, E-Mail oder Onlineshop laufen. Drittens muss der Abschluss im Rahmen eines für den Fernabsatz organisierten Vertriebs- oder Dienstleistungssystems erfolgen."
+            }
+          ],
+          [
+            {
+              "text": "Ein standardisierter Bestellablauf mit Katalog, zentraler Telefonannahme und Versand kann auch ohne Webshop ein solches System sein. Eine ausnahmsweise E-Mail-Bestellung bei einem rein stationär organisierten Betrieb genügt dafür regelmäßig nicht. Eine Abholung im Laden ändert einen bereits online geschlossenen Vertrag grundsätzlich nicht. Erfolgt online nur eine unverbindliche Reservierung und werden Preis und Vertrag erst im Laden verbindlich vereinbart, fehlt der Fernabsatzabschluss."
+            }
+          ]
+        ]
+      },
+      {
+        "id": "pflichten",
+        "title": "Information, Bestätigung und Widerruf unterscheiden",
+        "paragraphs": [
+          [
+            {
+              "text": "Prüfe den Anwendungsbereich nach § 312 BGB und die Verbraucherinformationen nach § 312d und Art. 246a EGBGB, insbesondere wesentliche Eigenschaften, Identität, Gesamtpreis, zusätzliche Kosten und Widerrufsbedingungen. § 312f verlangt bei erfassten Fernabsatzverträgen grundsätzlich eine Vertragsbestätigung auf einem dauerhaften Datenträger innerhalb angemessener Frist, spätestens bei Lieferung oder vor Beginn der Dienstleistung. Eine E-Mail mit speicherbarem Inhalt kann dafür geeignet sein."
+            }
+          ],
+          [
+            {
+              "text": "Prüfe daraufhin gesetzliche Ausnahmen, Fristbeginn, Erklärung und Rückgewähr im Artikel "
+            },
+            {
+              "text": "Umtausch, Widerruf und Rücktritt",
+              "articleId": "recht-umtausch-widerruf"
+            },
+            {
+              "text": ". Bei digitalen Inhalten oder vollständig erbrachten Dienstleistungen können unter § 356 Abs. 5 und 6 Sonderregeln zum Erlöschen greifen. Bei einem Onlineabschluss kommen zusätzlich die Vorgaben zum "
+            },
+            {
+              "text": "elektronischen Geschäftsverkehr",
+              "articleId": "recht-elektronischer-geschaeftsverkehr"
+            },
+            {
+              "text": " hinzu."
+            }
+          ]
+        ]
+      },
+      {
+        "id": "quellen",
+        "title": "Amtliche Rechtsgrundlagen",
+        "paragraphs": [
+          [
+            {
+              "text": "Stand 19.11.2026 · BGB §§ 312, 312c–312g und 355–356a, Art. 246a EGBGB"
+            }
+          ],
+          [
+            {
+              "text": "https://www.gesetze-im-internet.de/bgb/__312c.html"
+            }
+          ],
+          [
+            {
+              "text": "https://www.gesetze-im-internet.de/bgb/__312d.html"
+            }
+          ],
+          [
+            {
+              "text": "https://www.gesetze-im-internet.de/bgb/__312f.html"
+            }
+          ],
+          [
+            {
+              "text": "https://www.gesetze-im-internet.de/bgb/__312g.html"
+            }
+          ],
+          [
+            {
+              "text": "https://www.gesetze-im-internet.de/bgb/__356.html"
+            }
+          ]
+        ]
+      },
+      {
+        "id": "transferfrage",
+        "title": "Transferfrage",
+        "paragraphs": [
+          [
+            {
+              "text": "Eine Privatkundin kauft verbindlich im Webshop und holt im Lager ab. Ihr Kollege reserviert nur online und verhandelt und kauft erst im Laden. Der Betrieb hat einen standardisierten Webshop. Ordne beide Verträge ein."
+            }
+          ]
+        ],
+        "hint": {
+          "label": "Selbstkontrolle",
+          "title": "Musterantwort",
+          "content": "Der verbindliche Onlineabschluss ist bei ausschließlich auf Distanz geführten Verhandlungen ein Fernabsatzvertrag. Die spätere Lagerabholung ist Erfüllung. Beim Kollegen kommt der Vertrag nach persönlicher Verhandlung erst im Laden zustande. Für diesen Abschluss greift § 312c nicht. Prüfe beim ersten Fall die jeweiligen Informations- und Widerrufsvorschriften."
+        }
+      }
+    ]
+  },
+  {
+    "id": "recht-elektronischer-geschaeftsverkehr",
+    "chapterId": "recht-elektronischer-geschaeftsverkehr",
+    "subjectId": "recht",
+    "number": "3.7.2",
+    "title": "Elektronischer Geschäftsverkehr und Bestellbutton",
+    "intro": "Wer Waren oder Dienstleistungen über digitale Dienste anbietet, muss den Bestellvorgang rechtlich korrekt gestalten. Eine Eingangsbestätigung, eine Vertragsannahme und die Bestätigung der Zahlungspflicht erfüllen unterschiedliche Funktionen.",
+    "updatedAt": 1795046400000,
+    "version": 1,
+    "sections": [
+      {
+        "id": "allgemein",
+        "title": "Allgemeine Pflichten für Bestellungen",
+        "paragraphs": [
+          [
+            {
+              "text": "§ 312i BGB verlangt im Anwendungsbereich geeignete Mittel zur Erkennung und Korrektur von Eingabefehlern vor der Bestellung, Informationen zum Bestellablauf, eine unverzügliche elektronische Bestätigung des Bestelleingangs und abruf- und speicherbare Vertragsbedingungen einschließlich AGB. Prüfe dafür auch Art. 246c EGBGB. Die Regeln können auch B2B gelten. § 312i Abs. 2 enthält Ausnahmen für ausschließlich individuelle Kommunikation und bestimmte abweichende Vereinbarungen zwischen Parteien, die keine Verbraucher sind."
+            }
+          ],
+          [
+            {
+              "text": "Lies die Eingangs-E-Mail anhand der "
+            },
+            {
+              "text": "Regeln zu Angebot und Annahme",
+              "articleId": "recht-vertrag-angebot-annahme"
+            },
+            {
+              "text": ". Eine reine Empfangsquittung erfüllt einen Informationsschritt. Eine verbindliche Auftragsbestätigung kann zusätzlich die Annahme erklären. Prüfe Wortlaut und gesamten Bestellablauf."
+            }
+          ]
+        ]
+      },
+      {
+        "id": "verbraucher",
+        "title": "Zahlungspflicht sichtbar bestätigen lassen",
+        "paragraphs": [
+          [
+            {
+              "text": "Bei einem zahlungspflichtigen Verbrauchervertrag gilt im Anwendungsbereich des § 312j die "
+            },
+            {
+              "text": "Buttonlösung",
+              "termId": "recht-vt-begriff-buttonloesung"
+            },
+            {
+              "text": ". Lieferbeschränkungen und akzeptierte Zahlungsmittel sind grundsätzlich spätestens zu Beginn des Bestellvorgangs anzugeben. Unmittelbar vor der Bestellung müssen die wesentlichen gesetzlich bestimmten Informationen, etwa Merkmale, Gesamtpreis und gegebenenfalls Laufzeit, klar hervorgehoben sein."
+            }
+          ],
+          [
+            {
+              "text": "Die Schaltfläche muss die Zahlungspflicht eindeutig ausdrücken, etwa mit „zahlungspflichtig bestellen“. Eine Beschriftung wie „Weiter“ genügt dafür nicht. Verstößt der Unternehmer gegen § 312j Abs. 3, kommt der davon erfasste Vertrag nach Abs. 4 nicht zustande. Prüfe die Ausnahmen für individuelle Kommunikation und Finanzdienstleistungen nach Abs. 5. Kündigungsbutton (§ 312k) und elektronische Widerrufsfunktion (§ 356a) betreffen andere Phasen des Vertrags."
+            }
+          ]
+        ]
+      },
+      {
+        "id": "quellen",
+        "title": "Amtliche Rechtsgrundlagen",
+        "paragraphs": [
+          [
+            {
+              "text": "Stand 19.11.2026 · BGB §§ 145 ff., 312i–312k und 356a, Art. 246a und 246c EGBGB"
+            }
+          ],
+          [
+            {
+              "text": "https://www.gesetze-im-internet.de/bgb/__312i.html"
+            }
+          ],
+          [
+            {
+              "text": "https://www.gesetze-im-internet.de/bgb/__312j.html"
+            }
+          ],
+          [
+            {
+              "text": "https://www.gesetze-im-internet.de/bgb/__312k.html"
+            }
+          ],
+          [
+            {
+              "text": "https://www.gesetze-im-internet.de/bgb/__356a.html"
+            }
+          ]
+        ]
+      },
+      {
+        "id": "transferfrage",
+        "title": "Transferfrage",
+        "paragraphs": [
+          [
+            {
+              "text": "Ein Webshop zeigt Preis und Versandkosten. Die letzte Schaltfläche heißt „Weiter“. Eine automatische E-Mail meldet nur „Bestellung eingegangen“. Der Händler fordert Zahlung von der Privatkundin. Wie prüfst du das?"
+            }
+          ]
+        ],
+        "hint": {
+          "label": "Selbstkontrolle",
+          "title": "Musterantwort",
+          "content": "Beim hier angenommenen zahlungspflichtigen Standard-Verbrauchervertrag ist die Schaltfläche nach § 312j Abs. 3 unzureichend. Nach Abs. 4 kommt über diesen Ablauf kein Vertrag zustande. Die E-Mail erfüllt möglicherweise die Bestelleingangsbestätigung, erklärt nach ihrem Wortlaut keine Annahme und behebt den Buttonmangel nicht."
         }
       }
     ]
@@ -53171,10 +53689,31 @@
           ],
           [
             {
+              "text": "Die Leistungszeit beantwortet sowohl, ab wann der Gläubiger die Leistung verlangen kann, als auch, ab wann der Schuldner erfüllen darf. Bei einem bestimmten Termin kann der Schuldner nach § 271 Abs. 2 BGB im Zweifel vorher leisten, der Gläubiger aber erst zum Termin verlangen. Die Vereinbarung oder die Art des Geschäfts kann eine frühere Leistung ausschließen. Ein vereinbartes Lieferfenster für Kühlware kann zum Beispiel auch der Planung des Wareneingangs dienen."
+            }
+          ],
+          [
+            {
               "text": "Lies Zahlungsbedingungen im Vertrag. Ein einseitiger Rechnungstext setzt im Regelfall allein keinen vertraglichen Zahlungstermin und bringt den Empfänger nicht automatisch in Verzug. Bei ereignisabhängigen Tagesfristen zählt der Tag des auslösenden Ereignisses grundsätzlich nicht mit (§§ 187, 188 BGB). Fällt der letzte Tag auf einen Samstag, Sonntag oder gesetzlichen Feiertag am Leistungsort, prüfe § 193 BGB."
             }
           ]
         ]
+      },
+      {
+        "id": "lieferfenster",
+        "title": "Anwendungsfall: Vor dem vereinbarten Termin leisten",
+        "paragraphs": [
+          [
+            {
+              "text": "Ein Werkstattbetrieb soll am 30. November liefern. Der Kunde verlangt am 24. November Übergabe. Der Betrieb bietet seinerseits eine frühe Lieferung an. Was folgt im Zweifel aus § 271 Abs. 2 BGB, und was ändert ein ausdrücklich exklusives Ladefenster?"
+            }
+          ]
+        ],
+        "hint": {
+          "label": "Selbstkontrolle",
+          "title": "Musterantwort",
+          "content": "Der Kunde kann die Lieferung im Zweifel erst am 30. November verlangen. Der Betrieb darf grundsätzlich vorher leisten. Ein vereinbartes ausschließliches Ladefenster kann die vorzeitige Erfüllbarkeit ausschließen. Für Schuldnerverzug sind Fälligkeit und die weiteren Voraussetzungen des § 286 gesondert zu prüfen."
+        }
       },
       {
         "id": "zahlungsziele",
@@ -53244,7 +53783,7 @@
         "paragraphs": [
           [
             {
-              "text": "Stand 18. November 2026"
+              "text": "Stand 19. November 2026"
             }
           ],
           [
@@ -53255,8 +53794,8 @@
         ]
       }
     ],
-    "updatedAt": 1794960000000,
-    "version": 1
+    "updatedAt": 1795046400000,
+    "version": 2
   },
   {
     "id": "recht-verzugszinsen",
@@ -53993,6 +54532,39 @@
         ]
       },
       {
+        "id": "vertiefungen",
+        "title": "Sicherheit nach dem Vermögenswert auswählen",
+        "paragraphs": [
+          [
+            {
+              "text": "Faustpfand",
+              "articleId": "recht-faustpfand"
+            },
+            {
+              "text": " · "
+            },
+            {
+              "text": "Sicherungsübereignung",
+              "articleId": "recht-sicherungsuebereignung"
+            },
+            {
+              "text": " · "
+            },
+            {
+              "text": "Sicherungsabtretung",
+              "articleId": "recht-sicherungsabtretung"
+            },
+            {
+              "text": " · "
+            },
+            {
+              "text": "Grundpfandrechte",
+              "articleId": "recht-grundpfandrechte"
+            }
+          ]
+        ]
+      },
+      {
         "id": "flottenkredit",
         "title": "Was sichert die Bank, was kann der Betrieb nutzen?",
         "paragraphs": [
@@ -54014,7 +54586,7 @@
         "paragraphs": [
           [
             {
-              "text": "Stand 18. November 2026"
+              "text": "Stand 19. November 2026"
             }
           ],
           [
@@ -54025,8 +54597,8 @@
         ]
       }
     ],
-    "updatedAt": 1794960000000,
-    "version": 1
+    "updatedAt": 1795046400000,
+    "version": 2
   },
   {
     "id": "recht-buergschaft",
@@ -54111,6 +54683,382 @@
       }
     ],
     "updatedAt": 1794960000000,
+    "version": 1
+  },
+  {
+    "id": "recht-faustpfand",
+    "subjectId": "recht",
+    "chapterId": "recht-faustpfand",
+    "number": "4.4.2",
+    "title": "Pfandrecht an beweglichen Sachen",
+    "intro": "Mit einem Faustpfand erhält der Gläubiger ein Verwertungsrecht an einer beweglichen Sache. Die Sache kann im Eigentum des Verpfänders bleiben.",
+    "sections": [
+      {
+        "id": "bestellung",
+        "title": "Forderung, Einigung und Besitz prüfen",
+        "paragraphs": [
+          [
+            {
+              "text": "Für das "
+            },
+            {
+              "text": "Pfandrecht",
+              "termId": "recht-begriff-pfandrecht"
+            },
+            {
+              "text": " prüfst du eine gesicherte Forderung, auch eine künftige oder bedingte, die dingliche Einigung und die für den konkreten Fall erforderliche Besitzverschaffung. Der Verpfänder muss Eigentümer oder verfügungsbefugt sein. Für einen gutgläubigen Erwerb enthält § 1207 BGB Sonderregeln. Besitzt der Gläubiger die Sache bereits, genügt nach § 1205 Abs. 1 grundsätzlich die Einigung."
+            }
+          ],
+          [
+            {
+              "text": "Lässt der Schuldner die Maschine unverändert ausschließlich in seiner Halle und behält den alleinigen direkten Zugriff, genügt eine bloße Pfandabrede im Grundfall nicht. Ein wirksam bestelltes Pfand gibt dem Gläubiger Besitz und Pflichten zur Verwahrung. Der Gläubiger wird dadurch nicht Eigentümer und darf die Sache nicht ohne Weiteres nutzen."
+            }
+          ]
+        ]
+      },
+      {
+        "id": "verwertung",
+        "title": "Pfandreife und Verwertung auseinanderhalten",
+        "paragraphs": [
+          [
+            {
+              "text": "Persönliche Zahlungspflicht und Haftung mit dem Pfand sind verschiedene Dinge. Ist die gesicherte Forderung ganz oder teilweise fällig, prüfe die Verkaufsberechtigung nach § 1228 BGB. Für den Verkauf gelten grundsätzlich Androhung und Wartefrist nach § 1234 sowie Regeln zum öffentlichen Verkauf nach § 1235. Ein automatischer Eigentumsübergang bei Nichtzahlung ist unzulässig, wenn er vor Eintritt der Verkaufsberechtigung vereinbart wurde (§ 1229)."
+            }
+          ],
+          [
+            {
+              "text": "Aus dem Erlös wird die gesicherte Forderung im gesetzlichen Umfang befriedigt (§ 1247 BGB). Ein Überschuss verbleibt wirtschaftlich beim Verpfänder. Nach Erlöschen des Pfandrechts ist die Sache grundsätzlich zurückzugeben (§ 1223). In der Insolvenz ist das Absonderungsrecht nach § 50 InsO zu unterscheiden."
+            }
+          ]
+        ]
+      },
+      {
+        "id": "messgeraet",
+        "title": "Anwendungsfall: Pfand oder weiter nutzbares Gerät?",
+        "paragraphs": [
+          [
+            {
+              "text": "Ein Messgerät soll ein Darlehen absichern. Die Bank hat es noch nicht und der Betrieb braucht es täglich. Beide unterzeichnen nur die Erklärung, die Bank erhalte ein Pfandrecht. Was fehlt? Welche Alternative kommt infrage?"
+            }
+          ]
+        ],
+        "hint": {
+          "label": "Selbstkontrolle",
+          "title": "Musterantwort",
+          "content": "Für den Grundfall nach § 1205 fehlt die Übergabe. Soll der Betrieb unmittelbarer Besitzer bleiben, kommt eine Sicherungsübereignung mittels Besitzkonstitut in Betracht. Die Bank prüft Eigentum, Identität des Geräts und vorhandene Rechte, bevor sie die Sicherheit bewertet."
+        }
+      },
+      {
+        "id": "rechtsgrundlagen",
+        "title": "Rechtsgrundlagen",
+        "paragraphs": [
+          [
+            {
+              "text": "Stand 19. November 2026"
+            }
+          ],
+          [
+            {
+              "text": "BGB §§ 1204–1207, 1210, 1215, 1223, 1228–1229, 1234–1235 und 1247 · https://www.gesetze-im-internet.de/bgb/"
+            }
+          ],
+          [
+            {
+              "text": "InsO § 50 · https://www.gesetze-im-internet.de/inso/"
+            }
+          ]
+        ]
+      }
+    ],
+    "updatedAt": 1795046400000,
+    "version": 1
+  },
+  {
+    "id": "recht-sicherungsuebereignung",
+    "subjectId": "recht",
+    "chapterId": "recht-sicherungsuebereignung",
+    "number": "4.4.3",
+    "title": "Sicherungsübereignung bei Maschinen und Fahrzeugen",
+    "intro": "Bei der Sicherungsübereignung erhält der Kreditgeber Eigentum zu einem begrenzten Sicherungszweck. Der Betrieb kann die Sache aufgrund der vereinbarten Besitzvermittlung weiter nutzen.",
+    "sections": [
+      {
+        "id": "bestellung",
+        "title": "Sicherungsabrede und dingliche Einigung trennen",
+        "paragraphs": [
+          [
+            {
+              "text": "Bei der "
+            },
+            {
+              "text": "Sicherungsübereignung",
+              "termId": "recht-begriff-sicherungsuebereignung"
+            },
+            {
+              "text": " legt die Sicherungsabrede fest, welche Forderungen gesichert werden, wann die Bank verwerten darf und wann sie die Sicherheit freigibt. Nach §§ 929 und 930 BGB kann ein Besitzmittlungsverhältnis nach § 868 die Übergabe ersetzen. Die Bank wird Eigentümerin und mittelbare Besitzerin, der Betrieb bleibt unmittelbarer Besitzer."
+            }
+          ],
+          [
+            {
+              "text": "Prüfe die eindeutige Bestimmbarkeit der Sache, etwa anhand von Seriennummer oder Fahrzeug-Identifizierungsnummer, und das Eigentum des Sicherungsgebers. Ein Eigentumsvorbehalt oder ein bereits übertragenes Sicherungseigentum kann die Verfügung beschränken. Beim Erwerb vom Nichtberechtigten fehlt bei bloßem Besitzkonstitut regelmäßig die für den Gutglaubenserwerb nach § 933 erforderliche Übergabe."
+            }
+          ]
+        ]
+      },
+      {
+        "id": "einziehung",
+        "title": "Freigabe und Kreditausfall behandeln",
+        "paragraphs": [
+          [
+            {
+              "text": "Nach Tilgung bestimmt die Sicherungsabrede, ob eine Rückübertragung zu verlangen ist oder der vereinbarte Eigentumsrückfall eintritt. Im Sicherungsfall richten sich Herausgabe und Verwertung nach der Abrede und den gesetzlichen Grenzen. Ein Verwertungserlös ist abzurechnen und ein Überschuss nach der Sicherungsabrede herauszugeben."
+            }
+          ],
+          [
+            {
+              "text": "In der Insolvenz des Betriebs erhält der Sicherungseigentümer grundsätzlich ein Absonderungsrecht nach § 51 Nr. 1 InsO. Befindet sich die Maschine beim Insolvenzverwalter, kann dieser sie nach § 166 Abs. 1 verwerten. Die Verteilung des Erlöses richtet sich dann insbesondere nach §§ 170 und 171 InsO. Vergleiche "
+            },
+            {
+              "text": "Aussonderung und Absonderung",
+              "articleId": "recht-aus-absonderung"
+            },
+            {
+              "text": "."
+            }
+          ]
+        ]
+      },
+      {
+        "id": "fahrzeug",
+        "title": "Anwendungsfall: Noch nicht bezahlter Transporter",
+        "paragraphs": [
+          [
+            {
+              "text": "Ein Betrieb möchte einen Transporter seiner Bank im Wege des Besitzkonstituts zur Sicherheit übereignen. Der Händler hat sich bis zur vollständigen Zahlung wirksam das Eigentum vorbehalten. Die Bank erlangt keinen unmittelbaren Besitz. Ist die Bank damit bereits Eigentümerin?"
+            }
+          ]
+        ],
+        "hint": {
+          "label": "Selbstkontrolle",
+          "title": "Musterantwort",
+          "content": "Nein. Der Betrieb hat noch kein Volleigentum und kann dieses ohne Verfügungsbefugnis nicht übertragen. Der bloße Abschluss der Vereinbarung ohne körperliche Übergabe genügt hier auch für einen Gutglaubenserwerb nach § 933 nicht. Prüfe getrennt, ob eine vorhandene Anwartschaft übertragen werden soll oder zunächst der Händler abgelöst wird."
+        }
+      },
+      {
+        "id": "rechtsgrundlagen",
+        "title": "Rechtsgrundlagen",
+        "paragraphs": [
+          [
+            {
+              "text": "Stand 19. November 2026"
+            }
+          ],
+          [
+            {
+              "text": "BGB §§ 868, 929–933 und 985–986 · https://www.gesetze-im-internet.de/bgb/"
+            }
+          ],
+          [
+            {
+              "text": "InsO §§ 51, 166 und 170–171 · https://www.gesetze-im-internet.de/inso/"
+            }
+          ]
+        ]
+      }
+    ],
+    "updatedAt": 1795046400000,
+    "version": 1
+  },
+  {
+    "id": "recht-sicherungsabtretung",
+    "subjectId": "recht",
+    "chapterId": "recht-sicherungsabtretung",
+    "number": "4.4.4",
+    "title": "Sicherungsabtretung von Kundenforderungen",
+    "intro": "Ein Unternehmen kann eine Kundenforderung an die Bank übertragen, um einen Kredit zu sichern. Die Sicherungsabrede bestimmt, wie die Bank ihre Gläubigerstellung einsetzen darf.",
+    "sections": [
+      {
+        "id": "forderung",
+        "title": "Gläubigerwechsel und Sicherungszweck zuordnen",
+        "paragraphs": [
+          [
+            {
+              "text": "Bei der "
+            },
+            {
+              "text": "Sicherungsabtretung",
+              "termId": "recht-begriff-sicherungsabtretung"
+            },
+            {
+              "text": " schließen bisheriger und neuer Gläubiger einen Abtretungsvertrag nach § 398 BGB. Der Kunde muss regelmäßig nicht zustimmen. Prüfe, ob die Forderung bestimmbar und abtretbar ist und ob sie bereits anderweitig übertragen wurde. § 399 erfasst unter anderem vertragliche Abtretungsverbote. Bei bestimmten Geldforderungen aus Handelsgeschäften kann § 354a HGB die Abtretung trotzdem wirksam sein lassen. Das Gesetz schützt dort zugleich die Zahlung an den bisherigen Gläubiger."
+            }
+          ],
+          [
+            {
+              "text": "Auch mehrere oder künftige hinreichend bestimmbare Forderungen können erfasst sein. Bei einer Globalzession prüfst du Überschneidungen mit bereits abgetretenen Forderungen und mit einem verlängerten Eigentumsvorbehalt eines Lieferanten besonders sorgfältig. Die Sicherungsabrede ordnet gesicherte Kredite, Einziehung, Freigabe und mögliche Rückabtretung zu."
+            }
+          ]
+        ]
+      },
+      {
+        "id": "zahlung",
+        "title": "Stille und offene Abtretung unterscheiden",
+        "paragraphs": [
+          [
+            {
+              "text": "Bei stiller Abtretung wird der Kunde zunächst nicht informiert. Die Bank ist bereits Gläubigerin, kann dem Unternehmen aber die Einziehung erlauben. Leistet der Kunde in Unkenntnis der Abtretung an den bisherigen Gläubiger, schützt ihn grundsätzlich § 407 BGB. Bei offengelegter Abtretung ist grundsätzlich an den neuen Gläubiger zu leisten. Prüfe bei Widersprüchen die Anzeige und gesetzliche Sonderfälle. Bestehende Einwendungen des Kunden bleiben nach § 404 grundsätzlich erhalten. Für die Aufrechnung gilt § 406."
+            }
+          ],
+          [
+            {
+              "text": "Fällt der Kredit aus, legt die Bank die Abtretung gegebenenfalls offen und zieht die Forderungen nach der Sicherungsvereinbarung ein. In der Insolvenz des Sicherungsgebers kann der Insolvenzverwalter die zur Sicherheit abgetretene Forderung nach § 166 Abs. 2 InsO einziehen. Der Bank steht grundsätzlich Absonderung nach § 51 Nr. 1 zu."
+            }
+          ]
+        ]
+      },
+      {
+        "id": "frachtrechnung",
+        "title": "Anwendungsfall: Wer darf die Frachtrechnung einziehen?",
+        "paragraphs": [
+          [
+            {
+              "text": "Eine Spedition tritt eine offene Frachtrechnung über 8.000 € wirksam still an ihre Bank ab. Der Kunde zahlt ohne Kenntnis 3.000 € an die Spedition. Anschließend informiert ihn die Bank über die Abtretung und verlangt ohne weitere Besonderheiten den Rest. Wie viel kann sie vom Kunden beanspruchen?"
+            }
+          ]
+        ],
+        "hint": {
+          "label": "Selbstkontrolle",
+          "title": "Musterantwort",
+          "content": "Die Zahlung von 3.000 € ist nach § 407 BGB gegenüber der Bank grundsätzlich wirksam. Es bleiben 8.000 € − 3.000 € = 5.000 €. Nach Kenntnis wirkt eine weitere Zahlung an die Spedition grundsätzlich nicht befreiend, sofern etwa keine Einziehungsermächtigung oder Sonderregel greift. Wie die Spedition die bereits vereinnahmten 3.000 € gegenüber der Bank abrechnet, bestimmt ihr Sicherungsverhältnis."
+        }
+      },
+      {
+        "id": "rechtsgrundlagen",
+        "title": "Rechtsgrundlagen",
+        "paragraphs": [
+          [
+            {
+              "text": "Stand 19. November 2026"
+            }
+          ],
+          [
+            {
+              "text": "BGB §§ 398–400, 404, 406–407 und 409 · https://www.gesetze-im-internet.de/bgb/"
+            }
+          ],
+          [
+            {
+              "text": "HGB § 354a · https://www.gesetze-im-internet.de/hgb/"
+            }
+          ],
+          [
+            {
+              "text": "InsO §§ 51, 166 und 170–171 · https://www.gesetze-im-internet.de/inso/"
+            }
+          ]
+        ]
+      }
+    ],
+    "updatedAt": 1795046400000,
+    "version": 1
+  },
+  {
+    "id": "recht-grundpfandrechte",
+    "subjectId": "recht",
+    "chapterId": "recht-grundpfandrechte",
+    "number": "4.4.5",
+    "title": "Grundpfandrechte: Hypothek und Sicherungsgrundschuld",
+    "intro": "Grundpfandrechte sichern Ansprüche durch Zugriff auf ein Grundstück. Forderung, dingliches Recht, Grundbuchrang und Sicherungsabrede sind getrennt zu prüfen.",
+    "sections": [
+      {
+        "id": "bestellung",
+        "title": "Eintragung, Rang und Forderungsbindung",
+        "paragraphs": [
+          [
+            {
+              "text": "Grundpfandrechte werden im Grundfall durch dingliche Einigung und Eintragung im Grundbuch nach § 873 BGB bestellt. Der Rang bestimmt, wer sich bei einer Verwertung vorrangig befriedigen kann. Prüfe die Grundbucheinträge, besondere Rangabreden und bei einem Briefrecht die zusätzlichen Voraussetzungen. Die "
+            },
+            {
+              "text": "Hypothek",
+              "termId": "recht-begriff-hypothek"
+            },
+            {
+              "text": " ist als akzessorisches Recht an ihre Forderung gebunden. Die "
+            },
+            {
+              "text": "Grundschuld",
+              "termId": "recht-begriff-grundschuld"
+            },
+            {
+              "text": " kann auch ohne Forderung bestehen."
+            }
+          ],
+          [
+            {
+              "text": "Bei der Sicherungsgrundschuld vereinbaren Parteien zusätzlich, welche Forderung der Zugriff absichern soll. Nach Tilgung wird der Grundbucheintrag nicht automatisch gelöscht. Welche Rückgewähr geschuldet ist, ergibt sich aus der Sicherungsabrede. Bei der Hypothek sind nach Erlöschen der gesicherten Forderung die gesetzlichen Wirkungen nach §§ 1163 und 1177 zu prüfen."
+            }
+          ]
+        ]
+      },
+      {
+        "id": "vollstreckung",
+        "title": "Verwertung und Rangfolge beurteilen",
+        "paragraphs": [
+          [
+            {
+              "text": "Bei einem Kreditausfall prüft die Bank den Sicherungsfall, die Fälligkeit des dinglichen Rechts und ihre Vollstreckungsgrundlage. Für das Kapital einer Sicherungsgrundschuld gilt die Kündigungsregel des § 1193 BGB. Sie ist von der Darlehenskündigung zu trennen. Für die Verwertung kommen insbesondere Zwangsversteigerung oder Zwangsverwaltung in Betracht. Die Verteilung folgt dem maßgeblichen Rang, nicht automatisch der zeitlichen Reihenfolge der Kreditaufnahme."
+            }
+          ],
+          [
+            {
+              "text": "Beim Vergleich zweier Finanzierungen zählt daher nicht nur der geschätzte Grundstückswert. Berücksichtige vorrangige Rechte, mögliche Verwertungskosten und den voraussichtlichen Nettoerlös."
+            }
+          ]
+        ]
+      },
+      {
+        "id": "lagergrundstueck",
+        "title": "Anwendungsfall: Finanzierung im zweiten Rang",
+        "paragraphs": [
+          [
+            {
+              "text": "Beim Verkauf eines Lagergrundstücks stehen nach Kosten 260.000 € für zwei im Rang aufeinanderfolgende Gläubiger bereit. Für den ersten sind im Beispiel 200.000 € und für den zweiten 90.000 € zu berücksichtigen. Andere Ansprüche sind ausgeschlossen. Wie viel erhält jeder?"
+            }
+          ]
+        ],
+        "hint": {
+          "label": "Selbstkontrolle",
+          "title": "Musterantwort",
+          "content": "Der erste Gläubiger erhält 200.000 €. Für den zweiten bleiben 260.000 € − 200.000 € = 60.000 €. Von seinen 90.000 € bleiben 30.000 € ungedeckt. Einen persönlichen Restanspruch prüfst du separat anhand des Schuldverhältnisses."
+        }
+      },
+      {
+        "id": "rechtsgrundlagen",
+        "title": "Rechtsgrundlagen",
+        "paragraphs": [
+          [
+            {
+              "text": "Stand 19. November 2026"
+            }
+          ],
+          [
+            {
+              "text": "BGB §§ 873, 879, 1113–1117, 1153, 1163, 1177, 1191–1193 und 1200 · https://www.gesetze-im-internet.de/bgb/"
+            }
+          ],
+          [
+            {
+              "text": "InsO § 49 · https://www.gesetze-im-internet.de/inso/"
+            }
+          ],
+          [
+            {
+              "text": "ZVG: https://www.gesetze-im-internet.de/zvg/"
+            }
+          ]
+        ]
+      }
+    ],
+    "updatedAt": 1795046400000,
     "version": 1
   },
   {
@@ -54723,6 +55671,31 @@
         ]
       },
       {
+        "id": "weitere-rollen",
+        "title": "Kaufmännischer Rechtsschein und selbstständige Vermittlung",
+        "paragraphs": [
+          [
+            {
+              "text": "Wer nach außen als Kaufmann auftritt, kann Fragen zum "
+            },
+            {
+              "text": "Scheinkaufmann",
+              "articleId": "recht-scheinkaufmann"
+            },
+            {
+              "text": " aufwerfen. Bei selbstständigen Vertriebshelfern klärst du die Rolle im "
+            },
+            {
+              "text": "Vermittlergewerbe",
+              "articleId": "recht-vermittlergewerbe"
+            },
+            {
+              "text": "."
+            }
+          ]
+        ]
+      },
+      {
         "id": "transfer",
         "title": "Selbstkontrolle und Transfer",
         "paragraphs": [
@@ -54748,14 +55721,14 @@
           ],
           [
             {
-              "text": "Abgleich mit den amtlichen Normtexten am 18. November 2026."
+              "text": "Abgleich mit den Normtexten und Fachquellen am 19. November 2026."
             }
           ]
         ]
       }
     ],
-    "updatedAt": 1794960000000,
-    "version": 1
+    "updatedAt": 1795046400000,
+    "version": 2
   },
   {
     "id": "recht-kaufmannseigenschaft",
@@ -54993,6 +55966,100 @@
       }
     ],
     "updatedAt": 1794960000000,
+    "version": 1
+  },
+  {
+    "id": "recht-scheinkaufmann",
+    "chapterId": "recht-scheinkaufmann",
+    "subjectId": "recht",
+    "number": "5.1.2",
+    "title": "Scheinkaufmann und kaufmännischer Rechtsschein",
+    "intro": "Wer im Geschäftsverkehr zurechenbar den Eindruck erweckt, Kaufmann zu sein, muss sich unter bestimmten Voraussetzungen gegenüber einem gutgläubigen Geschäftspartner so behandeln lassen. Entscheidend sind der konkrete Rechtsschein und seine Wirkung auf das Geschäft.",
+    "sections": [
+      {
+        "id": "pruefung",
+        "title": "Tatsächlichen Status und Rechtsschein prüfen",
+        "paragraphs": [
+          [
+            {
+              "text": "Prüfe zuerst, ob echte Kaufmannseigenschaft nach dem HGB besteht. Beim "
+            },
+            {
+              "text": "Scheinkaufmann",
+              "termId": "recht-hw-scheinkaufmann"
+            },
+            {
+              "text": " fehlt sie. Ein kaufmännischer Rechtsschein kann etwa durch eine bewusst unzutreffende Bezeichnung als „e. K.“ auf Angeboten, in der Signatur und in Geschäftspapieren entstehen. Eine professionelle Webseite oder ein großer Auftrag belegen für sich allein keinen solchen Rechtsschein."
+            }
+          ],
+          [
+            {
+              "text": "Prüfe danach, ob der Betroffene den Rechtsschein gesetzt oder zurechenbar aufrechterhalten hat. Der konkrete Geschäftspartner muss schutzwürdig darauf vertraut haben und das Vertrauen muss für sein Verhalten erheblich geworden sein. Kennt er den tatsächlichen Status oder fehlt ein Einfluss auf sein Verhalten, trägt der Rechtsschein die gewünschte Rechtsfolge im Regelfall nicht."
+            }
+          ]
+        ]
+      },
+      {
+        "id": "abgrenzung",
+        "title": "Fallbezogene Wirkung und § 5 HGB unterscheiden",
+        "paragraphs": [
+          [
+            {
+              "text": "§ 5 HGB setzt einen Eintrag der Firma und einen darunter betriebenen Gewerbebetrieb voraus. Die Regel über den Scheinkaufmann kann auch ohne Eintragung greifen. Sie führt zu einer fallbezogenen Behandlung im Schutzinteresse des Gegenübers. Eine allgemeine, für alle Personen und Geschäfte wirkende Kaufmannseigenschaft entsteht dadurch nicht."
+            }
+          ],
+          [
+            {
+              "text": "Prüfe am Ende Zweck und Voraussetzungen der konkret beanspruchten Handelsregel. Bei der "
+            },
+            {
+              "text": "Untersuchungs- und Rügeobliegenheit",
+              "articleId": "recht-handelskauf-ruege"
+            },
+            {
+              "text": " ist etwa gesondert zu klären, ob die Anforderungen des beiderseitigen Handelskaufs vorliegen und ob der Vertragspartner sich gerade im konkreten Geschäft auf den erzeugten Rechtsschein stützen kann."
+            }
+          ]
+        ]
+      },
+      {
+        "id": "transfer",
+        "title": "Selbstkontrolle und Transfer",
+        "paragraphs": [
+          [
+            {
+              "text": "Ein nicht eingetragener Kleingewerbetreibender bezeichnet sich gegenüber einem Großhändler wiederholt bewusst als „e. K.“. Der Großhändler gewährt ihm allein deswegen kaufmännische Kreditkonditionen. Welche Prüfung ändert sich, wenn der Großhändler wusste, dass der Status vorgetäuscht war?"
+            }
+          ]
+        ],
+        "hint": {
+          "title": "Musterantwort",
+          "content": "Im ersten Fall sind der zurechenbare Rechtsschein und das konkrete Vertrauen anhand von Angebot, Korrespondenz und Kreditentscheidung belegbar. Prüfe dann, welche handelsrechtliche Rechtsfolge der Großhändler daraus herleiten will. Bei positiver Kenntnis vom fehlenden Status fehlt sein schutzwürdiges Vertrauen. Eine Registerwirkung nach § 5 HGB ist in beiden Fällen mangels Eintrags nicht einschlägig."
+        }
+      },
+      {
+        "id": "rechtsstand",
+        "title": "Rechtsgrundlagen",
+        "paragraphs": [
+          [
+            {
+              "text": "HGB §§ 1–6 · https://www.gesetze-im-internet.de/hgb/"
+            }
+          ],
+          [
+            {
+              "text": "Universität Mannheim, Handelsrecht, Kaufmann und Rechtsschein · https://www.jura.uni-mannheim.de/media/Lehrstuehle/jura/Wirth/HandelsR_FSS_25/GliedHdRFSS2025.pdf"
+            }
+          ],
+          [
+            {
+              "text": "Abgleich mit den Normtexten und Fachquellen am 19. November 2026."
+            }
+          ]
+        ]
+      }
+    ],
+    "updatedAt": 1795046400000,
     "version": 1
   },
   {
@@ -56792,6 +57859,117 @@
     "version": 1
   },
   {
+    "id": "recht-vermittlergewerbe",
+    "chapterId": "recht-vermittlergewerbe",
+    "subjectId": "recht",
+    "number": "5.11",
+    "title": "Vermittlergewerbe: Handelsvertreter, Handelsmakler und Kommissionär",
+    "intro": "Wer fremde Geschäfte anbahnt oder abwickelt, kann unterschiedliche Rechtsrollen haben. Die Einordnung bestimmt, wer Vertragspartner wird, wer das wirtschaftliche Ergebnis trägt und wofür eine Vergütung anfällt.",
+    "sections": [
+      {
+        "id": "rollen",
+        "title": "Drei Rollen am Geschäftsablauf erkennen",
+        "paragraphs": [
+          [
+            {
+              "text": "Handelsvertreter",
+              "termId": "recht-arb-begriff-handelsvertreter"
+            },
+            {
+              "text": " sind selbstständig und dauerhaft für einen Unternehmer tätig (§ 84 HGB). Sie vermitteln Abschlüsse oder schließen bei Abschlussvollmacht im Namen des Unternehmers ab. Der Unternehmer wird Vertragspartner des Kunden. Der Handelsvertreter wahrt die Interessen des Unternehmers und berichtet über vermittelte oder abgeschlossene Geschäfte. Welche Provision entsteht, richtet sich insbesondere nach §§ 87 und 87a. Nach Vertragsende ist unter den Voraussetzungen des § 89b ein Ausgleich möglich."
+            }
+          ],
+          [
+            {
+              "text": "Handelsmakler",
+              "termId": "marketing-handelsmakler-begriff"
+            },
+            {
+              "text": " vermitteln einzelne Geschäfte der in § 93 HGB genannten Arten ohne ständige Betrauung. Das vermittelte Geschäft schließen grundsätzlich die Kundenparteien. Prüfe eine besondere Vollmacht und die Vergütungsvereinbarung. Nach § 99 HGB tragen die Parteien den Maklerlohn im Zweifel je zur Hälfte, sofern die Parteien nichts anderes vereinbart haben und kein abweichender Ortsgebrauch besteht. Für andere Geschäfte wie Grundstücksvermittlung gelten andere Vorschriften."
+            }
+          ],
+          [
+            {
+              "text": "Kommissionäre",
+              "termId": "marketing-kommissionaer-begriff"
+            },
+            {
+              "text": " kaufen oder verkaufen gewerbsmäßig Waren oder Wertpapiere im eigenen Namen für Rechnung des Kommittenten (§ 383 HGB). Gegenüber dem Dritten wird der Kommissionär Vertragspartei. Im Innenverhältnis führt er das Geschäft für den Kommittenten aus, berichtet und rechnet ab. Provision und Aufwendungsersatz richten sich insbesondere nach § 396 HGB."
+            }
+          ]
+        ]
+      },
+      {
+        "id": "abgrenzung",
+        "title": "Vertragspartner, wirtschaftliche Rechnung und Erlaubnis prüfen",
+        "paragraphs": [
+          [
+            {
+              "text": "Frag zuerst, wer beim Abschluss im eigenen Namen handelt. Kläre dann, wer Chancen und Risiken aus dem Geschäft tragen soll. Ein Wiederverkäufer handelt grundsätzlich im eigenen Namen und auf eigene Rechnung. Eine angestellte Person im Vertrieb kann den Arbeitgeber vertreten, ist wegen persönlicher Abhängigkeit aber kein selbstständiger Handelsvertreter. Den Status prüfst du im Artikel "
+            },
+            {
+              "text": "Handelsvertreter und angestellter Vertrieb",
+              "articleId": "recht-handelsvertreter-status"
+            },
+            {
+              "text": "."
+            }
+          ],
+          [
+            {
+              "text": "Eine Erlaubnisfrage folgt aus der konkreten Tätigkeit. Die Einordnung einer Person als Handelsmakler oder Vertreter ersetzt keine Prüfung spezieller "
+            },
+            {
+              "text": "gewerberechtlicher Erlaubnistatbestände",
+              "articleId": "recht-gewerbeerlaubnis-ueberwachung"
+            },
+            {
+              "text": "."
+            }
+          ]
+        ]
+      },
+      {
+        "id": "transfer",
+        "title": "Selbstkontrolle und Transfer",
+        "paragraphs": [
+          [
+            {
+              "text": "Ein Hersteller beauftragt A dauerhaft mit der Vermittlung von Bestellungen, B einmalig mit der Vermittlung eines Rohstoffkaufs im Rahmen ihres selbstständigen Maklergewerbes und C gewerbsmäßig mit dem Verkauf eines Ersatzteilbestands im eigenen Namen für Rechnung des Herstellers. Ordne die Rollen und die Vertragsparteien zu."
+            }
+          ]
+        ],
+        "hint": {
+          "title": "Musterantwort",
+          "content": "A ist bei entsprechender Selbstständigkeit Handelsvertreter. Der Kaufvertrag entsteht zwischen Hersteller und Käufer, sofern der Hersteller selbst oder A mit Abschlussvollmacht in seinem Namen abschließt. Für B prüfst du die Voraussetzungen des § 93 HGB. Die Parteien des Rohstoffkaufs schließen grundsätzlich miteinander ab. C ist Verkaufskommissionär und wird Vertragspartner des Käufers, obwohl der Erlös im Innenverhältnis mit dem Hersteller abzurechnen ist. Die Vergütung folgt drei unterschiedlichen Regelungen."
+        }
+      },
+      {
+        "id": "rechtsstand",
+        "title": "Rechtsgrundlagen",
+        "paragraphs": [
+          [
+            {
+              "text": "HGB §§ 84–89b, 93–99, 383–384 und 396 · https://www.gesetze-im-internet.de/hgb/"
+            }
+          ],
+          [
+            {
+              "text": "GewO §§ 34c–34f · https://www.gesetze-im-internet.de/gewo/"
+            }
+          ],
+          [
+            {
+              "text": "Abgleich mit den Normtexten und Fachquellen am 19. November 2026."
+            }
+          ]
+        ]
+      }
+    ],
+    "updatedAt": 1795046400000,
+    "version": 1
+  },
+  {
     "id": "recht-arbeitsrecht",
     "subjectId": "recht",
     "chapterId": "recht-arbeitsrecht",
@@ -57019,12 +58197,36 @@
         ]
       },
       {
+        "id": "vertiefung",
+        "title": "Vertragsart und Pflichten im Betrieb",
+        "paragraphs": [
+          [
+            {
+              "text": "Arbeitsvertragsarten und Arbeit auf Abruf",
+              "articleId": "recht-arbeitsvertragsarten"
+            },
+            {
+              "text": " · "
+            },
+            {
+              "text": "Pflichten beider Vertragsparteien",
+              "articleId": "recht-arbeitsvertrag-pflichten"
+            }
+          ]
+        ]
+      },
+      {
         "id": "quellen",
         "title": "Rechtsstand und Quellen",
         "paragraphs": [
           [
             {
-              "text": "Recht für WiFaWi 2025, PDF-Seiten 399, 403–409. Prüfung anhand amtlicher Quellen am 18. November 2026."
+              "text": "Rechtsabgleich am 19. November 2026."
+            }
+          ],
+          [
+            {
+              "text": "Kursunterlage Recht für WiFaWi 2025, PDF-Seiten 399 und 403–409."
             }
           ],
           [
@@ -57066,7 +58268,239 @@
         }
       }
     ],
-    "updatedAt": 1794960000000,
+    "updatedAt": 1795046400000,
+    "version": 2
+  },
+  {
+    "id": "recht-arbeitsvertragsarten",
+    "subjectId": "recht",
+    "chapterId": "recht-arbeitsvertragsarten",
+    "title": "Arbeitsvertragsarten und Arbeit auf Abruf",
+    "number": "6.1.1",
+    "intro": "Ein Arbeitsverhältnis lässt sich nach Dauer, Arbeitszeit und Einsatzmodell einordnen. Diese Merkmale können zusammenfallen. Eine befristete Teilzeitstelle kann beispielsweise zugleich als Arbeit auf Abruf gestaltet sein.",
+    "sections": [
+      {
+        "id": "achsen",
+        "title": "Dauer, Arbeitszeit und Einsatzmodell einordnen",
+        "paragraphs": [
+          [
+            {
+              "text": "Unbefristete Verträge haben keinen vereinbarten Endzeitpunkt. Bei befristeten Verträgen sind Zeit- und Zweckbefristung zu unterscheiden. Eine Probezeit kann auch in einem unbefristeten Vertrag vereinbart sein. Vertiefe Form, Sachgrund und Verlängerung in "
+            },
+            {
+              "text": "Befristete Arbeitsverträge",
+              "articleId": "recht-befristung"
+            },
+            {
+              "text": "."
+            }
+          ],
+          [
+            {
+              "text": "Teilzeit betrifft die im Vergleich zu einem vergleichbaren Vollzeitbeschäftigten kürzere regelmäßige Arbeitszeit (§ 2 TzBfG). Prüfe das Benachteiligungsverbot des § 4 und gegebenenfalls die Voraussetzungen für eine Verringerung der Arbeitszeit nach § 8. Ein Minijob ist eine sozialversicherungsrechtliche Beschäftigungskategorie. Aus ihr folgt kein allgemeiner Wegfall von Urlaub, Mindestlohn oder Entgeltfortzahlung. Auch bei Arbeitnehmerüberlassung ist zu unterscheiden, mit wem der Arbeitsvertrag besteht und wer die tägliche Arbeit im Einsatzbetrieb organisiert."
+            }
+          ],
+          [
+            {
+              "text": "Berufsausbildung hat den Erwerb beruflicher Handlungsfähigkeit als Kern und richtet sich im Ausgangspunkt nach dem BBiG. Bei vermeintlich freien Dienstverhältnissen prüfe die tatsächliche persönliche Abhängigkeit nach § 611a BGB."
+            }
+          ]
+        ]
+      },
+      {
+        "id": "abruf",
+        "title": "Abrufarbeit und planbare Einsatzgrenzen",
+        "paragraphs": [
+          [
+            {
+              "text": "Bei "
+            },
+            {
+              "text": "Arbeit auf Abruf",
+              "termId": "recht-arb-begriff-abrufarbeit"
+            },
+            {
+              "text": " richtet sich die Arbeitsleistung nach dem Arbeitsanfall (§ 12 TzBfG). Die Vereinbarung muss eine bestimmte Dauer der wöchentlichen und täglichen Arbeitszeit festlegen. Fehlt die Wochenarbeitszeit, gelten 20 Stunden als vereinbart. Ohne bestimmte tägliche Dauer sind pro Einsatz mindestens drei aufeinanderfolgende Stunden abzurufen."
+            }
+          ],
+          [
+            {
+              "text": "Ist eine wöchentliche Mindestarbeitszeit vereinbart, darf grundsätzlich höchstens ein Viertel zusätzlich abgerufen werden. Ist eine Höchstarbeitszeit vereinbart, darf grundsätzlich höchstens ein Fünftel weniger abgerufen werden. Zu prüfen sind zudem der gesetzliche Referenzrahmen, die im Regelfall viertägige Ankündigung und zulässige tarifliche Abweichungen."
+            }
+          ]
+        ]
+      },
+      {
+        "id": "quellen",
+        "title": "Rechtsstand und Quellen",
+        "paragraphs": [
+          [
+            {
+              "text": "Rechtsabgleich am 19. November 2026."
+            }
+          ],
+          [
+            {
+              "text": "TzBfG §§ 2, 4, 8, 12 und 14: https://www.gesetze-im-internet.de/tzbfg/"
+            }
+          ],
+          [
+            {
+              "text": "BGB §§ 611a und 622: https://www.gesetze-im-internet.de/bgb/"
+            }
+          ],
+          [
+            {
+              "text": "SGB IV § 8: https://www.gesetze-im-internet.de/sgb_4/__8.html"
+            }
+          ],
+          [
+            {
+              "text": "BBiG §§ 1 und 10: https://www.gesetze-im-internet.de/bbig_2005/"
+            }
+          ],
+          [
+            {
+              "text": "AÜG § 1: https://www.gesetze-im-internet.de/a_g/__1.html"
+            }
+          ]
+        ]
+      },
+      {
+        "id": "transfer",
+        "title": "Transfer und Selbstkontrolle",
+        "paragraphs": [
+          [
+            {
+              "text": "Eine Aushilfe soll je nach Auftrag arbeiten. Die Vereinbarung legt weder Wochen- noch Tagesarbeitszeit fest. Der Betrieb verlangt per Nachricht am Vorabend einen zweistündigen Einsatz. Ordne die gesetzlichen Vorgaben ein."
+            }
+          ]
+        ],
+        "hint": {
+          "label": "SELBSTKONTROLLE",
+          "title": "Musterantwort",
+          "content": "Bei vereinbarter Abrufarbeit gelten ohne festgelegte Wochenarbeitszeit grundsätzlich 20 Wochenstunden. Ohne festgelegte Tagesdauer muss ein Abruf grundsätzlich drei zusammenhängende Stunden umfassen. Die Nachricht am Vorabend unterschreitet die gesetzliche Vorankündigung. Prüfe den Referenzrahmen und ob eine gesetzlich zulässige Tarifabweichung eingreift."
+        }
+      }
+    ],
+    "updatedAt": 1795046400000,
+    "version": 1
+  },
+  {
+    "id": "recht-arbeitsvertrag-pflichten",
+    "subjectId": "recht",
+    "chapterId": "recht-arbeitsvertrag-pflichten",
+    "title": "Pflichten von Arbeitnehmer und Arbeitgeber",
+    "number": "6.1.2",
+    "intro": "Arbeitsleistung und Vergütung sind die Hauptpflichten. Daneben schützen Rücksichtnahme-, Fürsorge- und Schutzpflichten die Interessen beider Seiten. Das Ergebnis hängt davon ab, wer welche Pflicht verletzt hat und welche Rechtsfolge geprüft wird.",
+    "sections": [
+      {
+        "id": "arbeitnehmer",
+        "title": "Arbeitsleistung und Sorgfalt einordnen",
+        "paragraphs": [
+          [
+            {
+              "text": "Der Arbeitnehmer erbringt grundsätzlich persönlich die vereinbarte Arbeitsleistung (§§ 611a und 613 BGB). Wirksame Weisungen konkretisieren die Leistung innerhalb der gesetzlichen und vertraglichen Grenzen. Aus § 241 Abs. 2 folgen betriebliche Rücksichtnahmepflichten, etwa sorgfältiger Umgang mit Arbeitsmitteln und der Schutz rechtlich geschützter Geschäftsgeheimnisse."
+            }
+          ],
+          [
+            {
+              "text": "Bei Krankheit ist die Arbeitsunfähigkeit mit ihrer voraussichtlichen Dauer unverzüglich mitzuteilen. Welche Nachweise erforderlich sind und wie das eAU-Verfahren funktioniert, behandelt "
+            },
+            {
+              "text": "Entgeltfortzahlung bei Krankheit",
+              "articleId": "recht-entgeltfortzahlung"
+            },
+            {
+              "text": ". Beim Schaden eines betrieblich veranlassten Einsatzes hängt die Arbeitnehmerhaftung unter anderem vom Verschuldensgrad ab. Eine Pflichtverletzung führt deshalb nicht automatisch zum Ersatz des gesamten Schadens."
+            }
+          ]
+        ]
+      },
+      {
+        "id": "arbeitgeber",
+        "title": "Vergütung, Beschäftigung und Schutz prüfen",
+        "paragraphs": [
+          [
+            {
+              "text": "Der Arbeitgeber schuldet die vereinbarte oder sonst maßgebliche Vergütung unter Beachtung zwingender Mindeststandards und einschlägiger Tarifnormen. § 615 BGB kann den Vergütungsanspruch bei Annahmeverzug erhalten, wenn der Arbeitgeber angebotene, vertragsgemäße Arbeit nicht annimmt und die übrigen Voraussetzungen erfüllt sind. Prüfe Leistungsfähigkeit und Leistungswillen, notwendiges Angebot sowie mögliche Anrechnung."
+            }
+          ],
+          [
+            {
+              "text": "Zur Fürsorge zählen insbesondere Schutz von Gesundheit und Persönlichkeit sowie sichere Arbeitsbedingungen (§§ 241 Abs. 2 und 618 BGB, ArbSchG). Daneben kommen Ansprüche auf vertragsgemäße Beschäftigung, "
+            },
+            {
+              "text": "Urlaub",
+              "articleId": "recht-erholungsurlaub"
+            },
+            {
+              "text": ", "
+            },
+            {
+              "text": "Nachweis der Arbeitsbedingungen",
+              "articleId": "recht-arbeitsvertrag"
+            },
+            {
+              "text": " und bei Beendigung ein Zeugnis nach § 109 GewO in Betracht. Welche Pflicht und welche Rechtsfolge greifen, hängt vom Sachverhalt ab."
+            }
+          ]
+        ]
+      },
+      {
+        "id": "quellen",
+        "title": "Rechtsstand und Quellen",
+        "paragraphs": [
+          [
+            {
+              "text": "Rechtsabgleich am 19. November 2026."
+            }
+          ],
+          [
+            {
+              "text": "BGB §§ 241, 293–297, 611a, 613, 615 und 618: https://www.gesetze-im-internet.de/bgb/"
+            }
+          ],
+          [
+            {
+              "text": "GewO §§ 106 und 109: https://www.gesetze-im-internet.de/gewo/"
+            }
+          ],
+          [
+            {
+              "text": "EFZG § 5: https://www.gesetze-im-internet.de/entgfg/"
+            }
+          ],
+          [
+            {
+              "text": "ArbSchG §§ 3–5: https://www.gesetze-im-internet.de/arbschg/"
+            }
+          ],
+          [
+            {
+              "text": "MiLoG § 1: https://www.gesetze-im-internet.de/milog/__1.html"
+            }
+          ]
+        ]
+      },
+      {
+        "id": "transfer",
+        "title": "Transfer und Selbstkontrolle",
+        "paragraphs": [
+          [
+            {
+              "text": "Ein disponierter Mitarbeiter erscheint pünktlich, ist arbeitsfähig und bietet seine Arbeit an. Die Leitung schickt ihn wegen eines kurzfristig verlorenen Kundenauftrags nach Hause. Im selben Lager ist eine bekannte Stolperstelle ungesichert. Welche Pflichten sind getrennt zu prüfen?"
+            }
+          ]
+        ],
+        "hint": {
+          "label": "SELBSTKONTROLLE",
+          "title": "Musterantwort",
+          "content": "Das ordnungsgemäße Arbeitsangebot und die Ablehnung sprechen für Annahmeverzug. Prüfe Vergütung nach § 615, gegebenenfalls Anrechnung und die Verteilung des Betriebsrisikos. Davon unabhängig besteht die Pflicht, Gefährdungen zu beurteilen und geeignete Schutzmaßnahmen zu treffen. Ein Auftragsausfall erledigt die Arbeitsschutzpflicht nicht."
+        }
+      }
+    ],
+    "updatedAt": 1795046400000,
     "version": 1
   },
   {
@@ -57743,12 +59177,32 @@
         ]
       },
       {
+        "id": "teilhabe",
+        "title": "Weitere Schutzrechte im Arbeitsverhältnis",
+        "paragraphs": [
+          [
+            {
+              "text": "Schwerbehindertenschutz im Arbeitsverhältnis",
+              "articleId": "recht-schwerbehindertenschutz"
+            },
+            {
+              "text": " behandelt neben der Kündigung auch Einstellung, Beteiligung und Zusatzurlaub."
+            }
+          ]
+        ]
+      },
+      {
         "id": "quellen",
         "title": "Rechtsstand und Quellen",
         "paragraphs": [
           [
             {
-              "text": "Recht für WiFaWi 2025, PDF-Seiten 413–416. Prüfung anhand amtlicher Quellen am 18. November 2026."
+              "text": "Rechtsabgleich am 19. November 2026."
+            }
+          ],
+          [
+            {
+              "text": "Kursunterlage Recht für WiFaWi 2025, PDF-Seiten 413–416."
             }
           ],
           [
@@ -57810,7 +59264,100 @@
         }
       }
     ],
-    "updatedAt": 1794960000000,
+    "updatedAt": 1795046400000,
+    "version": 2
+  },
+  {
+    "id": "recht-schwerbehindertenschutz",
+    "subjectId": "recht",
+    "chapterId": "recht-schwerbehindertenschutz",
+    "title": "Schwerbehindertenschutz im Arbeitsverhältnis",
+    "number": "6.5.3.1",
+    "intro": "Der arbeitsrechtliche Schwerbehindertenschutz betrifft Einstellung, Arbeitsplatzgestaltung, Beteiligung, Urlaub und Kündigung. Welche Regel greift, hängt unter anderem von Schwerbehinderung oder Gleichstellung und der betroffenen Maßnahme ab.",
+    "sections": [
+      {
+        "id": "status-einstellung",
+        "title": "Status, Einstellung und Gestaltung prüfen",
+        "paragraphs": [
+          [
+            {
+              "text": "Eine Schwerbehinderung setzt nach § 2 Abs. 2 SGB IX grundsätzlich einen Grad der Behinderung von wenigstens 50 und den gesetzlich geforderten Bezug zum Inland voraus. Bei einem Grad von 30 oder 40 kommt unter den Voraussetzungen des Abs. 3 eine Gleichstellung durch die Bundesagentur für Arbeit infrage, wenn ohne sie ein geeigneter Arbeitsplatz nicht erlangt oder behalten werden kann."
+            }
+          ],
+          [
+            {
+              "text": "Bei einer freien Stelle prüfst du die Pflichten des Arbeitgebers nach § 164. Berücksichtige die Beteiligung der zuständigen Vertretungen und bei der Beschäftigung eine behinderungsgerechte Organisation. Beschäftigungsquote und praxisnahe Gestaltung erklärt "
+            },
+            {
+              "text": "Behinderung und Teilhabe im Betrieb",
+              "articleId": "fz-behinderung-teilhabe"
+            },
+            {
+              "text": ". Bei öffentlichen Arbeitgebern können unter § 165 besondere Pflichten hinzukommen."
+            }
+          ]
+        ]
+      },
+      {
+        "id": "beteiligung-urlaub",
+        "title": "Vertretung, Zusatzurlaub und Kündigung unterscheiden",
+        "paragraphs": [
+          [
+            {
+              "text": "Die Schwerbehindertenvertretung hat Beteiligungsrechte nach § 178 SGB IX. Sie ist in Angelegenheiten, die schwerbehinderte Beschäftigte einzeln oder als Gruppe berühren, grundsätzlich unverzüglich und umfassend zu unterrichten und vor einer Entscheidung anzuhören. Bei einer Kündigung kann eine unterbliebene Beteiligung nach § 178 Abs. 2 zur Unwirksamkeit führen."
+            }
+          ],
+          [
+            {
+              "text": "Schwerbehinderte Menschen erhalten nach § 208 grundsätzlich fünf bezahlte zusätzliche Arbeitstage bei einer Fünftagewoche. Bei einer anderen Wochenverteilung ist die Zahl anzupassen. Eine Gleichstellung vermittelt diesen Zusatzurlaub nicht (§ 151 Abs. 3)."
+            }
+          ],
+          [
+            {
+              "text": "Eine Arbeitgeberkündigung erfordert im gesetzlichen Anwendungsbereich grundsätzlich vorherige Zustimmung des Integrationsamts (§ 168). Prüfe die Ausnahmen, etwa das noch nicht länger als sechs Monate bestehende Arbeitsverhältnis nach § 173. Die Zustimmungsprüfung ersetzt weder die Beteiligung der Schwerbehindertenvertretung noch eine gegebenenfalls erforderliche Betriebsratsanhörung. Jeder Verfahrensschritt hat seine eigenen Voraussetzungen."
+            }
+          ]
+        ]
+      },
+      {
+        "id": "quellen",
+        "title": "Rechtsstand und Quellen",
+        "paragraphs": [
+          [
+            {
+              "text": "Rechtsabgleich am 19. November 2026."
+            }
+          ],
+          [
+            {
+              "text": "SGB IX §§ 2, 151, 154, 164–165, 168, 173, 177–178 und 208: https://www.gesetze-im-internet.de/sgb_9_2018/"
+            }
+          ],
+          [
+            {
+              "text": "BetrVG § 102: https://www.gesetze-im-internet.de/betrvg/"
+            }
+          ]
+        ]
+      },
+      {
+        "id": "transfer",
+        "title": "Transfer und Selbstkontrolle",
+        "paragraphs": [
+          [
+            {
+              "text": "Ein Betrieb will einen seit zwei Jahren beschäftigten und gleichgestellten Mitarbeiter kündigen. Ein Betriebsrat und eine Schwerbehindertenvertretung bestehen. Der Mitarbeiter arbeitet regelmäßig an fünf Tagen. Welche Schritte und welchen Zusatzurlaub prüfst du?"
+            }
+          ]
+        ],
+        "hint": {
+          "label": "SELBSTKONTROLLE",
+          "title": "Musterantwort",
+          "content": "Sofern keine gesetzliche Ausnahme greift, muss der Betrieb vor einer Kündigung die Zustimmung des Integrationsamts einholen, die Schwerbehindertenvertretung beteiligen und den Betriebsrat anhören. Die Gleichstellung allein begründet keinen Zusatzurlaub nach § 208. Bei festgestellter Schwerbehinderung stünden im ganzjährigen Regelfall bei fünf Arbeitstagen pro Woche fünf zusätzliche Arbeitstage zu."
+        }
+      }
+    ],
+    "updatedAt": 1795046400000,
     "version": 1
   },
   {
@@ -58059,6 +59606,22 @@
         ]
       },
       {
+        "id": "aufgaben",
+        "title": "Allgemeine Aufgaben des Betriebsrats nach § 80",
+        "paragraphs": [
+          [
+            {
+              "text": "Der Betriebsrat überwacht die Durchführung der zugunsten der Beschäftigten geltenden Regeln und kann Maßnahmen zugunsten von Betrieb und Belegschaft beantragen. Zu seinen Aufgaben gehören unter anderem Gleichstellung, Vereinbarkeit von Familie und Beruf, Beschäftigungssicherung, Eingliederung schwerbehinderter Menschen und Förderung des Arbeitsschutzes. Er nimmt Anregungen von Beschäftigten und der Jugend- und Auszubildendenvertretung auf und verfolgt berechtigte Anliegen gegenüber dem Arbeitgeber."
+            }
+          ],
+          [
+            {
+              "text": "Für seine gesetzlichen Aufgaben muss er nach § 80 Abs. 2 rechtzeitig und umfassend unterrichtet werden. Allgemeine Aufgaben und die dafür nötigen Informationen sind vom Mitbestimmungsrecht bei einer konkreten Maßnahme zu unterscheiden. Welche Beteiligungswirkung eintritt, bestimmt die jeweilige Spezialregel."
+            }
+          ]
+        ]
+      },
+      {
         "id": "stufen",
         "title": "Beteiligung nach Wirkung unterscheiden",
         "paragraphs": [
@@ -58110,7 +59673,12 @@
         "paragraphs": [
           [
             {
-              "text": "Recht für WiFaWi 2025, PDF-Seiten 430–439. Prüfung anhand amtlicher Quellen am 18. November 2026."
+              "text": "Rechtsabgleich am 19. November 2026."
+            }
+          ],
+          [
+            {
+              "text": "Kursunterlage Recht für WiFaWi 2025, PDF-Seiten 430–439."
             }
           ],
           [
@@ -58126,19 +59694,19 @@
         "paragraphs": [
           [
             {
-              "text": "Der Arbeitgeber plant fünf neue Stellen, will eine Person einstellen und möchte allein die Gleitzeitordnung ändern. Welche Vorschriften helfen bei der Zuordnung?"
+              "text": "Der Arbeitgeber plant fünf neue Stellen, will eine Person einstellen und möchte allein die Gleitzeitordnung ändern. Beschäftigte melden zugleich Verstöße gegen die bisherige Gleitzeitordnung. Welche Vorschriften helfen bei der Zuordnung?"
             }
           ]
         ],
         "hint": {
           "label": "SELBSTKONTROLLE",
           "title": "Musterantwort",
-          "content": "Personalplanung: § 92, Information und Beratung. Einstellung in einem Unternehmen mit regelmäßig mehr als 20 wahlberechtigten Arbeitnehmern: § 99, Zustimmung einholen. Gleitzeit: regelmäßig § 87 Abs. 1 Nr. 2, erzwingbare Mitbestimmung im gesetzlichen Anwendungsbereich."
+          "content": "Personalplanung: § 92, Information und Beratung. Einstellung in einem Unternehmen mit regelmäßig mehr als 20 wahlberechtigten Arbeitnehmern: § 99, Zustimmung einholen. Gleitzeit: regelmäßig § 87 Abs. 1 Nr. 2, erzwingbare Mitbestimmung im gesetzlichen Anwendungsbereich. Allgemeine Aufgaben nach § 80 helfen beispielsweise, wenn Beschäftigte auf Verstöße gegen eine bestehende Arbeitszeitregelung hinweisen. Die Überwachung der geltenden Regel ist von der Zustimmung zur Änderung zu unterscheiden."
         }
       }
     ],
-    "updatedAt": 1794960000000,
-    "version": 1
+    "updatedAt": 1795046400000,
+    "version": 2
   },
   {
     "id": "recht-betriebsrat-kuendigung",

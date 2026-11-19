@@ -2,6 +2,7 @@ import type { Article, ArticleSection, Chapter, GlossaryTerm, RichText } from '.
 
 const subjectId = 'recht';
 const updatedAt = Date.UTC(2026, 10, 18);
+const revisionDate = Date.UTC(2026, 10, 19);
 const id = (suffix: string) => `recht-${suffix}`;
 const termLink = (termId: string, text: string): RichText => ({ text, termId });
 const term = (key: string, text: string): RichText => termLink(id(`hw-${key}`), text);
@@ -18,9 +19,12 @@ const exercise = (question: string, answer: string): ArticleSection => ({
 });
 const sources = (...laws: string[]) => section('rechtsstand', 'Rechtsgrundlagen', ...laws, 'Abgleich mit den amtlichen Normtexten am 18. November 2026.');
 
+const currentSources = (...laws: string[]) => section('rechtsstand', 'Rechtsgrundlagen', ...laws, 'Abgleich mit den Normtexten und Fachquellen am 19. November 2026.');
+
 interface Lesson {
   key: string;
   parent?: string;
+  added?: boolean;
   number: string;
   title: string;
   intro: string;
@@ -38,9 +42,11 @@ const lessons: Lesson[] = [
       section('orientierung', 'Drei Schritte im betrieblichen Fall',
         ['1. Bestimme die ', link(id('kaufmannseigenschaft'), 'Kaufmannseigenschaft'), ' beider Parteien. 2. Prüfe den konkreten Geschäftszweck und den passenden Tatbestand, zum Beispiel ', link(id('handelskauf-ruege'), 'Untersuchung und Rüge beim Handelskauf'), '. 3. Prüfe bei einer handelnden Person ', link(id('handelsvollmachten-publizitaet'), 'Vertretungsmacht und Register'), '.'],
         ['Bei einem privaten Kauf der Inhaberin fehlt der Betriebsbezug. Ein betrieblich eingesetzter Transporter kann dagegen zur Organisation des Handelsgewerbes gehören. Den Übergang vom allgemeinen Privatrecht erklärt der ', link(id('handelsgeschaeft-einstieg'), 'Einstieg ins Handelsgeschäft'), '.']),
+      section('weitere-rollen', 'Kaufmännischer Rechtsschein und selbstständige Vermittlung',
+        ['Wer nach außen als Kaufmann auftritt, kann Fragen zum ', link(id('scheinkaufmann'), 'Scheinkaufmann'), ' aufwerfen. Bei selbstständigen Vertriebshelfern klärst du die Rolle im ', link(id('vermittlergewerbe'), 'Vermittlergewerbe'), '.']),
       exercise('Ein eingetragener Händler bestellt einen Hubwagen fürs Lager und ein Sofa für seine Privatwohnung. Was ordnest du als Handelsgeschäft ein?',
         'Die Bestellung des Hubwagens steht in Verbindung mit dem Betrieb. Das Sofa ist nach dem feststehenden privaten Zweck kein Handelsgeschäft. Die Vermutung des § 344 Abs. 1 HGB greift im Zweifel und lässt einen nachweislich privaten Zweck unberührt.'),
-      sources('§§ 343–345 HGB · https://www.gesetze-im-internet.de/hgb/'),
+      currentSources('§§ 343–345 HGB · https://www.gesetze-im-internet.de/hgb/'),
     ],
   },
   {
@@ -68,6 +74,22 @@ const lessons: Lesson[] = [
       exercise('Eine Person betreibt einen kleinen Reparaturservice und trägt sich freiwillig als e. K. ein. Welche Folge hat die Eintragung?',
         'Wenn der Betrieb vor der Eintragung kein Handelsgewerbe nach § 1 Abs. 2 HGB war, begründet der Eintrag nach § 2 HGB die Kaufmannseigenschaft. Beim bereits kaufmännisch organisierungsbedürftigen Betrieb wäre die Eintragung deklaratorisch.'),
       sources('§§ 1–6, 29 HGB · https://www.gesetze-im-internet.de/hgb/', '§ 15 EStG · https://www.gesetze-im-internet.de/estg/__15.html', '§ 13 GmbHG und § 3 AktG · https://www.gesetze-im-internet.de/gmbhg/__13.html · https://www.gesetze-im-internet.de/aktg/__3.html'),
+    ],
+  },
+  {
+    key: 'scheinkaufmann', parent: 'kaufmannseigenschaft', number: '5.1.2', title: 'Scheinkaufmann und kaufmännischer Rechtsschein',
+    added: true,
+    intro: 'Wer im Geschäftsverkehr zurechenbar den Eindruck erweckt, Kaufmann zu sein, muss sich unter bestimmten Voraussetzungen gegenüber einem gutgläubigen Geschäftspartner so behandeln lassen. Entscheidend sind der konkrete Rechtsschein und seine Wirkung auf das Geschäft.',
+    sections: [
+      section('pruefung', 'Tatsächlichen Status und Rechtsschein prüfen',
+        ['Prüfe zuerst, ob echte Kaufmannseigenschaft nach dem HGB besteht. Beim ', term('scheinkaufmann', 'Scheinkaufmann'), ' fehlt sie. Ein kaufmännischer Rechtsschein kann etwa durch eine bewusst unzutreffende Bezeichnung als „e. K.“ auf Angeboten, in der Signatur und in Geschäftspapieren entstehen. Eine professionelle Webseite oder ein großer Auftrag belegen für sich allein keinen solchen Rechtsschein.'],
+        'Prüfe danach, ob der Betroffene den Rechtsschein gesetzt oder zurechenbar aufrechterhalten hat. Der konkrete Geschäftspartner muss schutzwürdig darauf vertraut haben und das Vertrauen muss für sein Verhalten erheblich geworden sein. Kennt er den tatsächlichen Status oder fehlt ein Einfluss auf sein Verhalten, trägt der Rechtsschein die gewünschte Rechtsfolge im Regelfall nicht.'),
+      section('abgrenzung', 'Fallbezogene Wirkung und § 5 HGB unterscheiden',
+        '§ 5 HGB setzt einen Eintrag der Firma und einen darunter betriebenen Gewerbebetrieb voraus. Die Regel über den Scheinkaufmann kann auch ohne Eintragung greifen. Sie führt zu einer fallbezogenen Behandlung im Schutzinteresse des Gegenübers. Eine allgemeine, für alle Personen und Geschäfte wirkende Kaufmannseigenschaft entsteht dadurch nicht.',
+        ['Prüfe am Ende Zweck und Voraussetzungen der konkret beanspruchten Handelsregel. Bei der ', link(id('handelskauf-ruege'), 'Untersuchungs- und Rügeobliegenheit'), ' ist etwa gesondert zu klären, ob die Anforderungen des beiderseitigen Handelskaufs vorliegen und ob der Vertragspartner sich gerade im konkreten Geschäft auf den erzeugten Rechtsschein stützen kann.']),
+      exercise('Ein nicht eingetragener Kleingewerbetreibender bezeichnet sich gegenüber einem Großhändler wiederholt bewusst als „e. K.“. Der Großhändler gewährt ihm allein deswegen kaufmännische Kreditkonditionen. Welche Prüfung ändert sich, wenn der Großhändler wusste, dass der Status vorgetäuscht war?',
+        'Im ersten Fall sind der zurechenbare Rechtsschein und das konkrete Vertrauen anhand von Angebot, Korrespondenz und Kreditentscheidung belegbar. Prüfe dann, welche handelsrechtliche Rechtsfolge der Großhändler daraus herleiten will. Bei positiver Kenntnis vom fehlenden Status fehlt sein schutzwürdiges Vertrauen. Eine Registerwirkung nach § 5 HGB ist in beiden Fällen mangels Eintrags nicht einschlägig.'),
+      currentSources('HGB §§ 1–6 · https://www.gesetze-im-internet.de/hgb/', 'Universität Mannheim, Handelsrecht, Kaufmann und Rechtsschein · https://www.jura.uni-mannheim.de/media/Lehrstuehle/jura/Wirth/HandelsR_FSS_25/GliedHdRFSS2025.pdf'),
     ],
   },
   {
@@ -387,6 +409,23 @@ const lessons: Lesson[] = [
     ],
   },
   {
+    key: 'vermittlergewerbe', parent: 'handelsrecht', number: '5.11', title: 'Vermittlergewerbe: Handelsvertreter, Handelsmakler und Kommissionär',
+    added: true,
+    intro: 'Wer fremde Geschäfte anbahnt oder abwickelt, kann unterschiedliche Rechtsrollen haben. Die Einordnung bestimmt, wer Vertragspartner wird, wer das wirtschaftliche Ergebnis trägt und wofür eine Vergütung anfällt.',
+    sections: [
+      section('rollen', 'Drei Rollen am Geschäftsablauf erkennen',
+        [termLink('recht-arb-begriff-handelsvertreter', 'Handelsvertreter'), ' sind selbstständig und dauerhaft für einen Unternehmer tätig (§ 84 HGB). Sie vermitteln Abschlüsse oder schließen bei Abschlussvollmacht im Namen des Unternehmers ab. Der Unternehmer wird Vertragspartner des Kunden. Der Handelsvertreter wahrt die Interessen des Unternehmers und berichtet über vermittelte oder abgeschlossene Geschäfte. Welche Provision entsteht, richtet sich insbesondere nach §§ 87 und 87a. Nach Vertragsende ist unter den Voraussetzungen des § 89b ein Ausgleich möglich.'],
+        [termLink('marketing-handelsmakler-begriff', 'Handelsmakler'), ' vermitteln einzelne Geschäfte der in § 93 HGB genannten Arten ohne ständige Betrauung. Das vermittelte Geschäft schließen grundsätzlich die Kundenparteien. Prüfe eine besondere Vollmacht und die Vergütungsvereinbarung. Nach § 99 HGB tragen die Parteien den Maklerlohn im Zweifel je zur Hälfte, sofern die Parteien nichts anderes vereinbart haben und kein abweichender Ortsgebrauch besteht. Für andere Geschäfte wie Grundstücksvermittlung gelten andere Vorschriften.'],
+        [termLink('marketing-kommissionaer-begriff', 'Kommissionäre'), ' kaufen oder verkaufen gewerbsmäßig Waren oder Wertpapiere im eigenen Namen für Rechnung des Kommittenten (§ 383 HGB). Gegenüber dem Dritten wird der Kommissionär Vertragspartei. Im Innenverhältnis führt er das Geschäft für den Kommittenten aus, berichtet und rechnet ab. Provision und Aufwendungsersatz richten sich insbesondere nach § 396 HGB.']),
+      section('abgrenzung', 'Vertragspartner, wirtschaftliche Rechnung und Erlaubnis prüfen',
+        ['Frag zuerst, wer beim Abschluss im eigenen Namen handelt. Kläre dann, wer Chancen und Risiken aus dem Geschäft tragen soll. Ein Wiederverkäufer handelt grundsätzlich im eigenen Namen und auf eigene Rechnung. Eine angestellte Person im Vertrieb kann den Arbeitgeber vertreten, ist wegen persönlicher Abhängigkeit aber kein selbstständiger Handelsvertreter. Den Status prüfst du im Artikel ', link(id('handelsvertreter-status'), 'Handelsvertreter und angestellter Vertrieb'), '.'],
+        ['Eine Erlaubnisfrage folgt aus der konkreten Tätigkeit. Die Einordnung einer Person als Handelsmakler oder Vertreter ersetzt keine Prüfung spezieller ', link(id('gewerbeerlaubnis-ueberwachung'), 'gewerberechtlicher Erlaubnistatbestände'), '.']),
+      exercise('Ein Hersteller beauftragt A dauerhaft mit der Vermittlung von Bestellungen, B einmalig mit der Vermittlung eines Rohstoffkaufs im Rahmen ihres selbstständigen Maklergewerbes und C gewerbsmäßig mit dem Verkauf eines Ersatzteilbestands im eigenen Namen für Rechnung des Herstellers. Ordne die Rollen und die Vertragsparteien zu.',
+        'A ist bei entsprechender Selbstständigkeit Handelsvertreter. Der Kaufvertrag entsteht zwischen Hersteller und Käufer, sofern der Hersteller selbst oder A mit Abschlussvollmacht in seinem Namen abschließt. Für B prüfst du die Voraussetzungen des § 93 HGB. Die Parteien des Rohstoffkaufs schließen grundsätzlich miteinander ab. C ist Verkaufskommissionär und wird Vertragspartner des Käufers, obwohl der Erlös im Innenverhältnis mit dem Hersteller abzurechnen ist. Die Vergütung folgt drei unterschiedlichen Regelungen.'),
+      currentSources('HGB §§ 84–89b, 93–99, 383–384 und 396 · https://www.gesetze-im-internet.de/hgb/', 'GewO §§ 34c–34f · https://www.gesetze-im-internet.de/gewo/'),
+    ],
+  },
+  {
     key: 'wettbewerb-gewerbe-transferfall', parent: 'wettbewerb-gewerbe', number: '7.4', title: 'Übungsfall: Vertriebsausbau und Gewerbemeldung',
     intro: 'Ein Hersteller von Werkstattzubehör plant eine Zweigstelle, Direktwerbung und die Übernahme eines Konkurrenten. Die drei Vorhaben unterliegen unterschiedlichen Regeln.',
     sections: [
@@ -418,8 +457,8 @@ export const articles: Article[] = lessons.map(lesson => ({
   title: lesson.title,
   intro: lesson.intro,
   sections: lesson.sections,
-  updatedAt,
-  version: 1,
+  updatedAt: lesson.added || lesson.key === 'handelsrecht' ? revisionDate : updatedAt,
+  version: lesson.key === 'handelsrecht' ? 2 : 1,
 }));
 
 const definitions: [key: string, label: string, definition: string, lesson: string][] = [
@@ -429,6 +468,7 @@ const definitions: [key: string, label: string, definition: string, lesson: stri
   ['formkaufmann', 'Formkaufmann', 'Kaufmann kraft der gewählten Rechtsform, beispielsweise GmbH oder AG nach den Spezialgesetzen.', 'kaufmannseigenschaft'],
   ['deklaratorisch', 'Deklaratorische Registerwirkung', 'Wirkung eines Registereintrags, der einen rechtlich bereits bestehenden Zustand dokumentiert.', 'handelsregister'],
   ['konstitutiv', 'Konstitutive Registerwirkung', 'Wirkung eines Eintrags, der eine Rechtsfolge erstmals entstehen lässt.', 'handelsregister'],
+  ['scheinkaufmann', 'Scheinkaufmann', 'Person ohne Kaufmannseigenschaft, die wegen eines zurechenbar erzeugten kaufmännischen Rechtsscheins einem schutzwürdigen Geschäftspartner gegenüber im konkreten Geschäft wie ein Kaufmann behandelt werden kann.', 'scheinkaufmann'],
   ['buchfuehrungsbefreiung', 'Buchführungsbefreiung für Einzelkaufleute', 'Erleichterung nach § 241a HGB, wenn die gesetzlichen Schwellen und Stichtagsvoraussetzungen erfüllt sind.', 'buchfuehrungsschwellen'],
   ['genehmigungsfiktion', 'Genehmigungsfiktion im Handelskauf', 'Rechtsfolge, dass die Ware bei unterlassener rechtzeitiger Rüge hinsichtlich des betroffenen Mangels als genehmigt gilt, soweit keine Ausnahme greift.', 'handelskauf-ruege'],
   ['handelsregister', 'Handelsregister', 'Öffentliches gerichtliches Register kaufmännisch wesentlicher Tatsachen mit den Abteilungen HRA und HRB.', 'handelsregister'],
