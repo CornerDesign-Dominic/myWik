@@ -1,101 +1,53 @@
-name: Android test APK
+name: Publish myWik Android preview 0.10.0
 
 on:
-  workflow_dispatch:
   push:
     branches: [release/preview-0.10.0]
 
 permissions:
-  contents: read
+  actions: read
+  contents: write
 
 jobs:
-  apk:
-    name: Build Android preview (test signing)
+  publish:
     runs-on: ubuntu-latest
-    timeout-minutes: 60
+    timeout-minutes: 10
     env:
-      CI: '1'
-      EXPO_NO_TELEMETRY: '1'
+      GH_TOKEN: ${{ github.token }}
+      GH_REPO: ${{ github.repository }}
+      BUILD_RUN: '44561998452'
+      BUILD_SHA: '17ab6e78b04754c8593ce310cb1307cdc1c804a1'
+      TARGET_SHA: '603fed07ae56a56f65bce5124a1eafe036120819'
+      APK_SHA: '80535b697ec6a8d92d18a4214e47829fe4e4a13d51940fe512f5420bc3fa5abd'
+      TAG: v0.10.0-preview
+      ASSET: myWik-0.10.0-Samsung.apk
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
-        with:
-          node-version: 24
-          cache: npm
-      - uses: actions/setup-java@v4
-        with:
-          distribution: temurin
-          java-version: 21
-      - uses: android-actions/setup-android@v3
-        with:
-          packages: platform-tools
-          log-accepted-android-sdk-licenses: false
-      - uses: gradle/actions/setup-gradle@v4
-      - run: npm ci
-      - run: npm run typecheck
-      - run: npm test
-      - name: Give preview its own application identity
+      - name: Verify release commit and retrieve the tested build
         run: |
-          node <<'NODE'
-          const fs = require('node:fs');
-          const config = JSON.parse(fs.readFileSync('app.json', 'utf8'));
-          config.expo.name = 'myWik';
-          config.expo.android.package = 'de.mywik.app.preview';
-          fs.writeFileSync('app.json', JSON.stringify(config, null, 2));
-          NODE
-      - name: Generate Android project
-        run: npx expo prebuild --platform android --no-install
-      - name: Verify test signing and embedded JavaScript build
+          test "$(gh api "repos/$GH_REPO/git/ref/heads/main" --jq .object.sha)" = "$TARGET_SHA"
+          gh run view "$BUILD_RUN" --json conclusion,headSha |
+            jq -e --arg sha "$BUILD_SHA" '.conclusion == "success" and .headSha == $sha'
+          gh run download "$BUILD_RUN" --name mywik-android-test-apk --dir verified
+          mv verified/app-release.apk "$ASSET"
+          printf '%s  %s\n' "$APK_SHA" "$ASSET" | sha256sum -c -
+          gh api "repos/$GH_REPO/contents/docs/RELEASE-0.10.0.md?ref=$TARGET_SHA" --jq .content |
+            base64 --decode > release-notes.md
+          test -s release-notes.md
+      - name: Publish a verified asset to the app update channel
         run: |
-          node <<'NODE'
-          const fs = require('node:fs');
-          const gradle = fs.readFileSync('android/app/build.gradle', 'utf8');
-          const release = gradle.match(/release\s*\{([^}]+)/)?.[1] ?? '';
-          if (!release.includes('signingConfig signingConfigs.debug')) {
-            throw new Error('Preview workflow requires the Expo template test signing configuration. Review native template before building.');
-          }
-          if (!fs.existsSync('android/app/debug.keystore')) {
-            throw new Error('Expo template test keystore missing.');
-          }
-          if (!gradle.includes('bundleCommand = "export:embed"') || /debuggableVariants\s*=\s*\[[^\]]*["']release["']/.test(gradle)) {
-            throw new Error('Release must embed JavaScript and run without Metro.');
-          }
-          NODE
-      - name: Install SDK required by Expo SDK 58 / React Native 0.88
-        run: |
-          sdkmanager "platform-tools" "platforms;android-37.0" "build-tools;37.0.0" "ndk;27.1.12297006" "cmake;3.30.5"
-          # Google publishes API 37 with its minor version; RN resolves android-37.
-          if [ ! -e "$ANDROID_HOME/platforms/android-37" ]; then
-            ln -s android-37.0 "$ANDROID_HOME/platforms/android-37"
+          if tag_sha=$(gh api "repos/$GH_REPO/git/ref/tags/$TAG" --jq .object.sha 2>/dev/null); then
+            test "$tag_sha" = "$TARGET_SHA"
           fi
-      - name: Build self-contained ARM64 APK
-        working-directory: android
-        run: |
-          chmod +x gradlew
-          ./gradlew :app:assembleRelease --no-daemon --max-workers=2 -PreactNativeArchitectures=arm64-v8a -Pandroid.enableMinifyInReleaseBuilds=false -Porg.gradle.jvmargs="-Xmx4096m -XX:MaxMetaspaceSize=1024m"
-      - name: Verify APK version, signature, and offline bundle
-        run: |
-          apk=android/app/build/outputs/apk/release/app-release.apk
-          tools="$ANDROID_HOME/build-tools/37.0.0"
-          version=$(node -p "require('./app.json').expo.version")
-          version_code=$(node -p "require('./app.json').expo.android.versionCode")
-          "$tools/aapt2" dump badging "$apk" > apk-badging.txt
-          grep -F "package: name='de.mywik.app.preview' versionCode='$version_code' versionName='$version'" apk-badging.txt
-          "$tools/apksigner" verify --print-certs "$apk" | tee apk-signature.txt
-          grep -E "^(Signer #[0-9]+|V[0-9]+ Signer): certificate SHA-256 digest: fac61745dc0903786fb9ede62a962b399f7348f0bb6f899b8332667591033b9c$" apk-signature.txt
-          unzip -Z1 "$apk" > apk-entries.txt
-          grep -Fx 'assets/index.android.bundle' apk-entries.txt
-          expected=$(sha256sum assets/generated/catalogue.db | cut -d ' ' -f1)
-          found=false
-          while IFS= read -r entry; do
-            actual=$(unzip -p "$apk" "$entry" | sha256sum | cut -d ' ' -f1)
-            if [ "$actual" = "$expected" ]; then found=true; break; fi
-          done < <(grep -E '\.db$' apk-entries.txt)
-          test "$found" = true
-      - uses: actions/upload-artifact@v4
-        with:
-          name: mywik-android-test-apk
-          path: android/app/build/outputs/apk/release/app-release.apk
-          if-no-files-found: error
-          retention-days: 14
-
+          if ! gh release view "$TAG" --json isDraft,targetCommitish,assets > release.json; then
+            gh release create "$TAG" --draft --prerelease --target "$TARGET_SHA" \
+              --title 'myWik 0.10.0 für Android' --notes-file release-notes.md
+            gh release view "$TAG" --json isDraft,targetCommitish,assets > release.json
+          fi
+          jq -e --arg target "$TARGET_SHA" '.isDraft and .targetCommitish == $target' release.json
+          if ! jq -e --arg asset "$ASSET" '.assets | any(.name == $asset)' release.json; then
+            gh release upload "$TAG" "$ASSET"
+          fi
+          gh release download "$TAG" --pattern "$ASSET" --output verify-upload.apk
+          printf '%s  %s\n' "$APK_SHA" verify-upload.apk | sha256sum -c -
+          gh release edit "$TAG" --draft=false
+          test "$(gh api "repos/$GH_REPO/git/ref/tags/$TAG" --jq .object.sha)" = "$TARGET_SHA"
