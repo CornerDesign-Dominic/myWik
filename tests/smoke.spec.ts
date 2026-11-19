@@ -700,10 +700,12 @@ test('repeated navigation does not stack duplicate screens and chapter folds sur
  await isolateCloud(page);await page.goto('/');await page.getByRole('tab', { name: 'Suche', exact: true }).click();await page.getByRole('tab', { name: 'Suche', exact: true }).click();
  await page.getByRole('button',{name:'Zurück',exact:true}).click();await expect(page.getByRole('button',{name:/^Fächer/})).toBeVisible();
  await page.getByRole('button',{name:/^Fächer/}).click();await page.getByRole('button',{name:/^Rechnungswesen,/}).click();
- await page.getByRole('button',{name:/1\.2 Teilkostenrechnung/}).click();
+ const partialCosting = page.getByRole('button', { name: /Vollkosten- und Teilkostenrechnung/ })
+   .and(page.locator('[aria-expanded]'));
+ await partialCosting.click();
  await page.getByRole('tab', { name: 'Suche', exact: true }).click();await page.getByRole('textbox',{name:'Glossar durchsuchen',exact:true}).fill('Deckungsbeitrag');await page.getByRole('button',{name:'Deckungsbeitrag',exact:true}).click();await page.getByRole('button',{name:'Zum Artikel',exact:true}).click();
  await page.getByRole('button',{name:'Zurück',exact:true}).click();await page.getByRole('button',{name:'Zurück',exact:true}).click();
- await expect(page.getByRole('button',{name:/1\.2 Teilkostenrechnung/})).toHaveAttribute('aria-expanded','false');
+ await expect(partialCosting).toHaveAttribute('aria-expanded','false');
  await page.getByRole('tab', { name: 'Start', exact: true }).click();await page.getByRole('button',{name:/^Fächer/}).click();await page.getByRole('button',{name:/^BWL,/}).click();
  await expect(page.getByText('Inhalt folgt',{exact:true}).first()).toBeVisible();
 });
