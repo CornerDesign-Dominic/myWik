@@ -707,7 +707,7 @@ test('repeated navigation does not stack duplicate screens and chapter folds sur
  await page.getByRole('button',{name:'Zurück',exact:true}).click();await page.getByRole('button',{name:'Zurück',exact:true}).click();
  await expect(partialCosting).toHaveAttribute('aria-expanded','false');
  await page.getByRole('tab', { name: 'Start', exact: true }).click();await page.getByRole('button',{name:/^Fächer/}).click();await page.getByRole('button',{name:/^BWL,/}).click();
- await expect(page.getByText('Inhalt folgt',{exact:true}).first()).toBeVisible();
+ await expect(page.getByRole('button', { name: /^1 Betriebliche Grundfunktionen/ })).toBeVisible();
 });
 
 
@@ -885,6 +885,51 @@ test('the logistics catalogue opens an inventory diagram and keeps the case solu
   await expect(page.getByText(/Ersparnis = 600.*17,24/)).toBeVisible();
 });
 
+test('VWL is reachable offline with all lessons, answers, glossary and mobile price diagrams', async ({ page }, testInfo) => {
+  test.setTimeout(180_000);
+  await page.setViewportSize({ width: 360, height: 780 });
+  await isolateCloud(page);
+  await page.goto('/');
+  await page.getByRole('button', { name: /^Fächer/ }).click();
+  await page.getByRole('button', { name: /^VWL, 17 Artikel/ }).click();
+  const lessons = fixtureArticles.filter(article => article.subjectId === 'vwl');
+  for (const lesson of lessons) {
+    await openChapter(page, new RegExp(lesson.number.replaceAll('.', '\\.') + ' ' + lesson.title.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')));
+    await expect(page.getByTestId('page-header').getByRole('heading', { name: lesson.title, exact: true })).toBeVisible();
+    const answers = page.getByRole('button', { name: /Musterantwort/ });
+    await expect(answers).toHaveCount(2);
+    for (let index = 0; index < 2; index++) {
+      await expect(answers.nth(index)).toHaveAttribute('aria-expanded', 'false');
+      await answers.nth(index).click();
+      await expect(answers.nth(index)).toHaveAttribute('aria-expanded', 'true');
+      const section = lesson.sections.filter(section => section.hint)[index];
+      await expect(page.getByText(section.hint!.content, { exact: true })).toBeVisible();
+    }
+    if (lesson.id === 'vwl-preisbildung') {
+      await page.getByRole('button', { name: 'Markt', exact: true }).click();
+      await expect(page.getByRole('dialog').getByText('Markt', { exact: true })).toBeVisible();
+      await page.getByRole('button', { name: 'Begriff schließen', exact: true }).click();
+    }
+    if (lesson.id === 'vwl-preiseingriffe') {
+      const diagrams = page.locator('svg[viewBox="0 0 320 182"]');
+      await expect(diagrams).toHaveCount(2);
+      for (let index = 0; index < 2; index++) {
+        await diagrams.nth(index).scrollIntoViewIfNeeded();
+        await expect(diagrams.nth(index).locator('polyline')).toHaveCount(2);
+        const bounds = await diagrams.nth(index).boundingBox();
+        expect(bounds!.x).toBeGreaterThanOrEqual(0);
+        expect(bounds!.x + bounds!.width).toBeLessThanOrEqual(page.viewportSize()!.width);
+        await diagrams.nth(index).screenshot({ path: testInfo.outputPath(`vwl-price-${index}.png`) });
+      }
+      // Follow an existing article across subject boundaries through the actual reading UI.
+      await page.getByRole('button', { name: 'Elastizität und Mengenreaktion', exact: true }).click();
+      await expect(page.getByTestId('page-header').getByRole('heading', { name: 'Preiselastizität der Nachfrage', exact: true })).toBeVisible();
+      await page.getByRole('button', { name: 'Zurück', exact: true }).click();
+    }
+    await page.getByRole('button', { name: 'Zurück', exact: true }).click();
+  }
+});
+
 test('ABC analysis shows the value chart, linked glossary and a path to XYZ', async ({ page }) => {
   await isolateCloud(page);
   await page.goto('/');
@@ -1048,4 +1093,187 @@ test('settings check for updates and open the published APK download', async ({ 
   await check.click();
   await expect(page.getByRole('alert').filter({ hasText: 'Die Suche nach Updates ist gerade nicht möglich.' })).toBeVisible();
   await expect(apk).toHaveCount(0);
+});
+
+test('Unternehmensführung is reachable offline with all lessons, glossary, links and collapsed answers', async ({ page }, testInfo) => {
+  test.setTimeout(180_000);
+  await isolateCloud(page);
+  await page.goto('/');
+  await page.getByRole('button', { name: /^Fächer/ }).click();
+  await page.getByRole('button', { name: /^Unternehmensführung,/ }).click();
+  const lessons = fixtureArticles.filter(a => a.subjectId === 'unternehmensfuehrung');
+  // Exercise the virtualized normal catalogue and the lazy offline loader for every UF lesson.
+  for (const lesson of lessons) {
+    await page.getByTestId('chapter-list').evaluate(element => element.scrollTo(0, 0));
+    await openChapter(page, new RegExp('^' + lesson.number.replaceAll('.', '\\.') + ' ' + lesson.title.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')));
+    await expect(page.getByTestId('page-header').getByRole('heading', { name: lesson.title, exact: true })).toBeVisible();
+    const answer = lesson.sections.find(s => s.id === 'transferfrage')!.hint!.content;
+    await expect(page.getByText(answer, { exact: true })).toHaveCount(0);
+    const disclosure = page.getByRole('button', { name: /Musterantwort/ }).last();
+    await expect(disclosure).toHaveAttribute('aria-expanded', 'false');
+    await disclosure.click();
+    await expect(page.getByText(answer, { exact: true })).toBeVisible();
+    if (lesson.id === 'uf-artikel-personalplanung') {
+      await page.getByRole('button', { name: 'Vollzeitäquivalente (VZÄ)', exact: true }).click();
+      const glossary = page.getByRole('dialog');
+      await expect(glossary.getByText('Vollzeitäquivalent', { exact: true })).toBeVisible();
+      await glossary.getByRole('button', { name: 'Begriff schließen', exact: true }).click();
+      await page.screenshot({ path: testInfo.outputPath('uf-personalplanung-mobile.png'), fullPage: true });
+    }
+    if (lesson.id === 'uf-artikel-aufbau') {
+      const tab = page.getByRole('tab', { name: 'Organigramm', exact: true });
+      await tab.scrollIntoViewIfNeeded();
+      const panel = tab.locator('..').locator('..');
+      await expect(panel.getByText(/Gleiche Einrückung bedeutet gleiche Ebene/)).toBeVisible();
+      await panel.screenshot({ path: testInfo.outputPath('uf-aufbau-mobile.png') });
+      await page.getByRole('tab', { name: 'Zuständigkeit', exact: true }).click();
+      await expect(panel.getByText(/Disposition → entscheidet und sagt zu/)).toBeVisible();
+    }
+    if (lesson.id === 'uf-artikel-ablauf') {
+      const tab = page.getByRole('tab', { name: 'Ablauf', exact: true });
+      await tab.scrollIntoViewIfNeeded();
+      const panel = tab.locator('..').locator('..');
+      await expect(panel.getByText(/Der Nein-Zweig führt zur erneuten Prüfung/)).toBeVisible();
+      await panel.screenshot({ path: testInfo.outputPath('uf-ablauf-mobile.png') });
+      await page.getByRole('tab', { name: 'Übergaben', exact: true }).click();
+      await expect(panel.getByText(/Jede Übergabe benennt den Absender/)).toBeVisible();
+    }
+    if (lesson.id === 'uf-artikel-analyse-anwenden') {
+      await page.getByRole('button', { name: 'Wertanalyse und Funktionskosten', exact: true }).click();
+      await expect(page.getByTestId('page-header').getByRole('heading', { name: 'Wertanalyse und Funktionskosten', exact: true })).toBeVisible();
+      await page.getByRole('button', { name: 'Zurück', exact: true }).click();
+    }
+    await page.getByRole('button', { name: 'Zurück', exact: true }).click();
+  }
+});
+
+test('BWL is reachable in the normal catalogue with glossary, related lessons and collapsed solutions', async ({ page }, testInfo) => {
+  await isolateCloud(page);
+  await page.goto('/');
+  await page.getByRole('button', { name: /^Fächer/ }).click();
+  await page.getByRole('button', { name: /^BWL,/ }).click();
+  await openChapter(page, /^1 Betriebliche Grundfunktionen/);
+  await expect(page.getByRole('heading', { name: 'Betriebliche Grundfunktionen und ihr Zusammenwirken', exact: true })).toBeVisible();
+  await page.getByText('Grundfunktion', { exact: true }).click();
+  await expect(page.getByRole('dialog')).toBeVisible();
+  await expect(page.getByText('Betriebliche Grundfunktion', { exact: true })).toBeVisible();
+  await page.getByRole('button', { name: 'Begriff schließen', exact: true }).click();
+  await page.getByText('Zielen und Aufgaben', { exact: true }).click();
+  await expect(page.getByRole('heading', { name: 'Ziele und Aufgaben der betrieblichen Funktionen', exact: true })).toBeVisible();
+  await page.getByRole('button', { name: 'Zurück', exact: true }).click();
+  await page.getByRole('button', { name: 'Zurück', exact: true }).click();
+  for (const entry of [
+    { number: /^1\.3 Übungsfall:/, title: 'Übungsfall: Zusatzauftrag, Engpass und Zahlungsbedarf', result: /Lücke 6.800/ },
+    { number: /^2\.4 Übungsfall:/, title: 'Übungsfall: Gründung und Rechtsformwahl bei Nordlicht', result: /Vorläufig GmbH/ },
+    { number: /^3\.3 Übungsfall:/, title: 'Übungsfall: kooperieren oder einen Zulieferer übernehmen?', result: /15.000.*Jahr/ },
+  ]) {
+    await openChapter(page, entry.number);
+    await expect(page.getByRole('heading', { name: entry.title, exact: true })).toBeVisible();
+    const solution = page.getByRole('button', { name: /Musterlösung aufklappen/ });
+    await expect(solution).toHaveAttribute('aria-expanded', 'false');
+    await solution.click();
+    await expect(solution).toHaveAttribute('aria-expanded', 'true');
+    await expect(page.getByText(entry.result)).toBeVisible();
+    await page.screenshot({ path: testInfo.outputPath(`${entry.number.source.slice(1, 2)}-bwl-case.png`), fullPage: true });
+    await page.getByRole('button', { name: 'Zurück', exact: true }).click();
+  }
+});
+
+test('Steuern loads every lesson and collapsed answer through the normal mobile catalogue', async ({ page }, testInfo) => {
+  test.setTimeout(180_000);
+  await isolateCloud(page);
+  const crashes: string[] = [];
+  page.on('pageerror', error => crashes.push(error.message));
+  await page.goto('/');
+  for (const article of fixtureArticles.filter(a => a.subjectId === 'steuern')) {
+    await page.getByRole('tab', { name: 'Start', exact: true }).click();
+    await page.getByRole('button', { name: /^Fächer/ }).click();
+    await page.getByRole('button', { name: /^Steuern,/ }).click();
+    await openChapter(page, new RegExp('^' + article.number.replaceAll('.', '\\.') + ' ' + article.title.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')));
+    await expect(page.getByRole('heading', { name: article.title, exact: true })).toBeVisible();
+    if (article.id === 'st-grundbegriffe') {
+      await page.getByText('Steuer', { exact: true }).click();
+      await expect(page.getByRole('dialog')).toBeVisible();
+      await expect(page.getByRole('button', { name: 'Im Glossar öffnen', exact: true })).toBeVisible();
+      await page.getByRole('button', { name: 'Begriff schließen', exact: true }).click();
+    }
+    if (article.id === 'st-buchfuehrung') {
+      await page.getByText('Buchführungspflicht nach HGB und AO', { exact: true }).click();
+      await expect(page.getByRole('heading', { name: 'Buchführungspflicht nach HGB und AO', exact: true })).toBeVisible();
+      await page.getByRole('button', { name: 'Zurück', exact: true }).click();
+    }
+    const answers = page.getByRole('button', { name: /Musterantwort/ });
+    await expect(answers).toHaveCount(2);
+    for (let index = 0; index < 2; index++) {
+      const answer = answers.nth(index);
+      await expect(answer).toHaveAttribute('aria-expanded', 'false');
+      await answer.click();
+      await expect(answer).toHaveAttribute('aria-expanded', 'true');
+      const content = article.sections.filter(s => s.hint?.title === 'Musterantwort')[index].hint!.content;
+      await expect(page.getByText(content, { exact: true })).toBeVisible();
+    }
+    if (article.id === 'st-fristen') await page.screenshot({ path: testInfo.outputPath('steuern-fristen-mobile.png'), fullPage: true });
+  }
+  expect(crashes).toEqual([]);
+});
+
+test('Investition und Finanzierung loads all lessons, answers and valid learning links offline', async ({ page }, testInfo) => {
+  test.setTimeout(240_000);
+  await isolateCloud(page);
+  await page.setViewportSize({ width: 360, height: 780 });
+  const crashes: string[] = [];
+  page.on('pageerror', error => crashes.push(error.message));
+  await page.goto('/');
+  await page.getByRole('button', { name: /^Fächer/ }).click();
+  await page.getByRole('button', { name: /^Investition und Finanzierung, 26 Artikel/ }).click();
+  const lessons = fixtureArticles.filter(a => a.subjectId === 'investition-finanzierung');
+  const visitedTerms = new Set<string>();
+  const visitedLinks = new Set<string>();
+  for (const lesson of lessons) {
+    await page.getByTestId('chapter-list').evaluate(element => element.scrollTo(0, 0));
+    await openChapter(page, new RegExp('^' + lesson.number.replaceAll('.', '\\.') + ' ' + lesson.title.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')));
+    await expect(page.getByTestId('page-header').getByRole('heading', { name: lesson.title, exact: true })).toBeVisible();
+    for (const [index, section] of lesson.sections.filter(s => s.hint).entries()) {
+      const disclosure = page.getByRole('button', { name: /Musterantwort|Musterlösung/ }).nth(index);
+      await expect(disclosure).toHaveAttribute('aria-expanded', 'false');
+      await disclosure.click();
+      await expect(page.getByText(section.hint!.content, { exact: true })).toBeVisible();
+    }
+    // Open each referenced glossary definition once across the subject, including reused terms.
+    for (const part of lesson.sections.flatMap(s => s.paragraphs.flat())) {
+      if (part.termId && !visitedTerms.has(part.termId)) {
+        await page.getByRole('button', { name: part.text, exact: true }).first().click();
+        const definition = fixtureGlossary.find(t => t.id === part.termId)!;
+        await expect(page.getByRole('dialog').getByText(definition.definition, { exact: true })).toBeVisible();
+        await page.getByRole('button', { name: 'Begriff schließen', exact: true }).click();
+        visitedTerms.add(part.termId);
+      }
+      if (part.articleId && !visitedLinks.has(part.articleId)) {
+        await page.getByRole('button', { name: part.text, exact: true }).first().click();
+        const target = fixtureArticles.find(a => a.id === part.articleId)!;
+        await expect(page.getByTestId('page-header').getByRole('heading', { name: target.title, exact: true })).toBeVisible();
+        await page.getByRole('button', { name: 'Zurück', exact: true }).click();
+        visitedLinks.add(part.articleId);
+      }
+    }
+    if (lesson.id === 'if-kostenvergleich') {
+      await page.setViewportSize({ width: 320, height: 740 });
+      const diagram = page.locator('svg[viewBox="0 0 320 182"]');
+      await diagram.scrollIntoViewIfNeeded();
+      await expect(diagram.locator('polyline')).toHaveCount(2);
+      const bounds = await diagram.boundingBox();
+      expect(bounds!.x).toBeGreaterThanOrEqual(0);
+      expect(bounds!.x + bounds!.width).toBeLessThanOrEqual(320);
+      await diagram.screenshot({ path: testInfo.outputPath('if-kostenvergleich-320px.png') });
+      await page.setViewportSize({ width: 360, height: 780 });
+    }
+    if (lesson.id === 'if-finanzierungsarten') {
+      await page.getByText('Herkunft und Rechtsstellung gemeinsam lesen', { exact: true }).scrollIntoViewIfNeeded();
+      await page.screenshot({ path: testInfo.outputPath('if-finanzierungsmatrix-mobile.png') });
+    }
+    await page.getByRole('button', { name: 'Zurück', exact: true }).click();
+  }
+  expect(visitedTerms.size).toBeGreaterThan(50);
+  for (const id of ['rw-eigenkapitalrentabilitaet','rw-fall-planung','recht-darlehen','recht-leasing','recht-kreditsicherheiten','logistik-zahlung-skonto','logistik-akkreditiv-streckengeschaeft','marketing-konditionenpolitik']) expect(visitedLinks.has(id), id).toBe(true);
+  expect(crashes).toEqual([]);
 });

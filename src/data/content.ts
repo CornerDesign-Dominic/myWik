@@ -1,3 +1,6 @@
+import { financeArticles, financeChapters, financeGlossary } from './investition-finanzierung';
+import { bwlArticles, bwlChapters, bwlGlossary } from './bwl';
+import { ufArticles, ufChapters, ufGlossary } from './unternehmensfuehrung';
 import type { Article, Chapter, GlossaryTerm, Subject } from '../types';
 import { logisticsArticles, logisticsChapters, logisticsGlossary } from './logistik';
 import { transferSection } from './logistik-standard';
@@ -8,6 +11,8 @@ import { operatingAccountingArticles, operatingAccountingChapters, operatingAcco
 import { controllingArticles, controllingChapters, controllingGlossary } from './controlling';
 import { accountingArticles, accountingChapters, accountingGlossary, contributionMarginNumber } from './rechnungswesen';
 import { managementArticles, managementChapters, managementGlossary } from './betriebliches-management';
+import { taxArticles, taxChapters, taxGlossary } from './steuern';
+import { vwlArticles, vwlChapters, vwlGlossary } from './vwl';
 
 export const subjects: Subject[] = [
   { id: 'bwl', title: 'BWL', subtitle: 'Betriebliche Entscheidungen verstehen', icon: 'building' },
@@ -44,20 +49,13 @@ export const chapters: Chapter[] = [
   { id: 'logistik-rationalisierung', subjectId: 'logistik', number: '4', title: 'Aspekte der Rationalisierung' },
   { id: 'logistik-rechtsaspekte', subjectId: 'logistik', number: '5', title: 'Spezielle Rechtsaspekte' },
   ...logisticsChapters,
-  { id: 'bwl-grundlagen', subjectId: 'bwl', number: '1', title: 'Betriebliche Grundfunktionen' },
-  { id: 'bwl-rechtsformen', subjectId: 'bwl', number: '2', title: 'Rechtsformen und Unternehmensverbindungen' },
-  { id: 'vwl-maerkte', subjectId: 'vwl', number: '1', title: 'Märkte und Preisbildung' },
-  { id: 'vwl-politik', subjectId: 'vwl', number: '2', title: 'Wirtschaftspolitik und Konjunktur' },
+  ...bwlChapters,
+  ...vwlChapters,
   ...lawChapters,
-  { id: 'steuern-arten', subjectId: 'steuern', number: '1', title: 'Steuerarten und Besteuerungsverfahren' },
-  { id: 'uf-strategie', subjectId: 'unternehmensfuehrung', number: '1', title: 'Strategische Unternehmensführung' },
-  { id: 'uf-organisation', subjectId: 'unternehmensfuehrung', number: '2', title: 'Organisation und Veränderung' },
+  ...taxChapters,
+  ...ufChapters,
   ...managementChapters,
-  { id: 'if-investition', subjectId: 'investition-finanzierung', number: '1', title: 'Investitionsplanung und Investitionsrechnung' },
-  { id: 'if-statisch', subjectId: 'investition-finanzierung', parentId: 'if-investition', number: '1.1', title: 'Statische Verfahren der Investitionsrechnung' },
-  { id: 'if-dynamisch', subjectId: 'investition-finanzierung', parentId: 'if-investition', number: '1.2', title: 'Dynamische Verfahren der Investitionsrechnung' },
-  { id: 'if-finanzierungsarten', subjectId: 'investition-finanzierung', number: '2', title: 'Finanzierungsarten' },
-  { id: 'if-liquiditaet', subjectId: 'investition-finanzierung', number: '3', title: 'Finanzplanung und Liquidität' },
+  ...financeChapters,
   ...controllingChapters,
   ...leadershipChapters,
 ];
@@ -208,8 +206,13 @@ export const articles: Article[] = [
   ...lawArticles,
   ...accountingArticles,
   ...operatingAccountingArticles,
+  ...financeArticles,
   ...controllingArticles,
   ...managementArticles,
+  ...ufArticles,
+  ...taxArticles,
+  ...vwlArticles,
+  ...bwlArticles,
 ];
 
 export const glossary: GlossaryTerm[] = [
@@ -227,8 +230,13 @@ export const glossary: GlossaryTerm[] = [
   ...lawGlossary,
   ...accountingGlossary,
   ...operatingAccountingGlossary,
+  ...financeGlossary,
   ...controllingGlossary,
   ...managementGlossary,
+  ...ufGlossary,
+  ...taxGlossary,
+  ...vwlGlossary,
+  ...bwlGlossary,
 ];
 
-export const contentVersion = 14;
+export const contentVersion = 18;
