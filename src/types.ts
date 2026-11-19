@@ -1,3 +1,5 @@
+import type { FormulaTopic } from './data/formulas';
+
 export type ThemeMode = 'system' | 'light' | 'dark';
 export type ArticleStatus = 'open' | 'unclear' | 'working' | 'done';
 export interface Subject { id: string; title: string; subtitle: string; icon: string }
@@ -45,4 +47,10 @@ export interface UserSettings { theme: ThemeMode; reminders: Record<ReminderCate
 export interface ChatMessage { id: string; role: 'user' | 'assistant'; content: string; createdAt: number }
 export interface ArticleChat { articleId: string; messages: ChatMessage[]; summary: string; updatedAt: number; expiresAt: number }
 export interface UserData { progress: Record<string, ArticleProgress>; notes: Note[]; cards: Flashcard[]; sessions: LearningSession[]; visits: string[]; later: LaterItem[]; recommendations: Recommendation[]; settings: UserSettings }
-export type Route = { name: 'home' | 'subjects' | 'cards' | 'success' | 'later' | 'recommendations' | 'settings' } | { name:'glossary';termId?:string;context?:{query:string;expanded:string|null;y:number} } | { name: 'chapters'; subjectId: string; collapsed?:Record<string,boolean> } | { name: 'article'; articleId: string };
+export interface FormulaViewState {
+  query: string;
+  topic?: FormulaTopic;
+  expanded?: string;
+  offset: number;
+}
+export type Route = { name: 'home' | 'subjects' | 'cards' | 'success' | 'later' | 'recommendations' | 'settings' } | { name: 'formulas'; context?: FormulaViewState } | { name:'glossary';termId?:string;context?:{query:string;expanded:string|null;y:number} } | { name: 'chapters'; subjectId: string; collapsed?:Record<string,boolean> } | { name: 'article'; articleId: string };

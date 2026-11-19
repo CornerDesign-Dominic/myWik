@@ -1047,3 +1047,28 @@ test('settings check for updates and open the published APK download', async ({ 
   await expect(page.getByRole('alert').filter({ hasText: 'Die Suche nach Updates ist gerade nicht möglich.' })).toBeVisible();
   await expect(apk).toHaveCount(0);
 });
+
+test('formulas are searchable offline with topic filtering and return from a linked lesson', async ({ page }) => {
+  await isolateCloud(page);
+  await page.goto('/');
+  await page.getByRole('button', { name: /^Formelsammlung/ }).click();
+  await page.getByRole('button', { name: 'Themenfilter: Alle Themen' }).click();
+  await page.getByRole('button', { name: 'Kostenrechnung und Kalkulation', exact: true }).click();
+
+  const search = page.getByRole('textbox', { name: 'Formeln durchsuchen' });
+  await search.fill('Gewinnschwelle');
+  const formula = page.getByRole('button', { name: 'Break-even-Menge (Gewinnschwelle)' });
+  await formula.click();
+  await expect(page.getByText('6.000 € ÷ 40 €/Stück = 150 Stück.', { exact: true })).toBeVisible();
+  await page.getByRole('button', { name: 'Zum Lernartikel' }).click();
+  await expect(page.getByText('Gewinnschwelle berechnen', { exact: true })).toBeVisible();
+  await page.getByRole('button', { name: 'Zurück', exact: true }).click();
+  await expect(search).toHaveValue('Gewinnschwelle');
+  await expect(formula).toHaveAttribute('aria-expanded', 'true');
+  await expect(page.getByRole('button', { name: 'Themenfilter: Kostenrechnung und Kalkulation' })).toBeVisible();
+
+  await search.fill('ZZZ Unbekannte Formel');
+  await expect(page.getByText('Keine passende Formel gefunden.')).toBeVisible();
+  await page.getByRole('button', { name: 'Leeren', exact: true }).click();
+  await expect(search).toHaveValue('');
+});

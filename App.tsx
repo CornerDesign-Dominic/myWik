@@ -2,12 +2,14 @@ import React, { useEffect, useState } from 'react';
 import { ActivityIndicator, AppState, BackHandler, Modal, Platform, Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
 import { StatusBar } from 'expo-status-bar';
-import { BookA, BookOpen, ChevronRight, Layers, Star, Bookmark, X } from 'lucide-react-native';
+import { BookA, BookOpen, Calculator, ChevronRight, Layers, Star, Bookmark, X } from 'lucide-react-native';
 import { StoreProvider, useStore } from './src/state/Store';
 import { ThemeProvider, useTheme, Page, Body, Muted, Button, Row } from './src/components/ui';
 import { SubjectsScreen, ChaptersScreen } from './src/screens/SubjectsScreen';
 import { ArticleScreen } from './src/screens/ArticleScreen';
 import { GlossaryScreen } from './src/screens/GlossaryScreen';
+import { FormulasScreen } from './src/screens/FormulasScreen';
+import { formulas } from './src/data/formulas';
 import { CardsScreen, SuccessScreen, LaterScreen, RecommendationsScreen, SettingsScreen } from './src/screens/LearningScreens';
 import { ChatPanel } from './src/components/ChatPanel';
 import { MeiWikAvatar } from './src/components/MeiWikAvatar';
@@ -31,6 +33,7 @@ function HomeScreen({navigate}:{navigate:(r:Route)=>void}) {
  const tiles=[
  {title:'Fächer',sub:`${subjects.length} Fächer`,icon:BookOpen,route:'subjects'},
  {title:'Begriffsglossar',sub:`${glossary.length} Begriffe`,icon:BookA,route:'glossary'},
+ {title:'Formelsammlung',sub:`${formulas.length} Formeln und Rechenschemata`,icon:Calculator,route:'formulas'},
  {title:'Karteikarten',sub:`${data.cards.length} ${data.cards.length===1?'Karte':'Karten'}`,icon:Layers,route:'cards'},
  {title:'Deine Erfolge',sub:`${minutes} Minuten heute`,icon:Star,route:'success'},
  {title:'Für später',sub:`${data.later.filter(x=>x.status==='open').length} offene Einträge`,icon:Bookmark,route:'later'},
@@ -89,7 +92,7 @@ function Application() {
  if(!store.ready)return <SafeAreaView style={{flex:1,backgroundColor:colors.background,alignItems:'center',justifyContent:'center',gap:16}}><ActivityIndicator color={colors.accent}/><Body>{store.error??'Dein Wissen wird geladen …'}</Body>{store.error&&<><Button title="Erneut laden" onPress={store.retryLoad}/>{store.user&&<Button title="Abmelden" onPress={()=>{void store.signOut().catch(()=>{})}}/>}</>}</SafeAreaView>;
  const titles = {
   home: 'Start', subjects: 'Fächer', chapters: catalogue.subjects.find(subject => route.name === 'chapters' && subject.id === route.subjectId)?.title ?? 'Fach',
-  article: summary?.title ?? 'Artikel', glossary: 'Begriffsglossar', cards: 'Karteikarten',
+  article: summary?.title ?? 'Artikel', glossary: 'Begriffsglossar', formulas: 'Formelsammlung', cards: 'Karteikarten',
   success: 'Deine Erfolge', later: 'Für später', recommendations: 'MeiWik', settings: 'Einstellungen',
  };
  const activeShortcut: Shortcut | undefined = chatOpen || route.name === 'recommendations' ? 'meiwik' :
@@ -122,6 +125,17 @@ function Application() {
    screen = <GlossaryScreen key={entry.key} initialTermId={route.termId} initialContext={route.context}
     onContextChange={(context: GlossaryState) => setNav(state => ({ ...state, entries: state.entries.map(e => e.key === entry.key && e.route.name === 'glossary' ? { ...e, route: { ...e.route, context } } : e) }))}
     onArticle={openArticle} />;
+   break;
+  case 'formulas':
+   screen = <FormulasScreen key={entry.key} initialState={route.context} onArticle={(id, context) => {
+    setNav(state => ({
+     ...state,
+     entries: state.entries.map(current => current.key === entry.key && current.route.name === 'formulas'
+      ? { ...current, route: { ...current.route, context } }
+      : current),
+    }));
+    openArticle(id);
+   }} />;
    break;
   case 'cards':
    screen = <CardsScreen />;
