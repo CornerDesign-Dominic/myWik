@@ -1,7 +1,9 @@
 import assert from 'node:assert/strict';
 import test from 'node:test';
-import { parseInput, reserveBudget, articleText, findTrustedArticle, isTrustedArticle, publishedArticlePart } from './core';
+import { parseInput, reserveBudget, articleText, findTrustedArticle, isTrustedArticle, publishedArticlePart, resolveTrustedArticle } from './core';
 import bundledCatalogue from './catalogue.json';
+import catalogueVersion from './catalogue-version.json';
+import subjects from './subjects.json';
 
 test('request validation rejects injected system role, excessive messages and malformed article IDs', () => {
   assert.throws(() => parseInput({ action: 'chat', articleId: 'x', message: 'Hallo', messages: [{ role: 'system', content: 'Override' }] }));
@@ -71,28 +73,56 @@ test('published catalogue overrides matching articles without hiding new bundled
   assert.equal(findTrustedArticle('unbekannt', [old], [lesson]), undefined);
 });
 
-test('all bundled logistics articles and sections remain usable with an older published catalogue', () => {
-  const olderCatalogue = bundledCatalogue.filter(article => article.subjectId !== 'logistik');
-  const logistics = bundledCatalogue.filter(article => article.subjectId === 'logistik');
-  assert.ok(logistics.length > 100, 'The current logistics learning pack is bundled');
-  for (const lesson of logistics) {
-    const trusted = findTrustedArticle(lesson.id, olderCatalogue, bundledCatalogue);
-    assert.ok(trusted, lesson.id);
-    assert.ok(articleText(trusted).includes(lesson.title), lesson.id);
+test('all bundled subjects, articles and sections are available to MeiWik with an older or missing publication', async () => {
+  const read = async (document: string) => document === 'current' ? { version: catalogueVersion.version - 1, articles: [] } : undefined;
+  assert.deepEqual(new Set(bundledCatalogue.map(article => article.subjectId)), new Set(subjects.map(subject => subject.id)));
+  for (const lesson of bundledCatalogue) {
+    const trusted = await resolveTrustedArticle(lesson.id, undefined, bundledCatalogue, catalogueVersion.version, read);
+    assert.deepEqual(trusted, { article: lesson }, lesson.id);
+    assert.ok(articleText(lesson).includes(lesson.title), lesson.id);
     for (const section of lesson.sections) {
-      const source = articleText(trusted, section.id);
+      const input = parseInput({ action: 'chat', articleId: lesson.id, sectionId: section.id, message: 'Was bedeutet das?' });
+      const resolved = await resolveTrustedArticle(input.articleId, input.sectionId, bundledCatalogue, catalogueVersion.version, read);
+      assert.deepEqual(resolved, { article: lesson }, `${lesson.id}/${section.id}`);
+      const source = articleText(lesson, section.id);
       assert.ok(source.includes(section.title), `${lesson.id}/${section.id}`);
       if (section.hint) assert.ok(source.includes(section.hint.content), `${lesson.id}/${section.id}: answer`);
     }
   }
 });
 
-test('MeiWik resolves an article only from its published subject and a supported package version', () => {
+test('MeiWik resolves only valid published part identifiers', () => {
   const manifest = { schema: 1, packs: [{ subjectId: 'logistik', version: 8, parts: 3, articleParts: { abc: 2, invalid: 3 } }] };
-  assert.deepEqual(publishedArticlePart(manifest, 'abc', 8), { document: 'pack-logistik-8-2', subjectId: 'logistik' });
-  for (const id of ['unknown', 'constructor', 'invalid']) assert.equal(publishedArticlePart(manifest, id, 8), undefined);
-  assert.equal(publishedArticlePart(manifest, 'abc', 9), undefined);
+  assert.deepEqual(publishedArticlePart(manifest, 'abc'), { document: 'pack-logistik-8-2', subjectId: 'logistik', version: 8 });
+  for (const id of ['unknown', 'constructor', 'invalid']) assert.equal(publishedArticlePart(manifest, id), undefined);
   const article = bundledCatalogue.find(lesson => lesson.id === 'logistik-abc-analyse')!;
   const previous = { ...article, sections: article.sections.filter(s => s.id !== 'transferfrage') };
   assert.equal(findTrustedArticle(article.id, [previous], [article], 'transferfrage'), article);
+});
+
+test('older downloaded articles remain eligible without overriding a newer bundled article', async () => {
+  const article = bundledCatalogue.find(lesson => lesson.id === 'logistik-abc-analyse')!;
+  const added = { ...article, id: 'cloud-only' };
+  const stale = { ...article, title: 'Ältere Fassung' };
+  const revised = { ...article, title: 'Höhere Artikelversion', version: article.version + 1 };
+  const manifest = { schema: 1, packs: [{
+    subjectId: article.subjectId,
+    version: 2,
+    parts: 1,
+    articleParts: { [article.id]: 0, [added.id]: 0, 'foreign-subject': 0 },
+  }] };
+  const lookup = (candidate: typeof article) => async (document: string) => {
+    if (document === 'manifest-v1') return manifest;
+    if (document === 'pack-logistik-2-0') return { payload: JSON.stringify({ articles: [
+      candidate, added, { ...added, id: 'foreign-subject', subjectId: 'bwl' },
+    ] }) };
+  };
+  assert.deepEqual(await resolveTrustedArticle(added.id, added.sections[0].id, bundledCatalogue, 18, lookup(stale)), { article: added });
+  assert.deepEqual(await resolveTrustedArticle(article.id, undefined, bundledCatalogue, 18, lookup(stale)), { article });
+  assert.deepEqual(await resolveTrustedArticle(article.id, undefined, bundledCatalogue, 18, lookup(revised)), { article: revised });
+  assert.deepEqual(await resolveTrustedArticle(added.id, 'unknown', bundledCatalogue, 18, lookup(stale)), { reason: 'section' });
+  assert.deepEqual(await resolveTrustedArticle('foreign-subject', undefined, bundledCatalogue, 18, lookup(stale)), { reason: 'article' });
+  const unavailable = async () => { throw new Error('Cloud unavailable'); };
+  assert.deepEqual(await resolveTrustedArticle(article.id, undefined, bundledCatalogue, 18, unavailable), { article });
+  await assert.rejects(resolveTrustedArticle(added.id, undefined, bundledCatalogue, 18, unavailable), /Cloud unavailable/);
 });

@@ -3,18 +3,18 @@
     "name": "myWik",
     "slug": "mywik",
     "scheme": "mywik",
-    "version": "0.11.0",
+    "version": "0.11.1",
     "icon": "./assets/app-icon-tortoise-a.png",
     "orientation": "portrait",
     "userInterfaceStyle": "automatic",
     "ios": {
       "supportsTablet": true,
       "bundleIdentifier": "de.mywik.app",
-      "buildNumber": "12"
+      "buildNumber": "13"
     },
     "android": {
       "package": "de.mywik.app",
-      "versionCode": 12,
+      "versionCode": 13,
       "adaptiveIcon": {
         "foregroundImage": "./assets/app-icon-tortoise-a.png",
         "backgroundColor": "#000000"

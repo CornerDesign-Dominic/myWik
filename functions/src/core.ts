@@ -5,7 +5,7 @@ export const MAX_OUTPUT_TOKENS = 2200;
 export type Action = 'chat' | 'compact' | 'flashcard' | 'flashcards' | 'check_card' | 'practice';
 export interface Turn { role: 'user' | 'assistant'; content: string }
 export interface Input { action: Action; articleId: string; sectionId?: string; message: string; summary: string; messages: Turn[]; selectedText: string; generationMode?: 'new'|'improve'; subjectId?: string; card?: {id?: string; front: string; back: string}; existingCards?: Array<{id: string; front: string; back: string}> }
-export interface TrustedArticle { id: string; title: string; subjectId: string; intro: string; number: string; sections: Array<{ id: string; title: string; paragraphs: Array<Array<{ text: string }>>; tabs?: Array<{ title: string; content: string }>; hint?: { title: string; content: string } }> }
+export interface TrustedArticle { id: string; title: string; subjectId: string; intro: string; number: string; version?: number; sections: Array<{ id: string; title: string; paragraphs: Array<Array<{ text: string }>>; tabs?: Array<{ title: string; content: string }>; hint?: { title: string; content: string } }> }
 export function parseInput(raw: unknown): Input {
   if (!raw || typeof raw !== 'object') throw new Error('Ungültige Anfrage.');
   const r = raw as Record<string, unknown>;
@@ -58,16 +58,65 @@ export function findTrustedArticle(id: string, published: unknown, bundled: read
   return (Array.isArray(published) ? find(published) : undefined) ?? find(bundled);
 }
 
-export function publishedArticlePart(manifest: unknown, id: string, minimumVersion: number): { document: string; subjectId: string } | undefined {
+export function publishedArticlePart(manifest: unknown, id: string): { document: string; subjectId: string; version: number } | undefined {
   const { schema, packs } = (manifest ?? {}) as { schema?: unknown; packs?: unknown };
   if (schema !== 1 || !Array.isArray(packs)) return undefined;
   for (const pack of packs) {
     if (!pack || typeof pack.subjectId !== 'string' || !/^[a-zA-Z0-9_-]{1,250}$/.test(pack.subjectId)
-      || !Number.isSafeInteger(pack.version) || pack.version < minimumVersion || !Number.isInteger(pack.parts) || pack.parts < 1 || pack.parts > 100
+      || !Number.isSafeInteger(pack.version) || pack.version < 1 || !Number.isInteger(pack.parts) || pack.parts < 1 || pack.parts > 100
       || !pack.articleParts || !Object.prototype.hasOwnProperty.call(pack.articleParts, id)) continue;
     const index = pack.articleParts[id];
-    if (Number.isInteger(index) && index >= 0 && index < pack.parts) return { document: `pack-${pack.subjectId}-${pack.version}-${index}`, subjectId: pack.subjectId };
+    if (Number.isInteger(index) && index >= 0 && index < pack.parts) return { document: `pack-${pack.subjectId}-${pack.version}-${index}`, subjectId: pack.subjectId, version: pack.version };
   }
+}
+
+export async function resolveTrustedArticle(
+  id: string,
+  sectionId: string | undefined,
+  bundledCatalogue: readonly unknown[],
+  bundleVersion: number,
+  read: (document: string) => Promise<Record<string, unknown> | undefined>,
+): Promise<{ article: TrustedArticle } | { reason: 'article' | 'section' }> {
+  const bundled = findTrustedArticle(id, [], bundledCatalogue);
+  const matchesSection = (article: TrustedArticle | undefined): article is TrustedArticle =>
+    Boolean(article && (!sectionId || article.sections.some(section => section.id === sectionId)));
+  const prefersPublished = (article: TrustedArticle, publicationVersion: number) => {
+    if (!matchesSection(bundled)) return true;
+    const candidateVersion = article.version;
+    const bundledVersion = bundled.version;
+    if (typeof candidateVersion === 'number' && typeof bundledVersion === 'number' && candidateVersion !== bundledVersion) {
+      return candidateVersion > bundledVersion;
+    }
+    return publicationVersion >= bundleVersion;
+  };
+
+  let published: TrustedArticle | undefined;
+  let legacy: TrustedArticle | undefined;
+  try {
+    const manifest = await read('manifest-v1');
+    const part = publishedArticlePart(manifest, id);
+    if (part) {
+      const { payload } = await read(part.document) ?? {};
+      if (typeof payload === 'string' && payload.length <= 450_000) {
+        try {
+          const candidate = findTrustedArticle(id, JSON.parse(payload)?.articles, []);
+          if (candidate?.subjectId === part.subjectId && (!bundled || bundled.subjectId === candidate.subjectId)) {
+            published = candidate;
+            if (matchesSection(published) && prefersPublished(published, part.version)) return { article: published };
+          }
+        } catch { /* A malformed publication must not hide the bundled article. */ }
+      }
+    }
+    const snapshot = await read('current');
+    legacy = findTrustedArticle(id, snapshot?.articles, []);
+    if (legacy && bundled && legacy.subjectId !== bundled.subjectId) legacy = undefined;
+    const version = typeof snapshot?.version === 'number' ? snapshot.version : bundleVersion;
+    if (matchesSection(legacy) && prefersPublished(legacy, version)) return { article: legacy };
+  } catch (error) {
+    if (!matchesSection(bundled)) throw error;
+  }
+  if (matchesSection(bundled)) return { article: bundled };
+  return { reason: bundled || published || legacy ? 'section' : 'article' };
 }
 
 export function articleText(article: TrustedArticle, sectionId?: string): string {
